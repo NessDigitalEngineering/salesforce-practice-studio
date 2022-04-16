@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>Practice_Studio</application>
+        <visible>true</visible>
+    </applicationVisibilities>
     <description>Provides full access to Practice Studio</description>
     <fieldPermissions>
         <editable>true</editable>
