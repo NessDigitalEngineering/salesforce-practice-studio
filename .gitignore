@@ -24,6 +24,9 @@ yarn-error.log*
 # Dependency directories
 node_modules/
 
+# Profiles
+**/profiles/
+
 # Eslint cache
 .eslintcache
 
