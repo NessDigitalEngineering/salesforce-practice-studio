@@ -44,7 +44,7 @@ jobs:
 
       # Run Apex tests in scratch org
       - name: 'Run Apex tests'
-        run: 'sfdx force:apex:test:run -c -r human -w 20'
+        run: 'sfdx force:apex:test:run --verbose -c -r human -d testLog -w 140'
       - name: delete scratch org
         run: |
           'sfdx force:org:delete --noprompt --targetusername scratch-org'
