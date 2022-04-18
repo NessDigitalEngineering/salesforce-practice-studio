@@ -46,8 +46,8 @@ jobs:
       - name: 'Run Apex tests'
         run: 'sfdx force:apex:test:run --verbose -c -r human -d testLog -w 140'
       - name: delete scratch org
-        run: |
-          'sfdx force:org:delete --noprompt --targetusername scratch-org'
+        if: always()
+        run: 'sfdx force:org:delete -p -u scratch-org'
 
 
 
