@@ -1,4 +1,4 @@
-# This executes unit tests on each pull request on develop branch
+# This executes unit tests on each pull request to develop branch
 
 name: Run Unit Tests
 
