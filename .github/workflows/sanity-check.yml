@@ -17,7 +17,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - uses: actions/checkout@v2
+    
     # Runs a single command using the runners shell
     - name: Install Salesforce CLI
       run: |
@@ -28,6 +28,8 @@ jobs:
     - name: Install jq
       run: |
         sudo apt-get install jq
+    - name: checkout
+      - uses: actions/checkout@v2
     - name: Populate auth file
       shell: bash
       run: 'echo ${{ secrets.DEVHUB_SFDX_URL }} > ./DEVHUB_SFDX_URL.txt'
@@ -35,7 +37,6 @@ jobs:
       run: 'sfdx force:auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a NessDevHub -d'
     - name: Create new scratch org
       run: |
-        ls -l
         'sfdx force:org:create --setdefaultusername -f config/project-scratch-def.json -d 1 --setalias scratch-org'
     - name: deploy codebase to scratch org
       run: |
