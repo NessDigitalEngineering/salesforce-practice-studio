@@ -35,7 +35,7 @@ jobs:
       run: 'sfdx force:auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a NessDevHub -d'
     - name: Create new scratch org
       run: |
-        'sfdx force:org:create --setdefaultusername -f /config/project-scratch-def.json -d 15 -setalias $GITHUB_RUN_ID'
+        'sfdx force:org:create --setdefaultusername -f config/project-scratch-def.json -d 1 -setalias scratch-org'
     - name: deploy codebase to scratch org
       run: |
         'sfdx force:source:deploy -p force-app -w 140'
@@ -47,7 +47,7 @@ jobs:
         'sfdx force:apex:test:run --verbose -c -r human -d testLog -w 140'
     - name: delete scratch org
       run: |
-        'sfdx force:org:delete --noprompt --targetusername $GITHUB_RUN_ID'
+        'sfdx force:org:delete --noprompt --targetusername scratch-org'
 
 
 
