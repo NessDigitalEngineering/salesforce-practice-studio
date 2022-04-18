@@ -1,0 +1,56 @@
+# This executes unit tests on each pull request to develop branch
+
+name: Run Unit Tests
+
+# Controls when the action will run. Workflow runs on pull request
+on:
+  pull_request:
+    branches:
+      - develop
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This job runs unit tests 
+  run_unit_tests:
+    runs-on: ubuntu-latest
+    steps:
+      # Install Salesforce CLI
+      - name: Install Salesforce CLI
+        run: |
+            wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
+            mkdir sfdx-cli
+            tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
+            ./sfdx-cli/install
+      # Checkout the code in the pull request
+      - name: 'Checkout source code'
+        uses: actions/checkout@v2
+
+      # Store secret for dev hub
+      - name: 'Populate auth file with DEVHUB_SFDX_URL secret'
+        shell: bash
+        run: 'echo ${{ secrets.DEVHUB_SFDX_URL}} > ./DEVHUB_SFDX_URL.txt'
+
+      # Authenticate dev hub
+      - name: 'Authenticate Dev Hub'
+        run: 'sfdx force:auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a devhub -d'
+
+      # Create scratch org
+      - name: 'Create scratch org'
+        run: 'sfdx force:org:create -f config/project-scratch-def.json -a scratch-org -s -d 1'
+
+      # Deploy source to scratch org
+      - name: 'Push source to scratch org'
+        run: 'sfdx force:source:push'
+
+      # Run Apex tests in scratch org
+      - name: 'Run Apex tests'
+        run: 'sfdx force:apex:test:run --verbose -c -r human -d testLog -w 140'
+
+      # Delete scratch org
+      - name: delete scratch org
+        if: always()
+        run: 'sfdx force:org:delete -p -u scratch-org'
+
+
+
+
