@@ -5,6 +5,7 @@
     <columns>Type__c</columns>
     <columns>Program_Level__c</columns>
     <columns>Registration_fee__c</columns>
+    <columns>Badge_Icon__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>
