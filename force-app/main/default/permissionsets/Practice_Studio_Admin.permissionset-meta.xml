@@ -6,6 +6,11 @@
     </applicationVisibilities>
     <description>Provides full access to Practice Studio</description>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Credential__c.Achieved_Count__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Credential__c.Approximate_Exam_Prep_Time_Hrs__c</field>
         <readable>true</readable>
@@ -38,6 +43,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Credential__c.Retake_fee__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Credential__c.Target_Count__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Credential__c.URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
