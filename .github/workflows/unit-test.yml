@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # This executes unit tests on each pull request to develop branch
-=======
-# This executes unit tests on each pull request on develop branch
->>>>>>> origin/develop
 
 name: Run Unit Tests
 
