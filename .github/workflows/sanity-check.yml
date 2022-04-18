@@ -12,44 +12,42 @@ on:
 jobs:
   # This job runs unit tests 
   run_unit_tests:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
+      steps:
+          # Install Salesforce CLI
+          - name: Install Salesforce CLI
+            run: |
+                wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
+                mkdir sfdx-cli
+                tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
+                ./sfdx-cli/install
+          # Checkout the code in the pull request
+          - name: 'Checkout source code'
+            uses: actions/checkout@v2
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-    
-    # Runs a single command using the runners shell
-    - name: Install Salesforce CLI
-      run: |
-        wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
-        mkdir sfdx-cli
-        tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
-        ./sfdx-cli/install  
-    - name: Install jq
-      run: |
-        sudo apt-get install jq
-    - name: checkout source code
-      uses: actions/checkout@v2
-    - name: Populate auth file
-      shell: bash
-      run: 'echo ${{ secrets.DEVHUB_SFDX_URL }} > ./DEVHUB_SFDX_URL.txt'
-    - name: Authenticate Dev Hub
-      run: 'sfdx force:auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a NessDevHub -d'
-    - name: Create new scratch org
-      run: |
-        'sfdx force:org:create --setdefaultusername -f config/project-scratch-def.json -d 1 --setalias scratch-org'
-    - name: deploy codebase to scratch org
-      run: |
-        'sfdx force:source:deploy -p force-app -w 140'
-    - name: open scratch org
-      run: |
-        'sfdx force:source:open'
-    - name: execute unit tests
-      run: |
-        'sfdx force:apex:test:run --verbose -c -r human -d testLog -w 140'
-    - name: delete scratch org
-      run: |
-        'sfdx force:org:delete --noprompt --targetusername scratch-org'
+          # Store secret for dev hub
+          - name: 'Populate auth file with DEVHUB_SFDX_URL secret'
+            shell: bash
+            run: 'echo ${{ secrets.DEVHUB_SFDX_URL}} > ./DEVHUB_SFDX_URL.txt'
+
+          # Authenticate dev hub
+          - name: 'Authenticate Dev Hub'
+            run: 'sfdx force:auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a devhub -d'
+
+          # Create scratch org
+          - name: 'Create scratch org'
+            run: 'sfdx force:org:create -f config/project-scratch-def.json -a scratch-org -s -d 1'
+
+          # Deploy source to scratch org
+          - name: 'Push source to scratch org'
+            run: 'sfdx force:source:push'
+
+          # Run Apex tests in scratch org
+          - name: 'Run Apex tests'
+            run: 'sfdx force:apex:test:run -c -r human -d ./tests/apex -w 20'
+          - name: delete scratch org
+            run: |
+              'sfdx force:org:delete --noprompt --targetusername scratch-org'
 
 
 
