@@ -1,6 +1,6 @@
-# This is a sanity check workflow which runs unit tests and scans the code via sonar cloud. This is run on each pull request on develop branch
+# This executes unit tests on each pull request on develop branch
 
-name: Sanity Check
+name: Run Unit Tests
 
 # Controls when the action will run. Workflow runs on pull request
 on:
@@ -45,6 +45,8 @@ jobs:
       # Run Apex tests in scratch org
       - name: 'Run Apex tests'
         run: 'sfdx force:apex:test:run --verbose -c -r human -d testLog -w 140'
+
+      # Delete scratch org
       - name: delete scratch org
         if: always()
         run: 'sfdx force:org:delete -p -u scratch-org'
