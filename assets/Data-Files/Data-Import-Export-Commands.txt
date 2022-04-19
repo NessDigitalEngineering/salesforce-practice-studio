@@ -1,6 +1,6 @@
 Export Credentials
 
-sfdx force:data:tree:export -q "Select Approximate_Exam_Prep_Time_Hrs__c, Curriculum_to_Prep_for_Exam__c, Exam_Guide__c, Icon__c, Name, Program_Level__c, Registration_fee__c, Retake_fee__c, Status__c, Type__c, Visible_in_Partner_Community_Cert_Tab__c, URL__c, Target_Count__c FROM Credential__c"
+sfdx force:data:tree:export -q "Select Approximate_Exam_Prep_Time_Hrs__c, Curriculum_to_Prep_for_Exam__c, Exam_Guide__c, Icon__c, Name, Program_Level__c, Registration_fee__c, Retake_fee__c, Status__c, Type__c, Visible_in_Partner_Community_Cert_Tab__c, URL__c, Target_Count__c, External_ID__c FROM Credential__c"
 
 Import Credentials
 
