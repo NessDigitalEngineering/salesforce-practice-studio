@@ -10,11 +10,13 @@
     <formFactors>Small</formFactors>
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
-    <isNavPersonalizationDisabled>true</isNavPersonalizationDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>Practice Studio</label>
     <navType>Standard</navType>
+    <setupExperience>all</setupExperience>
     <tabs>Credential__c</tabs>
+    <tabs>User_Credential__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Practice_Studio_UtilityBar</utilityBar>
 </CustomApplication>
