@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Voucher Requested</fullName>
+                <default>false</default>
+                <label>Voucher Requested</label>
+            </value>
+            <value>
+                <fullName>Voucher Approved</fullName>
+                <default>false</default>
+                <label>Voucher Approved</label>
+            </value>
+            <value>
+                <fullName>Voucher Declined</fullName>
+                <default>false</default>
+                <label>Voucher Declined</label>
+            </value>
+            <value>
+                <fullName>Voucher Assigned</fullName>
+                <default>false</default>
+                <label>Voucher Assigned</label>
+            </value>
+            <value>
+                <fullName>Exam Scheduled</fullName>
+                <default>false</default>
+                <label>Exam Scheduled</label>
+            </value>
+            <value>
+                <fullName>Exam Passed</fullName>
+                <default>false</default>
+                <label>Exam Passed</label>
+            </value>
+            <value>
+                <fullName>Exam Failed</fullName>
+                <default>false</default>
+                <label>Exam Failed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
