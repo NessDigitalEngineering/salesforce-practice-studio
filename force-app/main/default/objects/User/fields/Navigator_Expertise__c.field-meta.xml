@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Navigator_Expertise__c</fullName>
+    <externalId>false</externalId>
+    <label>Navigator Expertise</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>B2C Commerce</fullName>
+                <default>false</default>
+                <label>B2C Commerce</label>
+            </value>
+            <value>
+                <fullName>Commerce</fullName>
+                <default>false</default>
+                <label>Commerce</label>
+            </value>
+            <value>
+                <fullName>Customer 360 Platform</fullName>
+                <default>false</default>
+                <label>Customer 360 Platform</label>
+            </value>
+            <value>
+                <fullName>Education Cloud</fullName>
+                <default>false</default>
+                <label>Education Cloud</label>
+            </value>
+            <value>
+                <fullName>Einstein Expert</fullName>
+                <default>false</default>
+                <label>Einstein Expert</label>
+            </value>
+            <value>
+                <fullName>Experience Cloud</fullName>
+                <default>false</default>
+                <label>Experience Cloud</label>
+            </value>
+            <value>
+                <fullName>Integration</fullName>
+                <default>false</default>
+                <label>Integration</label>
+            </value>
+            <value>
+                <fullName>Marketing Cloud</fullName>
+                <default>false</default>
+                <label>Marketing Cloud</label>
+            </value>
+            <value>
+                <fullName>Multi-Cloud Integration</fullName>
+                <default>false</default>
+                <label>Multi-Cloud Integration</label>
+            </value>
+            <value>
+                <fullName>Nonprofit Cloud</fullName>
+                <default>false</default>
+                <label>Nonprofit Cloud</label>
+            </value>
+            <value>
+                <fullName>Revenue Cloud</fullName>
+                <default>false</default>
+                <label>Revenue Cloud</label>
+            </value>
+            <value>
+                <fullName>Sales Cloud</fullName>
+                <default>false</default>
+                <label>Sales Cloud</label>
+            </value>
+            <value>
+                <fullName>Service Cloud</fullName>
+                <default>false</default>
+                <label>Service Cloud</label>
+            </value>
+            <value>
+                <fullName>Slack</fullName>
+                <default>false</default>
+                <label>Slack</label>
+            </value>
+            <value>
+                <fullName>Industry Products</fullName>
+                <default>false</default>
+                <label>Industry Products</label>
+            </value>
+            <value>
+                <fullName>Managed Services</fullName>
+                <default>false</default>
+                <label>Managed Services</label>
+            </value>
+            <value>
+                <fullName>PDO/AppExchange</fullName>
+                <default>false</default>
+                <label>PDO/AppExchange</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>
