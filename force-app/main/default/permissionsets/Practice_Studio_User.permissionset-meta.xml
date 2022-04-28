@@ -191,6 +191,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>User_Credential__c.External_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>User_Credential__c.Last_Partner_Portal_Sync_Date_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
