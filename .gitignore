@@ -8,6 +8,12 @@
 .localdevserver/
 deploy-options.json
 
+# etl data files
+
+etl/sync-from-partner-portal/input/
+etl/sync-from-partner-portal/staging/
+etl/sync-from-partner-portal/output/
+
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
 
