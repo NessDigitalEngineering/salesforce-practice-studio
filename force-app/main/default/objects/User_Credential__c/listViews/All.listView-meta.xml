@@ -8,6 +8,8 @@
     <columns>Assigned_Date__c</columns>
     <columns>Due_Date__c</columns>
     <columns>Status__c</columns>
+    <columns>Active__c</columns>
+    <columns>Region__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>
