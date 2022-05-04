@@ -8,6 +8,11 @@
         <operation>equals</operation>
         <value>True</value>
     </summaryFilterItems>
+    <summaryFilterItems>
+        <field>User_Credential__c.Status__c</field>
+        <operation>equals</operation>
+        <value>Completed</value>
+    </summaryFilterItems>
     <summaryForeignKey>User_Credential__c.Credential__c</summaryForeignKey>
     <summaryOperation>count</summaryOperation>
     <trackTrending>false</trackTrending>
