@@ -3,9 +3,11 @@
         {
             "path": "force-app",
             "default": true,
-            "package": "Ness Practice Studio",
-            "versionName": "ver 0.1",
-            "versionNumber": "0.1.6.NEXT"
+            "package": "Practice Studio",
+            "versionName": "R1 2022",
+            "versionNumber": "0.1.6.NEXT",
+            "postInstallUrl": "https://github.com/NessDigitalEngineering/salesforce-practice-studio/wiki/R1-2022#post-installation-setup",
+            "releaseNotesUrl": "https://github.com/NessDigitalEngineering/salesforce-practice-studio/wiki/R1-2022#release-notes"
         }
     ],
     "name": "salesforce-practice-studio",
@@ -13,11 +15,11 @@
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "54.0",
     "packageAliases": {
-        "Ness Practice Studio": "0Ho5j000000PB7DCAW",
-        "Ness Practice Studio@0.1.1-1": "04t5j000000UbpNAAS",
-        "Ness Practice Studio@0.1.2-1": "04t5j000000QgceAAC",
-        "Ness Practice Studio@0.1.3-1": "04t5j000000Qgh1AAC",
-        "Ness Practice Studio@0.1.4-1": "04t5j000000Qgh6AAC",
-        "Ness Practice Studio@0.1.5-1": "04t5j000000QgjgAAC"
+        "Practice Studio": "0Ho5j000000PB7DCAW",
+        "Practice Studio@0.1.1-1": "04t5j000000UbpNAAS",
+        "Practice Studio@0.1.2-1": "04t5j000000QgceAAC",
+        "Practice Studio@0.1.3-1": "04t5j000000Qgh1AAC",
+        "Practice Studio@0.1.4-1": "04t5j000000Qgh6AAC",
+        "Practice Studio@0.1.5-1": "04t5j000000QgjgAAC"
     }
 }
