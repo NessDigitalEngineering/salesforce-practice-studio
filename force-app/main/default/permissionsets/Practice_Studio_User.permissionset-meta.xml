@@ -240,7 +240,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>User_Credential__c.Maintenance_Due__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -252,6 +252,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>User_Credential__c.Synced_from_Partner_Portal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User_Credential__c.URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
