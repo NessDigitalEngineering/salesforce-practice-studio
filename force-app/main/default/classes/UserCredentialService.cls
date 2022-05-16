@@ -15,9 +15,9 @@ public with sharing class UserCredentialService {
     */
     @AuraEnabled(cacheable=true)
     public static List<User_Credential__c> getActiveUserCredentials(String userId) {
-        String userId = '%' + userId + '%';
+        String currentUserId = '%' + userId + '%';
         List<User_Credential__c> userCredentialList = new List<User_Credential__c>();
-            User_Credential__c userCredential = [Select id, Credential__c, Status__c, User__c from User_Credential__c where User__r.id= :userId and User_Credential__c.Status__c != 'Completed' WITH SECURITY_ENFORCED];
+            User_Credential__c userCredential = [Select id, Credential__c, Status__c, User__c from User_Credential__c where User__r.id= :currentUserId and User_Credential__c.Status__c != 'Completed' WITH SECURITY_ENFORCED];
             userCredentialList.add(userCredential);                                            
         return userCredentialList;
     }
