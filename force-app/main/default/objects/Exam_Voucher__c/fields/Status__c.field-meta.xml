@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Voucher_Sponsor__c</fullName>
+    <fullName>Status__c</fullName>
     <externalId>false</externalId>
-    <label>Voucher Sponsor</label>
+    <label>Status</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
@@ -11,19 +11,24 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Ness</fullName>
-                <default>false</default>
-                <label>Ness</label>
+                <fullName>Available</fullName>
+                <default>true</default>
+                <label>Available</label>
             </value>
             <value>
-                <fullName>Salesforce</fullName>
+                <fullName>Assigned</fullName>
                 <default>false</default>
-                <label>Salesforce</label>
+                <label>Assigned</label>
             </value>
             <value>
-                <fullName>Candidate</fullName>
+                <fullName>Used</fullName>
                 <default>false</default>
-                <label>Candidate</label>
+                <label>Used</label>
+            </value>
+            <value>
+                <fullName>Expired</fullName>
+                <default>false</default>
+                <label>Expired</label>
             </value>
         </valueSetDefinition>
     </valueSet>
