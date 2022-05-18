@@ -3,7 +3,7 @@ import getResults from '@salesforce/apex/UserSearchController.getUsers';
 
 import UserSearchLabel from '@salesforce/label/c.UserSearchLabel';
 
-export default class LwcCustomLookup extends LightningElement {
+export default class userSearch extends LightningElement {
     @api objectName = 'User';
     @api fieldName = 'Name';
     @api selectRecordId = '';
@@ -56,7 +56,7 @@ export default class LwcCustomLookup extends LightningElement {
    setSelectedRecord(event) {
         var currentRecId = event.currentTarget.dataset.id;
         var selectName =  event.currentTarget.dataset.name;
-        alert(selectName);
+       
         this.txtclassname =  'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
         this.iconFlag = false;
         this.clearIconFlag = true;

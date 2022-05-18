@@ -4,10 +4,9 @@ public with sharing class UserSearchController {
     public static List <User> getUsers(String searchKeyWord) {
      String searchKey = searchKeyWord + '%';
      List <User> returnList = new List < User > ();
-     //List <User> lstOfUsers = [select id, Name from User where Name LIKE: searchKey];
-
-     if(String.isNotEmpty(searchKey) && searchKey.length() >= 4) {
-        List <User> lstOfUsers = [select id, Name from User where Name LIKE: searchKey];
+    
+    if(String.isNotEmpty(searchKey) && searchKey.length() >= 4) {
+        List <User> lstOfUsers = [select id, Name,Title from User where Name LIKE: searchKey];
      for (User users: lstOfUsers) {
         returnList.add(users);
        

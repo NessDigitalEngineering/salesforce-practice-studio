@@ -4,8 +4,7 @@ import getResults from '@salesforce/apex/CredentialSearchController.getCredentia
 import UserSearchLabel from '@salesforce/label/c.UserSearchLabel';
 
 export default class credentialSearch extends LightningElement {
-    //@api objectName = 'Credential__c';
-    //@api fieldName = 'Name';
+ 
     @api Label;
     @track searchRecords = [];
     @track selectedRecords = [];
@@ -24,7 +23,7 @@ export default class credentialSearch extends LightningElement {
             selectRecId.push(this.selectedRecords[i].recId);
         }
         this.LoadingText = true;
-        getResults({value: currentText, selectedRecId : selectRecId })
+        getResults({searchKey: currentText, selectedRecId : selectRecId })
         .then(result => {
             this.searchRecords= result;
             this.LoadingText = false;
@@ -82,5 +81,4 @@ export default class credentialSearch extends LightningElement {
         // Dispatches the event.
         this.dispatchEvent(selectedEvent);
     }
-}  
-
+}
