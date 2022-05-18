@@ -38,7 +38,7 @@ public with sharing class UserCredentialService {
     * @param userCredentials List of User Credentials
     * @return List of Database.SaveResult 
     */  
-    public List<Database.SaveResult> createUserCredentials(List<User_Credentials__c> userCredentials){
+    public List<Database.SaveResult> createUserCredentials(List<User_Credential__c> userCredentials){
         try{
             return Database.insert(userCredentials,true);
         }
@@ -52,7 +52,7 @@ public with sharing class UserCredentialService {
     * @param userCredentials List of User Credentials
     * @return List of Database.SaveResult 
     */
-    public List<Database.SaveResult> updateUserCredentials(List<User_Credentials__c> userCredentials){
+    public List<Database.SaveResult> updateUserCredentials(List<User_Credential__c> userCredentials){
         try{
             return Database.update(userCredentials,true);
         }
