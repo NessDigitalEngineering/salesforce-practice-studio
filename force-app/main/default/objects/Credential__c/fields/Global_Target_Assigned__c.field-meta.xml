@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>IN_Target_Achievement__c</fullName>
+    <fullName>Global_Target_Assigned__c</fullName>
     <externalId>false</externalId>
-    <label>IN Target Achievement</label>
-    <summaryFilterItems>
-        <field>User_Credential__c.Region__c</field>
-        <operation>equals</operation>
-        <value>IN</value>
-    </summaryFilterItems>
-    <summaryFilterItems>
-        <field>User_Credential__c.Active__c</field>
-        <operation>equals</operation>
-        <value>True</value>
-    </summaryFilterItems>
+    <label>Global Target Assigned</label>
     <summaryFilterItems>
         <field>User_Credential__c.Status__c</field>
         <operation>equals</operation>
-        <value>Completed</value>
+        <value>Assigned, Preparing, Ready</value>
     </summaryFilterItems>
     <summaryForeignKey>User_Credential__c.Credential__c</summaryForeignKey>
     <summaryOperation>count</summaryOperation>

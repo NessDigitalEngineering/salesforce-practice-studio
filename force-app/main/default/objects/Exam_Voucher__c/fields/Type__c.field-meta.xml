@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Status__c</fullName>
+    <fullName>Type__c</fullName>
     <externalId>false</externalId>
-    <label>Status</label>
-    <required>true</required>
+    <label>Type</label>
+    <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -11,24 +11,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Assigned</fullName>
-                <default>true</default>
-                <label>Assigned</label>
+                <fullName>Trailhead</fullName>
+                <default>false</default>
+                <label>Trailhead</label>
             </value>
             <value>
-                <fullName>Preparing</fullName>
+                <fullName>AP</fullName>
                 <default>false</default>
-                <label>Preparing</label>
+                <label>AP</label>
             </value>
             <value>
-                <fullName>Ready</fullName>
+                <fullName>MuleSoft</fullName>
                 <default>false</default>
-                <label>Ready</label>
-            </value>
-            <value>
-                <fullName>Completed</fullName>
-                <default>false</default>
-                <label>Completed</label>
+                <label>MuleSoft</label>
             </value>
         </valueSetDefinition>
     </valueSet>
