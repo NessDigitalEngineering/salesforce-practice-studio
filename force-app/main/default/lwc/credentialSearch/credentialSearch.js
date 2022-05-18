@@ -1,91 +1,86 @@
 import { LightningElement,wire,api,track } from 'lwc';
 import getResults from '@salesforce/apex/CredentialSearchController.getCredentials';
-//import getCredentials from '@salesforce/apex/apecExample1.getCredentials';
+
 import UserSearchLabel from '@salesforce/label/c.UserSearchLabel';
 
+export default class credentialSearch extends LightningElement {
+    //@api objectName = 'Credential__c';
+    //@api fieldName = 'Name';
+    @api Label;
+    @track searchRecords = [];
+    @track selectedRecords = [];
+    @api required = false;
+    @api iconName ;
+    @api LoadingText = false;
+    @track txtclassname = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
+    @track messageFlag = false;
+    UserLabels = UserSearchLabel;
+ 
+    searchField(event) {
 
-export default class CredentialSearch extends LightningElement {
-@api objectName = 'Credential__c';
-@api fieldName = 'Name';
-@api selectRecordId = '';
-@api selectRecordName;
-@api Label;
-@api searchRecords = [];
-@api required = false;
-@api iconName ;
-@api LoadingText = false;
-@track txtclassname = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
-@track messageFlag = false;
-@track iconFlag =  true;
-@track clearIconFlag = false;
-@track inputReadOnly = false;
-@track userRoleSelect;
-@track usersearchlists = UserSearchLabel ;
+        var currentText = event.target.value;
+        var selectRecId = [];
+        for(let i = 0; i < this.selectedRecords.length; i++){
+            selectRecId.push(this.selectedRecords[i].recId);
+        }
+        this.LoadingText = true;
+        getResults({value: currentText, selectedRecId : selectRecId })
+        .then(result => {
+            this.searchRecords= result;
+            this.LoadingText = false;
+            
+            this.txtclassname =  result.length > 0 ? 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open' : 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
+            if(currentText.length > 0 && result.length == 0) {
+                this.messageFlag = true;
+            }
+            else {
+                this.messageFlag = false;
+            }
 
-searchField(event) {
-const regixs = /^(?=^\w{3,20}$)[a-z0-9]+_?[a-z0-9]+$/;
-var currentText = event.target.value;
+            if(this.selectRecordId != null && this.selectRecordId.length > 0) {
+                this.iconFlag = false;
+                this.clearIconFlag = true;
+            }
+            else {
+                this.iconFlag = true;
+                this.clearIconFlag = false;
+            }
 
-
-if(currentText.match(regixs)){
-
-this.LoadingText = true;
-getResults({searchKeyWord: currentText}).then(response=>{
-    this.searchRecords= response;
-    this.LoadingText = false;
+            this.dispatchEvent(new CustomEvent('credentialsevent', {detail:selectRecId}));
+        })
+        .catch(error => {
+            console.log('-------error-------------'+error);
+            console.log(error);
+        });
+        
+    }
     
-    this.txtclassname =  response.length > 0 ? 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open' : 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
-    if(currentText.length > 0 && response.length == 0) {
-        this.messageFlag = true;
+   setSelectedRecord(event) {
+        var recId = event.currentTarget.dataset.id;
+        var selectName = event.currentTarget.dataset.name;
+        let newsObject = { 'recId' : recId ,'recName' : selectName };
+        this.selectedRecords.push(newsObject);
+        this.txtclassname =  'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
+        let selRecords = this.selectedRecords;
+		this.template.querySelectorAll('lightning-input').forEach(each => {
+            each.value = '';
+        });
+        const selectedEvent = new CustomEvent('selected', { detail: {selRecords}, });
+        // Dispatches the event.
+        this.dispatchEvent(selectedEvent);
     }
-    else {
-        this.messageFlag = false;
+
+    removeRecord (event){
+        let selectRecId = [];
+        for(let i = 0; i < this.selectedRecords.length; i++){
+            if(event.detail.name !== this.selectedRecords[i].recId)
+                selectRecId.push(this.selectedRecords[i]);
+        }
+        this.selectedRecords = [...selectRecId];
+        let selRecords = this.selectedRecords;
+        const selectedEvent = new CustomEvent('selected', { detail: {selRecords}, });
+        // Dispatches the event.
+        this.dispatchEvent(selectedEvent);
     }
+}  
 
-    if(this.selectRecordId != null && this.selectRecordId.length > 0) {
-        this.iconFlag = false;
-        this.clearIconFlag = true;
-    }
-    else {
-        this.iconFlag = true;
-        this.clearIconFlag = false;
-    }
-})
-.catch(error => {
-    console.log('-------error-------------'+error);
-    console.log(error);
-});
-
-
-
-} 
-
-}
-
-
-
-setSelectedRecord(event) {
-var currentRecId = event.currentTarget.dataset.id;
-var selectName =  event.currentTarget.dataset.name;
-alert(selectName);
-this.txtclassname =  'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
-this.iconFlag = false;
-this.clearIconFlag = true;
-this.selectRecordName = event.currentTarget.dataset.name;
-this.selectRecordId = currentRecId;
-this.inputReadOnly = true;
-const selectedEvent = new CustomEvent('selected', { detail: {selectName, currentRecId}, });
-// Dispatches the event.
-this.dispatchEvent(selectedEvent);
-}
-
-resetData(event) {
-this.selectRecordName = "";
-this.selectRecordId = "";
-this.inputReadOnly = false;
-this.iconFlag = true;
-this.clearIconFlag = false;
-
-}
-
-}

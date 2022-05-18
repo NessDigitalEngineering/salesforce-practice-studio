@@ -14,9 +14,11 @@ public class CredentialSearchControllerTest {
     }
     
     static testMethod void getCredentialsTest() {
-        Credential__c c = [SELECT Id,name FROM Credential__c limit 1]; 
+        Credential__c c = [SELECT Id,name FROM Credential__c limit 1];
+        List<String> searchLists;
+
         Test.startTest();
-        List<Credential__c> credentials=CredentialSearchController.getCredentials(c.Name);
+        List<Credential__c> credentials=CredentialSearchController.getCredentials(c.Name,searchLists);
         Test.stopTest();
         System.assertNotEquals(0, credentials.size());
         
