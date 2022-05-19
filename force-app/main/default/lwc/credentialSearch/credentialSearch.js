@@ -14,6 +14,8 @@ export default class credentialSearch extends LightningElement {
     @track txtclassname = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
     @track messageFlag = false;
     UserLabels = UserSearchLabel;
+
+    @api datesend ;
  
     searchField(event) {
 
@@ -23,7 +25,8 @@ export default class credentialSearch extends LightningElement {
             selectRecId.push(this.selectedRecords[i].recId);
         }
         this.LoadingText = true;
-        getResults({searchKey: currentText, selectedRecId : selectRecId })
+        //alert(this.datesend);
+        getResults({searchKey: currentText, selectedRecId : selectRecId,userName: this.datesend })
         .then(result => {
             this.searchRecords= result;
             this.LoadingText = false;
