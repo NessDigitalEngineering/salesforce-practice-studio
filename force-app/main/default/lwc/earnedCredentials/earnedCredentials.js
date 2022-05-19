@@ -18,10 +18,10 @@ userCredData;
     if(data){
        this.countRec = data.length;
        let selectedRec = [];
-       if(this.countRec > 3){
+       if(this.countRec > 2){
             this.showMore = true;
         for(let i=0;i<this.countRec;i++){
-            if(i<3){
+            if(i<2){
                 selectedRec.push(data[i]);
             }
         }
