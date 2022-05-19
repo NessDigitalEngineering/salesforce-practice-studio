@@ -128,14 +128,11 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>User_Credential_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
+        <type>Default</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <formFactor>Large</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -155,15 +152,15 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>User Credential</label>
+    <externalSharingModel>Private</externalSharingModel>
+    <label>Exam Voucher</label>
     <nameField>
-        <displayFormat>CRED-{00000}</displayFormat>
-        <label>User Credential ID</label>
+        <displayFormat>VC-{000000}</displayFormat>
+        <label>Exam Voucher ID</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>User Credentials</pluralLabel>
+    <pluralLabel>Exam Vouchers</pluralLabel>
     <searchLayouts></searchLayouts>
-    <sharingModel>ControlledByParent</sharingModel>
+    <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
