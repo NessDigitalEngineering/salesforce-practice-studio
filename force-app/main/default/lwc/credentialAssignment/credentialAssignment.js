@@ -6,10 +6,9 @@ export default class CredentialAssignment extends LightningElement {
 
 handlefireEvent(event){
 
-    this.selectedUserName = event.detail.selectName;
-    alert(this.selectedUserName);
+    this.selectedUserName = event.detail.currentRecId;
+    //alert(this.selectedUserName);
 
-    //this.dispatchEvent(new CustomEvent('userSelect', {detail:selectedUserName}));
 }
 
 }

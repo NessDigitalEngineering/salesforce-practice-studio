@@ -19,6 +19,7 @@ export default class userSearch extends LightningElement {
     @track clearIconFlag = false;
     @track inputReadOnly = false;
      userLabel = UserSearchLabel;
+     
    
 
     searchField(event) {
@@ -28,7 +29,7 @@ export default class userSearch extends LightningElement {
         getResults({searchKeyWord: currentText}).then(response=>{
             this.searchRecords= response;
             this.LoadingText = false;
-            
+            console.log("response data:"+JSON.stringify(response));
             this.txtclassname =  response.length > 0 ? 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open' : 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
             if(currentText.length > 0 && response.length == 0) {
                 this.messageFlag = true;
@@ -56,7 +57,7 @@ export default class userSearch extends LightningElement {
    setSelectedRecord(event) {
         var currentRecId = event.currentTarget.dataset.id;
         var selectName =  event.currentTarget.dataset.name;
-       
+        console.log("currentRecId:"+currentRecId );
         this.txtclassname =  'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
         this.iconFlag = false;
         this.clearIconFlag = true;

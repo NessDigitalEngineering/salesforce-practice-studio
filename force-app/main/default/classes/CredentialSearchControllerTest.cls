@@ -13,6 +13,7 @@ public class CredentialSearchControllerTest {
         User_Credential__c uc = new User_Credential__c ();
         uc.Credential__c =c.id;
         uc.status__c = 'Ready';
+        
         insert uc;
         
     }
@@ -20,9 +21,9 @@ public class CredentialSearchControllerTest {
     static testMethod void getCredentialsTest() {
         Credential__c c = [SELECT Id,name FROM Credential__c limit 1];
         List<String> searchLists;
-
+        Id userId;
         Test.startTest();
-        List<Credential__c> credentials=CredentialSearchController.getCredentials(c.Name,searchLists);
+        List<Credential__c> credentials=CredentialSearchController.getCredentials(c.Name,searchLists,userId);
         Test.stopTest();
         System.assertNotEquals(0, credentials.size());
         

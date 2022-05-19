@@ -26,7 +26,7 @@ export default class credentialSearch extends LightningElement {
         }
         this.LoadingText = true;
         //alert(this.datesend);
-        getResults({searchKey: currentText, selectedRecId : selectRecId,userName: this.datesend })
+        getResults({searchKey: currentText, selectedRecId : selectRecId,userId: this.datesend })
         .then(result => {
             this.searchRecords= result;
             this.LoadingText = false;
