@@ -10,3 +10,4 @@ public with sharing class earnedCredentialsController
    
 
 }
+
