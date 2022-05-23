@@ -1,7 +1,7 @@
-import { api, LightningElement, track, wire} from 'lwc';
+import { api, LightningElement, track} from 'lwc';
 import { updateRecord, deleteRecord } from 'lightning/uiRecordApi';
 import getUserCredentials from '@salesforce/apex/CredentialAssignmentController.getUserCredentials';
-import updateCredentials from '@salesforce/apex/CredentialAssignmentController.updateCredentials';
+
 import {loadStyle} from 'lightning/platformResourceLoader'
 import REMOVEROW from '@salesforce/resourceUrl/removeRow'
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -20,7 +20,7 @@ typeAttributes:
     day: 'numeric',  
     month: 'numeric',  
     year: 'numeric'}},
-{ label: 'Due Date', fieldName: 'Due_Date__c', type: 'Date', type: 'date-local', editable: true, typeAttributes: {  
+{ label: 'Due Date', fieldName: 'Due_Date__c', type: 'date-local', editable: true, typeAttributes: {  
     day: 'numeric',  
     month: 'numeric',  
     year: 'numeric'}},
@@ -227,7 +227,10 @@ rowactionDelete(event) {
 
          //refresh data in the datatable
          console.log('refresh date'+this.credentials);
-         return refreshApex(this.credentials);            
+         //return refreshApex(this.credentials); 
+         //return this.refresh(); 
+         this.refresh(); 
+         console.log('refresh date1234'+this.credentials);      
          })
 
          //display error message in case of errors
@@ -251,6 +254,12 @@ renderedCallback(){
         .catch(error => {
             console.log( 'error',error );
     });
+}
+@api
+async refresh() {
+        
+    await refreshApex(this.credentials);
+   
 }
 
 }

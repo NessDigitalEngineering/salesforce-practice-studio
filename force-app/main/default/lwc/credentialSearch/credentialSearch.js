@@ -1,4 +1,4 @@
-import { LightningElement,wire,api,track } from 'lwc';
+import { LightningElement,api,track } from 'lwc';
 import getResults from '@salesforce/apex/CredentialSearchController.getCredentials';
 
 import UserSearchLabel from '@salesforce/label/c.UserSearchLabel';
@@ -25,7 +25,7 @@ export default class credentialSearch extends LightningElement {
             selectRecId.push(this.selectedRecords[i].recId);
         }
         this.LoadingText = true;
-        //alert(this.datesend);
+        
         getResults({searchKey: currentText, selectedRecId : selectRecId,userId: this.datesend })
         .then(result => {
             this.searchRecords= result;

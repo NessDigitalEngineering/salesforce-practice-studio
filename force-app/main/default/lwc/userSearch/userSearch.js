@@ -1,4 +1,4 @@
-import { LightningElement,wire,api,track } from 'lwc';
+import { LightningElement,api,track } from 'lwc';
 import getResults from '@salesforce/apex/UserSearchController.getUsers';
 
 import UserSearchLabel from '@salesforce/label/c.UserSearchLabel';

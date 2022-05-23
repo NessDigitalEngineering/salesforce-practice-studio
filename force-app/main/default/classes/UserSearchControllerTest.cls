@@ -9,7 +9,7 @@ public class UserSearchControllerTest {
         insert r;
         
         //For create user
-        User u = new User(
+        User userName = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'].Id,
             LastName = 'admin',
             Email = 'puser000@amamama.com',
@@ -27,11 +27,11 @@ public class UserSearchControllerTest {
     
     static testMethod void getUsersTest() {
        
-        User u = [SELECT Id,name FROM User limit 1]; 
+        User usersName = [SELECT Id,name FROM User limit 1]; 
         Test.startTest();
         List<User> users=UserSearchController.getUsers(u.Name);
         Test.stopTest();
-        System.assertNotEquals(0, users.size());
+        System.assertNotEquals(0, usersName.size());
         
     }
     
