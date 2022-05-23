@@ -1,7 +1,5 @@
 @isTest
-
 public class earnedCredentialsControllerTest {
-
     @TestSetup
     static void setup() {
         
