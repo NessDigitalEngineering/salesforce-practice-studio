@@ -13,19 +13,14 @@ public class earnedCredentialsControllerTest {
         insert c;
         User_Credential__c uc = new User_Credential__c ();
         uc.Credential__c =c.id;
-        uc.status__c = 'Completed';
-        
-        insert uc;
-        
+        uc.status__c = 'Completed';        
+        insert uc;        
     }
 static testMethod void getCredentialsTest() {
-        User_Credential__c c = [SELECT Id,name FROM User_Credential__c limit 1];
-        List<String> searchLists;
+       
          String userId;
         Test.startTest();
         List<User_Credential__c> credentials = earnedCredentialsController.getUserCredentials(userId);
-        Test.stopTest();
-        //System.assertNotEquals(0, credentials.size());
-        
+        Test.stopTest();               
     }
 }
