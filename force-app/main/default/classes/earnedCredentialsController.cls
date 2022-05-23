@@ -1,4 +1,4 @@
-public with sharing class earnedCredentialsController {
+public with sharing class EarnedCredentialsController {
     @AuraEnabled(cacheable=true)
     public static List<User_Credential__c> getUserCredentials(String userId)
    {
