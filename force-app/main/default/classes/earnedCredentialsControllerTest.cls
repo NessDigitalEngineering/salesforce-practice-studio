@@ -1,5 +1,5 @@
 @isTest
-public class earnedCredentialsControllerTest {
+public class earnedCredentialsControllerTest{
     @TestSetup
     static void setup() {
         
@@ -14,7 +14,8 @@ public class earnedCredentialsControllerTest {
         uc.status__c = 'Completed';        
         insert uc;        
     }
-static testMethod void getCredentialsTest() {
+    static testMethod void getCredentialsTest() 
+    {
        
          String userId;
         Test.startTest();
