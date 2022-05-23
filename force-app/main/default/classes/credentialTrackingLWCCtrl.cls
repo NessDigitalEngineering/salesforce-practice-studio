@@ -1,6 +1,6 @@
 /*
 Author      :   Pendyala Shravani
-Description :   Controller for credentialTrackingLWC component
+Description :   Controller for CredentialTrackingLWC component
 TestClass   :   
 Related Components  :   credentialTrackingLWC, UserCredentialService
 Date        : 19-May-2022
@@ -8,8 +8,8 @@ Date        : 19-May-2022
 Update Log:
 CH1         :   19-May-2022 - Pendyala Shravani - 
 */
-public with sharing class credentialTrackingLWCCtrl {
-
+public with sharing class CredentialTrackingLWCCtrl {
+ 
     // Gets Active Credentials for the provided user
    @AuraEnabled
    public static List<User_Credential__c> getUserCredentials(String userId)

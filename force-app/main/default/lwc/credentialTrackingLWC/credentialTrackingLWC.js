@@ -1,12 +1,13 @@
 import { LightningElement, wire, track } from 'lwc';
 import { getObjectInfo,getPicklistValues  } from 'lightning/uiObjectInfoApi';
 import STATUS from '@salesforce/schema/User_Credential__c.Status__c';
-import getUserCredentials from '@salesforce/apex/credentialTrackingLWCCtrl.getUserCredentials';
-import updateUserCredential from '@salesforce/apex/credentialTrackingLWCCtrl.updateUserCredential';
+import getUserCredentials from '@salesforce/apex/CredentialTrackingLWCCtrl.getUserCredentials';
+import updateUserCredential from '@salesforce/apex/CredentialTrackingLWCCtrl.updateUserCredential';
 import USER_ID from '@salesforce/user/Id';
 
-export default class EarnedCredentials extends LightningElement {
-    
+export default class CredentialTrackingLWC extends LightningElement {
+
+       
 userIds = USER_ID;
 title;
 userCredData;
@@ -120,7 +121,7 @@ processData(data){
 }
      this.title = 'My Credential Assignment (' + data.length + ')';
      this.loaded = true;
-}
+} 
 showMoreRec(){
         this.initialRecords = false;
         this.showMoreRecords = true;
