@@ -50,6 +50,7 @@ export default class CredentialAssignment extends LightningElement {
 draftValues = [];
 
 wiredRecords;
+refreshTable;
 handlefireEvent(event){
 
     this.selectedUserName = event.detail.currentRecId;
@@ -76,6 +77,7 @@ fireEvent(event){
     getUserCredentials(
         {credentialsId : this.selectedCredentials}
     ).then(response=>{
+        this.refreshTable = response;
         var tempResponse = [];
         var tempObject = {};
         if(response){
@@ -172,7 +174,7 @@ handleSave(event) {
              );
 
          //refresh data in the datatable
-         return refreshApex(this.credentials);            
+         return refreshApex(this.refreshTable);            
          })
 
          //display error message in case of errors
@@ -224,6 +226,7 @@ rowactionDelete(event) {
              );
 
          //refresh data in the datatable
+         console.log('refresh date'+this.credentials);
          return refreshApex(this.credentials);            
          })
 
@@ -249,44 +252,5 @@ renderedCallback(){
             console.log( 'error',error );
     });
 }
-handleSave1 (event){
-
-    
-
-        const updatedFields = event.detail.draftValues;
-
-        console.log( 'updatedFields is ' + updatedFields);
-        updateCredentials( { data: updatedFields } )
-        .then( result => {
-
-            console.log( JSON.stringify( "Apex update result: " + result ) );
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Success',
-                    message: 'Credentials(s) updated',
-                    variant: 'success'
-                })
-            );
-            
-            refreshApex( this.wiredRecords ).then( () => {
-                this.draftValues = [];
-            });        
-
-        }).catch( error => {
-
-            console.log( 'Error is ' + JSON.stringify( error ) );
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error updating or refreshing records',
-                    message: error.body.message,
-                    variant: 'error'
-                })
-            );
-
-        });
-
-    
-}
-
 
 }
