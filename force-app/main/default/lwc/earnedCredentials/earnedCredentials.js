@@ -1,4 +1,4 @@
-import { LightningElement, api, wire, track } from 'lwc';
+import { LightningElement, wire, track } from 'lwc';
 import getUserCredentials from '@salesforce/apex/earnedCredentialsController.getUserCredentials';
 import strUserId from '@salesforce/user/Id';
 
@@ -48,6 +48,8 @@ showMoreRec(){
                              this.showMoreRecords = true;
                              this.showMore = false;
                              this.userCredentialsData = response;
-              }).catch(error=>{});
+              }).catch(error=>{
+                  console.log("error" +error);
+              });
 }
 }
