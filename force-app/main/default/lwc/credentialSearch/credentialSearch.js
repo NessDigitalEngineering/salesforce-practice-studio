@@ -47,7 +47,7 @@ export default class credentialSearch extends LightningElement {
                 this.iconFlag = true;
                 this.clearIconFlag = false;
             }
-
+            
             this.dispatchEvent(new CustomEvent('credentialsevent', {detail:selectRecId}));
         })
         .catch(error => {

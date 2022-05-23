@@ -6,7 +6,7 @@ public with sharing class UserSearchController {
      List <User> returnList = new List < User > ();
     
     if(String.isNotEmpty(searchKey) && searchKey.length() >= 4) {
-        List <User> lstOfUsers = [select id, Name,Title from User where Name LIKE: searchKey];
+        List <User> lstOfUsers = [select id, Name,Title from User where Name LIKE: searchKey WITH SECURITY_ENFORCED];
      for (User users: lstOfUsers) {
         returnList.add(users);
        
