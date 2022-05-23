@@ -12,7 +12,8 @@ public with sharing class UserCredentialService {
     */  
     public List<User_Credential__c> getActiveUserCredentials(Id userId) {        
         try{
-            return [Select id, Credential__c, Status__c, User__c from User_Credential__c where User__r.id= :userId and User_Credential__c.Status__c != 'Completed' WITH SECURITY_ENFORCED];        
+              return [Select Id, Credential__c, Status__c, User__c, Credential__r.Name, Credential__r.Icon__c, Badge_Icon__c from User_Credential__c where User__r.id= :userId and User_Credential__c.Status__c != 'Completed' WITH SECURITY_ENFORCED];        
+            //return [Select id, Credential__c, Status__c, User__c                                                           from User_Credential__c where User__r.id= :userId and User_Credential__c.Status__c != 'Completed' WITH SECURITY_ENFORCED];        
         }
         catch (Exception ex){
             throw ex;
