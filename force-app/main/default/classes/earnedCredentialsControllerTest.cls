@@ -18,7 +18,7 @@ static testMethod void getCredentialsTest() {
        
          String userId;
         Test.startTest();
-        List<User_Credential__c> Cred = earnedCredentialsController.getUserCredentials(userId);
+        earnedCredentialsController.getUserCredentials(userId);
         Test.stopTest();               
     }
 }
