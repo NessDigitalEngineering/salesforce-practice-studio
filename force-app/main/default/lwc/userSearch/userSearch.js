@@ -69,7 +69,7 @@ export default class userSearch extends LightningElement {
         this.dispatchEvent(selectedEvent);
     }
     
-    resetData(event) {
+    resetData(_event) {
         this.selectRecordName = "";
         this.selectRecordId = "";
         this.inputReadOnly = false;

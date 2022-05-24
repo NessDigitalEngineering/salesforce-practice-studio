@@ -88,7 +88,7 @@ handleSave(event) {
          //invoke updaterecord() for batch update
          const promises = recordInputs.map(recordInput => 
                                                  updateRecord(recordInput));
-         Promise.all(promises).then(contacts => {
+         Promise.all(promises).then(_contacts => {
              this.dispatchEvent(
                  new ShowToastEvent({
                      title: this.constant.VAR_SUCCESS,
@@ -138,7 +138,7 @@ handleSave(event) {
          //invoke updaterecord() for single row update
          const promises = recordInputs.map(recordInput => 
                                                    updateRecord(recordInput));
-         Promise.all(promises).then(contacts => {
+         Promise.all(promises).then(_contacts => {
              this.dispatchEvent(
                  new ShowToastEvent({
                      title: this.constant.VAR_SUCCESS,
@@ -279,7 +279,7 @@ getdata(){
         console.log("==="+JSON.stringify(tempResponse));
         
     }).catch(error=>{
-        console.log ('error msg');
+        console.log ('error msg',error);
     });
 	
 	}
