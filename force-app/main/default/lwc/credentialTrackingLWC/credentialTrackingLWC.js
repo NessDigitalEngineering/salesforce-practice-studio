@@ -27,9 +27,9 @@ statusValuesReady=false;
 @wire(getPicklistValues, { recordTypeId: '$userCredentialMetadata.data.defaultRecordTypeId', fieldApiName: STATUS })
 picklistValues({data,error}){
     if(data){
-            for (let index = 0; index < data.values.length; index++) {
-                this.statusValues.push(data.values[index].value);                
-            }
+        for (const statusVal of data.values) {
+            this.statusValues.push(statusVal.value); 
+        }
             this.statusValuesReady=true
     }
     if(error){
@@ -53,7 +53,7 @@ handleClick(event){
     console.log(event.target.title);
     updateUserCredential({ id: event.target.value, status:event.target.title })
             .then((result) => {
-                if (result==true) {
+                if (result===true) {
                     getUserCredentials({userId:this.userIds})
                     .then((rs) => {
                         this.totalUserCredentials = rs;
