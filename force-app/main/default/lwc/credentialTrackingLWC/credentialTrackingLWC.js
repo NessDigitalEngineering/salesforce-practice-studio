@@ -4,10 +4,12 @@ import STATUS from '@salesforce/schema/User_Credential__c.Status__c';
 import getUserCredentials from '@salesforce/apex/CredentialTrackingLWCCtrl.getUserCredentials';
 import updateUserCredential from '@salesforce/apex/CredentialTrackingLWCCtrl.updateUserCredential';
 import USER_ID from '@salesforce/user/Id';
+import CompTitle from '@salesforce/label/c.CredentialTrackingLWC_Title';
+import ShowmoreTitle from '@salesforce/label/c.CredentialTrackingLWC_ShowmoreTitle';
 
 export default class CredentialTrackingLWC extends LightningElement {
 
-       
+label = {CompTitle, ShowmoreTitle}; 
 userIds = USER_ID;
 title;
 userCredData;
@@ -117,7 +119,7 @@ processData(data){
 } else{
     this.userCredentialsData = data;
 }
-     this.title = 'My Credential Assignment (' + data.length + ')';
+     this.title = this.label.CompTitle +' (' + data.length + ')';
      this.loaded = true;
 } 
 showMoreRec(){
