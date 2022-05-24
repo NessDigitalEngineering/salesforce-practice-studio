@@ -3,7 +3,7 @@ import getResults from '@salesforce/apex/UserSearchController.getUsers';
 
 import UserSearchLabel from '@salesforce/label/c.UserSearchLabel';
 
-export default class userSearch extends LightningElement {
+export default class UserSearch extends LightningElement {
     @api objectName = 'User';
     @api fieldName = 'Name';
     @api selectRecordId = '';
@@ -78,4 +78,4 @@ export default class userSearch extends LightningElement {
        
     }
 
-}
+}  

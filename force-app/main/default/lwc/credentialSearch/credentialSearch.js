@@ -3,7 +3,7 @@ import getResults from '@salesforce/apex/CredentialSearchController.getCredentia
 
 import UserSearchLabel from '@salesforce/label/c.UserSearchLabel';
 
-export default class credentialSearch extends LightningElement {
+export default class CredentialSearch extends LightningElement {
 
 @api Label;
 @track searchRecords = [];
@@ -89,4 +89,4 @@ removeRecord (event){
     // Dispatches the event.
     this.dispatchEvent(selectedEvent);
 }
-}
+} 
