@@ -29,9 +29,9 @@ public class UserSearchControllerTest {
        
         User usersName = [SELECT Id,name FROM User limit 1]; 
         Test.startTest();
-        List<User> users=UserSearchController.getUsers(u.Name);
+        List<User> userList = UserSearchController.getUsers(usersName.Name);
         Test.stopTest();
-        System.assertNotEquals(0, usersName.size());
+        System.assertNotEquals(0, userList.size());
         
     }
     

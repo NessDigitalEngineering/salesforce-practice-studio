@@ -73,34 +73,8 @@ fireEvent(event){
    
    
     this.selectedCredentials = tempSelectRecords;
+    this.getdata();
     
-    getUserCredentials(
-        {credentialsId : this.selectedCredentials}
-    ).then(response=>{
-        this.refreshTable = response;
-        var tempResponse = [];
-        var tempObject = {};
-        if(response){
-    
-             for (let index = 0; index < response.length; index++) {
-                console.log("==="+response[index].Credential__r.Name);  
-                tempObject = {...response[index]};
-
-                tempObject.CredentialName = response[index].Credential__r.Name;
-                tempResponse.push(tempObject);
-                tempObject = {};
-
-            
-             }
-
-        }
-        
-        this.credentials = tempResponse;
-        console.log("==="+JSON.stringify(tempResponse));
-        
-    }).catch(error=>{
-        //alert('Failed');
-    }); 
 }
 handleSave(event) {
  
@@ -227,12 +201,34 @@ rowactionDelete(event) {
 
          //refresh data in the datatable
          console.log('refresh date'+this.credentials);
-         //return refreshApex(this.credentials); 
-         //return this.refresh(); 
-         this.refresh(); 
+         
+         
+        for(let cred in this.credentials)
+        {
+            console.log('cred--'+this.credentials[cred].Id+'--'+event.detail.row.Id);
+
+            if(this.credentials[cred].Id===event.detail.row.Id)
+            {
+                console.log('log check');
+                this.credentials.splice(cred,1);
+            }
+            
+        }
+       var tempResponse=[];var tempObject={};
+
+       
+        
+        for (let index = 0; index < this.credentials.length; index++) {
+            tempObject = {...this.credentials[index]};
+
+         tempResponse.push(tempObject);
+            tempObject = {};
+         }
+
+        this.credentials=tempResponse;
          console.log('refresh date1234'+this.credentials);      
          })
-
+         
          //display error message in case of errors
          .catch(error => {
              this.dispatchEvent(
@@ -255,11 +251,38 @@ renderedCallback(){
             console.log( 'error',error );
     });
 }
-@api
-async refresh() {
+
+getdata(){
+    getUserCredentials(
+        {credentialsId : this.selectedCredentials}
+    ).then(response=>{
+        this.refreshTable = response;
+        var tempResponse = [];
+        var tempObject = {};
+        if(response){
+    
+             for (let index = 0; index < response.length; index++) {
+                console.log("==="+response[index].Credential__r.Name);  
+                tempObject = {...response[index]};
+
+                tempObject.CredentialName = response[index].Credential__r.Name;
+                tempResponse.push(tempObject);
+                tempObject = {};
+
+            
+             }
+
+        }
         
-    await refreshApex(this.credentials);
-   
-}
+        this.credentials = tempResponse;
+       
+        console.log("==="+JSON.stringify(tempResponse));
+        
+    }).catch(error=>{
+        console.log ('error msg');
+    });
+	
+	}
+    
 
 }
