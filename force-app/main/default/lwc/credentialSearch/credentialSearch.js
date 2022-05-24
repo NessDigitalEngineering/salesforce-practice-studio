@@ -21,9 +21,14 @@ export default class credentialSearch extends LightningElement {
 
         var currentText = event.target.value;
         var selectRecId = [];
-        for(let i = 0; i < this.selectedRecords.length; i++){
-            selectRecId.push(this.selectedRecords[i].recId);
+        console.log('testing teess');
+        for (const selRec of this.selectedRecords) {
+            console.log('testing teess123'+selRec);
+            selectRecId.push(selRec.recId);
         }
+       /* for(let i = 0; i < this.selectedRecords.length; i++){
+            selectRecId.push(this.selectedRecords[i].recId);
+        } */
         this.LoadingText = true;
         
         getResults({searchKey: currentText, selectedRecId : selectRecId,userId: this.datesend })
@@ -74,10 +79,17 @@ export default class credentialSearch extends LightningElement {
 
     removeRecord (event){
         let selectRecId = [];
-        for(let i = 0; i < this.selectedRecords.length; i++){
+        console.log('selrecords test');
+        for (const selRec of this.selectedRecords) {
+            console.log('selrecr'+selRec);
+            if(event.detail.name !== selRec.recId){
+                selectRecId.push(selRec);
+            }     
+        }
+       /* for(let i = 0; i < this.selectedRecords.length; i++){
             if(event.detail.name !== this.selectedRecords[i].recId)
                 selectRecId.push(this.selectedRecords[i]);
-        }
+        } */
         this.selectedRecords = [...selectRecId];
         let selRecords = this.selectedRecords;
         const selectedEvent = new CustomEvent('selected', { detail: {selRecords}, });

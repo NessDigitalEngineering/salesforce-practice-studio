@@ -64,11 +64,12 @@ fireEvent(event){
    
     var tempSelectRecords = [];
     if(event.detail.selRecords){
-        for (let index = 0; index < event.detail.selRecords.length; index++) {
-            
-            tempSelectRecords.push(event.detail.selRecords[index].recId);
-            
+        console.log('testing');
+        for (const rec of event.detail.selRecords) {
+            console.log('rec'+rec.recId);
+            tempSelectRecords.push(rec.recId);
         }
+    
     }
    
    
@@ -158,6 +159,7 @@ handleSave(event) {
                  new ShowToastEvent({
                      title: this.constant.MSG_ERR_UPD_RELOAD,
                      message: error.body.message,
+                     mode: 'dismissible',
                      variant: this.constant.VAR_ERROR
                  })
              );
@@ -173,12 +175,18 @@ handleDelete(event) {
             const action = event.detail.action.name;
 
             //check for save or delete action
-            switch (action) {
+           /* switch (action) {
                 
                 case this.constant.ROWACTION_DELETE: 
                     this.rowactionDelete(event);
                     break;
-                }        
+                }  */  
+                if (action != ''){
+	
+                    this.constant.ROWACTION_DELETE;
+                    this.rowactionDelete(event);
+                 
+                 }    
         } catch (errorMsg) {
             console.log ('error msg');
         } 
