@@ -12,6 +12,6 @@ public class CredentialTrackingLWCCtrl_Test {
 	@isTest
     public static void getUserCredentials(){
         List<User_Credential__c> ucList = CredentialTrackingLWCCtrl.getUserCredentials(userinfo.getUserId());
-        Boolean isSuccess = CredentialTrackingLWCCtrl.updateUserCredential(ucList[0].Id, ucList[0].Status__c);
+        CredentialTrackingLWCCtrl.updateUserCredential(ucList[0].Id, ucList[0].Status__c);
    }
 }
