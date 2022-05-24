@@ -181,9 +181,8 @@ handleDelete(event) {
                     this.rowactionDelete(event);
                     break;
                 }  */  
-                if (action != ''){
+                if (action != '' && action == this.constant.ROWACTION_DELETE){
 	
-                    this.constant.ROWACTION_DELETE;
                     this.rowactionDelete(event);
                  
                  }    
@@ -223,15 +222,21 @@ rowactionDelete(event) {
             
         }
        var tempResponse=[];var tempObject={};
+       console.log('testing777');
+       for (const credn of this.credentials) {
+        console.log('testing888'+credn);
+        tempObject = {...credn};
 
-       
+        tempResponse.push(tempObject);
+           tempObject = {};
+       }
         
-        for (let index = 0; index < this.credentials.length; index++) {
+      /*  for (let index = 0; index < this.credentials.length; index++) {
             tempObject = {...this.credentials[index]};
 
          tempResponse.push(tempObject);
             tempObject = {};
-         }
+         } */
 
         this.credentials=tempResponse;
          console.log('refresh date1234'+this.credentials);      
@@ -268,8 +273,18 @@ getdata(){
         var tempResponse = [];
         var tempObject = {};
         if(response){
+
+            for (const res of response) {
+                console.log("==="+res.Credential__r.Name);  
+                tempObject = {...res};
+
+                tempObject.CredentialName = res.Credential__r.Name;
+                tempResponse.push(tempObject);
+                tempObject = {};
+
+            }
     
-             for (let index = 0; index < response.length; index++) {
+           /*  for (let index = 0; index < response.length; index++) {
                 console.log("==="+response[index].Credential__r.Name);  
                 tempObject = {...response[index]};
 
@@ -278,7 +293,7 @@ getdata(){
                 tempObject = {};
 
             
-             }
+             } */
 
         }
         
