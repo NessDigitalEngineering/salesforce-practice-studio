@@ -1,5 +1,5 @@
 import { LightningElement, wire, track } from 'lwc';
-import getUserCredentials from '@salesforce/apex/earnedCredentialsController.getUserCredentials';
+import getCompletedUserCredentials from '@salesforce/apex/UserCredentialService.getCompletedUserCredentials';
 import strUserId from '@salesforce/user/Id';
 
 
@@ -14,7 +14,7 @@ userCredData;
 @track initialRecords = false;
 @track showMoreRecords = false;
 
-@wire(getUserCredentials, {userId:'$userIds'}) userdata({data,error}){
+@wire(getCompletedUserCredentials, {userId:'$userIds'}) userdata({data,error}){
     if(data){
        this.countRec = data.length;
        let selectedRec = [];
@@ -43,7 +43,7 @@ userCredData;
 }
 
 showMoreRec(){
-    getUserCredentials({userId:'$userIds'}).then(response=>{
+    getCompletedUserCredentials({userId:'$userIds'}).then(response=>{
                              this.initialRecords = false;
                              this.showMoreRecords = true;
                              this.showMore = false;
