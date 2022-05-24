@@ -1,5 +1,5 @@
 @isTest
-public class EarnedCredentialsControllerTest{
+public class UserCredentialServiceTest{
     @TestSetup
     static void setup() {
         
@@ -19,7 +19,7 @@ public class EarnedCredentialsControllerTest{
        
          String userId;
         Test.startTest();
-        EarnedCredentialsController.getUserCredentials(userId);
+        list<User_Credential__c> usercred = UserCredentialService.getCompletedUserCredentials(userId);
         Test.stopTest();               
     }
 }
