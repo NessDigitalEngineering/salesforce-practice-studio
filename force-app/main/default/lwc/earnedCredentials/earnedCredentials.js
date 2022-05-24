@@ -41,7 +41,6 @@ userCredData;
 
     }
 }
-
 showMoreRec(){
     getCompletedUserCredentials({userId:'$userIds'}).then(response=>{
                              this.initialRecords = false;
