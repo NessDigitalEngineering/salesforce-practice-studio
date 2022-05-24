@@ -70,7 +70,6 @@ handleClick(event){
 }
 processStatusValues(){
     if(this.statusValuesReady){
-        //var tempData = JSON.parse(JSON.stringify(this.totalUserCredentials));
         this.totalUserCredentials.forEach(e => {
             if(e.Status__c && e.Status__c!='Completed'){ 
              e.nextStatusLbl = this.statusValues[this.statusValues.indexOf(''+e.Status__c)+1] +' >';
@@ -78,7 +77,6 @@ processStatusValues(){
              e.credentialName=e.Credential__r.Name;
             }
         });
-        //this.totalUserCredentials=tempData;
         this.processData(this.totalUserCredentials);
     } else{
         this.progress=3000;
