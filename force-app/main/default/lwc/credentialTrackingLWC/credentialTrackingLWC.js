@@ -1,8 +1,8 @@
 import { LightningElement, wire, track } from 'lwc';
 import { getObjectInfo,getPicklistValues  } from 'lightning/uiObjectInfoApi';
 import STATUS from '@salesforce/schema/User_Credential__c.Status__c';
-import getUserCredentials from '@salesforce/apex/CredentialTrackingLWCCtrl.getUserCredentials';
-import updateUserCredential from '@salesforce/apex/CredentialTrackingLWCCtrl.updateUserCredential';
+import getUserCredentials from '@salesforce/apex/CredentialTrackingLWCAPEX.getUserCredentials';
+import updateUserCredential from '@salesforce/apex/CredentialTrackingLWCAPEX.updateUserCredential';
 import USER_ID from '@salesforce/user/Id';
 import CompTitle from '@salesforce/label/c.CredentialTrackingLWC_Title';
 import ShowmoreTitle from '@salesforce/label/c.CredentialTrackingLWC_ShowmoreTitle';
