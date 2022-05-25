@@ -3,7 +3,7 @@ import { updateRecord, deleteRecord } from 'lightning/uiRecordApi';
 import getUserCredentials from '@salesforce/apex/CredentialAssignmentController.getUserCredentials';
 
 import {loadStyle} from 'lightning/platformResourceLoader';
-import REMOVEROW from '@salesforce/resourceUrl/removeRow';
+
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 
