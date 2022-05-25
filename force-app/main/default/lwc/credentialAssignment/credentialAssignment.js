@@ -20,7 +20,7 @@ name: 'delete',
 day: 'numeric',  
 month: 'numeric',  
 year: 'numeric'}},
-{ label: 'Due Date', fieldName: 'Due_Date__c', type: 'date-local', editable: true, typeAttributes: {  
+{ label: 'Due Date', fieldName: 'Due_Date__c', type: 'date-local', editable: {fieldName: 'controlEditField'}, typeAttributes: {  
 day: 'numeric',  
 month: 'numeric',  
 year: 'numeric'}},
@@ -241,18 +241,6 @@ rowactionDelete(event) {
         });            
     }       
 }
-
-renderedCallback(){ 
-Promise.all([
-    loadStyle( this, REMOVEROW)
-    ]).then(() => {
-        console.log( 'Files loaded' );
-    })
-    .catch(error => {
-        console.log( 'error',error );
-});
-}
-
 getdata(){
 getUserCredentials(
     {credentialsId : this.selectedCredentials}
@@ -267,6 +255,12 @@ getUserCredentials(
             tempObject = {...res};
 
             tempObject.CredentialName = res.Credential__r.Name;
+            if (res.Status__c == 'Assigned') {
+                tempObject.controlEditField = true;
+            }               
+            else { 
+            tempObject.controlEditField = false;
+           }
             tempResponse.push(tempObject);
             tempObject = {};
 
