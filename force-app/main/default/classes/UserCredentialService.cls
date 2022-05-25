@@ -10,8 +10,8 @@ public with sharing class UserCredentialService {
     * @param userId SF id of user
     * @return List of User Credentials 
     */ 
-    
-    public List<User_Credential__c> getActiveUserCredentials(Id userId) {        
+    @AuraEnabled(cacheable=true) 
+    public static List<User_Credential__c> getActiveUserCredentials(Id userId) {        
         try{
             return [Select id, Credential__c, Status__c, User__c from User_Credential__c where User__r.id= :userId and User_Credential__c.Status__c != 'Completed' WITH SECURITY_ENFORCED];        
         }
@@ -28,22 +28,21 @@ public with sharing class UserCredentialService {
     @AuraEnabled(cacheable=true) 
     public static List<User_Credential__c> getCompletedUserCredentials(Id userId) {  
              
-        try{
-            return [Select id, Credential__c, Status__c, User__c from User_Credential__c where User__r.id= :userId and User_Credential__c.Status__c = 'Completed' WITH SECURITY_ENFORCED];        
-        }
-        catch (Exception ex){
-            throw ex;
-        }
+        
+            return [Select id, Credential__r.Name,Badge_Icon__c, Status__c, User__c from User_Credential__c where User__r.id= :userId and User_Credential__c.Status__c = 'Completed' WITH SECURITY_ENFORCED];        
+        
+        
     }
     
     /*******************************************************************************************************
     * @description create User Credentials    
     * @param userCredentials List of User Credentials
     * @return List of Database.SaveResult 
-    */  
-    public List<Database.SaveResult> createUserCredentials(List<User_Credential__c> userCredentials){
+    */
+    
+    public static List<Database.SaveResult> createUserCredentials(List<User_Credential__c> userCredentials){
         try{
-            return Database.insert(userCredentials,true);
+            return Database.insert(userCredentials,false);
         }
         catch (Exception ex){
             throw ex;
@@ -55,9 +54,9 @@ public with sharing class UserCredentialService {
     * @param userCredentials List of User Credentials
     * @return List of Database.SaveResult 
     */
-    public List<Database.SaveResult> updateUserCredentials(List<User_Credential__c> userCredentials){
+    public Static List<Database.SaveResult> updateUserCredentials(List<User_Credential__c> userCredentials){
         try{
-            return Database.update(userCredentials,true);
+            return Database.update(userCredentials,false);
         }
         catch (Exception ex){
             throw ex;
