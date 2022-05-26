@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Voucher_Code__c</fullName>
+    <fullName>Employee_ID__c</fullName>
     <externalId>false</externalId>
-    <label>Voucher Code</label>
-    <length>30</length>
+    <label>Employee ID</label>
+    <length>255</length>
     <required>false</required>
-    <trackTrending>false</trackTrending>
+    <trackFeedHistory>false</trackFeedHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>
