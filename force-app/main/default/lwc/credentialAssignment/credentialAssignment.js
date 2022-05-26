@@ -52,6 +52,7 @@ handlefireEvent(event){
 
 this.selectedUserName = event.detail.currentRecId;
 
+this.dispatchEvent(new CustomEvent('onuserrecord',{detail:this.selectedUserName}));
 }
 
 fireEvent(event){

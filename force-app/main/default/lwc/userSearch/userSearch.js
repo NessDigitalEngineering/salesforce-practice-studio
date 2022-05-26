@@ -56,6 +56,7 @@ export default class UserSearch extends LightningElement {
     
    setSelectedRecord(event) {
         var currentRecId = event.currentTarget.dataset.id;
+        this.dispatchEvent(new CustomEvent('useridpass', {detail:currentRecId}));
         var selectName =  event.currentTarget.dataset.name;
         console.log("currentRecId:"+currentRecId );
         this.txtclassname =  'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';

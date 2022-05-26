@@ -1,11 +1,11 @@
-import { LightningElement, wire, track } from 'lwc';
+import { LightningElement, wire, api, track } from 'lwc';
 import getCompletedUserCredentials from '@salesforce/apex/UserCredentialService.getCompletedUserCredentials';
-import strUserId from '@salesforce/user/Id';
+//import strUserId from '@salesforce/user/Id';
 
 
 export default class EarnedCredentials extends LightningElement {
-userIds = strUserId;
-title;
+//@api userIds = strUserId;
+title = 'Earned Credentials';
 userCredentialsData;
 userCredData;
 @track countRec;
@@ -13,8 +13,9 @@ userCredData;
 @track showMre =  false;
 @track initialRecords = false;
 @track showMoreRecords = false;
-
-@wire(getCompletedUserCredentials, {userId:'$userIds'}) userdata({data,error}){
+@api datesend;
+@wire(getCompletedUserCredentials, {userId:'$datesend'}) userdata({data,error}){
+    console.log('data'+ this.datesend);
     if(data){
        this.countRec = data.length;
        let selectedRec = [];
@@ -41,8 +42,12 @@ userCredData;
 
     }
 }
+
 showMoreRec(){
-    getCompletedUserCredentials({userId:'$userIds'}).then(response=>{
+
+    getCompletedUserCredentials({userId:this.datesend}).then(response=>{
+        console.log('userids' +this.datesend);
+
                              this.initialRecords = false;
                              this.showMoreRecords = true;
                              this.showMore = false;
