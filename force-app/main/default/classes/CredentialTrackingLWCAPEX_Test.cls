@@ -3,10 +3,9 @@ public class CredentialTrackingLWCAPEX_Test {
 
     @testSetup 
     public static void setupmethod() {
-        Credential__c cred = new Credential__c(Name='TestCred',Type__c='Trailhead',Status__c='Active',Program_Level__c='L1');
-    	Insert cred;
-        User_Credential__c uc = new User_Credential__c(Credential__c=cred.Id,Status__c='Assigned',User__c=userinfo.getUserId());
-        insert uc;
+        TestDataFactory.createCredentials();
+        List<Credential__c> creds = [Select id from Credential__c limit 1];
+        TestDataFactory.createUserCredentials(userinfo.getUserId(),creds[0].Id);
     }
     
 	@isTest
