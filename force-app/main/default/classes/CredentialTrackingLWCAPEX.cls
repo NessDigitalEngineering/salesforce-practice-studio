@@ -17,18 +17,12 @@ public class CredentialTrackingLWCAPEX {
         
         Boolean isSuccess= true;
         for (Database.SaveResult sr : srList) {
-            if (sr.isSuccess()) {
-                
-                System.debug('Successfully updated the record.' + sr.getId());
-            }
-            else {
-                isSuccess =false;
-                               
-                for(Database.Error err : sr.getErrors()) {
-                    System.debug('The following error has occurred.');                    
-                    System.debug(err.getStatusCode() + ': ' + err.getMessage());
-                    System.debug('Record fields that affected this error: ' + err.getFields());
-                }
+            if (sr.isSuccess()) {System.debug('Successfully updated the record.' + sr.getId());
+                                }else {isSuccess =false; for(Database.Error err : sr.getErrors()) {
+                                    System.debug('The following error has occurred.');                    
+                                    System.debug(err.getStatusCode() + ': ' + err.getMessage());
+                                    System.debug('Record fields that affected this error: ' + err.getFields());
+                                }
             }
         }
         
