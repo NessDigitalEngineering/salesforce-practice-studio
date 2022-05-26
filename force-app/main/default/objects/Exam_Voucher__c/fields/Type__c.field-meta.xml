@@ -11,19 +11,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Trailhead</fullName>
+                <fullName>Voucher Code</fullName>
                 <default>false</default>
-                <label>Trailhead</label>
+                <label>Voucher Code</label>
             </value>
             <value>
-                <fullName>AP</fullName>
+                <fullName>Virtual Credit Card</fullName>
                 <default>false</default>
-                <label>AP</label>
-            </value>
-            <value>
-                <fullName>MuleSoft</fullName>
-                <default>false</default>
-                <label>MuleSoft</label>
+                <label>Virtual Credit Card</label>
             </value>
         </valueSetDefinition>
     </valueSet>
