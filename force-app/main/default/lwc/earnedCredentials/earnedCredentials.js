@@ -1,10 +1,6 @@
 import { LightningElement, wire, api, track } from 'lwc';
 import getCompletedUserCredentials from '@salesforce/apex/UserCredentialService.getCompletedUserCredentials';
-//import strUserId from '@salesforce/user/Id';
-
-
 export default class EarnedCredentials extends LightningElement {
-//@api userIds = strUserId;
 title = 'Earned Credentials';
 userCredentialsData;
 userCredData;
