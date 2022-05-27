@@ -61,7 +61,7 @@ public class UserCredentialServiceTest{
     }*/
 }
 
-@IsTest
+/*@IsTest
 private class UserCredentialServiceTest {
     @TestSetup
     static void makeData(){
@@ -211,4 +211,4 @@ private class UserCredentialServiceTest {
         }
     }
 }
-
+*/
