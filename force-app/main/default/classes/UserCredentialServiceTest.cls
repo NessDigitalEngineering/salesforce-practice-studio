@@ -1,4 +1,3 @@
-
 @IsTest
 private class UserCredentialServiceTest {
     @TestSetup
