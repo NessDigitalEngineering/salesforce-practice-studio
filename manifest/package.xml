@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-
     <types>
         <members>Sample</members>
         <members>SampleTest</members>
         <members>UserCredentialService</members>
-
-        <members>UserCredentialServiceTest</members>
-
         <name>ApexClass</name>
     </types>
     <types>
@@ -18,11 +14,6 @@
         <members>Practice_Studio</members>
         <name>CustomApplication</name>
     </types>
-
-    <types> <members>*</members> 
-    <name>CustomLabels</name> 
-    </types>
-
     <types>
         <members>Credential_Exam_Attempt__c.Credential__c</members>
         <members>Credential_Exam_Attempt__c.Exam_Date_Time__c</members>
@@ -109,9 +100,6 @@
         <members>Credential__c</members>
         <members>Exam_Voucher__c</members>
         <members>User_Credential__c</members>
-
-        <members>standard-home</members>
-
         <name>CustomTab</name>
     </types>
     <types>
@@ -121,9 +109,6 @@
     </types>
     <types>
         <members>Practice_Studio_UtilityBar</members>
-
-        <members>Recommended_Credentials</members>
-
         <members>User_Credential_Record_Page</members>
         <name>FlexiPage</name>
     </types>
@@ -147,13 +132,6 @@
         <name>Layout</name>
     </types>
     <types>
-
-        <members>earnedCredentials</members>
-        <members>recommendedCredentials</members>
-        <name>LightningComponentBundle</name>
-    </types>
-    <types>
-
         <members>Credential_Exam_Attempt__c.All</members>
         <members>Credential__c.All</members>
         <members>Credential__c.Europe</members>
@@ -181,6 +159,5 @@
         <members>User_Credential__c.Credential_Assigned</members>
         <name>WorkflowAlert</name>
     </types>
-
     <version>53.0</version>
 </Package>
