@@ -31,7 +31,6 @@ public with sharing class UserCredentialService {
         
             return [Select id, Credential__r.Name,Badge_Icon__c, Status__c, User__c from User_Credential__c where User__r.id= '0051y00000Lboy1AAB' and User_Credential__c.Status__c = 'Completed' WITH SECURITY_ENFORCED];        
         
-        
     }
     
     /*******************************************************************************************************
