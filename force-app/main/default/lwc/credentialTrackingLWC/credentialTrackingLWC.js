@@ -14,7 +14,7 @@ export default class CredentialTrackingLWC extends LightningElement {
     title;
     userCredData;
     statusValuesReady = false;
-    @api boxStyle;
+    @api boxStyle = "height:12rem;";
     @track loaded = false;
     @track userCredentialsData;
     @track statusValues = [];
@@ -22,7 +22,7 @@ export default class CredentialTrackingLWC extends LightningElement {
     @track showMore = false;
     @track showMre = false;
     @track initialRecords = false;
-    @track showMoreRecords = false;
+    @track showMoreRecords = false; 
 
     @wire(getObjectInfo, { objectApiName: 'User_Credential__c' })
     userCredentialMetadata;
