@@ -13,6 +13,8 @@ userCredData;
 @track showMre =  false;
 @track initialRecords = false;
 @track showMoreRecords = false;
+@track loaded = false;
+@track totalUserCredentials;
 
 @wire(getCompletedUserCredentials, {userId:'$userIds'}) userdata({data,error}){
     if(data){
@@ -34,6 +36,7 @@ userCredData;
         
         
         this.title = 'Earned Credentials (' + data.length + ')';
+        this.loaded = true;
 
     }else if(error)
     {
@@ -41,16 +44,24 @@ userCredData;
 
     }
 }
-
+connectedCallback(){
+    getCompletedUserCredentials({userId:this.userIds})
+                    .then((res) => {
+                        this.totalUserCredentials = res;
+                        
+                    })
+                    .catch((error) => {
+                        console.log("error" + JSON.stringify(error));
+                    });
+}
 showMoreRec(){
-    getCompletedUserCredentials({userId:this.userIds}).then(response=>{
+   /*getCompletedUserCredentials({userId:this.userIds}).then(response=>
+    {*/
                              this.initialRecords = false;
                              this.showMoreRecords = true;
                              this.showMore = false;
-                             this.userCredentialsData = response;
-              }).catch(error=>{
-                  console.log("error" +error);
-              });
+                             this.userCredentialsData = this.totalUserCredentials;
+          //    })
 }
 }
 
