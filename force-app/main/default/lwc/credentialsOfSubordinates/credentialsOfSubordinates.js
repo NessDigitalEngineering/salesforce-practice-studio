@@ -1,4 +1,4 @@
-import { LightningElement, api, wire, track } from 'lwc';
+import { LightningElement, wire, track } from 'lwc';
 import USER_ID from '@salesforce/user/Id';
 import getCredentialsOfSubordinates from '@salesforce/apex/CredentialsOfSubordinatesAPEX.getCredentialsOfSubordinates';
 
