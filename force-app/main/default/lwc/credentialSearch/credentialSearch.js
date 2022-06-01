@@ -17,13 +17,15 @@ UserLabels = UserSearchLabel;
 
 @api datesend ;
 
-searchField(event) {
 
+searchField(event) {
+    
     var currentText = event.target.value;
     var selectRecId = [];
     
     for (const selRec of this.selectedRecords) {
         selectRecId.push(selRec.recId);
+        
     }
     
     this.LoadingText = true;
@@ -60,16 +62,19 @@ searchField(event) {
 }
 
 setSelectedRecord(event) {
+    console.log('aaa datsends bbb'+JSON.stringify(this.datsends));
     var recId = event.currentTarget.dataset.id;
     var selectName = event.currentTarget.dataset.name;
+    
     let newsObject = { 'recId' : recId ,'recName' : selectName };
     this.selectedRecords.push(newsObject);
     this.txtclassname =  'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
     let selRecords = this.selectedRecords;
+    
     this.template.querySelectorAll('lightning-input').forEach(each => {
         each.value = '';
     });
-    const selectedEvent = new CustomEvent('selected', { detail: {selRecords}, });
+    const selectedEvent = new CustomEvent('selected', { detail: {selRecords,selectName}, });
     // Dispatches the event.
     this.dispatchEvent(selectedEvent);
 }
@@ -89,4 +94,22 @@ removeRecord (event){
     // Dispatches the event.
     this.dispatchEvent(selectedEvent);
 }
+@api
+removeCredentials(assignments){
+    
+
+    for (const selRec of this.selectedRecords) {
+
+        if( assignments == selRec.recName){
+
+            const index = this.selectedRecords.indexOf(selRec);
+            if (index > -1) {
+           this.selectedRecords.splice(index, 1); // 2nd parameter means remove one item only
+                     }
+
+        }     
+    }
+   
+} 
+
 } 

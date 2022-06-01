@@ -29,7 +29,7 @@ export default class UserSearch extends LightningElement {
         getResults({searchKeyWord: currentText}).then(response=>{
             this.searchRecords= response;
             this.LoadingText = false;
-            console.log("response data:"+JSON.stringify(response));
+            
             this.txtclassname =  response.length > 0 ? 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open' : 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
             if(currentText.length > 0 && response.length == 0) {
                 this.messageFlag = true;
@@ -49,7 +49,7 @@ export default class UserSearch extends LightningElement {
         })
         .catch(error => {
             console.log('-------error-------------'+error);
-            console.log(error);
+            
         });
         
     }
@@ -57,11 +57,12 @@ export default class UserSearch extends LightningElement {
    setSelectedRecord(event) {
         var currentRecId = event.currentTarget.dataset.id;
         var selectName =  event.currentTarget.dataset.name;
-        console.log("currentRecId:"+currentRecId );
+        
         this.txtclassname =  'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
         this.iconFlag = false;
         this.clearIconFlag = true;
         this.selectRecordName = event.currentTarget.dataset.name;
+        
         this.selectRecordId = currentRecId;
         this.inputReadOnly = true;
         const selectedEvent = new CustomEvent('selected', { detail: {selectName, currentRecId}, });

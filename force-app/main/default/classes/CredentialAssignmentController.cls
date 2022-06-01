@@ -1,9 +1,75 @@
+
 public with sharing class CredentialAssignmentController {
-    
+
     @AuraEnabled(cacheable=true)
-    public static List<User_Credential__c>  getUserCredentials(list<Id> credentialsId){
-        List<User_Credential__c> credentialsRec = [select Id,Name ,Credential__r.name ,Assigned_Date__c,Due_Date__c ,Status__c from User_Credential__c where Credential__r.Id IN:credentialsId];
-        return credentialsRec;
-    } 
+    public static List<CredentialData> getUserCredentials(List<Id> credmap, string userId,String credentialsName){
     
-}
+    List<CredentialData>  credenlsData = new List<CredentialData>();
+    
+    List<User_Credential__c> credentialsRec = [select Id,Name ,Credential__r.name,Assigned_Date__c,Due_Date__c ,Status__c,User__c from User_Credential__c where User__c =:userId];
+    List<Id> lststring = new  List<Id>();
+    
+    for(User_Credential__c userCred:credentialsRec){
+    
+    CredentialData data = new CredentialData();
+    data.CredName = userCred.Credential__r.name;
+    data.AssignedDate = userCred.Assigned_Date__c;
+    data.DueData = userCred.Due_Date__c;
+    data.Status = userCred.Status__c;
+    
+    credenlsData.add(data);
+   
+    lststring.add(userCred.Credential__r.Id);
+    
+    }
+    List<Credential__c> credentialsRecIds = [select Id,Name from Credential__c  where Id In : credmap];
+
+     for( Credential__c c:credentialsRecIds){
+        if(!lststring.contains(c.id)) {
+       
+            CredentialData data =new CredentialData();
+            data.CredName = c.Name;
+            data.AssignedDate = System.today();
+            data.DueData = System.today()+90;
+            data.Status = 'Assigned';
+            credenlsData.add(data);
+               
+               }
+
+     }
+       
+     return credenlsData;
+    
+    }
+
+ /*   @auraenabled
+    public static void createUserCredentials(CredentialData wrapper)
+    {
+        system.debug('wrapper:'+wrapper);
+        if(wrapper!=null)
+        {
+            User_Credential__c credUser = new User_Credential__c();
+            credUser.Credential__c = ;
+            credUser.Assigned_Date__c = ;
+			credUser.Due_Date__c = ;
+			credUser.Status__c = ;
+			credUser.User__c = ;
+            insert credUser;
+            
+
+        }
+    }  */
+
+     Public class CredentialData{
+    @AuraEnabled
+    public String CredName {get;set;}
+    @AuraEnabled
+    public Datetime AssignedDate {get;set;}
+    @AuraEnabled
+    public Datetime DueData {get;set;}
+    @AuraEnabled
+    public String Status {get;set;}
+     
+     }
+    
+    } 
