@@ -237,7 +237,7 @@ renderedCallback(){
 getdata(){
     
 getUserCredentials(
-    {credmap : this.selectedCredentials, userId:this.selectedUserName,credentialsName: this.credNamess}
+    {credmap : this.selectedCredentials, userId:this.selectedUserName}
 ).then(response=>{
    
    

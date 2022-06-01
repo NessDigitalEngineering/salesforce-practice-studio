@@ -2,7 +2,7 @@
 public with sharing class CredentialAssignmentController {
 
     @AuraEnabled(cacheable=true)
-    public static List<CredentialData> getUserCredentials(List<Id> credmap, string userId,String credentialsName){
+    public static List<CredentialData> getUserCredentials(List<Id> credmap, string userId){
     
     List<CredentialData>  credenlsData = new List<CredentialData>();
     

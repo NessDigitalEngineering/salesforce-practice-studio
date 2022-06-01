@@ -4,14 +4,20 @@ public class CredentialAssignmentControllerTest {
     @TestSetup
     static void setup() {
         
-        Credential__c c =new Credential__c ();
-        c.Name ='Admin';
-        c.Status__c='Active';
-        c.Program_Level__c='L1';
-        c.Type__c='Trailhead';
-        insert c;
+        Credential__c c1 =new Credential__c ();
+        c1.Name ='Admin';
+        c1.Status__c='Active';
+        c1.Program_Level__c='L1';
+        c1.Type__c='Trailhead';
+        insert c1;
+        Credential__c c2 =new Credential__c ();
+        c2.Name ='Service Cloud';
+        c2.Status__c='Active';
+        c2.Program_Level__c='L1';
+        c2.Type__c='Trailhead';
+        insert c2;
         User_Credential__c uc = new User_Credential__c ();
-        uc.Credential__c =c.id;
+        uc.Credential__c =c1.id;
         uc.status__c = 'Ready';
         
         insert uc;
@@ -19,12 +25,15 @@ public class CredentialAssignmentControllerTest {
     
     static testMethod void getCredentialsTest() {
         list<Id> credentialsId = new list<Id> (); 
-        Credential__c c = [SELECT Id FROM Credential__c limit 1 ];
-        credentialsId.add(c.id);
+        List<Credential__c> c = [SELECT Id FROM Credential__c where name ='Service cloud'];
+        credentialsId.add(c[0].id);
+        
+        String userId;
       Test.startTest();
-        List<User_Credential__c> credentials=CredentialAssignmentController.getUserCredentials(credentialsId);
+        CredentialAssignmentController.getUserCredentials(credentialsId,userId);
+                          
       Test.stopTest();
-        System.assertNotEquals(0, credentials.size());
+        
     }
 
 }
