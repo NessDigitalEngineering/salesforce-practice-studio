@@ -1,7 +1,5 @@
 @IsTest
 public with sharing class CredentialsOfSubordinatesAPEX_Test {
-    public CredentialsOfSubordinatesAPEX_Test() {
-    }
     @TestSetup
     static void makeData(){
         TestDataFactory.createCredentials();        
