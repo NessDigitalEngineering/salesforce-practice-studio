@@ -1,8 +1,8 @@
 public class CredentialsOfSubordinatesAPEX {
     
 	@AuraEnabled(cacheable=true)    
-   public static List<subordinateCredentialsInfo> getCredentialsOfSubordinates(String userId){      
-       List<subordinateCredentialsInfo> sciList = new List<subordinateCredentialsInfo>();
+   public static List<SubordinateCredentialsInfo> getCredentialsOfSubordinates(String userId){      
+       List<SubordinateCredentialsInfo> sciList = new List<SubordinateCredentialsInfo>();
        map<id,List<User_Credential__c>> usrIdUcMap = new map<id,List<User_Credential__c>>();
        UserCredentialService u = new UserCredentialService();
        Map<Id, User> um = new Map<Id, User>(u.getSubordinates(userId));
@@ -16,7 +16,7 @@ public class CredentialsOfSubordinatesAPEX {
            }
        }
        for(id usrId:usrIdUcMap.keySet()){
-          subordinateCredentialsInfo sci =new subordinateCredentialsInfo();
+        SubordinateCredentialsInfo sci =new SubordinateCredentialsInfo();
            sci.usrRecordId=usrId;
            sci.usrRecord= um.get(usrId);
            sci.ucList= usrIdUcMap.get(usrId);
@@ -26,7 +26,7 @@ public class CredentialsOfSubordinatesAPEX {
        return sciList;
    }
     
-public class subordinateCredentialsInfo{
+public class SubordinateCredentialsInfo{
         @AuraEnabled
         public Id usrRecordId{get;set;}
     	@AuraEnabled

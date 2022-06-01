@@ -19,7 +19,7 @@ public with sharing class CredentialsOfSubordinatesAPEX_Test {
             insert usrCredential;
             system.debug(usrCredential);
             Test.startTest();
-            List<CredentialsOfSubordinatesAPEX.subordinateCredentialsInfo> sciList = CredentialsOfSubordinatesAPEX.getCredentialsOfSubordinates(usr.Id);
+            CredentialsOfSubordinatesAPEX.getCredentialsOfSubordinates(usr.Id);
             Test.stopTest();
         }
     }
