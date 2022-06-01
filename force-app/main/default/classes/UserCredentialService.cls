@@ -1,7 +1,7 @@
 public with sharing class UserCredentialService {
     public List<User> getSubordinates(Id userId) {        
         try{
-              return [SELECT Id, IsProfilePhotoActive, FullPhotoUrl FROM User where ManagerId=:userId ];        
+              return [SELECT Id, Name, IsProfilePhotoActive, FullPhotoUrl FROM User where ManagerId=:userId ];        
             }
         catch (Exception ex){ 
             throw ex;
