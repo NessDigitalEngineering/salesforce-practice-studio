@@ -261,7 +261,7 @@ getUserCredentials(
            }
             
             tempResponse.push(tempObject);
-            //tempObject = {};
+            
         }
     }  
     this.credentials = tempResponse;
