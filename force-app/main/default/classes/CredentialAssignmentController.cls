@@ -10,6 +10,8 @@ public with sharing class CredentialAssignmentController {
     List<Id> lststring = new  List<Id>();
     
     for(User_Credential__c userCred:credentialsRec){
+
+     if(userCred.Status__c != 'Assigned' && userCred.Status__c != 'Completed') {
     
     CredentialData data = new CredentialData();
     data.CredName = userCred.Credential__r.name;
@@ -20,6 +22,8 @@ public with sharing class CredentialAssignmentController {
     credenlsData.add(data);
    
     lststring.add(userCred.Credential__r.Id);
+
+        } 
     
     }
     List<Credential__c> credentialsRecIds = [select Id,Name from Credential__c  where Id In : credmap];

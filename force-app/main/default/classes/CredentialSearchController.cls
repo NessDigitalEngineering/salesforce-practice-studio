@@ -16,7 +16,7 @@ public with sharing class CredentialSearchController {
                 if(so.User_Credentials__r.size() > 0){
                     for(User_Credential__c usCds: so.User_Credentials__r){
     
-                        if(usCds.Status__c != 'Completed' && (usCds.User__r.id != userId || usCds.User__r.id == null)){
+                        if((usCds.Status__c != 'Completed' && usCds.Status__c != 'Assigned') && (usCds.User__r.id != userId || usCds.User__r.id == null)){
                             
                             sObjectResultList.add(so);
                         
