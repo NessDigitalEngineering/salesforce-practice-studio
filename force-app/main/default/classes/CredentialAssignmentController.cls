@@ -46,24 +46,6 @@ public with sharing class CredentialAssignmentController {
     
     }
 
- /*   @auraenabled
-    public static void createUserCredentials(CredentialData wrapper)
-    {
-        system.debug('wrapper:'+wrapper);
-        if(wrapper!=null)
-        {
-            User_Credential__c credUser = new User_Credential__c();
-            credUser.Credential__c = ;
-            credUser.Assigned_Date__c = ;
-			credUser.Due_Date__c = ;
-			credUser.Status__c = ;
-			credUser.User__c = ;
-            insert credUser;
-            
-
-        }
-    }  */
-
      Public class CredentialData{
     @AuraEnabled
     public String CredName {get;set;}
