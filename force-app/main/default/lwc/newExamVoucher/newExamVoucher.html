@@ -1,0 +1,28 @@
+<template>
+        <lightning-card title = "Vouchers" icon-name = "custom:custom63">
+                <div class="slds-m-around_medium">
+                 <template if:true={VoucherList}>
+                     <div style="height: 500px">
+                        <lightning-datatable data={VoucherList} 
+                                         columns={columns} 
+                                         enable-infinite-loading
+                                         onloadmore={loadMoreData}
+                                         key-field="Id"></lightning-datatable>
+                     </div>
+                  </template>
+               
+            
+                   <template if:true={error}>
+                      {error}
+                   </template>
+                   <br/>
+                   <div class="slds-grid slds-wrap">
+                      <div class="slds-col">
+                         <lightning-button variant="brand"  class="slds-float_right" label="Decrypt" onclick={handleDecryption}></lightning-button>
+                      </div>
+                   </div>
+                   <br/>
+                   <br/>
+                </div>
+             </lightning-card>
+</template>
