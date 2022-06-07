@@ -15,7 +15,7 @@ export default class CredentialSearch extends LightningElement {
 @track messageFlag = false;
 UserLabels = UserSearchLabel;
 
-@api datesend ;
+@api datesend='' ;
 
 
 searchField(event) {
@@ -29,6 +29,7 @@ searchField(event) {
     }
     
     this.LoadingText = true;
+    console.log('check creds');
     
     getResults({searchKey: currentText, selectedRecId : selectRecId,userId: this.datesend })
     .then(result => {
@@ -97,7 +98,6 @@ removeRecord (event){
 @api
 removeCredentials(assignments){
     
-
     for (const selRec of this.selectedRecords) {
 
         if( assignments == selRec.recName){
@@ -111,5 +111,11 @@ removeCredentials(assignments){
     }
    
 } 
+
+@api
+resetCredentials(){
+    this.selectedRecords=[];  
+} 
+
 
 } 

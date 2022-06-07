@@ -1,10 +1,9 @@
-
 public with sharing class CredentialAssignmentController {
-
+    
     @AuraEnabled(cacheable=true)
     public static List<CredentialData> getUserCredentials(List<Id> credmap, string userId){
     
-    List<CredentialData>  credenlsData = new List<CredentialData>();
+        List<CredentialData>  credenlsData = new List<CredentialData>();
     
     List<User_Credential__c> credentialsRec = [select Id,Name ,Credential__r.name,Assigned_Date__c,Due_Date__c ,Status__c,User__c from User_Credential__c where User__c =:userId];
     List<Id> lststring = new  List<Id>();
@@ -18,6 +17,7 @@ public with sharing class CredentialAssignmentController {
     data.AssignedDate = userCred.Assigned_Date__c;
     data.DueData = userCred.Due_Date__c;
     data.Status = userCred.Status__c;
+    data.deleteIcon=false;     
     
     credenlsData.add(data);
    
@@ -32,10 +32,12 @@ public with sharing class CredentialAssignmentController {
         if(!lststring.contains(c.id)) {
        
             CredentialData data =new CredentialData();
-            data.CredName = c.Name;
-            data.AssignedDate = System.today();
-            data.DueData = System.today()+90;
-            data.Status = 'Assigned';
+            data.credName = c.Name;
+            data.assignedDate = System.today();
+            data.dueData = System.today()+90;
+            data.status = 'Assigned';
+            data.assigneId=userId;
+            data.credId=c.id;
             credenlsData.add(data);
                
                }
@@ -45,17 +47,40 @@ public with sharing class CredentialAssignmentController {
      return credenlsData;
     
     }
-
-     Public class CredentialData{
+@AuraEnabled
+   public static void insertCredAssignments(List<CredentialData> credAssignmentList)
+   {    
+    UserCredentialService credentialService=new UserCredentialService();
+    List<User_Credential__c> userCredentials=new List<User_Credential__c>();
+    for(CredentialData credData:credAssignmentList)
+    {
+        User_Credential__c userCred=new User_Credential__c();
+        userCred.Credential__c=credData.credId;
+        userCred.Assigned_Date__c=credData.assignedDate;
+        userCred.Due_Date__c=credData.dueData;
+        userCred.User__c=credData.assigneId;
+        userCred.Status__c=credData.status;
+        userCred.Assigned_By__c=UserInfo.getUserId();
+        userCredentials.add(userCred);
+    }
+   // credentialService.createUserCredentials(userCredentials);
+       system.debug('credAssignmentList-'+credAssignmentList);
+   }
+    Public class CredentialData{
     @AuraEnabled
-    public String CredName {get;set;}
+    public String credId{get;set;}    
     @AuraEnabled
-    public Datetime AssignedDate {get;set;}
+    public String credName {get;set;}
     @AuraEnabled
-    public Datetime DueData {get;set;}
+    public Datetime assignedDate {get;set;}
     @AuraEnabled
-    public String Status {get;set;}
-     
+    public Datetime dueData {get;set;}
+    @AuraEnabled
+    public String status {get;set;}
+    @AuraEnabled
+    public String assigneId {get;set;}
+    @AuraEnabled
+    public Boolean deleteIcon {get;set;}
      }
     
-    } 
+    }

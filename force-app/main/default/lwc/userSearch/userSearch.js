@@ -65,6 +65,7 @@ export default class UserSearch extends LightningElement {
         
         this.selectRecordId = currentRecId;
         this.inputReadOnly = true;
+        console.log('selectName--'+selectName);
         const selectedEvent = new CustomEvent('selected', { detail: {selectName, currentRecId}, });
         // Dispatches the event.
         this.dispatchEvent(selectedEvent);
@@ -76,6 +77,13 @@ export default class UserSearch extends LightningElement {
         this.inputReadOnly = false;
         this.iconFlag = true;
         this.clearIconFlag = false;
+        var currentRecId = this.selectRecordName;
+        var selectName =  this.selectRecordId;
+
+        const selectedEvent = new CustomEvent('selected', { detail: {selectName, currentRecId}, });
+
+        // Dispatches the event.
+        this.dispatchEvent(selectedEvent);
        
     }
 
