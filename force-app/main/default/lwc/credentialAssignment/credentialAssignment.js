@@ -3,26 +3,27 @@ import { updateRecord} from 'lightning/uiRecordApi';
 import getUserCredentials from '@salesforce/apex/CredentialAssignmentController.getUserCredentials';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
-import REMOVEROW from '@salesforce/resourceUrl/removeRow';
+import insertCredAssignments from '@salesforce/apex/CredentialAssignmentController.insertCredAssignments';
 import {loadStyle} from 'lightning/platformResourceLoader';
+import REMOVEROW from '@salesforce/resourceUrl/removeRow'
 
 const cols = [ { type: 'button-icon',fixedWidth:35,
 typeAttributes:
 {  
 iconName: 'utility:delete',
-    name: 'delete',
- disabled: {fieldName:'Delete'},
+    name: 'deleteIcon',
+ disabled: {fieldName:'deleteIcon'}
 }},
-{ label: 'Credential Name', fieldName: 'CredName', type: "text" ,hideDefaultActions: "true" },
-{ label: 'Assigned Date', fieldName: 'AssignedDate', type: 'date-local',editable: false, typeAttributes: {  
+{ label: 'Credential Name', fieldName: 'credName', type: "text" ,hideDefaultActions: "true",wrapText: true },
+{ label: 'Assigned Date', fieldName: 'assignedDate', type: 'date-local',editable: false, typeAttributes: {  
 day: 'numeric',  
 month: 'numeric',  
 year: 'numeric'}},
-{ label: 'Due Date', fieldName: 'DueData', type: 'date-local', editable: {fieldName: 'controlEditField'}, typeAttributes: {  
+{ label: 'Due Date', fieldName: 'dueData', type: 'date-local', editable: {fieldName: 'controlEditField'}, typeAttributes: {  
 day: 'numeric',  
 month: 'numeric',  
 year: 'numeric'}},
-{ label: 'Status', fieldName: 'Status', type: 'text',hideDefaultActions: "true" },];
+{ label: 'Status', fieldName: 'status', type: 'text',hideDefaultActions: "true" },];
 
 export default class CredentialAssignment extends LightningElement {
 @api constant = {
@@ -41,38 +42,37 @@ export default class CredentialAssignment extends LightningElement {
 }
 @track columns;
 @api removeCredentials;
-@api selectedUserName;
+@api selectedUserName='';
 @track credentials;
 @track selectedCredentials;
-@track DataFlag = false;
-draftValues = [];
+@track isDataAvaialable = false;
+draftValues=[] ;
 
 wiredRecords;
 refreshTable;
-@track credNamess;
-handlefireEvent(event){
-
+handleUserName(event){
 this.selectedUserName = event.detail.currentRecId;
-
+this.handleCredential(event);
 }
 
-fireEvent(event){
-this.DataFlag = true;
+handleCredential(event){
 this.columns = cols;
-
-this.credNamess = event.detail.selectName;
-
 var tempSelectRecords = [];
-if(event.detail.selRecords){
-    
-    for (const rec of event.detail.selRecords) {
-        
-        tempSelectRecords.push(rec.recId);
-        
-    }
 
+console.log('this.selRecords-'+event.detail.selRecords);
+if(this.selectedUserName && event.detail.selRecords){
+    for (const rec of event.detail.selRecords)        
+        tempSelectRecords.push(rec.recId)    
+        this.selectedCredentials = tempSelectRecords;
+        this.isDataAvaialable=true;
 }
+else
+{
+this.template.querySelector("c-Credential-Search").resetCredentials();
 this.selectedCredentials = tempSelectRecords;
+this.isDataAvaialable = false;
+}
+console.log('this.selRecords-'+event.detail.selRecords);
 
 this.getdata();
 
@@ -226,7 +226,11 @@ rowactionDelete(event) {
 }
 renderedCallback(){ 
     Promise.all([
+
+       // loadStyle( this, REMOVEROW)
+
         loadStyle( this, REMOVEROW)
+
         ]).then(() => {
             console.log( 'Files loaded' );
         })
@@ -235,7 +239,8 @@ renderedCallback(){
     });
     } 
 getdata(){
-    
+    console.log('getUserCredentials--'+this.selectedCredentials);
+
 getUserCredentials(
     {credmap : this.selectedCredentials, userId:this.selectedUserName}
 ).then(response=>{
@@ -249,15 +254,15 @@ getUserCredentials(
             
             tempObject = {...res};
             
-        if (res.Status === 'Assigned') {
+        if (res.status == 'Assigned') {
             
             tempObject.controlEditField = true;
-            tempObject.Delete = false;
+            tempObject.deleteIcon = false;
             }               
             else { 
                 
             tempObject.controlEditField = false;
-            tempObject.Delete = true;
+            tempObject.deleteIcon = true;
            }
             
             tempResponse.push(tempObject);
@@ -265,13 +270,40 @@ getUserCredentials(
         }
     }  
     this.credentials = tempResponse;
-    
-   
+    if(this.credentials.length>0)
+    this.isDataAvaialable = true;
+    else
+    this.isDataAvaialable = false;
+
+    console.debug('this.credentials-'+this.credentials);
     
 }).catch(error=>{
     console.log ('error msg',error);
 });
 
+}
+
+handleClick(event)
+{
+    insertCredAssignments({credAssignmentList:this.credentials})
+       .then(result => {
+             
+       })
+       .catch(error => {
+           console.log('Errorured:- '+error.body.message);
+       });
+
+       this.draftValues=event.detail.draftValues;
+
+       const recordInputs =  event.detail.draftValues.slice().map(draft => {
+        const fields = Object.assign({}, draft);
+        return { fields };
+    }); 
+    this.draftValues = [];
+
+
+    console.log('Button Click Check'+JSON.stringify(this.credentials));
+    
 }
 
 }
