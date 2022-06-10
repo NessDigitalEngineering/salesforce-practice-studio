@@ -2,7 +2,6 @@ import { api, LightningElement, track} from 'lwc';
 import { updateRecord} from 'lightning/uiRecordApi';
 import getUserCredentials from '@salesforce/apex/CredentialAssignmentController.getUserCredentials';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { refreshApex } from '@salesforce/apex';
 import insertCredAssignments from '@salesforce/apex/CredentialAssignmentController.insertCredAssignments';
 import {loadStyle} from 'lightning/platformResourceLoader';
 import REMOVEROW from '@salesforce/resourceUrl/removeRow'
@@ -19,7 +18,7 @@ iconName: 'utility:delete',
 day: 'numeric',  
 month: 'numeric',  
 year: 'numeric'}},
-{ label: 'Due Date', fieldName: 'dueData', type: 'date-local', editable: {fieldName: 'controlEditField'}, typeAttributes: {  
+{ label: 'Due Date', fieldName: 'dueData',sortable: 'true', type: 'date-local', editable: {fieldName: 'controlEditField'}, typeAttributes: {  
 day: 'numeric',  
 month: 'numeric',  
 year: 'numeric'}},
@@ -28,7 +27,7 @@ year: 'numeric'}},
 export default class CredentialAssignment extends LightningElement {
 @api constant = {
     ERROR_TITLE : 'Error Found',
-    ROWACTION_DELETE : 'delete',
+    ROWACTION_DELETE : 'deleteIcon',
     VAR_SUCCESS : 'Success',
     ROWACTION_SAVE : 'save',
     VAR_ERROR : 'error',
@@ -50,6 +49,9 @@ draftValues=[] ;
 
 wiredRecords;
 refreshTable;
+myMap={};
+@track sortBy;
+@track sortDirection;
 handleUserName(event){
 this.selectedUserName = event.detail.currentRecId;
 this.handleCredential(event);
@@ -58,12 +60,16 @@ this.handleCredential(event);
 handleCredential(event){
 this.columns = cols;
 var tempSelectRecords = [];
-
-console.log('this.selRecords-'+event.detail.selRecords);
+var mapCheck=[];
+ 
 if(this.selectedUserName && event.detail.selRecords){
-    for (const rec of event.detail.selRecords)        
-        tempSelectRecords.push(rec.recId)    
-        this.selectedCredentials = tempSelectRecords;
+    for (const rec of event.detail.selRecords) 
+    {
+        tempSelectRecords.push(rec.recId)    ;
+        this.myMap[rec.recId]=rec.recName;
+    }
+
+         this.selectedCredentials = tempSelectRecords;
         this.isDataAvaialable=true;
 }
 else
@@ -72,112 +78,19 @@ this.template.querySelector("c-Credential-Search").resetCredentials();
 this.selectedCredentials = tempSelectRecords;
 this.isDataAvaialable = false;
 }
-console.log('this.selRecords-'+event.detail.selRecords);
 
 this.getdata();
 
 }
-handleSave(event) {
-
-try {
-
-        const recordInputs =  event.detail.draftValues.slice().map(draft => {
-            const fields = Object.assign({}, draft);
-            return { fields };
-        }); 
-
-        //invoke updaterecord() for batch update
-        const promises = recordInputs.map(recordInput => 
-                                                updateRecord(recordInput));
-        Promise.all(promises).then(_contacts => {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: this.constant.VAR_SUCCESS,
-                    message: this.constant.MSG_UPD,
-                    variant: this.constant.VAR_SUCCESS
-                })
-            );
-
-        //refresh data in the datatable
-        return refreshApex(this.credentials);            
-        })
-
-        //display error message in case of errors
-        .catch(error => {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: this.constant.MSG_ERR_UPD_RELOAD,
-                    message: error.body.message,
-                    variant: this.constant.VAR_ERROR
-                })
-            );
-        });
-    } catch (errorMsg) {
-        console.log ('error at save'+errorMsg.message );
-    }         
-}
-
-rowactionSave(event) {
-
-    try {
-
-        //get the changed records using queryselector.draftValues
-
-    let qslct = this.template.querySelector('lightning-datatable').
-                draftValues.find(x => x.Id == event.detail.row.Id);
-
-
-        let row = [];
-        row = [...row, qslct];
-
-
-        const recordInputs = row.slice().map(draft => {
-            const fields = Object.assign({}, draft);
-            return { fields };
-        });    
-
-        //invoke updaterecord() for single row update
-        const promises = recordInputs.map(recordInput => 
-                                                updateRecord(recordInput));
-        Promise.all(promises).then(_contacts => {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: this.constant.VAR_SUCCESS,
-                    message: this.constant.MSG_UPD,
-                    variant: this.constant.VAR_SUCCESS
-                })
-            );
-
-        //refresh data in the datatable
-        return refreshApex(this.refreshTable);            
-        })
-
-        //display error message in case of errors
-
-    .catch(error => {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: this.constant.MSG_ERR_UPD_RELOAD,
-                    message: error.body.message,
-                    mode: 'dismissible',
-                    variant: this.constant.VAR_ERROR
-                })
-            );
-        });
-    } catch (errorMsg) {
-        console.log ('error at save record');
-    }         
-} 
-
 handleDelete(event) {
 
 try {
         const action = event.detail.action.name;
-
+        
         //check for save or delete action
          
             if (action != '' && action == this.constant.ROWACTION_DELETE){
-                alert('action11'+action);
+                
                 this.rowactionDelete(event);
                 
                 }    
@@ -194,11 +107,10 @@ rowactionDelete(event) {
         for(let cred in this.credentials)
     {
         
-
-        if(this.credentials[cred].CredName===event.detail.row.CredName && this.credentials[cred].Status=='Assigned')
+    if(this.credentials[cred].credName===event.detail.row.credName && this.credentials[cred].status=='Assigned')
         {
-           
-            this.template.querySelector("c-Credential-Search").removeCredentials(this.credentials[cred].CredName);
+            
+            this.template.querySelector("c-Credential-Search").removeCredentials(this.credentials[cred].credName);
             this.credentials.splice(cred,1);
             
             
@@ -229,7 +141,7 @@ renderedCallback(){
 
        // loadStyle( this, REMOVEROW)
 
-        loadStyle( this, REMOVEROW)
+       loadStyle( this, REMOVEROW)
 
         ]).then(() => {
             console.log( 'Files loaded' );
@@ -239,10 +151,9 @@ renderedCallback(){
     });
     } 
 getdata(){
-    console.log('getUserCredentials--'+this.selectedCredentials);
-
+    
 getUserCredentials(
-    {credmap : this.selectedCredentials, userId:this.selectedUserName}
+    {credmap : this.myMap, userId:this.selectedUserName}
 ).then(response=>{
    
    
@@ -275,8 +186,6 @@ getUserCredentials(
     else
     this.isDataAvaialable = false;
 
-    console.debug('this.credentials-'+this.credentials);
-    
 }).catch(error=>{
     console.log ('error msg',error);
 });
@@ -294,16 +203,38 @@ handleClick(event)
        });
 
        this.draftValues=event.detail.draftValues;
+       
 
        const recordInputs =  event.detail.draftValues.slice().map(draft => {
         const fields = Object.assign({}, draft);
         return { fields };
     }); 
     this.draftValues = [];
-
-
-    console.log('Button Click Check'+JSON.stringify(this.credentials));
     
 }
+handleSortCaseData(event) {
+    this.sortBy = event.detail.fieldName;
+    this.sortDirection = event.detail.sortDirection;
+    this.sortCaseData(this.sortBy, this.sortDirection);
+    
+}
+
+sortCaseData(fieldname, direction) {
+    let parseData = JSON.parse(JSON.stringify(this.credentials));
+    // Return the value stored in the field
+    let keyValue = (a) => {
+        return a[fieldname];
+    };
+    // cheking reverse direction
+    let isReverse = direction === 'asc' ? 1: -1;
+    // sorting data
+    parseData.sort((x, y) => {
+        x = keyValue(x) ? keyValue(x) : ''; // handling null values
+        y = keyValue(y) ? keyValue(y) : '';
+        // sorting values based on direction
+        return isReverse * ((x > y) - (y > x));
+    });
+    this.credentials = parseData;
+}  
 
 }

@@ -16,7 +16,7 @@ userCredData;
 @api senddata='';
 
 @wire(getCompletedUserCredentials, {userId:'$senddata'}) userdata({data,error}){
-console.log('check inside'+data);
+
     if(data){
        this.countRec = data.length;
        let selectedRec = [];    
@@ -39,8 +39,8 @@ console.log('check inside'+data);
         this.loaded = true;
 
     }else if(error)
-    {
-            console.log("error" + error);
+    {       
+            console.log("error1" + JSON.stringify(error));
 
     }
 }
@@ -51,17 +51,16 @@ connectedCallback(){
                         
                     })
                     .catch((error) => {
-                        console.log("error" + JSON.stringify(error));
+                        console.log("error2" + JSON.stringify(error));
                     });
 }
 showMoreRec(){
-   /*getCompletedUserCredentials({userId:this.userIds}).then(response=>
-    {*/
+   
                              this.initialRecords = false;
                              this.showMoreRecords = true;
                              this.showMore = false;
                              this.userCredentialsData = this.totalUserCredentials;
-          //    })
+         
 }
 }
 

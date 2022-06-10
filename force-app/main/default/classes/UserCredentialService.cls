@@ -11,10 +11,10 @@ public with sharing class UserCredentialService {
     * @return List of User Credentials 
     */  
    
-    public 
+    public Static 
      List<User_Credential__c> getActiveUserCredentials(Id userId) {        
         try{
-            return [Select id, Credential__c, Status__c, User__c from User_Credential__c where User__r.id= :userId and User_Credential__c.Status__c != 'Completed' WITH SECURITY_ENFORCED];        
+            return [Select id, Credential__c,Credential__r.name,Assigned_Date__c,Due_Date__c ,Status__c, User__c from User_Credential__c where User__r.id= :userId and (User_Credential__c.Status__c != 'Completed' OR User_Credential__c.Status__c != 'Assigned') WITH SECURITY_ENFORCED];        
         }
         catch (Exception ex){
             throw ex;
@@ -27,18 +27,18 @@ public with sharing class UserCredentialService {
     * @return List of User Credentials 
     */  
     @AuraEnabled(cacheable=true) 
-    public static List<User_Credential__c> getCompletedUserCredentials(Id userId) {     
+    public static List<User_Credential__c> getCompletedUserCredentials(String userId) {     
         system.debug('userid--'+userid);   
-       // try
+       try
         {
-            return [Select id, Credential__c, Status__c, User__c from User_Credential__c where User__c= :userId and User_Credential__c.Status__c = 'Completed'];        
+            return [Select id, Credential__c,Credential__r.Name, Status__c, User__c from User_Credential__c where User__c= :userId and User_Credential__c.Status__c = 'Completed'];        
         }
-       /* catch (Exception ex)
+        catch (Exception ex)
         {
 
-           // throw ex;
+           throw ex;
         }
-        */
+        
     }
     
     /*******************************************************************************************************

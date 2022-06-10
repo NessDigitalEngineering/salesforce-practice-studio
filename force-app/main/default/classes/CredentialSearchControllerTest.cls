@@ -10,12 +10,7 @@ public class CredentialSearchControllerTest {
         c.Program_Level__c='L1';
         c.Type__c='Trailhead';
         insert c;
-        User_Credential__c uc = new User_Credential__c ();
-        uc.Credential__c =c.id;
-        uc.status__c = 'Ready';
-        
-        insert uc;
-        
+       
     }
     
     static testMethod void getCredentialsTest() {

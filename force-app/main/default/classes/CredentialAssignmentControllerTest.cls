@@ -19,21 +19,27 @@ public class CredentialAssignmentControllerTest {
         User_Credential__c uc = new User_Credential__c ();
         uc.Credential__c =c1.id;
         uc.status__c = 'Ready';
-        
         insert uc;
+          
     }
     
     static testMethod void getCredentialsTest() {
-        list<Id> credentialsId = new list<Id> (); 
-        List<Credential__c> c = [SELECT Id FROM Credential__c where name ='Service cloud'];
-        credentialsId.add(c[0].id);
-        
+        Map<String,String> credentialsId = new Map<String,String>(); 
+        Credential__c c = [SELECT Id,name FROM Credential__c where name ='Service cloud' limit 1];
+        credentialsId.put(c.id,c.name);
         String userId;
-      Test.startTest();
+        Test.startTest();
         CredentialAssignmentController.getUserCredentials(credentialsId,userId);
-                          
-      Test.stopTest();
+        Test.stopTest();
         
     }
-
-}
+    static testMethod void insertCredAssignmentsTest() {
+        
+        List<CredentialAssignmentController.CredentialData>  credenlsData = new  List<CredentialAssignmentController.CredentialData>();
+        Test.startTest();
+        CredentialAssignmentController.insertCredAssignments(credenlsData);
+        Test.stopTest();
+        
+    } 
+    
+} 

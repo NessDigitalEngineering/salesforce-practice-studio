@@ -29,7 +29,6 @@ searchField(event) {
     }
     
     this.LoadingText = true;
-    console.log('check creds');
     
     getResults({searchKey: currentText, selectedRecId : selectRecId,userId: this.datesend })
     .then(result => {
@@ -57,13 +56,13 @@ searchField(event) {
     })
     .catch(error => {
         console.log('-------error-------------'+error);
-        console.log(error);
+        
     });
     
 }
 
 setSelectedRecord(event) {
-    console.log('aaa datsends bbb'+JSON.stringify(this.datsends));
+    
     var recId = event.currentTarget.dataset.id;
     var selectName = event.currentTarget.dataset.name;
     
