@@ -1,0 +1,44 @@
+<template>
+    <lightning-card class="cardLabel" title="My Credential Assignment" style="width: 100%;">
+        <lightning-layout>
+            <lightning-layout-item padding="around-small" size="12">
+                <div class="slds-has-dividers_around-space">
+                  <template if:true={userCredentials}>
+                        <template for:each={userCredentials} for:item="userCredential">
+                            <div class="slds-item" key={userCredential.Id}>
+                                <lightning-layout vertical-align="center" horizontal-align="spread"></lightning-layout>
+                                <lightning-layout-item >{userCredential.name}</lightning-layout-item>
+                                <lightning-layout-item padding="horizontal-large">{userCredential.status}</lightning-layout-item>
+                                <lightning-layout-item padding="horizontal-medium">
+                                <lightning-button label={userCredential.nextStatus} variant="brand" onclick={voucherRequestModal} ></lightning-button>
+                                </lightning-layout-item>
+                            </div>
+
+                            <template if:true={isShowModal}>
+                                <section key={userCredential.id} role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-describedby="modal-content-id-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+                                    <div class="slds-modal__container">
+                                        <header class="slds-modal__header">
+                                            <h2 class="slds-text-heading_medium slds-hyphenate">Voucher Confirmation</h2>
+                                        </header>
+
+                                        <div class="slds-modal__content slds-var-p-around_medium"> 
+                                            <h4 class="slds-align_absolute-left" style="height:3rem">Do you need a Voucher?</h4>
+                                            <div class="slds-grid slds-grid_align-center">
+                                            <lightning-button variant="neutral" label="Yes" class="slds-var-m-right_medium" onclick={handleClick}></lightning-button>                                      
+                                            <lightning-button variant="brand" label="No" onclick={hideModalBox}></lightning-button>
+                                        </div>
+                                    </div>
+                                        <footer class="slds-modal__footer">
+                                            <lightning-button variant="neutral" label="Cancel" onclick={hideModalBox}></lightning-button>
+                                        </footer>
+                                    </div>
+                                </section>
+                                <div key={userCredential.id} class="slds-backdrop slds-backdrop_open"></div>
+                            </template>
+                        </template>
+                    </template>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+     </lightning-card>
+</template>
