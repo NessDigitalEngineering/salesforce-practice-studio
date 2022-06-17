@@ -14,7 +14,7 @@ public with sharing class UserCredentialService {
     public Static 
      List<User_Credential__c> getActiveUserCredentials(Id userId) {        
         try{
-            return [Select id, Credential__c,Credential__r.name,Assigned_Date__c,Due_Date__c ,Status__c, User__c from User_Credential__c where User__r.id= :userId and (User_Credential__c.Status__c != 'Completed' OR User_Credential__c.Status__c != 'Assigned') WITH SECURITY_ENFORCED];        
+            return [Select id, Credential__c,Credential__r.name,Assigned_Date__c,Due_Date__c ,Status__c, User__c from User_Credential__c where User__r.id= :userId and User_Credential__c.Status__c != 'Completed' WITH SECURITY_ENFORCED];        
         }
         catch (Exception ex){
             throw ex;
@@ -31,7 +31,7 @@ public with sharing class UserCredentialService {
         system.debug('userid--'+userid);   
        try
         {
-            return [Select id, Credential__c,Credential__r.Name, Status__c, User__c from User_Credential__c where User__c= :userId and User_Credential__c.Status__c = 'Completed'];        
+            return [Select id, Credential__c,Credential__r.Name, Status__c, User__c,Badge_Icon__c from User_Credential__c where User__c= :userId and User_Credential__c.Status__c = 'Completed'];        
         }
         catch (Exception ex)
         {

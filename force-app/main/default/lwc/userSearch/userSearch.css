@@ -6,7 +6,7 @@ div input[readonly] {
 }
 
 .slds-input-has-icon .slds-input__icon {
-    top: 74% !important;
+    top: 65% !important;
 }
 .slds-icon_small, .slds-icon--small {
     width: 1.5rem;
@@ -16,3 +16,12 @@ div input[readonly] {
 .custom-container {
     width: 100%;
 } 
+.my-card{
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    padding: 20px;
+    display: flex;
+}
+.titleadjust{
+    margin-left: 14px;
+}

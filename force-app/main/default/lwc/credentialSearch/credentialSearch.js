@@ -2,6 +2,7 @@ import { LightningElement,api,track } from 'lwc';
 import getResults from '@salesforce/apex/CredentialSearchController.getCredentials';
 
 import UserSearchLabel from '@salesforce/label/c.UserSearchLabel';
+import { APPLICATION_SCOPE } from 'lightning/messageService';
 
 export default class CredentialSearch extends LightningElement {
 
@@ -9,15 +10,14 @@ export default class CredentialSearch extends LightningElement {
 @track searchRecords = [];
 @track selectedRecords = [];
 @api required = false;
-@api iconName ;
+@api iconName;
 @api LoadingText = false;
 @track txtclassname = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
 @track messageFlag = false;
 UserLabels = UserSearchLabel;
 
 @api datesend='' ;
-
-
+@track iconDisplay =[];
 searchField(event) {
     
     var currentText = event.target.value;
@@ -33,6 +33,7 @@ searchField(event) {
     getResults({searchKey: currentText, selectedRecId : selectRecId,userId: this.datesend })
     .then(result => {
         this.searchRecords= result;
+        console.log('hai1'+JSON.stringify(this.searchRecords));
         this.LoadingText = false;
         
         this.txtclassname =  result.length > 0 ? 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open' : 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
@@ -65,8 +66,12 @@ setSelectedRecord(event) {
     
     var recId = event.currentTarget.dataset.id;
     var selectName = event.currentTarget.dataset.name;
+    var iconName = event.currentTarget.dataset.icon;
+    console.log('icons'+iconName);
+    this.iconDisplay = iconName;
+    console.log('this.iconDisplay 476'+this.iconDisplay);
+    let newsObject = { 'recId' : recId ,'recName' : selectName,'recIcon' : iconName };
     
-    let newsObject = { 'recId' : recId ,'recName' : selectName };
     this.selectedRecords.push(newsObject);
     this.txtclassname =  'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
     let selRecords = this.selectedRecords;

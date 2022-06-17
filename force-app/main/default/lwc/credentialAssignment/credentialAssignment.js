@@ -13,7 +13,7 @@ iconName: 'utility:delete',
     name: 'deleteIcon',
  disabled: {fieldName:'deleteIcon'}
 }},
-{ label: 'Credential Name', fieldName: 'credName', type: "text" ,hideDefaultActions: "true",wrapText: true },
+{ label: 'Credential Name', fieldName: 'credName', type: "text" ,hideDefaultActions: "true",wrapText: true ,cellAttributes:{class:'slds-text-color_default',}},
 { label: 'Assigned Date', fieldName: 'assignedDate', type: 'date-local',editable: false, typeAttributes: {  
 day: 'numeric',  
 month: 'numeric',  
@@ -34,7 +34,7 @@ export default class CredentialAssignment extends LightningElement {
     MSG_DELETE : 'Record Deleted',
     MSG_ERR_DEL : 'Error deleting record',
     MSG_ERR_UPD_RELOAD : 'Error updating or reloading record',
-    MSG_UPD : 'Certificate Updated',
+    MSG_UPD : 'Credential(s) Successfully Assigned.',
     DEL_CONFIRM : 'Want to delete?',
     MODE_BATCH : 'batch',
     MODE_SINGLE : 'single'
@@ -45,6 +45,7 @@ export default class CredentialAssignment extends LightningElement {
 @track credentials;
 @track selectedCredentials;
 @track isDataAvaialable = false;
+@track saveButtonHide = false;
 draftValues=[] ;
 
 wiredRecords;
@@ -61,8 +62,9 @@ handleCredential(event){
 this.columns = cols;
 var tempSelectRecords = [];
 var mapCheck=[];
- 
+ this.myMap = {};
 if(this.selectedUserName && event.detail.selRecords){
+    
     for (const rec of event.detail.selRecords) 
     {
         tempSelectRecords.push(rec.recId)    ;
@@ -79,7 +81,10 @@ this.selectedCredentials = tempSelectRecords;
 this.isDataAvaialable = false;
 }
 
+if(this.selectedUserName !=''){
 this.getdata();
+
+} 
 
 }
 handleDelete(event) {
@@ -107,7 +112,7 @@ rowactionDelete(event) {
         for(let cred in this.credentials)
     {
         
-    if(this.credentials[cred].credName===event.detail.row.credName && this.credentials[cred].status=='Assigned')
+    if(this.credentials[cred].credName===event.detail.row.credName && this.credentials[cred].status=='')
         {
             
             this.template.querySelector("c-Credential-Search").removeCredentials(this.credentials[cred].credName);
@@ -165,21 +170,26 @@ getUserCredentials(
             
             tempObject = {...res};
             
-        if (res.status == 'Assigned') {
+        if (res.status == '') {
             
             tempObject.controlEditField = true;
             tempObject.deleteIcon = false;
+            this.saveButtonHide = true ;
             }               
             else { 
                 
             tempObject.controlEditField = false;
             tempObject.deleteIcon = true;
+            //tempObject.credName = res.credName ? "slds-text-color_error":"slds-text-color_success";
+            this.saveButtonHide = false;
            }
             
-            tempResponse.push(tempObject);
+            //tempResponse.push(tempObject);
+            tempResponse.unshift(tempObject);
             
         }
-    }  
+    }
+    
     this.credentials = tempResponse;
     if(this.credentials.length>0)
     this.isDataAvaialable = true;
@@ -195,21 +205,45 @@ getUserCredentials(
 handleClick(event)
 {
     insertCredAssignments({credAssignmentList:this.credentials})
+
        .then(result => {
-             
+
+
+
+        this.dispatchEvent(
+
+            new ShowToastEvent({
+
+                //title: this.constant.VAR_SUCCESS,
+
+                message: this.constant.MSG_UPD,
+
+                variant: this.constant.VAR_SUCCESS
+                
+
+            })
+
+        );
+
+        this.credentials=[];
+
+        this.template.querySelector("c-Credential-Search").resetCredentials();
+        this.template.querySelector("c-User-Search").resetData();
+
+       this.selectedCredentials = [];
+
+       this.isDataAvaialable = false;
+
        })
+
        .catch(error => {
+
            console.log('Errorured:- '+error.body.message);
+
        });
 
        this.draftValues=event.detail.draftValues;
-       
-
-       const recordInputs =  event.detail.draftValues.slice().map(draft => {
-        const fields = Object.assign({}, draft);
-        return { fields };
-    }); 
-    this.draftValues = [];
+       this.draftValues = []; 
     
 }
 handleSortCaseData(event) {
@@ -236,5 +270,4 @@ sortCaseData(fieldname, direction) {
     });
     this.credentials = parseData;
 }  
-
 }

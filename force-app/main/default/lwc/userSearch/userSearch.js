@@ -70,7 +70,7 @@ export default class UserSearch extends LightningElement {
         // Dispatches the event.
         this.dispatchEvent(selectedEvent);
     }
-    
+    @api
     resetData(_event) {
         this.selectRecordName = "";
         this.selectRecordId = "";

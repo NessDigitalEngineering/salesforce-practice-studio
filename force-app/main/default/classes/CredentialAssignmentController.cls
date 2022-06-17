@@ -10,7 +10,7 @@ List<Id> lststring = new  List<Id>();
 
 for(User_Credential__c userCred:credentialsRec){
 
-if(userCred.Status__c != 'Assigned' && userCred.Status__c != 'Completed') {
+if(userCred.Status__c != 'Completed') {
 
 CredentialData data = new CredentialData();
 data.CredName = userCred.Credential__r.name;
@@ -34,7 +34,7 @@ if(!lststring.contains(c)) {
     data.credName = credmap.get(c);
     data.assignedDate = System.today();
     data.dueData = System.today()+90;
-    data.status = 'Assigned';
+    data.status = '';
     data.assigneId=userId;
     data.credId=c;
     credenlsData.add(data);
@@ -53,13 +53,13 @@ UserCredentialService credentialService=new UserCredentialService();
 List<User_Credential__c> userCredentials=new List<User_Credential__c>();
 for(CredentialData credData:credAssignmentList)
 {
-if(credData.status == 'Assigned'){
+if(credData.status == ''){
 User_Credential__c userCred=new User_Credential__c();
 userCred.Credential__c=credData.credId;
 userCred.Assigned_Date__c=credData.assignedDate;
 userCred.Due_Date__c=credData.dueData;
 userCred.User__c=credData.assigneId;
-userCred.Status__c=credData.status;
+userCred.Status__c='Assigned';
 userCred.Assigned_By__c=UserInfo.getUserId();
 userCredentials.add(userCred);
 } 
