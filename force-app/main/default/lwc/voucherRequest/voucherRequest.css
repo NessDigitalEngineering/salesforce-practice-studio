@@ -1,7 +1,17 @@
 h2{
-    font-weight: bold;
+    font-size: 18px;
 }
 
-h4{
+.custom-text{
     font-size: 15px;
+    text-align: center;
+}
+
+.slds-backdrop{
+    backdrop-filter: blur(1px);
+}
+
+.slds-modal__footer{
+    min-height: 8%;
+    font-size: 13px;
 }

@@ -15,6 +15,10 @@ voucherRequestModal(){
     this.isShowModal=true;
 }
 
+closeModal() {
+    this.isShowModal = false;
+}
+
 hideModalBox() {  
     this.isShowModal = false;
 }
