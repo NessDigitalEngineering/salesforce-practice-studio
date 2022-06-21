@@ -189,10 +189,12 @@ getUserCredentials(
     }
     
     this.credentials = tempResponse;
-    if(this.credentials.length>0)
+    if(this.credentials.length>0){
     this.isDataAvaialable = true;
-    else
+    }
+    else{
     this.isDataAvaialable = false;
+    }
 
 }).catch(error=>{
     console.log ('error msg',error);
