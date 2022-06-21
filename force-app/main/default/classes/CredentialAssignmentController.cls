@@ -1,5 +1,9 @@
 public with sharing class CredentialAssignmentController {
 
+    public CredentialAssignmentController(){
+
+    }
+
     @AuraEnabled(cacheable=true)
     public static List<CredentialData> getUserCredentials(Map<String,String> credmap, string userId){
     
@@ -87,7 +91,12 @@ public with sharing class CredentialAssignmentController {
     credentialService.createUserCredentials(userCredentials);
     
     }
-    Public class CredentialData{
+    public class CredentialData{
+
+        public CredentialData() {
+
+        }
+
     @AuraEnabled
     public String credId{get;set;}    
     @AuraEnabled

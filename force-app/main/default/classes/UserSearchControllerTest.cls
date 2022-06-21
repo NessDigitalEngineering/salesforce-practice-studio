@@ -1,5 +1,5 @@
 @isTest
-public class UserSearchControllerTest {
+private class UserSearchControllerTest {
     
     @TestSetup
     static void setup() {

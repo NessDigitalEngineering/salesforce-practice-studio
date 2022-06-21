@@ -34,7 +34,7 @@ export default class CredentialAssignment extends LightningElement {
     MSG_ERR_DEL : 'Error deleting record',
     MSG_ERR_UPD_RELOAD : 'Error updating or reloading record',
     MSG_UPD : 'Credential(s) Successfully Assigned.',
-    DEL_CONFIRM : 'Want to delete?',
+    DEL_CONFIRM : 'Are you sure you want to delete this item ?',
     MODE_BATCH : 'batch',
     MODE_SINGLE : 'single'
 }

@@ -1,5 +1,5 @@
 @isTest
-public class CredentialSearchControllerTest {
+private class CredentialSearchControllerTest {
     
     @TestSetup
     static void setup() {
