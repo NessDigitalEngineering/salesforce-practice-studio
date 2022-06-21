@@ -4,42 +4,38 @@ public class CredentialAssignmentControllerTest {
     @TestSetup
     static void setup() {
         
-        Credential__c c1 =new Credential__c ();
-        c1.Name ='Admin';
-        c1.Status__c='Active';
-        c1.Program_Level__c='L1';
-        c1.Type__c='Trailhead';
-        insert c1;
-        Credential__c c2 =new Credential__c ();
-        c2.Name ='Service Cloud';
-        c2.Status__c='Active';
-        c2.Program_Level__c='L1';
-        c2.Type__c='Trailhead';
-        insert c2;
-        User_Credential__c uc = new User_Credential__c ();
-        uc.Credential__c =c1.id;
-        uc.status__c = 'Ready';
-        insert uc;
-          
+    TestDataFactory.createCredentials();      
     }
     
     static testMethod void getCredentialsTest() {
         Map<String,String> credentialsId = new Map<String,String>(); 
-        Credential__c c = [SELECT Id,name FROM Credential__c where name ='Service cloud' limit 1];
+        Credential__c c = [SELECT Id,name FROM Credential__c limit 1];
         credentialsId.put(c.id,c.name);
-        String userId;
+        User usrs = TestDataFactory.createUser();
+        User_Credential__c usrCred = TestDataFactory.createUserCredentials(usrs.id,c.id);
+        usrCred.Status__c='Ready';
+        insert usrCred;
+
+    
         Test.startTest();
-        CredentialAssignmentController.getUserCredentials(credentialsId,userId);
+        CredentialAssignmentController.getUserCredentials(credentialsId,usrs.Id);
         Test.stopTest();
-        
+  
     }
     static testMethod void insertCredAssignmentsTest() {
-        
+        Credential__c c = [SELECT Id,name FROM Credential__c limit 1];
         List<CredentialAssignmentController.CredentialData>  credenlsData = new  List<CredentialAssignmentController.CredentialData>();
+        CredentialAssignmentController.CredentialData newData= new CredentialAssignmentController.CredentialData();
+        newData.status='';
+        newData.assignedDate=system.today();
+        newData.credId= c.id;
+        newData.credName=c.Name;
+        credenlsData.add(newData);
+        
         Test.startTest();
         CredentialAssignmentController.insertCredAssignments(credenlsData);
         Test.stopTest();
         
     } 
     
-} 
+}
