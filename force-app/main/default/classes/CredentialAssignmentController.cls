@@ -58,13 +58,7 @@ public with sharing class CredentialAssignmentController {
             latestDate =  latestDate + 90;
         }
         credenlsData.add(data);
-    
-        //data.dueData = System.today()+90;
-        //data.status = '';
-        //data.assigneId=userId;
-        //data.credId=c;
-        //credenlsData.add(data);
-            
+  
             }
     
     }
