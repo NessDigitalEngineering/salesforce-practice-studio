@@ -1,5 +1,4 @@
 import { api, LightningElement, track} from 'lwc';
-import { updateRecord} from 'lightning/uiRecordApi';
 import getUserCredentials from '@salesforce/apex/CredentialAssignmentController.getUserCredentials';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import insertCredAssignments from '@salesforce/apex/CredentialAssignmentController.insertCredAssignments';
@@ -60,9 +59,9 @@ this.handleCredential(event);
 
 handleCredential(event){
 this.columns = cols;
-var tempSelectRecords = [];
-var mapCheck=[];
- this.myMap = {};
+const tempSelectRecords = [];
+
+this.myMap = {};
 if(this.selectedUserName && event.detail.selRecords){
     
     for (const rec of event.detail.selRecords) 
@@ -123,8 +122,8 @@ rowactionDelete(event) {
         
     }
 
-    var tempResponse = [];
-    var tempObject = {};
+    const tempResponse = [];
+    const tempObject = {};
     if(this.credentials){
 
         for (const res of this.credentials) {
@@ -162,8 +161,8 @@ getUserCredentials(
 ).then(response=>{
    
    
-    var tempResponse = [];
-    var tempObject = {};
+    const tempResponse = [];
+    const tempObject = {};
     if(response){
         
         for (const res of response) {
@@ -180,12 +179,11 @@ getUserCredentials(
                 
             tempObject.controlEditField = false;
             tempObject.deleteIcon = true;
-            //tempObject.credName = res.credName ? "slds-text-color_error":"slds-text-color_success";
+            
             this.saveButtonHide = false;
            }
             
-            //tempResponse.push(tempObject);
-            tempResponse.unshift(tempObject);
+           tempResponse.unshift(tempObject);
             
         }
     }
@@ -206,7 +204,7 @@ handleClick(event)
 {
     insertCredAssignments({credAssignmentList:this.credentials})
 
-       .then(result => {
+       .then(_result => {
 
 
 

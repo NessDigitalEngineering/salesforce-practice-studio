@@ -5,7 +5,7 @@ public class UserSearchControllerTest {
     static void setup() {
         
         //For create user
-        User usrs = TestDataFactory.createUser();
+        TestDataFactory.createUser();
     }
     
     static testMethod void getUsersTest() {

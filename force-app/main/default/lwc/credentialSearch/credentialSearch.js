@@ -2,7 +2,7 @@ import { LightningElement,api,track } from 'lwc';
 import getResults from '@salesforce/apex/CredentialSearchController.getCredentials';
 
 import UserSearchLabel from '@salesforce/label/c.UserSearchLabel';
-import { APPLICATION_SCOPE } from 'lightning/messageService';
+
 
 export default class CredentialSearch extends LightningElement {
 
@@ -20,8 +20,8 @@ UserLabels = UserSearchLabel;
 @track iconDisplay =[];
 searchField(event) {
     
-    var currentText = event.target.value;
-    var selectRecId = [];
+    const currentText = event.target.value;
+    const selectRecId = [];
     
     for (const selRec of this.selectedRecords) {
         selectRecId.push(selRec.recId);
@@ -64,9 +64,9 @@ searchField(event) {
 
 setSelectedRecord(event) {
     
-    var recId = event.currentTarget.dataset.id;
-    var selectName = event.currentTarget.dataset.name;
-    var iconName = event.currentTarget.dataset.icon;
+    const recId = event.currentTarget.dataset.id;
+    const selectName = event.currentTarget.dataset.name;
+    const iconName = event.currentTarget.dataset.icon;
     console.log('icons'+iconName);
     this.iconDisplay = iconName;
     console.log('this.iconDisplay 476'+this.iconDisplay);

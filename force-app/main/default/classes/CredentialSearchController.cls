@@ -3,7 +3,7 @@ public with sharing class CredentialSearchController {
     @AuraEnabled(cacheable=true)
     public static List<Credential__c> getCredentials(String searchKey, List<String> selectedRecId,Id userId) {
         List<Credential__c> sObjectResultList = new List<Credential__c>();
-        set<string> credNames = new set<string>();  
+       
         
         if(selectedRecId == null)
             selectedRecId = new List<String>();

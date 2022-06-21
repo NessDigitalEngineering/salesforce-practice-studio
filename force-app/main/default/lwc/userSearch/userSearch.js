@@ -23,7 +23,7 @@ export default class UserSearch extends LightningElement {
    
 
     searchField(event) {
-        var currentText = event.target.value;
+        const currentText = event.target.value;
         this.LoadingText = true;
         
         getResults({searchKeyWord: currentText}).then(response=>{
@@ -55,8 +55,8 @@ export default class UserSearch extends LightningElement {
     }
     
    setSelectedRecord(event) {
-        var currentRecId = event.currentTarget.dataset.id;
-        var selectName =  event.currentTarget.dataset.name;
+        const currentRecId = event.currentTarget.dataset.id;
+        const selectName =  event.currentTarget.dataset.name;
         
         this.txtclassname =  'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
         this.iconFlag = false;
