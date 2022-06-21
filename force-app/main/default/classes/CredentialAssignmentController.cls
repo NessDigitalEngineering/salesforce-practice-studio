@@ -38,7 +38,7 @@ public with sharing class CredentialAssignmentController {
         CredentialData data =new CredentialData();
         data.credName = credmap.get(c);
         data.assignedDate = System.today();
-        data.status = 'Assigned';
+        data.status = '';
         data.assigneId=userId;
         data.credId=c;
         credenlsData2.add(data);
@@ -73,7 +73,7 @@ public with sharing class CredentialAssignmentController {
     List<User_Credential__c> userCredentials=new List<User_Credential__c>();
     for(CredentialData credData:credAssignmentList)
     {
-    if(credData.status == ''){
+    if(String.isBlank(credData.status)){
     User_Credential__c userCred=new User_Credential__c();
     userCred.Credential__c=credData.credId;
     userCred.Assigned_Date__c=credData.assignedDate;
