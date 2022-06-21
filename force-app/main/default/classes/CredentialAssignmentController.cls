@@ -4,8 +4,10 @@ public with sharing class CredentialAssignmentController {
 public static List<CredentialData> getUserCredentials(Map<String,String> credmap, string userId){
 
 List<CredentialData>  credenlsData = new List<CredentialData>();
+    
+UserCredentialService usCredService = new UserCredentialService ();
 
-List<User_Credential__c> credentialsRec = UserCredentialService.getActiveUserCredentials(userId); 
+List<User_Credential__c> credentialsRec = usCredService.getActiveUserCredentials(userId); 
 List<Id> lststring = new  List<Id>();
 
 for(User_Credential__c userCred:credentialsRec){
