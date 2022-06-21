@@ -59,7 +59,7 @@ this.handleCredential(event);
 
 handleCredential(event){
 this.columns = cols;
-const tempSelectRecords = [];
+let tempSelectRecords = [];
 
 this.myMap = {};
 if(this.selectedUserName && event.detail.selRecords){
@@ -122,8 +122,8 @@ rowactionDelete(event) {
         
     }
 
-    const tempResponse = [];
-    const tempObject = {};
+    let tempResponse = [];
+    let tempObject = {};
     if(this.credentials){
 
         for (const res of this.credentials) {
@@ -161,8 +161,8 @@ getUserCredentials(
 ).then(response=>{
    
    
-    const tempResponse = [];
-    const tempObject = {};
+    let tempResponse = [];
+    let tempObject = {};
     if(response){
         
         for (const res of response) {

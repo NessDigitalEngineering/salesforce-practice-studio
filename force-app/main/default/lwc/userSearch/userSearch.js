@@ -77,8 +77,8 @@ export default class UserSearch extends LightningElement {
         this.inputReadOnly = false;
         this.iconFlag = true;
         this.clearIconFlag = false;
-        var currentRecId = this.selectRecordName;
-        var selectName =  this.selectRecordId;
+        let currentRecId = this.selectRecordName;
+        let selectName =  this.selectRecordId;
 
         const selectedEvent = new CustomEvent('selected', { detail: {selectName, currentRecId}, });
 
