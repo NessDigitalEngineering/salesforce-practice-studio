@@ -25,3 +25,7 @@ div input[readonly] {
 .titleadjust{
     margin-left: 14px;
 }
+.iconAdjust{
+    left: 2px;
+    width:269px;
+}
