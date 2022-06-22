@@ -4,7 +4,6 @@
 * @description Apex controller for credentialsSearch component
 */
 public with sharing class CredentialSearchController {
-
  /*******************************************************************************************************
     * @description Returns Credential__c that are based on searchKey    
     * @param searchKey,selectedRecId and userId 

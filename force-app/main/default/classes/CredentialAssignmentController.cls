@@ -5,15 +5,11 @@
 */
 public with sharing class CredentialAssignmentController {
 
-    public CredentialAssignmentController(){
-
-    }
     /*******************************************************************************************************
     * @description Returns CredentialData that are based on user selection    
     * @param credmap and userId of wrapper class.
     * @return List of CredentialData 
     */ 
-
     @AuraEnabled(cacheable=true)
     public static List<CredentialData> getUserCredentials(Map<String,String> credmap, string userId){
     

@@ -5,6 +5,7 @@
 */
 
 public with sharing class UserCredentialService {
+    
     /*******************************************************************************************************
     * @description Returns User Credentials that are in progress     
     * @param userId SF id of user
