@@ -6,26 +6,26 @@ div input[readonly] {
 }
 
 .slds-input-has-icon .slds-input__icon {
-    top: 65% !important;
+    top: 2.40rem !important;
 }
 .slds-icon_small, .slds-icon--small {
     width: 1.5rem;
-    height: 1.5rem;
+    height: 1rem;
     line-height: 2;
 } 
 .custom-container {
-    width: 100%;
+    width: 1rem;
 } 
 .my-card{
-    border: 2px solid #ccc;
-    border-radius: 25px;
-    padding: 20px;
+    border: 0.125rem solid #ccc;
+    border-radius: 1.5625rem;
+    padding: 1.25rem;
     display: flex;
 }
 .titleadjust{
-    margin-left: 14px;
+    margin-left: 0.875rem;
 }
 .iconAdjust{
-    left: 2px;
-    width:269px;
+    left: 0.125rem;
+    width:16.813rem;
 }
