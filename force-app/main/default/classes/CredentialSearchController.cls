@@ -1,4 +1,15 @@
+/**
+* @author Maddileti Boya
+* @date   6/22/2022
+* @description Service Class containing method specific to Select Credentials
+*/
 public with sharing class CredentialSearchController {
+
+ /*******************************************************************************************************
+    * @description Returns Credential__c that are based on searchKey    
+    * @param searchKey,selectedRecId and userId 
+    * @return List of Credential__c 
+    */ 
   
     @AuraEnabled(cacheable=true)
     public static List<Credential__c> getCredentials(String searchKey, List<String> selectedRecId,Id userId) {

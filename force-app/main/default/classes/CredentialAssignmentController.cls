@@ -1,8 +1,18 @@
+/**
+* @author Maddileti Boya
+* @date   6/22/2022
+* @description Service Class containing methods specific to CredentialAssignment user story
+*/
 public with sharing class CredentialAssignmentController {
 
     public CredentialAssignmentController(){
 
     }
+    /*******************************************************************************************************
+    * @description Returns CredentialData that are based on user selection    
+    * @param credmap and userId of wrapper class.
+    * @return List of CredentialData 
+    */ 
 
     @AuraEnabled(cacheable=true)
     public static List<CredentialData> getUserCredentials(Map<String,String> credmap, string userId){
@@ -70,6 +80,10 @@ public with sharing class CredentialAssignmentController {
     return credenlsData;
     
     }
+    /*******************************************************************************************************
+    * @description Inserting credentials data that are based on credentials selection      
+    * @param credAssignmentList of wrapper class
+    */ 
     @AuraEnabled
     public static void insertCredAssignments(List<CredentialData> credAssignmentList)
     {    

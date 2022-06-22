@@ -1,4 +1,15 @@
+/**
+* @author Maddileti Boya
+* @date   6/22/2022
+* @description Service Class containing method specific to User Selection
+*/
 public with sharing class UserSearchController {
+
+    /*******************************************************************************************************
+    * @description Returns User that based on searchKeyWord    
+    * @param searchKeyWord of user
+    * @return List of User 
+    */ 
    
     @AuraEnabled(cacheable=true)
     public static List <User> getUsers(String searchKeyWord) {
