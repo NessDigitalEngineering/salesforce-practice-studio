@@ -1,7 +1,7 @@
 /**
 * @author Maddileti Boya
 * @date   6/22/2022
-* @description Service Class containing method specific to Select Credentials
+* @description Apex controller for credentialsSearch component
 */
 public with sharing class CredentialSearchController {
 

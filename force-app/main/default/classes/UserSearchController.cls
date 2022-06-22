@@ -1,7 +1,7 @@
 /**
 * @author Maddileti Boya
 * @date   6/22/2022
-* @description Service Class containing method specific to User Selection
+* @description Apex cotroller for userSearch component
 */
 public with sharing class UserSearchController {
 

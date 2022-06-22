@@ -1,7 +1,7 @@
 /**
 * @author Maddileti Boya
 * @date   6/22/2022
-* @description Service Class containing methods specific to CredentialAssignment user story
+* @description Apex controller for CredentialAssignment component
 */
 public with sharing class CredentialAssignmentController {
 

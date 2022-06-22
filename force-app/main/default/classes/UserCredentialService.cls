@@ -9,10 +9,8 @@ public with sharing class UserCredentialService {
     * @description Returns User Credentials that are in progress     
     * @param userId SF id of user
     * @return List of User Credentials 
-    */  
-   
-    public 
-     List<User_Credential__c> getActiveUserCredentials(Id userId) {        
+    */     
+    public List<User_Credential__c> getActiveUserCredentials(Id userId) {        
         try{
             return [Select id, Credential__c,Credential__r.name,Assigned_Date__c,Due_Date__c ,Status__c, User__c from User_Credential__c where User__r.id= :userId and User_Credential__c.Status__c != 'Completed'];        
         }
