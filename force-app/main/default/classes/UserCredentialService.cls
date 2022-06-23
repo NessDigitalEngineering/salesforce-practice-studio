@@ -16,7 +16,7 @@ public with sharing class UserCredentialService {
 				SELECT id, Credential__c, Credential__r.name, Assigned_Date__c, Due_Date__c, Status__c, User__c
 				FROM User_Credential__c
 				WHERE User__r.id = :userId AND User_Credential__c.Status__c != 'Completed'
-				
+				WITH SECURITY_ENFORCED
 			];
 		} catch (Exception ex) {
 			throw ex;
