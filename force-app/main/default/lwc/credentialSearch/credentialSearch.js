@@ -14,7 +14,7 @@ export default class CredentialSearch extends LightningElement {
     "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click";
   @track messageFlag = false;
   UserLabels = UserSearchLabel;
-
+  title ='Select Credentials';
   @api datesend = "";
   @track iconDisplay = [];
   searchField(event) {

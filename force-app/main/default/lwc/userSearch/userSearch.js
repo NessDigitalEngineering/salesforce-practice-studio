@@ -20,7 +20,7 @@ export default class UserSearch extends LightningElement {
   @track clearIconFlag = false;
   @track inputReadOnly = false;
   userLabel = UserSearchLabel;
-
+  title = 'Select User';
   searchField(event) {
     const currentText = event.target.value;
     this.LoadingText = true;

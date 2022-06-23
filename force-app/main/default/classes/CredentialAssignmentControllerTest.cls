@@ -9,16 +9,18 @@ private class CredentialAssignmentControllerTest {
     
     static testMethod void getCredentialsTest() {
         Map<String,String> credentialsId = new Map<String,String>(); 
-        Credential__c c = [SELECT Id,name FROM Credential__c limit 1];
-        credentialsId.put(c.id,c.name);
+        List<Credential__c> credList = [SELECT Id,name FROM Credential__c];
+        for(Credential__c cred : credList){
+            credentialsId.put(cred.id,cred.name);
+        }
         User usrs = TestDataFactory.createUser();
-        User_Credential__c usrCred = TestDataFactory.createUserCredentials(usrs.id,c.id);
+        User_Credential__c usrCred = TestDataFactory.createUserCredentials(usrs.id,credList[0].id);
         usrCred.Status__c='Ready';
+        usrCred.Due_Date__c= system.today();
         insert usrCred;
 
-    
         Test.startTest();
-        CredentialAssignmentController.getUserCredentials(credentialsId,usrs.Id);
+          CredentialAssignmentController.getUserCredentials(credentialsId,usrs.Id);
         Test.stopTest();
   
     }

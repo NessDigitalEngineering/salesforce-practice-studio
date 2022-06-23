@@ -77,7 +77,7 @@ export default class CredentialAssignment extends LightningElement {
   @track isDataAvaialable = false;
   @track saveButtonHide = false;
   draftValues = [];
-
+  title = 'List of Assignments';
   wiredRecords;
   refreshTable;
   myMap = {};
