@@ -9,7 +9,7 @@ private class CredentialAssignmentControllerTest {
         System.runAs(usrs){
             List<Credential__c> credList = TestDataFactory.createCredentials(); 
             User_Credential__c usrCred = TestDataFactory.createUserCredentials(usrs.id,credList[0].id);
-            usrCred.Status__c='Ready';
+            usrCred.Status__c='Preparing';
             usrCred.Due_Date__c= system.today();
             usrCred.Assigned_By__c = userinfo.getUserId(); 
             insert usrCred;
