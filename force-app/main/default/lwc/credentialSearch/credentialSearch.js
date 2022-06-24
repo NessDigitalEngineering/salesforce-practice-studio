@@ -11,7 +11,7 @@ export default class CredentialSearch extends LightningElement {
   @api iconName;
   @api LoadingText = false;
   @track txtclassname =
-    "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click";
+    "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click test1";
   @track messageFlag = false;
   UserLabels = UserSearchLabel;
   title ='Select Credentials';
@@ -39,8 +39,8 @@ export default class CredentialSearch extends LightningElement {
 
         this.txtclassname =
           result.length > 0
-            ? "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
-            : "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click";
+            ? "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open test1"
+            : "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click test1";
         if (currentText.length > 0 && result.length == 0) {
           this.messageFlag = true;
         } else {
@@ -75,7 +75,7 @@ export default class CredentialSearch extends LightningElement {
 
     this.selectedRecords.push(newsObject);
     this.txtclassname =
-      "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click";
+      "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click test1";
     let selRecords = this.selectedRecords;
 
     this.template.querySelectorAll("lightning-input").forEach((each) => {
