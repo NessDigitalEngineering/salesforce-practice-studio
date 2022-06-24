@@ -24,9 +24,8 @@ private class CredentialAssignmentControllerTest {
         }
         User usrs = [select id,name from User where Email= 'puser000@amamama.com' limit 1];
         System.runAs(usrs){
-            User_Credential__c credUser = [SELECT Id,name,Credential__r.name FROM User_Credential__c limit 1];
             Test.startTest();
-            CredentialAssignmentController.getUserCredentials(credentialsId,usrs.Id);
+              CredentialAssignmentController.getUserCredentials(credentialsId,usrs.Id);
             Test.stopTest();
         } 
         
