@@ -18,7 +18,7 @@ public with sharing class CredentialAssignmentController {
 
 		List<User_Credential__c> credentialsRec = usCredService.getActiveUserCredentials(userId);
 		List<Id> lststring = new List<Id>();
-
+       System.debug('456'+credentialsRec);
 		for (User_Credential__c userCred : credentialsRec) {
 			if (userCred.Status__c != 'Completed') {
 				CredentialData data = new CredentialData();
