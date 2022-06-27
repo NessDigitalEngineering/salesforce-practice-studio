@@ -1,0 +1,79 @@
+<template>
+
+   <!-- modal start -->      
+   <template if:true={isShowModal}>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+       <div class="slds-modal__container" style="width:60% !important;max-width:60% !important;height:90% !important;min-height:90% !important;max-height:90% !important;">
+        <!-- modal header start -->
+          <header class="slds-modal__header">
+             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+             <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Voucher Request</h2>
+          </header>
+      
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_6-of-12 slds-p-top_large slds-p-left_large slds-p-right_large">
+                  <span >
+                    <lightning-combobox name="CredentialName" label="Credential Name" placeholder="Select Credential" options={totalUserCredentials} onchange={handleCredentialChange} ></lightning-combobox>
+                  </span>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-p-top_large slds-p-left_large slds-p-right_large">
+                    <span >
+                        <lightning-input type="date" name="examDate" label="When are you planning for your exam?" onchange={handleExamDateChangeEvent}  ></lightning-input>
+                    </span>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-p-around_large">
+                    <span >
+                        <lightning-textarea name="comments"  required label="Are you ready for your exam? Please share your comments."  onchange={handleCommentsChangeEvent}></lightning-textarea>
+                    </span>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-p-around_large">
+                    <div class="slds-grid slds-grid_vertical">
+                        <div class="slds-col  slds-size_12-of-12" >
+                            <span> Peparation Documents
+                                <lightning-helptext class="slds-m-left_x-small slds-p-bottom_medium" icon-name="utility:info" content="Please upload the course completion evidences from the respective official trining sites."></lightning-helptext>
+                            </span>
+                        </div>
+                        <div></div>
+                        <div class="slds-col  slds-size_12-of-12" >
+                            <span>
+                                <lightning-input type="file" label=""
+                                accept={acceptedFormats}
+                                onchange={handleFilesChange}
+                                ></lightning-input>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-col--padded slds-size_12-of-12" >
+                            <div style="width: 215px">
+                                <span class="slds-p-around_xx-large">
+                                    <div class="slds-tabs_card slds-align-middle slds-p-top_xx-large">
+                                        <lightning-formatted-rich-text value='<span class="slds-text-color_destructive">Help:</span> The document size cannot exceed 5 MB and must be one of the format: .docx, .pdf, .jpg.'></lightning-formatted-rich-text>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>                                
+                    </div>
+                </div>
+              </div>
+          </div>
+
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+            <lightning-button label="Cancel" title="Cancel" onclick={hideModalBox} ></lightning-button>
+            <lightning-button label="Submit" title="Submit" onclick={handleSubmit} variant="brand"  class="slds-m-left_x-small"></lightning-button>  
+        </footer>
+       
+       </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+ </template>
+ <!-- modal end -->
+
+</template>
