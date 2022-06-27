@@ -22,8 +22,8 @@ public class TestDataFactory {
         insert new PermissionSetAssignment(AssigneeId = usr.id, PermissionSetId = ps.Id);
     }
 
-    public static void createCredentials(){
-        insert new List<Credential__c>{new Credential__c(            
+    public static List<Credential__c> createCredentials(){
+        List<Credential__c> credLists = new List<Credential__c>{new Credential__c(            
                                                             Alias__c= 'Salesforce Certified Platform Developer II',
                                                             EU_Target__c = 3,
                                                             External_ID__c = 'Platform_Developer_II',
@@ -52,7 +52,12 @@ public class TestDataFactory {
                                                             Type__c = 'Trailhead',
                                                             URL__c = 'https://trailhead.salesforce.com/help?article=Salesforce-Certified-Platform-Developer-I-Exam-Guide',
                                                             US_Target__c = 2,
+         
                                                             Visible_in_Partner_Community_Cert_Tab__c = true)};
+                                                                
+          insert credLists;                                                      
+          return credLists;                                                      
+                                                               
     }
 
     public static User_Credential__c createUserCredentials(Id userId,Id credentialId){

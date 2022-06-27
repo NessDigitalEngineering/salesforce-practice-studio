@@ -1,0 +1,15 @@
+.slds-table tr th:first-child{
+
+    width:0 !important;
+
+}
+.table-test thead th span {
+    font-size:12px
+	}
+	
+	.table-test td span {
+    font-size:12px
+	}
+.slds-resizable__divider{
+height: 0px;
+}

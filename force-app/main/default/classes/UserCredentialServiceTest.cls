@@ -52,8 +52,7 @@ private class UserCredentialServiceTest {
             insert usrCredentials;
 
             Test.startTest();
-            UserCredentialService ucService = new UserCredentialService();
-            List<User_Credential__c> ucList = ucService.getCompletedUserCredentials(usr.Id);
+            UserCredentialService.getCompletedUserCredentials(usr.Id);
             Test.stopTest();
 
             System.assertEquals(credential.Id, [Select Credential__c from User_Credential__c where user__c =:usr.id][0].Credential__c, 'Testing whether completed User Credential record is fetched');
@@ -69,8 +68,9 @@ private class UserCredentialServiceTest {
             usrCredentials.Status__c = 'Completed';
             insert usrCredentials;
             try {
-                UserCredentialService ucService = new UserCredentialService();
-                List<User_Credential__c> ucList = ucService.getCompletedUserCredentials(usr.id);
+                
+            UserCredentialService.getCompletedUserCredentials(usr.Id);
+           
             } catch (Exception ex) {
                 system.assert(ex.getMessage().contains('Insufficient permissions'));                
             }
