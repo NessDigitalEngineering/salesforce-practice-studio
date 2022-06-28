@@ -96,7 +96,7 @@ export default class CredentialTrackingLWC extends LightningElement {
             }, this.progress);
         }
     }
-    processData(data) {
+    processData(data) { 
         this.totalUserCredentials = data;
         this.countRec = data.length;
         let selectedRec = [];
