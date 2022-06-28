@@ -4,7 +4,7 @@ import getUserCredentials from '@salesforce/apex/CredentialAssignmentController.
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import insertCredAssignments from '@salesforce/apex/CredentialAssignmentController.insertCredAssignments';
 import {loadStyle} from 'lightning/platformResourceLoader';
-import REMOVEROW from '@salesforce/resourceUrl/removeRow'
+//import REMOVEROW from '@salesforce/resourceUrl/removeRow'
 
 const cols = [ { type: 'button-icon',fixedWidth:35,
 typeAttributes:
@@ -142,7 +142,7 @@ rowactionDelete(event) {
     }       
 }
 renderedCallback(){ 
-    Promise.all([
+   /* Promise.all([
 
        // loadStyle( this, REMOVEROW)
 
@@ -153,7 +153,7 @@ renderedCallback(){
         })
         .catch(error => {
             console.log( 'error',error );
-    });
+    });*/
     } 
 getdata(){
     

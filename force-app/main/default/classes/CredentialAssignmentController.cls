@@ -4,8 +4,9 @@ public with sharing class CredentialAssignmentController {
 public static List<CredentialData> getUserCredentials(Map<String,String> credmap, string userId){
 
 List<CredentialData>  credenlsData = new List<CredentialData>();
-
-List<User_Credential__c> credentialsRec = UserCredentialService.getActiveUserCredentials(userId); 
+List<CredentialData>  credenlsData2 = new List<CredentialData>();
+UserCredentialService usc = new UserCredentialService();
+List<User_Credential__c> credentialsRec = usc.getActiveUserCredentials(userId); 
 List<Id> lststring = new  List<Id>();
 
 for(User_Credential__c userCred:credentialsRec){
@@ -27,17 +28,42 @@ lststring.add(userCred.Credential__r.Id);
 
 }
 
+date latestDate;  
+
 for( String c:credmap.keySet()){
 
 if(!lststring.contains(c)) {
     CredentialData data =new CredentialData();
     data.credName = credmap.get(c);
     data.assignedDate = System.today();
-    data.dueData = System.today()+90;
-    data.status = '';
+    data.status = 'Assigned';
     data.assigneId=userId;
     data.credId=c;
+    credenlsData2.add(data);
+
+    if(credenlsData2.size() == 1){
+        if(credenlsData.size() > 0){
+            integer x = credenlsData.size();
+            data.dueData = credenlsData[x-1].dueData+90;
+                  latestDate = Date.valueOf(credenlsData[x-1].dueData)+90;
+        }else{
+            data.dueData = System.today()+90;
+                  latestDate = System.today()+90;
+        }
+    }
+    else{           
+        data.dueData = latestDate + 90;
+        latestDate =  latestDate + 90;
+    }
     credenlsData.add(data);
+
+
+
+    //data.dueData = System.today()+90;
+    //data.status = '';
+    //data.assigneId=userId;
+    //data.credId=c;
+    //credenlsData.add(data);
         
         }
 

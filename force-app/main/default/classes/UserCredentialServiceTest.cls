@@ -1,6 +1,6 @@
 @IsTest
 private class UserCredentialServiceTest {
-    @TestSetup
+    /*@TestSetup
     static void makeData(){
         TestDataFactory.createCredentials();        
     }
@@ -146,5 +146,5 @@ private class UserCredentialServiceTest {
                 system.assert(ex.getMessage().contains('Insufficient permissions')); 
             }
         }
-    }
+    }*/
 }
