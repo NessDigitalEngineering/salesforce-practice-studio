@@ -4,8 +4,8 @@ public with sharing class CredentialAssignmentController {
 public static List<CredentialData> getUserCredentials(Map<String,String> credmap, string userId){
 
 List<CredentialData>  credenlsData = new List<CredentialData>();
-
-List<User_Credential__c> credentialsRec = UserCredentialService.getActiveUserCredentials(userId); 
+UserCredentialService ucService = new UserCredentialService();
+List<User_Credential__c> credentialsRec = ucService.getActiveUserCredentials(userId); 
 List<Id> lststring = new  List<Id>();
 
 for(User_Credential__c userCred:credentialsRec){
