@@ -10,8 +10,9 @@ public with sharing class CredentialSearchController {
 	 * @return List of Credential__c
 	 */
 
+
 	@AuraEnabled
-	public static List<Credential__c> getCredentials(String searchKey, List<String> selectedRecId, Id userId) {
+  public static List<Credential__c> getCredentials(String searchKey, List<String> selectedRecId, Id userId) {
 		List<Credential__c> sObjectResultList = new List<Credential__c>();
 
 		if (selectedRecId == null)

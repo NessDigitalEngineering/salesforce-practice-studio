@@ -34,7 +34,6 @@ export default class CredentialSearch extends LightningElement {
     })
       .then((result) => {
         this.searchRecords = result;
-        
         this.LoadingText = false;
 
         this.txtclassname =
@@ -68,6 +67,11 @@ export default class CredentialSearch extends LightningElement {
     const recId = event.currentTarget.dataset.id;
     const selectName = event.currentTarget.dataset.name;
     const iconName = event.currentTarget.dataset.icon;
+
+    
+    this.iconDisplay = iconName;
+    
+
     
     this.iconDisplay = iconName;
     

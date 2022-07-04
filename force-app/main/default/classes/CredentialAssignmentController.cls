@@ -9,8 +9,9 @@ public with sharing class CredentialAssignmentController {
 	 * @param credmap and userId of wrapper class.
 	 * @return List of CredentialData
 	 */
+
 	@AuraEnabled
-	public static List<CredentialData> getUserCredentials(Map<String, String> credmap, string userId) {
+  public static List<CredentialData> getUserCredentials(Map<String, String> credmap, string userId) {
 		List<CredentialData> credenlsData = new List<CredentialData>();
 		List<CredentialData> credenlsData2 = new List<CredentialData>();
 
