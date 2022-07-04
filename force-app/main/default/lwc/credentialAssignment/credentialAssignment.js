@@ -207,13 +207,7 @@ export default class CredentialAssignment extends LightningElement {
     insertCredAssignments({ credAssignmentList: this.credentials })
       .then((_result) => {
 
-        
-        this.dispatchEvent(
-          new ShowToastEvent({
-            //title: this.constant.VAR_SUCCESS,
-          
-
-        this.dispatchEvent(
+       this.dispatchEvent(
           new ShowToastEvent({
             //title: this.constant.VAR_SUCCESS,
 

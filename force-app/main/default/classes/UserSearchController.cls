@@ -10,7 +10,7 @@ public with sharing class UserSearchController {
 	 * @return List of User
 	 */
 
-=======
+
 	@AuraEnabled
   public static List<User> getUsers(String searchKeyWord) {
 		String searchKey = searchKeyWord + '%';
