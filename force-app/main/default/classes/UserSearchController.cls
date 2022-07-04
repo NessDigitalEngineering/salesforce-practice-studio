@@ -9,7 +9,7 @@ public with sharing class UserSearchController {
 	 * @param searchKeyWord of user
 	 * @return List of User
 	 */
-	@AuraEnabled(cacheable=true)
+	@AuraEnabled
 	public static List<User> getUsers(String searchKeyWord) {
 		String searchKey = searchKeyWord + '%';
 		List<User> returnList = new List<User>();

@@ -91,7 +91,7 @@ export default class CredentialAssignment extends LightningElement {
   handleCredential(event) {
     this.columns = cols;
     let tempSelectRecords = [];
-
+    
     this.myMap = {};
     if (this.selectedUserName && event.detail.selRecords) {
       for (const rec of event.detail.selRecords) {
@@ -172,6 +172,7 @@ export default class CredentialAssignment extends LightningElement {
       .then((response) => {
         let tempResponse = [];
         let tempObject = {};
+        
         if (response) {
           for (const res of response) {
             tempObject = { ...res };
@@ -206,16 +207,17 @@ export default class CredentialAssignment extends LightningElement {
   handleClick(event) {
     insertCredAssignments({ credAssignmentList: this.credentials })
       .then((_result) => {
+        
         this.dispatchEvent(
           new ShowToastEvent({
             //title: this.constant.VAR_SUCCESS,
-
+          
             message: this.constant.MSG_UPD,
 
             variant: this.constant.VAR_SUCCESS,
           })
         );
-
+      
         this.credentials = [];
 
         this.template.querySelector("c-Credential-Search").resetCredentials();
@@ -224,6 +226,7 @@ export default class CredentialAssignment extends LightningElement {
         this.selectedCredentials = [];
 
         this.isDataAvaialable = false;
+        
       })
 
       .catch((error) => {
@@ -232,6 +235,7 @@ export default class CredentialAssignment extends LightningElement {
 
     this.draftValues = event.detail.draftValues;
     this.draftValues = [];
+    
   }
   handleSortCaseData(event) {
     this.sortBy = event.detail.fieldName;
@@ -256,4 +260,5 @@ export default class CredentialAssignment extends LightningElement {
     });
     this.credentials = parseData;
   }
+
 }
