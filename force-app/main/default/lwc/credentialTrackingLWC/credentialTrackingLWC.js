@@ -9,7 +9,7 @@ import ShowmoreTitle from '@salesforce/label/c.CredentialTrackingLWC_ShowmoreTit
 import ShowlessTitle from '@salesforce/label/c.CredentialTrackingLWC_ShowlessTitle';
 
 export default class CredentialTrackingLWC extends LightningElement {
-
+ 
     label = { CompTitle, ShowmoreTitle , ShowlessTitle};
     userIds = USER_ID;
     title;
