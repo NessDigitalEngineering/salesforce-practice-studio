@@ -32,13 +32,13 @@ export default class CredentialTrackingLWC extends LightningElement {
 
     @wire(getPicklistValues, { recordTypeId: '$userCredentialMetadata.data.defaultRecordTypeId', fieldApiName: STATUS })
     picklistValues({ data, error }) {
-        //alert(data);
+        
         if (data) {
             for (const statusVal of data.values) {
                 this.statusValues.push(statusVal.value);
             }
             this.statusValuesReady = true;
-            //alert(this.statusValuesReady);
+            
         }
         if (error) {
             console.log(error);
