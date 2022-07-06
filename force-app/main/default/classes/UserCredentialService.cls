@@ -13,7 +13,7 @@ public with sharing class UserCredentialService {
 	public List<User_Credential__c> getActiveUserCredentials(Id userId) {
 		try {
 			return [
-				SELECT id, Credential__c, Credential__r.name, Assigned_Date__c, Due_Date__c, Status__c, User__c
+				SELECT id, Credential__c, Credential__r.name, Assigned_Date__c, Due_Date__c, Status__c, User__c,Badge_Icon__c
 				FROM User_Credential__c
 				WHERE User__r.id = :userId AND User_Credential__c.Status__c != 'Completed'
 				WITH SECURITY_ENFORCED
