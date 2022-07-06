@@ -2,6 +2,7 @@ import { LightningElement, wire, track, api } from "lwc";
 import getCompletedUserCredentials from "@salesforce/apex/UserCredentialService.getCompletedUserCredentials";
 import strUserId from "@salesforce/user/Id";
 export default class EarnedCredentials extends LightningElement {
+
   userIds = strUserId;
   title;
   userCredentialsData;
@@ -14,6 +15,7 @@ export default class EarnedCredentials extends LightningElement {
   @track loaded = false;
   @track totalUserCredentials;
   @api senddata = "";
+  @track showIcon=false;
 
   @wire(getCompletedUserCredentials, { userId: "$senddata" }) userdata({
     data,
@@ -31,11 +33,13 @@ export default class EarnedCredentials extends LightningElement {
         }
         this.initialRecords = true;
         this.userCredentialsData = selectedRec;
-      } else {
+      } else{
+        if(data.length == 0){
+          this.showIcon=true;
+        }
         this.initialRecords = true;
         this.userCredentialsData = data;
       }
-
       this.title = "Earned Credentials (" + data.length + ")";
       this.loaded = true;
     } else if (error) {
