@@ -49,8 +49,8 @@ jobs:
       # Check Unit Test code coverage
       - name: 'Check code coverage'
         run: |
-          'ls -alt testLog'
-          'cat testLog/test-result.txt | grep \"Org Wide Coverage\"'
+          ls -alt testLog
+          grep "Org Wide Coverage" testLog/test-result.txt
 
       # Delete scratch org
       - name: delete scratch org
