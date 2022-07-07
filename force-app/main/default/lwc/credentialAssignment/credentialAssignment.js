@@ -129,14 +129,14 @@ export default class CredentialAssignment extends LightningElement {
 
     if (window.confirm(this.constant.DEL_CONFIRM)) {
       for (let cred in this.credentials) {
-        if (
-          this.credentials[cred].credName === event.detail.row.credName &&
-          this.credentials[cred].status == ""
-        ) {
+        if (this.credentials[cred].credName === event.detail.row.credName){
+          if(this.credentials[cred].status == ""){
+        
           this.template
             .querySelector("c-Credential-Search")
             .removeCredentials(this.credentials[cred].credName);
           this.credentials.splice(cred, 1);
+          }
         }
       }
 
