@@ -49,7 +49,7 @@ jobs:
       # Check Unit Test code coverage
       - name: 'Check code coverage'
         run: | 
-          echo $(((grep "Org Wide Coverage" testLog/test-result.txt|awk '{print $NF}'|sed 's/%//g') > 75))         
+          echo $(((grep \"Org Wide Coverage\" testLog/test-result.txt|awk '{print $NF}'|sed 's/%//g') > 75))         
           echo "Code coverage is less than 75%%"
           exit 1
 
