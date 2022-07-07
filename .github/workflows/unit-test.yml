@@ -46,6 +46,10 @@ jobs:
       - name: 'Run Apex tests'
         run: 'sfdx force:apex:test:run --verbose -c -r human -d testLog -w 140'
 
+      # Check Unit Test code coverage
+      - name: 'Check code coverage'
+        run: 'ls -al testLog'
+
       # Delete scratch org
       - name: delete scratch org
         if: always()
