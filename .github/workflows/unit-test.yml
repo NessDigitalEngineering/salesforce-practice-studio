@@ -50,7 +50,7 @@ jobs:
       - name: 'Check code coverage'
         run: |
           ls -alt testLog
-          grep "Org Wide Coverage" testLog/test-result.txt
+          grep "Org Wide Coverage" testLog/test-result.txt|awk '{print $NF}'|sed 's/%//g'
 
       # Delete scratch org
       - name: delete scratch org
