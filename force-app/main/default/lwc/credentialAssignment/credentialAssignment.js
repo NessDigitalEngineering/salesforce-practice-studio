@@ -131,7 +131,7 @@ export default class CredentialAssignment extends LightningElement {
       for (let cred in this.credentials) {
         if (this.credentials[cred].credName === event.detail.row.credName){
           if(this.credentials[cred].status == ""){
-        
+          this.saveButtonHide = true;
           this.template
             .querySelector("c-Credential-Search")
             .removeCredentials(this.credentials[cred].credName);
@@ -148,9 +148,7 @@ export default class CredentialAssignment extends LightningElement {
           tempObject = { ...res };
           tempResponse.push(tempObject);
           tempObject = {};
-          if(res.status == ""){
-            this.saveButtonHide = true;
-          }
+          
         }
       }
 
