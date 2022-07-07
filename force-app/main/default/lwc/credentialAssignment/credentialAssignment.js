@@ -147,18 +147,18 @@ export default class CredentialAssignment extends LightningElement {
           tempObject = { ...res };
           tempResponse.push(tempObject);
           tempObject = {};
-        if(res.status == ""){
-            this.saveButtonHide = true;
-          }
+        if(res.status == "")
+          this.saveButtonHide = true;
+          
           
         }
       }
 
       this.credentials = tempResponse;
       this.removeCredentials = this.credentials;
-      if (this.credentials.length == 0) {
+      if (this.credentials.length == 0) 
           this.isDataAvaialable = false;
-      }
+      
     }
   }
   renderedCallback() {
