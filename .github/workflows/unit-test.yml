@@ -53,7 +53,7 @@ jobs:
         run: |
           echo "Code coverage is less than 75%"
           exit 1
-
+          
       # Delete scratch org
       - name: delete scratch org
         if: always()
