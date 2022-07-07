@@ -48,10 +48,12 @@ jobs:
 
       # Check Unit Test code coverage
       - name: 'Check code coverage'
-        env: 
-          COVERAGE: ${{grep \"Org Wide Coverage\" testLog/test-result.txt|awk '{print $NF}'|sed 's/%//g'}}
         run: | 
-          echo ${COVERAGE}
+          threshold=75
+          if [ $(grep \"Org Wide Coverage\" testLog/test-result.txt|awk '{print $NF}'|sed 's/%//g') -gt $threshold ]
+          then
+            echo 'pass'
+          fi 
 
       # Delete scratch org
       - name: delete scratch org
