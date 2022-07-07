@@ -50,7 +50,7 @@ jobs:
       - name: 'Check code coverage'
         run: | 
           threshold=75
-          if [ $(grep \"Org Wide Coverage\" testLog/test-result.txt|awk '{print $NF}'|sed 's/%//g') -gt $threshold ]
+          if [ $(grep "Org Wide Coverage" testLog/test-result.txt|awk '{print $NF}'|sed 's/%//g') -gt $threshold ]
           then
             echo 'pass'
           fi 
