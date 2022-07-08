@@ -33,9 +33,8 @@ public with sharing class CredentialTrackingController {
          Boolean isSuccess= true;
          for (Database.SaveResult sr : srList) {
              if (sr.isSuccess()) {
-                 //console.log(sr.getId());
                                  }else {isSuccess =false; for(Database.Error err : sr.getErrors()) {
-                                    // console.log(err.getMessage());
+                                    
                                  }
              }
          }
