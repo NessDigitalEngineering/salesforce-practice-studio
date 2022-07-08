@@ -1,8 +1,8 @@
 @isTest
-public class CredentialTrackingLWCAPEX_Test {
+private class CredentialTrackingControllerTest {
 
     @isTest
-    public static void getUserCredentials(){
+    private static void getUserCredentials(){
         User usrs = TestDataFactory.createUser();
         TestDataFactory.assignPboAdminPermissions(usrs);
         System.runAs(usrs){
@@ -11,8 +11,10 @@ public class CredentialTrackingLWCAPEX_Test {
         TestDataFactory.createUserCredentials(usrs.Id,creds[0].Id);
         User_Credential__c uc= TestDataFactory.createUserCredentials(usrs.id,creds[0].Id);
         insert uc;
-        List<User_Credential__c> ucList = CredentialTrackingLWCAPEX.getUserCredentials(usrs.id);
-        CredentialTrackingLWCAPEX.updateUserCredential(ucList[0].Id, ucList[0].Status__c);
+        List<User_Credential__c> ucList = CredentialTrackingController.getUserCredentials(usrs.id);
+        system.assert(ucList.size() > 0);
+        CredentialTrackingController.updateUserCredential(ucList[0].Id, ucList[0].Status__c);
         }
    }
 }
+

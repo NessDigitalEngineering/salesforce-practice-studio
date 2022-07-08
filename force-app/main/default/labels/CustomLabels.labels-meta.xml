@@ -8,24 +8,24 @@
         <value>No result found.</value>
     </labels>
     <labels>
-        <fullName>CredentialTrackingLWC_ShowlessTitle</fullName>
+        <fullName>CredentialTracking_ShowlessTitle</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>CredentialTrackingLWC_ShowlessTitle</shortDescription>
+        <shortDescription>CredentialTracking_ShowlessTitle</shortDescription>
         <value>Show Less</value>
     </labels>
     <labels>
-        <fullName>CredentialTrackingLWC_ShowmoreTitle</fullName>
+        <fullName>CredentialTracking_ShowmoreTitle</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>CredentialTrackingLWC_ShowmoreTitle</shortDescription>
+        <shortDescription>CredentialTracking_ShowmoreTitle</shortDescription>
         <value>Show More</value>
     </labels>
     <labels>
-        <fullName>CredentialTrackingLWC_Title</fullName>
+        <fullName>CredentialTracking_Title</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>CredentialTrackingLWC_Title</shortDescription>
-        <value>My Credential Assignments</value>
+        <shortDescription>CredentialTracking_Title</shortDescription>
+        <value>My Assignments</value>
     </labels>
 </CustomLabels>

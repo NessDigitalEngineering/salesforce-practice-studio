@@ -1,18 +1,20 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { getObjectInfo, getPicklistValues } from 'lightning/uiObjectInfoApi';
 import STATUS from '@salesforce/schema/User_Credential__c.Status__c';
-import getUserCredentials from '@salesforce/apex/CredentialTrackingLWCAPEX.getUserCredentials';
-import updateUserCredential from '@salesforce/apex/CredentialTrackingLWCAPEX.updateUserCredential';
+import getUserCredentials from '@salesforce/apex/CredentialTrackingController.getUserCredentials';
+import updateUserCredential from '@salesforce/apex/CredentialTrackingController.updateUserCredential';
 import USER_ID from '@salesforce/user/Id';
-import CompTitle from '@salesforce/label/c.CredentialTrackingLWC_Title';
-import ShowmoreTitle from '@salesforce/label/c.CredentialTrackingLWC_ShowmoreTitle';
-import ShowlessTitle from '@salesforce/label/c.CredentialTrackingLWC_ShowlessTitle';
+import CompTitle from '@salesforce/label/c.CredentialTracking_Title';
+import ShowmoreTitle from '@salesforce/label/c.CredentialTracking_ShowmoreTitle';
+import ShowlessTitle from '@salesforce/label/c.CredentialTracking_ShowlessTitle';
+import AssignmentIcon from "@salesforce/resourceUrl/Assignment_Icon";
 
-export default class CredentialTrackingLWC extends LightningElement {
+export default class CredentialTracking extends LightningElement {
  
     label = { CompTitle, ShowmoreTitle , ShowlessTitle};
     userIds = USER_ID;
     title;
+    Icn = AssignmentIcon;
     userCredData;
     statusValuesReady = false;
     @api boxStyle = "height:12rem;";
@@ -26,7 +28,7 @@ export default class CredentialTrackingLWC extends LightningElement {
     @track showMoreRecords = false; 
     @track showLess=false;
     @track userCredData;
-
+    @track showIcon = false;
     @wire(getObjectInfo, { objectApiName: 'User_Credential__c' })
     userCredentialMetadata;
 
@@ -76,6 +78,9 @@ export default class CredentialTrackingLWC extends LightningElement {
             });
     }
     processStatusValues() {
+        
+        const three_sec = 3000;
+
         if (this.statusValuesReady) {
             this.totalUserCredentials.forEach(e => {
                 if (e.Status__c && e.Status__c != 'Completed') {
@@ -85,12 +90,12 @@ export default class CredentialTrackingLWC extends LightningElement {
                 }
             });
             this.processData(this.totalUserCredentials);
-        } else {
-            this.progress = 3000;
+        } else { 
+            this.progress = three_sec;
             this._interval = setInterval(() => {
-                this.progress = this.progress + 3000;
+                this.progress = this.progress + three_sec;
                 this.processStatusValues();
-                if (this.progress === 6000) {
+                if (this.progress === (three_sec * 2)) {
                     clearInterval(this._interval);
                 }
             }, this.progress);
@@ -112,6 +117,9 @@ export default class CredentialTrackingLWC extends LightningElement {
                 this.userCredentialsData = selectedRec;
                 this.userCredData = selectedRec;
             } else {
+                if (data.length === 0) {
+					this.showIcon = true;
+				}
                 this.showMore = false;
                 this.initialRecords = true;
                 this.userCredentialsData = data;
