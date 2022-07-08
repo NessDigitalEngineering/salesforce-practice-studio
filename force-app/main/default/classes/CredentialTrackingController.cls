@@ -34,8 +34,7 @@ public with sharing class CredentialTrackingController {
          for (Database.SaveResult sr : srList) {
              if (sr.isSuccess()) {
                                  }else {isSuccess =false; for(Database.Error err : sr.getErrors()) {
-                                    
-                                 }
+                                    }
              }
          }
          return isSuccess; 
