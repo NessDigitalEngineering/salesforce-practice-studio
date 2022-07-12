@@ -17,7 +17,7 @@ export default class CredentialTracking extends LightningElement {
     Icn = AssignmentIcon;
     userCredData;
     statusValuesReady = false;
-    @api boxStyle = "height:12rem;";
+    @api boxStyle = "height:10.8rem;";
     @track loaded = false;
     @track userCredentialsData;
     @track statusValues = [];
@@ -29,6 +29,7 @@ export default class CredentialTracking extends LightningElement {
     @track showLess=false;
     @track userCredData;
     @track showIcon = false;
+    @track emptyRecords = true;
     @wire(getObjectInfo, { objectApiName: 'User_Credential__c' })
     userCredentialMetadata;
 
@@ -119,6 +120,7 @@ export default class CredentialTracking extends LightningElement {
             } else {
                 if (data.length === 0) {
 					this.showIcon = true;
+                    this.emptyRecords = false;
 				}
                 this.showMore = false;
                 this.initialRecords = true;
@@ -127,7 +129,7 @@ export default class CredentialTracking extends LightningElement {
         } else {
             this.userCredentialsData = data;
         }
-        this.title = this.label.CompTitle + ' (' + data.length + ')';
+        this.title = this.label.CompTitle;
         this.loaded = true;
     }
     showMoreRec() {

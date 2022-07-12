@@ -1,7 +1,7 @@
 import { LightningElement, api, track } from "lwc";
 import getResults from "@salesforce/apex/UserSearchController.getUsers";
 
-import UserSearchLabel from "@salesforce/label/c.UserSearchLabel";
+//import UserSearchLabel from "@salesforce/label/c.UserSearchLabel";
 
 export default class UserSearch extends LightningElement {
   @api objectName = "User";
@@ -19,7 +19,7 @@ export default class UserSearch extends LightningElement {
   @track iconFlag = true;
   @track clearIconFlag = false;
   @track inputReadOnly = false;
-  userLabel = UserSearchLabel;
+  userLabel = 'User';
   title = 'Select User';
   searchField(event) {
     const currentText = event.target.value;

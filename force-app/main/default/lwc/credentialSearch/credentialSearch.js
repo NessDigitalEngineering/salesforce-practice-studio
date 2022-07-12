@@ -1,7 +1,7 @@
 import { LightningElement, api, track } from "lwc";
 import getResults from "@salesforce/apex/CredentialSearchController.getCredentials";
 
-import UserSearchLabel from "@salesforce/label/c.UserSearchLabel";
+//import UserSearchLabel from "@salesforce/label/c.UserSearchLabel";
 
 export default class CredentialSearch extends LightningElement {
   @api Label;
@@ -13,7 +13,7 @@ export default class CredentialSearch extends LightningElement {
   @track txtclassname =
     "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click test1";
   @track messageFlag = false;
-  UserLabels = UserSearchLabel;
+  UserLabels = 'User';
   title ='Select Credentials';
   @api datesend = "";
   @track iconDisplay = [];
