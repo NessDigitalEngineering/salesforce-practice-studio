@@ -308,9 +308,8 @@ export default class CredentialAssignment extends LightningElement {
     });
     this.credentials = parseData;
   }
-  closeModal(event){
+  closeModal(){
     this.isDialogVisible = false;
-
-  }
+}
 
 }
