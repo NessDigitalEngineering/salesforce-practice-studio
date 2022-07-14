@@ -4,7 +4,8 @@ import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import insertCredAssignments from "@salesforce/apex/CredentialAssignmentController.insertCredAssignments";
 import { loadStyle } from "lightning/platformResourceLoader";
 import REMOVEROW from "@salesforce/resourceUrl/removeRow";
-
+import TasksIcon from "@salesforce/resourceUrl/TasksIcon";
+import headerTitle from "@salesforce/label/c.headerTitle";
 const cols = [
   {
     type: "button-icon",
@@ -45,6 +46,8 @@ const cols = [
       month: "numeric",
       year: "numeric",
     },
+    cellAttributes:{ class: "fa fa-pencil" },
+    
   },
   {
     label: "Status",
@@ -77,19 +80,28 @@ export default class CredentialAssignment extends LightningElement {
   @track isDataAvaialable = false;
   @track saveButtonHide = false;
   draftValues = [];
-  headerTitle = 'Credential Assignment';
+  headerTitle = headerTitle;
   title = 'List of Assignments';
   wiredRecords;
   refreshTable;
   myMap = {};
   @track sortBy;
   @track sortDirection;
+  @track disableButton = false;
+  icon = TasksIcon;
+  @track showIcon = true;
+  @track isDialogVisible = false;
+  @track deleteRow;
+  confirmMessage= 'Are you sure you want to delete this item ?';
+  conf = 'Confirmation';
+  defaultMessage = 'Nothing needs your attention right now. Check back later.';
   handleUserName(event) {
     this.selectedUserName = event.detail.currentRecId;
     this.handleCredential(event);
   }
 
   handleCredential(event) {
+    this.disableButton = true;
     this.columns = cols;
     let tempSelectRecords = [];
     this.myMap = {};
@@ -98,13 +110,18 @@ export default class CredentialAssignment extends LightningElement {
         tempSelectRecords.push(rec.recId);
         this.myMap[rec.recId] = rec.recName;
       }
-
       this.selectedCredentials = tempSelectRecords;
       this.isDataAvaialable = true;
+      this.showIcon = false;
+      
     } else {
       this.template.querySelector("c-Credential-Search").resetCredentials();
       this.selectedCredentials = tempSelectRecords;
+      
       this.isDataAvaialable = false;
+      this.saveButtonHide = false;
+      this.showIcon = true;
+      
     }
 
     if (this.selectedUserName != "") {
@@ -112,22 +129,25 @@ export default class CredentialAssignment extends LightningElement {
     }
   }
   handleDelete(event) {
-    try {
-      const action = event.detail.action.name;
+    this.isDialogVisible = true;
+    this.deleteRow = event;
 
+  }
+  deleteRecord(){
+    try {
+      const action = this.deleteRow.detail.action.name;
       //check for save or delete action
 
       if (action != "" && action == this.constant.ROWACTION_DELETE) {
-        this.rowactionDelete(event);
-      }
+        this.rowactionDelete(this.deleteRow);
+        }
     } catch (errorMsg) {
       console.log("error msg" + errorMsg);
     }
   }
   rowactionDelete(event) {
     //confirm to delete & invoke deleteRecord()
-
-    if (window.confirm(this.constant.DEL_CONFIRM)) {
+   if (this.constant.DEL_CONFIRM) {
       for (let cred in this.credentials) {
         if (this.credentials[cred].credName === event.detail.row.credName && 
           this.credentials[cred].status == "" ) {
@@ -141,20 +161,25 @@ export default class CredentialAssignment extends LightningElement {
 
       let tempResponse = [];
       let tempObject = {};
-      this.saveButtonHide = false;
+      this.disableButton = true;
+      this.myMap = {};
         for (const res of this.credentials) {
           tempObject = { ...res };
           tempResponse.push(tempObject);
           tempObject = {};
         if(res.status == ""){
             this.saveButtonHide = true;
+            this.disableButton = false;
           }
           
         }
+      this.isDialogVisible = false;
       this.credentials = tempResponse;
       this.removeCredentials = this.credentials;
       if (this.credentials.length == 0) {
           this.isDataAvaialable = false;
+          this.showIcon = true;
+          
       }
     }
   }
@@ -185,11 +210,13 @@ export default class CredentialAssignment extends LightningElement {
               tempObject.controlEditField = true;
               tempObject.deleteIcon = false;
               this.saveButtonHide = true;
+              this.disableButton = false;
             } else {
               tempObject.controlEditField = false;
               tempObject.deleteIcon = true;
 
-              this.saveButtonHide = false;
+              this.saveButtonHide = true;
+              this.disableButton = true;
             }
 
             tempResponse.unshift(tempObject);
@@ -199,8 +226,10 @@ export default class CredentialAssignment extends LightningElement {
         this.credentials = tempResponse;
         if (this.credentials.length > 0) {
           this.isDataAvaialable = true;
+          this.showIcon = false;
         } else {
           this.isDataAvaialable = false;
+          this.showIcon = true;
          }
       })
       .catch((error) => {
@@ -211,36 +240,50 @@ export default class CredentialAssignment extends LightningElement {
   handleClick(event) {
     insertCredAssignments({ credAssignmentList: this.credentials })
       .then((_result) => {
+        let tempResponse = [];
+        let tempObject = {};
+        for (const res of this.credentials) {
+              tempObject = { ...res };
 
-       this.dispatchEvent(
+            if (res.status == "") {
+              res.status = 'Assigned';
+              tempObject = { ...res };
+              tempResponse.push(tempObject);
+              tempObject.controlEditField = false;
+              tempObject.deleteIcon = true;
+
+              this.saveButtonHide = true;
+              this.disableButton = true;
+            } else {
+              tempResponse.push(tempObject);
+              tempObject.controlEditField = false;
+              tempObject.deleteIcon = true;
+
+              this.saveButtonHide = true;
+              this.disableButton = true;
+            }
+
+          }
+        
+        this.credentials = tempResponse;
+        this.dispatchEvent(
           new ShowToastEvent({
-            //title: this.constant.VAR_SUCCESS,
-
-
-            message: this.constant.MSG_UPD,
+           message: this.constant.MSG_UPD,
 
             variant: this.constant.VAR_SUCCESS,
           })
         );
 
-        this.credentials = [];
+     this.template.querySelector("c-Credential-Search").resetCredentials();
 
-        this.template.querySelector("c-Credential-Search").resetCredentials();
-        this.template.querySelector("c-User-Search").resetData();
-
-        this.selectedCredentials = [];
-
-        this.isDataAvaialable = false;
-
-      })
+     this.disableButton = true;
+     })
 
       .catch((error) => {
         console.log("Errorured:- " + error.body.message);
       });
 
     this.draftValues = event.detail.draftValues;
-    this.draftValues = [];
-
   }
   handleSortCaseData(event) {
     this.sortBy = event.detail.fieldName;
@@ -264,6 +307,10 @@ export default class CredentialAssignment extends LightningElement {
       return isReverse * ((x > y) - (y > x));
     });
     this.credentials = parseData;
+  }
+  closeModal(event){
+    this.isDialogVisible = false;
+
   }
 
 }
