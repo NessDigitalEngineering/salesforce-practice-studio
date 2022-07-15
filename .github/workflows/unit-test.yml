@@ -46,6 +46,17 @@ jobs:
       - name: 'Run Apex tests'
         run: 'sfdx force:apex:test:run --verbose -c -r human -d testLog -w 140'
 
+      # Check Unit Test code coverage
+      - name: 'Check code coverage'
+        run: | 
+          threshold=75
+          if [ $(grep "Org Wide Coverage" testLog/test-result.txt|awk '{print $NF}'|sed 's/%//g') -lt $threshold ]
+          then
+            exit 1
+          else
+            echo 'pass'
+          fi 
+
       # Delete scratch org
       - name: delete scratch org
         if: always()
