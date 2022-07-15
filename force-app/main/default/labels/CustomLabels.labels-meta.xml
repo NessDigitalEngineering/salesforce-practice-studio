@@ -28,4 +28,11 @@
         <shortDescription>CredentialTracking_Title</shortDescription>
         <value>My Assignments</value>
     </labels>
+        <labels>
+        <fullName>headerTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>headerTitle</shortDescription>
+        <value>Credential Assignment</value>
+    </labels>
 </CustomLabels>
