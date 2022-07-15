@@ -31,9 +31,11 @@ export default class EarnedCredentials extends LightningElement {
         }
         this.initialRecords = true;
         this.userCredentialsData = selectedRec;
+        
       } else {
         this.initialRecords = true;
         this.userCredentialsData = data;
+        
       }
 
       this.title = "Earned Credentials (" + data.length + ")";
@@ -43,7 +45,7 @@ export default class EarnedCredentials extends LightningElement {
     }
   }
   connectedCallback() {
-    getCompletedUserCredentials({ userId: this.userIds })
+    getCompletedUserCredentials({ userId: this.senddata })
       .then((res) => {
         this.totalUserCredentials = res;
       })
