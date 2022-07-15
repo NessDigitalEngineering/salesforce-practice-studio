@@ -13,3 +13,13 @@
 .slds-resizable__divider{
 height: 0px;
 }
+.slds-scrollable_x, .slds-scrollable--x {
+ background: white;
+}
+.slds-th__action {
+ background-color: white;
+}
+.slds-modal__container {
+    width: 25%;
+}
+
