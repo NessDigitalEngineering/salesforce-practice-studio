@@ -8,6 +8,27 @@
         <value>No result found.</value>
     </labels>
     <labels>
+        <fullName>CredentialTracking_ShowlessTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialTracking_ShowlessTitle</shortDescription>
+        <value>Show Less</value>
+    </labels>
+    <labels>
+        <fullName>CredentialTracking_ShowmoreTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialTracking_ShowmoreTitle</shortDescription>
+        <value>Show More</value>
+    </labels>
+    <labels>
+        <fullName>CredentialTracking_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialTracking_Title</shortDescription>
+        <value>My Assignments</value>
+    </labels>
+        <labels>
         <fullName>headerTitle</fullName>
         <language>en_US</language>
         <protected>true</protected>
