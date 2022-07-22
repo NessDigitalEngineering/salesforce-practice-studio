@@ -1,6 +1,7 @@
 import { LightningElement, wire, track, api } from "lwc";
 import getCompletedUserCredentials from "@salesforce/apex/UserCredentialService.getCompletedUserCredentials";
 import strUserId from "@salesforce/user/Id";
+import TasksIcon from "@salesforce/resourceUrl/TasksIcon";
 export default class EarnedCredentials extends LightningElement {
   userIds = strUserId;
   title;
@@ -14,6 +15,8 @@ export default class EarnedCredentials extends LightningElement {
   @track loaded = false;
   @track totalUserCredentials;
   @api senddata = "";
+  @track showIcon = true;
+  icon = TasksIcon;
 
   @wire(getCompletedUserCredentials, { userId: "$senddata" }) userdata({
     data,
@@ -37,8 +40,14 @@ export default class EarnedCredentials extends LightningElement {
         this.userCredentialsData = data;
         
       }
-
-      this.title = "Earned Credentials (" + data.length + ")";
+      if(this.countRec > 0){
+        this.showIcon = false;
+    this.title = "Earned Credentials (" + data.length + ")";
+  }else{
+    this.showIcon = true;
+    this.title = "Earned Credentials";
+  }
+  
       this.loaded = true;
     } else if (error) {
       console.log("error1" + JSON.stringify(error));

@@ -18,7 +18,7 @@ export default class CredentialTracking extends LightningElement {
     userCredData;
     statusValuesReady = false;
     @api boxStyle = "height:10.8rem;";
-    @track loaded = false;
+   @track loaded = false;
     @track userCredentialsData;
     @track statusValues = [];
     @track countRec;
@@ -129,8 +129,13 @@ export default class CredentialTracking extends LightningElement {
         } else {
             this.userCredentialsData = data;
         }
-        this.title = this.label.CompTitle;
-        this.loaded = true;
+        if(data.length > 0){
+            this.title = this.label.CompTitle + "(" + data.length + ")";
+          }else{
+            this.title = this.label.CompTitle;
+          }
+        //this.title = this.label.CompTitle;
+       this.loaded = true;
     }
     showMoreRec() {
         this.initialRecords = false;
