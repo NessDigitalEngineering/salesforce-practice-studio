@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>UserSearchLabel</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>UserSearchLabel</shortDescription>
+        <value>No result found.</value>
+    </labels>
+    <labels>
+        <fullName>CredentialTracking_ShowlessTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialTracking_ShowlessTitle</shortDescription>
+        <value>Show Less</value>
+    </labels>
+    <labels>
+        <fullName>CredentialTracking_ShowmoreTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialTracking_ShowmoreTitle</shortDescription>
+        <value>Show More</value>
+    </labels>
+    <labels>
+        <fullName>CredentialTracking_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialTracking_Title</shortDescription>
+        <value>My Assignments</value>
+    </labels>
+        <labels>
+        <fullName>headerTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>headerTitle</shortDescription>
+        <value>Credential Assignment</value>
+    </labels>
+</CustomLabels>

@@ -1,0 +1,25 @@
+.slds-table tr th:first-child{
+
+    width:0 !important;
+
+}
+.table-test thead th span {
+    font-size:12px
+	}
+	
+	.table-test td span {
+    font-size:12px
+	}
+.slds-resizable__divider{
+height: 0px;
+}
+.slds-scrollable_x, .slds-scrollable--x {
+ background: white;
+}
+.slds-th__action {
+ background-color: white;
+}
+.slds-modal__container {
+    width: 25%;
+}
+
