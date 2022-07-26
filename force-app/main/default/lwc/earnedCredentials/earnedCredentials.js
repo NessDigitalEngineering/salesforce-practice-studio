@@ -21,7 +21,6 @@ export default class EarnedCredentials extends LightningElement {
 	@api senddata = "";
 	@track showIcon = true;
 	icon = TasksIcon;
-	@track emptyRecords = true;
 
 	@wire(getCompletedUserCredentials, { userId: "$senddata" }) userdata({ data, error }) {
 		if (data) {
@@ -40,10 +39,10 @@ export default class EarnedCredentials extends LightningElement {
 					this.userCredentialsData = selectedRec;
 					this.userCredData = selectedRec;
 				} else {
-					if (this.countRec === 0) {
-						this.showIcon = true;
-						this.title = "Earned Credentials (" + data.length + ")";
-					}
+					// if (this.countRec === 0) {
+					// 	this.showIcon = true;
+					// 	this.title = "Earned Credentials (" + data.length + ")";
+					// }
 					this.showMore = false;
 					this.initialRecords = true;
 					this.userCredentialsData = data;
