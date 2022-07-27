@@ -1,62 +1,93 @@
 import { LightningElement, wire, track, api } from "lwc";
 import getCompletedUserCredentials from "@salesforce/apex/UserCredentialService.getCompletedUserCredentials";
 import strUserId from "@salesforce/user/Id";
+import TasksIcon from "@salesforce/resourceUrl/TasksIcon";
+import ShowmoreTitle from "@salesforce/label/c.CredentialTracking_ShowmoreTitle";
+import ShowlessTitle from "@salesforce/label/c.CredentialTracking_ShowlessTitle";
 export default class EarnedCredentials extends LightningElement {
-  userIds = strUserId;
-  title;
-  userCredentialsData;
-  userCredData;
-  @track countRec;
-  @track showMore = false;
-  @track showMre = false;
-  @track initialRecords = false;
-  @track showMoreRecords = false;
-  @track loaded = false;
-  @track totalUserCredentials;
-  @api senddata = "";
+	label = { ShowmoreTitle, ShowlessTitle };
+	userIds = strUserId;
+	title;
+	userCredentialsData;
+	@track userCredData;
+	@track countRec;
+	@track showMore = false;
+	@track showLess = false;
+	@track showMre = false;
+	@track initialRecords = false;
+	@track showMoreRecords = false;
+	@track loaded = false;
+	@track totalUserCredentials;
+	//@api senddata = "";
+	@track showIcon = true;
+	icon = TasksIcon;
 
-  @wire(getCompletedUserCredentials, { userId: "$senddata" }) userdata({
-    data,
-    error,
-  }) {
-    if (data) {
-      this.countRec = data.length;
-      let selectedRec = [];
-      if (this.countRec > 2) {
-        this.showMore = true;
-        for (let i = 0; i < this.countRec; i++) {
-          if (i < 2) {
-            selectedRec.push(data[i]);
-          }
-        }
-        this.initialRecords = true;
-        this.userCredentialsData = selectedRec;
-        
-      } else {
-        this.initialRecords = true;
-        this.userCredentialsData = data;
-        
-      }
+	@api get senddata() {
+		return this.userData;
+	}
 
-      this.title = "Earned Credentials (" + data.length + ")";
-      this.loaded = true;
-    } else if (error) {
-      console.log("error1" + JSON.stringify(error));
-    }
-  }
-  connectedCallback() {
-    getCompletedUserCredentials({ userId: this.senddata })
-      .then((res) => {
-        this.totalUserCredentials = res;
-      })
-      .catch((error) => {
-        console.log("error2" + JSON.stringify(error));
-      });
-  }
-  showMoreRec() {
-    this.initialRecords = false;
-    this.showMoreRecords = true;
-    this.showMore = false;
-    this.userCredentialsData = this.totalUserCredentials;
-  }
+	@wire(getCompletedUserCredentials, { userId: "$senddata" }) userdata({ data, error }) {
+		if (data) {
+			this.totalUserCredentials = data;
+			this.countRec = data.length;
+			let selectedRec = [];
+			if (!this.showMoreRecords) {
+				if (this.countRec > 2) {
+					this.showMore = true;
+					this.initialRecords = true;
+					for (let i = 0; i < this.countRec; i++) {
+						if (i < 2) {
+							selectedRec.push(data[i]);
+						}
+					}
+					this.userCredentialsData = selectedRec;
+					this.userCredData = selectedRec;
+				} else {
+					this.showMore = false;
+					this.initialRecords = true;
+					this.userCredentialsData = data;
+				}
+			} else {
+				this.showMore = false;
+				this.showLess = false;
+				this.userCredentialsData = data;
+			}
+			if (this.countRec > 0) {
+				this.showIcon = false;
+				this.title = "Earned Credentials (" + data.length + ")";
+			} else {
+				this.showIcon = true;
+				this.title = "Earned Credentials";
+			}
+
+			this.loaded = true;
+		} else if (error) {
+			console.log("error1" + JSON.stringify(error));
+		}
+	}
+
+	connectedCallback() {
+		getCompletedUserCredentials({ userId: this.senddata })
+			.then((res) => {
+				this.totalUserCredentials = res;
+			})
+			.catch((error) => {
+				console.log("error2" + JSON.stringify(error));
+			});
+	}
+	showMoreRec() {
+		this.initialRecords = false;
+		this.showMoreRecords = true;
+		this.showMore = false;
+		this.showLess = true;
+		this.userCredentialsData = this.totalUserCredentials;
+	}
+
+	showLessRec() {
+		this.initialRecords = false;
+		this.showMoreRecords = true;
+		this.showMore = true;
+		this.showLess = false;
+		this.userCredentialsData = this.userCredData;
+	}
 }
