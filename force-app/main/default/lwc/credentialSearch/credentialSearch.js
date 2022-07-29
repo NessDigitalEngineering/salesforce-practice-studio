@@ -11,7 +11,7 @@ export default class CredentialSearch extends LightningElement {
   @api iconName;
   @api LoadingText = false;
   @track txtclassname =
-    "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click test1";
+    "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click";
   @track messageFlag = false;
   UserLabels = 'User';
   title ='Select Credentials';
@@ -38,8 +38,8 @@ export default class CredentialSearch extends LightningElement {
 
         this.txtclassname =
           result.length > 0
-            ? "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open test1"
-            : "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click test1";
+            ? "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open "
+            : "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click ";
         if (currentText.length > 0 && result.length == 0) {
           this.messageFlag = true;
         } else {
@@ -59,7 +59,7 @@ export default class CredentialSearch extends LightningElement {
         );
       })
       .catch((error) => {
-        console.log("-------error-------------" + error);
+        console.log("-------error-------------" + JSON.stringify(error));
       });
   }
 
@@ -79,7 +79,7 @@ export default class CredentialSearch extends LightningElement {
 
     this.selectedRecords.push(newsObject);
     this.txtclassname =
-      "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click test1";
+      "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click ";
     let selRecords = this.selectedRecords;
 
     this.template.querySelectorAll("lightning-input").forEach((each) => {

@@ -29,6 +29,9 @@ div input[readonly] {
     left: 0.125rem;
     width:16.813rem;
 }
-.test1{
-    margin-top: -0.938rem; width:17.188rem;
+.addMarginTop{
+    margin-top: -1.938rem;
+}
+.addClearmargin{
+    margin-top: -3rem;
 }
