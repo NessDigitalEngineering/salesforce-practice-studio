@@ -13,50 +13,47 @@ export default class EarnedCredentials extends LightningElement {
 	@track countRec;
 	@track showMore = false;
 	@track showLess = false;
-	@track showMre = false;
 	@track initialRecords = false;
-	@track showMoreRecords = false;
+	//@track showMoreRecords = false;
 	@track loaded = false;
 	@track totalUserCredentials;
-	//@api senddata = "";
+	@api senddata = "";
 	@track showIcon = true;
 	icon = TasksIcon;
-
-	@api get senddata() {
-		return this.userData;
-	}
+	@track showUtilityIcon = false;
 
 	@wire(getCompletedUserCredentials, { userId: "$senddata" }) userdata({ data, error }) {
 		if (data) {
 			this.totalUserCredentials = data;
 			this.countRec = data.length;
 			let selectedRec = [];
-			if (!this.showMoreRecords) {
-				if (this.countRec > 2) {
-					this.showMore = true;
-					this.initialRecords = true;
-					for (let i = 0; i < this.countRec; i++) {
-						if (i < 2) {
-							selectedRec.push(data[i]);
-						}
+
+			if (this.countRec > 2) {
+				this.showMore = true;
+				this.initialRecords = true;
+				for (let i = 0; i < this.countRec; i++) {
+					if (i < 2) {
+						selectedRec.push(data[i]);
 					}
-					this.userCredentialsData = selectedRec;
-					this.userCredData = selectedRec;
-				} else {
-					this.showMore = false;
-					this.initialRecords = true;
-					this.userCredentialsData = data;
 				}
+				this.userCredentialsData = selectedRec;
+				this.userCredData = selectedRec;
 			} else {
+				if (this.countRec === 0) {
+					this.showUtilityIcon = true;
+					this.title = "Earned Credentials (" + data.length + ")";
+				}
 				this.showMore = false;
-				this.showLess = false;
+				this.initialRecords = true;
 				this.userCredentialsData = data;
 			}
+
 			if (this.countRec > 0) {
 				this.showIcon = false;
 				this.title = "Earned Credentials (" + data.length + ")";
 			} else {
 				this.showIcon = true;
+				this.showUtilityIcon = false;
 				this.title = "Earned Credentials";
 			}
 
