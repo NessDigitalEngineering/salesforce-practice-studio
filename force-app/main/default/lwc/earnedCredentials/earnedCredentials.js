@@ -1,6 +1,7 @@
 import { LightningElement, wire, track, api } from "lwc";
 import getCompletedUserCredentials from "@salesforce/apex/UserCredentialService.getCompletedUserCredentials";
 import strUserId from "@salesforce/user/Id";
+import TasksIcon from "@salesforce/resourceUrl/AssistantIcon";
 export default class EarnedCredentials extends LightningElement {
   userIds = strUserId;
   title;
@@ -14,7 +15,9 @@ export default class EarnedCredentials extends LightningElement {
   @track loaded = false;
   @track totalUserCredentials;
   @api senddata = "";
-
+  defaultMessage = 'Nothing needs your attention right now. Check back later.';
+  @track showIcon = true;
+  icon = TasksIcon;
   @wire(getCompletedUserCredentials, { userId: "$senddata" }) userdata({
     data,
     error,
