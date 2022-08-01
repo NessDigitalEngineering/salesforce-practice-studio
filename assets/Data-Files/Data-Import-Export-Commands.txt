@@ -4,7 +4,7 @@ sfdx force:data:tree:export -q "Select Alias__c, Approximate_Exam_Prep_Time_Hrs_
 
 Import Credentials
 
-
+sfdx force:data:tree:import -f .\Credential__c.json
 
 
 Create Package Version
