@@ -2,7 +2,6 @@ import { LightningElement, api, track } from "lwc";
 import getResults from "@salesforce/apex/CredentialSearchController.getCredentials";
 
 export default class CredentialSearch extends LightningElement {
-  
   @api Label;
   @track searchRecords = [];
   @track selectedRecords = [];
