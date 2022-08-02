@@ -2,9 +2,7 @@ import { api, LightningElement, track } from "lwc";
 import getUserCredentials from "@salesforce/apex/CredentialAssignmentController.getUserCredentials";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import insertCredAssignments from "@salesforce/apex/CredentialAssignmentController.insertCredAssignments";
-import { loadStyle } from "lightning/platformResourceLoader";
-import REMOVEROW from "@salesforce/resourceUrl/removeRow";
-import TasksIcon from "@salesforce/resourceUrl/TasksIcon";
+import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 import headerTitle from "@salesforce/label/c.headerTitle";
 const cols = [
   {
@@ -95,6 +93,7 @@ export default class CredentialAssignment extends LightningElement {
   confirmMessage= 'Are you sure you want to delete this item ?';
   conf = 'Confirmation';
   defaultMessage = 'Nothing needs your attention right now. Check back later.';
+  dataTableStyle=false;
   handleUserName(event) {
     this.selectedUserName = event.detail.currentRecId;
     this.handleCredential(event);
@@ -184,17 +183,16 @@ export default class CredentialAssignment extends LightningElement {
     }
   }
   renderedCallback() {
-    Promise.all([
-      // loadStyle( this, REMOVEROW)
+    try {
+      const style = document.createElement('style');
+      style.innerText = `c-credential-assignment .slds-table_header-fixed_container {
+          background-color: white;
+      }`;
+      this.template.querySelector('lightning-datatable').appendChild(style);
 
-      loadStyle(this, REMOVEROW),
-    ])
-      .then(() => {
-        console.log("Files loaded");
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
   }
   getdata() {
     getUserCredentials({ credmap: this.myMap, userId: this.selectedUserName })

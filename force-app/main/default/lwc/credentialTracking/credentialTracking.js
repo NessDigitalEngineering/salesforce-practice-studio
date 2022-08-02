@@ -7,14 +7,14 @@ import USER_ID from '@salesforce/user/Id';
 import CompTitle from '@salesforce/label/c.CredentialTracking_Title';
 import ShowmoreTitle from '@salesforce/label/c.CredentialTracking_ShowmoreTitle';
 import ShowlessTitle from '@salesforce/label/c.CredentialTracking_ShowlessTitle';
-import AssignmentIcon from "@salesforce/resourceUrl/Assignment_Icon";
+import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 
 export default class CredentialTracking extends LightningElement {
  
     label = { CompTitle, ShowmoreTitle , ShowlessTitle};
     userIds = USER_ID;
     title;
-    Icn = AssignmentIcon;
+    Icn = TasksIcon;
     userCredData;
     statusValuesReady = false;
     @api boxStyle = "height:10.8rem;";
