@@ -17,8 +17,6 @@ export default class CredentialTracking extends LightningElement {
     Icn = TasksIcon;
     userCredData;
     statusValuesReady = false;
-    @api boxStyle = "height:10.8rem;";
-    //@track loaded = false;
     @track userCredentialsData;
     @track statusValues = [];
     @track countRec;
@@ -60,7 +58,7 @@ export default class CredentialTracking extends LightningElement {
             });
     }
     handleClick(event) {
-       // this.loaded = false;
+       
         updateUserCredential({ id: event.target.value, status: event.target.title })
             .then((result) => {
                 if (result === true) {
@@ -80,8 +78,7 @@ export default class CredentialTracking extends LightningElement {
     }
     processStatusValues() {
         
-        //const three_sec = 1000;
-
+        
         if (this.statusValuesReady) {
             this.totalUserCredentials.forEach(e => {
                 if (e.Status__c && e.Status__c != 'Completed') {
@@ -92,13 +89,9 @@ export default class CredentialTracking extends LightningElement {
             });
             this.processData(this.totalUserCredentials);
         } else { 
-            //this.progress = three_sec;
             this._interval = setInterval(() => {
-               // this.progress = this.progress + three_sec;
                 this.processStatusValues();
-                //if (this.progress === (three_sec * 2)) {
-                    clearInterval(this._interval);
-               // }
+                clearInterval(this._interval);
             }, 0);
         }
     }
@@ -106,8 +99,6 @@ export default class CredentialTracking extends LightningElement {
         this.totalUserCredentials = data;
         this.countRec = data.length;
         let selectedRec = [];
-       // let slctRec= [];
-        //let slctRecords= [];
         if (!this.showMoreRecords) {
             if (this.countRec > 2) {
                 this.showMore = true;
@@ -115,8 +106,6 @@ export default class CredentialTracking extends LightningElement {
                 for (let i = 0; i < this.countRec; i++) {
                     if (i < 2) {
                         selectedRec.push(data[i]);
-                        //slctRec.push(data[i].Credential__r.Name);
-                        //slctRecords.concat(selectedRec,slctRec);
                     }
                 }
                 this.userCredentialsData = selectedRec;
@@ -138,7 +127,6 @@ export default class CredentialTracking extends LightningElement {
         }else{
             this.title = this.label.CompTitle;
         }
-        //this.loaded = true;
     }
     showMoreRec() {
         this.initialRecords = false;
