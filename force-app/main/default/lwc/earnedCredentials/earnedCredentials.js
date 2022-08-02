@@ -1,7 +1,7 @@
 import { LightningElement, wire, track, api } from "lwc";
 import getCompletedUserCredentials from "@salesforce/apex/UserCredentialService.getCompletedUserCredentials";
 import strUserId from "@salesforce/user/Id";
-import TasksIcon from "@salesforce/resourceUrl/TasksIcon";
+import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 import ShowmoreTitle from "@salesforce/label/c.CredentialTracking_ShowmoreTitle";
 import ShowlessTitle from "@salesforce/label/c.CredentialTracking_ShowlessTitle";
 export default class EarnedCredentials extends LightningElement {
