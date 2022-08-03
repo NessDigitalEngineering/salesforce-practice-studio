@@ -41,7 +41,8 @@ export default class EarnedCredentials extends LightningElement {
 			} else {
 				if (this.countRec === 0) {
 					this.showUtilityIcon = true;
-					this.title = "Earned Credentials (" + data.length + ")";
+					//this.fireCountEvent("Earned Credentials (" + data.length + ")");
+					//this.title = "Earned Credentials (" + data.length + ")";
 				}
 				this.showMore = false;
 				this.initialRecords = true;
@@ -50,17 +51,27 @@ export default class EarnedCredentials extends LightningElement {
 
 			if (this.countRec > 0) {
 				this.showIcon = false;
-				this.title = "Earned Credentials (" + data.length + ")";
+				this.fireCountEvent("Earned Credentials (" + data.length + ")");
+				//this.title = "Earned Credentials (" + data.length + ")";
 			} else {
 				this.showIcon = true;
 				this.showUtilityIcon = false;
-				this.title = "Earned Credentials";
+				this.fireCountEvent("Earned Credentials");
+				//this.title = "Earned Credentials";
 			}
 
 			this.loaded = true;
 		} else if (error) {
 			console.log("error1" + JSON.stringify(error));
 		}
+	}
+
+	fireCountEvent(title){
+		const countEvent = new CustomEvent("title", {
+			detail: title
+		});
+		console.log('fired event: ',title);
+		this.dispatchEvent(countEvent);
 	}
 
 	connectedCallback() {
@@ -82,7 +93,7 @@ export default class EarnedCredentials extends LightningElement {
 
 	showLessRec() {
 		this.initialRecords = false;
-		this.showMoreRecords = true;
+		this.showMoreRecords = false;
 		this.showMore = true;
 		this.showLess = false;
 		this.userCredentialsData = this.userCredData;
