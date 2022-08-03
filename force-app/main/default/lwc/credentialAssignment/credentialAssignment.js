@@ -94,6 +94,8 @@ export default class CredentialAssignment extends LightningElement {
   conf = 'Confirmation';
   defaultMessage = 'Nothing needs your attention right now. Check back later.';
   dataTableStyle=false;
+  @track earnedCredentialsTitle = "Earned Credentials";
+
   handleUserName(event) {
     this.selectedUserName = event.detail.currentRecId;
     this.handleCredential(event);
@@ -308,6 +310,11 @@ export default class CredentialAssignment extends LightningElement {
   }
   closeModal(){
     this.isDialogVisible = false;
-}
+  }
+
+  handleTitle(event){
+    console.log('title is:',event.detail);
+    this.earnedCredentialsTitle = event.detail;
+  }
 
 }
