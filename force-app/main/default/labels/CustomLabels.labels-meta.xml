@@ -42,4 +42,26 @@
         <shortDescription>emptyCard</shortDescription>
         <value>There's nothing here yet.</value>
     </labels>
+    <labels>
+        <fullName>Earned_Credentials</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Earned Credentials</shortDescription>
+        <value>Earned Credentials</value>
+    </labels>
+    <labels>
+        <fullName>Select_User</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Select_User</shortDescription>
+        <value>Select_User</value>
+    </labels>
+    <labels>
+        <fullName>Select_Credentials</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Select Credentials</shortDescription>
+        <value>Select Credentials</value>
+    </labels>
+
 </CustomLabels>

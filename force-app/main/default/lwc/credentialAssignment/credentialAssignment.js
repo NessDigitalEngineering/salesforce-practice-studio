@@ -3,7 +3,9 @@ import getUserCredentials from "@salesforce/apex/CredentialAssignmentController.
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import insertCredAssignments from "@salesforce/apex/CredentialAssignmentController.insertCredAssignments";
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
-import headerTitle from "@salesforce/label/c.headerTitle";
+import HeaderTitle from "@salesforce/label/c.headerTitle";
+import SelectUser from "@salesforce/label/c.Select_User";
+import SelectCredentials from "@salesforce/label/c.Select_Credentials";
 const cols = [
   {
     type: "button-icon",
@@ -70,6 +72,7 @@ export default class CredentialAssignment extends LightningElement {
     MODE_BATCH: "batch",
     MODE_SINGLE: "single",
   };
+  label = {HeaderTitle, SelectUser, SelectCredentials}
   @track columns;
   @api removeCredentials;
   @api selectedUserName = "";
@@ -78,7 +81,6 @@ export default class CredentialAssignment extends LightningElement {
   @track isDataAvaialable = false;
   @track saveButtonHide = false;
   draftValues = [];
-  headerTitle = headerTitle;
   title = 'List of Assignments';
   wiredRecords;
   refreshTable;
