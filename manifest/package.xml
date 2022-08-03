@@ -135,6 +135,7 @@
         <name>CustomObject</name>
     </types>
     <types>
+        <members>Assign_Credentials</members>
         <members>Decrypt_Voucher_Codes</members>
         <name>CustomPermission</name>
     </types>
@@ -143,7 +144,6 @@
         <members>Credential__c</members>
         <members>Exam_Voucher__c</members>
         <members>User_Credential__c</members>
-        <members>standard-home</members>
         <name>CustomTab</name>
     </types>
     <types>
@@ -152,7 +152,6 @@
         <name>EmailTemplate</name>
     </types>
     <types>
-        <members>Home_Page_Default</members>
         <members>Practice_Studio_UtilityBar</members>
         <members>User_Credential_Record_Page</members>
         <name>FlexiPage</name>
@@ -197,7 +196,6 @@
         <name>ListView</name>
     </types>
     <types>
-        <members>CredentialPermissions</members>
         <members>Practice_Studio_Admin</members>
         <members>Practice_Studio_Manager</members>
         <members>Practice_Studio_User</members>
@@ -205,13 +203,7 @@
         <name>PermissionSet</name>
     </types>
     <types>
-        <members>Account</members>
-        <name>Settings</name>
-    </types>
-    <types>
-        <members>Assignment_Icon</members>
-        <members>TasksIcon</members>
-        <members>removeRow</members>
+        <members>EmptyCmpImage</members>
         <name>StaticResource</name>
     </types>
     <types>

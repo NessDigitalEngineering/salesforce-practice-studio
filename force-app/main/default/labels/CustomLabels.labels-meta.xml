@@ -28,11 +28,18 @@
         <shortDescription>CredentialTracking_Title</shortDescription>
         <value>My Assignments</value>
     </labels>
-        <labels>
+    <labels>
         <fullName>headerTitle</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>headerTitle</shortDescription>
         <value>Credential Assignment</value>
+    </labels>
+    <labels>
+        <fullName>emptyCard</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>emptyCard</shortDescription>
+        <value>There's nothing here yet.</value>
     </labels>
 </CustomLabels>
