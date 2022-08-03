@@ -4,8 +4,9 @@ import strUserId from "@salesforce/user/Id";
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 import ShowmoreTitle from "@salesforce/label/c.CredentialTracking_ShowmoreTitle";
 import ShowlessTitle from "@salesforce/label/c.CredentialTracking_ShowlessTitle";
+import EmptyCard from "@salesforce/label/c.emptyCard";
 export default class EarnedCredentials extends LightningElement {
-	label = { ShowmoreTitle, ShowlessTitle };
+	label = { ShowmoreTitle, ShowlessTitle, EmptyCard };
 	userIds = strUserId;
 	title;
 	userCredentialsData;
@@ -97,5 +98,13 @@ export default class EarnedCredentials extends LightningElement {
 		this.showMore = true;
 		this.showLess = false;
 		this.userCredentialsData = this.userCredData;
+	}
+
+	@api
+	resetCredentials() {
+	  this.userCredentialsData = [];
+	  this.showLess = false;
+	  this.showMore = false;
+	  this.showIcon = true;
 	}
 }

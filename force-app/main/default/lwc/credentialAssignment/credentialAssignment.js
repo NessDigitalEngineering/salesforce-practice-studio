@@ -117,6 +117,7 @@ export default class CredentialAssignment extends LightningElement {
       
     } else {
       this.template.querySelector("c-Credential-Search").resetCredentials();
+      this.template.querySelector("c-Earned-Credentials").resetCredentials();
       this.selectedCredentials = tempSelectRecords;
       
       this.isDataAvaialable = false;
