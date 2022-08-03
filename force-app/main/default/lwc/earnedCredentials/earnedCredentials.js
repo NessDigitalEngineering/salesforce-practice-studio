@@ -49,4 +49,12 @@ export default class EarnedCredentials extends LightningElement {
 	  this.userCredentialsData = [];
 	  this.showIcon = true;
 	}
+
+	@api
+	resetCredentials() {
+	  this.userCredentialsData = [];
+	  this.showLess = false;
+	  this.showMore = false;
+	  this.showIcon = true;
+	}
 }
