@@ -93,7 +93,7 @@ export default class EarnedCredentials extends LightningElement {
 
 	showLessRec() {
 		this.initialRecords = false;
-		this.showMoreRecords = true;
+		this.showMoreRecords = false;
 		this.showMore = true;
 		this.showLess = false;
 		this.userCredentialsData = this.userCredData;

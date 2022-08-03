@@ -17,8 +17,6 @@ export default class CredentialTracking extends LightningElement {
     Icn = TasksIcon;
     userCredData;
     statusValuesReady = false;
-    @api boxStyle = "height:10.8rem;";
-    @track loaded = false;
     @track userCredentialsData;
     @track statusValues = [];
     @track countRec;
@@ -60,7 +58,7 @@ export default class CredentialTracking extends LightningElement {
             });
     }
     handleClick(event) {
-        this.loaded = false;
+       
         updateUserCredential({ id: event.target.value, status: event.target.title })
             .then((result) => {
                 if (result === true) {
@@ -80,8 +78,7 @@ export default class CredentialTracking extends LightningElement {
     }
     processStatusValues() {
         
-        const three_sec = 3000;
-
+        
         if (this.statusValuesReady) {
             this.totalUserCredentials.forEach(e => {
                 if (e.Status__c && e.Status__c != 'Completed') {
@@ -92,14 +89,10 @@ export default class CredentialTracking extends LightningElement {
             });
             this.processData(this.totalUserCredentials);
         } else { 
-            this.progress = three_sec;
             this._interval = setInterval(() => {
-                this.progress = this.progress + three_sec;
                 this.processStatusValues();
-                if (this.progress === (three_sec * 2)) {
-                    clearInterval(this._interval);
-                }
-            }, this.progress);
+                clearInterval(this._interval);
+            }, 0);
         }
     }
     processData(data) { 
@@ -129,24 +122,27 @@ export default class CredentialTracking extends LightningElement {
         } else {
             this.userCredentialsData = data;
         }
-        this.title = this.label.CompTitle;
-        this.loaded = true;
+        if(this.countRec > 0){
+            this.title = this.label.CompTitle + " (" + data.length + ")";
+        }else{
+            this.title = this.label.CompTitle;
+        }
     }
     showMoreRec() {
         this.initialRecords = false;
         this.showMoreRecords = true;
         this.showMore = false;
         this.showLess = true;
-        this.userCredentialsData = this.totalUserCredentials
+        this.userCredentialsData = this.totalUserCredentials;
 
     }
 
     showLessRec() {
         this.initialRecords = false;
-        this.showMoreRecords = true;
+        this.showMoreRecords = false;
         this.showMore = true;
         this.showLess = false;
-        this.userCredentialsData = this.userCredData
+        this.userCredentialsData = this.userCredData;
 
     }
 }
