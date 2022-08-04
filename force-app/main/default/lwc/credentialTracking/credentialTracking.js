@@ -5,27 +5,21 @@ import getUserCredentials from '@salesforce/apex/CredentialTrackingController.ge
 import updateUserCredential from '@salesforce/apex/CredentialTrackingController.updateUserCredential';
 import USER_ID from '@salesforce/user/Id';
 import CompTitle from '@salesforce/label/c.CredentialTracking_Title';
-import ShowmoreTitle from '@salesforce/label/c.CredentialTracking_ShowmoreTitle';
-import ShowlessTitle from '@salesforce/label/c.CredentialTracking_ShowlessTitle';
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 
 export default class CredentialTracking extends LightningElement {
  
-    label = { CompTitle, ShowmoreTitle , ShowlessTitle};
+    label = { CompTitle};
     userIds = USER_ID;
     title;
     Icn = TasksIcon;
-    userCredData;
     statusValuesReady = false;
     @track userCredentialsData;
     @track statusValues = [];
     @track countRec;
-    @track showMore = false;
     @track showMre = false;
     @track initialRecords = false;
     @track showMoreRecords = false; 
-    @track showLess=false;
-    @track userCredData;
     @track showIcon = false;
     @track emptyRecords = true;
     @wire(getObjectInfo, { objectApiName: 'User_Credential__c' })
@@ -100,25 +94,12 @@ export default class CredentialTracking extends LightningElement {
         this.countRec = data.length;
         let selectedRec = [];
         if (!this.showMoreRecords) {
-            if (this.countRec > 2) {
-                this.showMore = true;
-                this.initialRecords = true;
-                for (let i = 0; i < this.countRec; i++) {
-                    if (i < 2) {
-                        selectedRec.push(data[i]);
-                    }
-                }
-                this.userCredentialsData = selectedRec;
-                this.userCredData = selectedRec;
-            } else {
-                if (data.length === 0) {
-					this.showIcon = true;
-                    this.emptyRecords = false;
-				}
-                this.showMore = false;
-                this.initialRecords = true;
-                this.userCredentialsData = data;
+            if (data.length === 0) {
+                this.showIcon = true;
+                this.emptyRecords = false;
             }
+            this.initialRecords = true;
+            this.userCredentialsData = data;
         } else {
             this.userCredentialsData = data;
         }
@@ -127,22 +108,5 @@ export default class CredentialTracking extends LightningElement {
         }else{
             this.title = this.label.CompTitle;
         }
-    }
-    showMoreRec() {
-        this.initialRecords = false;
-        this.showMoreRecords = true;
-        this.showMore = false;
-        this.showLess = true;
-        this.userCredentialsData = this.totalUserCredentials;
-
-    }
-
-    showLessRec() {
-        this.initialRecords = false;
-        this.showMoreRecords = false;
-        this.showMore = true;
-        this.showLess = false;
-        this.userCredentialsData = this.userCredData;
-
     }
 }
