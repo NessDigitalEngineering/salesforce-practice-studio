@@ -101,7 +101,7 @@ export default class CredentialTracking extends LightningElement {
             this.initialRecords = true;
             this.userCredentialsData = data;
         } else {
-            this.userCredentialsData = data;
+            this.userCredentialsData = data; 
         }
         if(this.countRec > 0){
             this.title = this.label.CompTitle + " (" + data.length + ")";
