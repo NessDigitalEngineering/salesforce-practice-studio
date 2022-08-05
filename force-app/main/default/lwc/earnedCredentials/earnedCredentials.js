@@ -21,10 +21,9 @@ export default class EarnedCredentials extends LightningElement {
 			}
 			this.userCredentialsData = selectedRec;
 
-
 			if (data.length > 0) {
 				this.showIcon = false;
-				this.fireCountEvent( Earned_Credentials +" (" + data.length + ")");
+				this.fireCountEvent(Earned_Credentials + " (" + data.length + ")");
 			} else {
 				this.showIcon = true;
 				this.fireCountEvent(Earned_Credentials);
@@ -36,17 +35,16 @@ export default class EarnedCredentials extends LightningElement {
 		}
 	}
 
-	fireCountEvent(title){
+	fireCountEvent(title) {
 		const countEvent = new CustomEvent("title", {
 			detail: title
 		});
-		console.log('fired event: ',title);
 		this.dispatchEvent(countEvent);
 	}
 
 	@api
 	resetCredentials() {
-	  this.userCredentialsData = [];
-	  this.showIcon = true;
+		this.userCredentialsData = [];
+		this.showIcon = true;
 	}
 }
