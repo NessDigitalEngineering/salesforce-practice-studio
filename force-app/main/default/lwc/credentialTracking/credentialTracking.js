@@ -47,7 +47,7 @@ export default class CredentialTracking extends LightningElement {
     }
 
     /*
-        @description    :   Displays based on current logged user id assignment records 
+        @description    :   Displays logged IN user current assignments. 
         @param          :   userIds
     */
     connectedCallback() {
@@ -109,8 +109,7 @@ export default class CredentialTracking extends LightningElement {
     }
 
     /*
-        @description    :   Displays current logged user id assignment records and title name. 
-                            Icon displays when no records are found
+        @description    :   Displays logged IN user current assignments and title, also shows the Icon if no records are found.
         @param          :   data
     */
     processData(data) { 
