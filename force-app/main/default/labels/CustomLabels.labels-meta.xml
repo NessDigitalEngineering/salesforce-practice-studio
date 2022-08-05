@@ -54,7 +54,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Select_User</shortDescription>
-        <value>Select_User</value>
+        <value>Select User</value>
     </labels>
     <labels>
         <fullName>Select_Credentials</fullName>

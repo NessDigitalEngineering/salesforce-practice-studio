@@ -1,37 +1,16 @@
-div input[readonly] {
-    padding-left: 10.75rem !important;  
+.slds-input-has-icon .slds-input__icon {
+	top: 2.4rem !important;
 }
-.slds-input{
-    padding-left: 0.75rem !important;
+.slds-icon_small,
+.slds-icon--small {
+	width: 1.5rem;
+	height: 1rem;
+	line-height: 2;
 }
 
-.slds-input-has-icon .slds-input__icon {
-    top: 2.40rem !important;
+.addMarginTop {
+	margin-top: -1.938rem;
 }
-.slds-icon_small, .slds-icon--small {
-    width: 1.5rem;
-    height: 1rem;
-    line-height: 2;
-} 
-.custom-container {
-    width: 1rem;
-} 
-.my-card{
-    border: 0.125rem solid #ccc;
-    border-radius: 1.5625rem;
-    padding: 1.25rem;
-    display: flex;
-}
-.titleadjust{
-    margin-left: 0.875rem;
-}
-.iconAdjust{
-    left: 0.125rem;
-    width:16.813rem;
-}
-.addMarginTop{
-    margin-top: -1.938rem;
-}
-.addClearmargin{
-    margin-top: -3rem;
+.addClearmargin {
+	margin-top: -3rem;
 }
