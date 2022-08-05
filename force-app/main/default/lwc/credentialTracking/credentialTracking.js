@@ -16,15 +16,21 @@ export default class CredentialTracking extends LightningElement {
     statusValuesReady = false;
     @track userCredentialsData;
     @track statusValues = [];
-    @track countRec;
-    @track showMre = false;
-    @track initialRecords = false;
-    @track showMoreRecords = false; 
+    @track countRec; 
     @track showIcon = false;
     @track emptyRecords = true;
+
+    /*
+        @description    :   Wire service is used to get metadata for a single object 
+        @param          :   passing object(User_Credential__c) API name 
+    */
     @wire(getObjectInfo, { objectApiName: 'User_Credential__c' })
     userCredentialMetadata;
 
+    /*
+        @description    :   Using wire service to get all picklist values 
+        @param          :   defaultRecordTypeId & STATUS
+    */
     @wire(getPicklistValues, { recordTypeId: '$userCredentialMetadata.data.defaultRecordTypeId', fieldApiName: STATUS })
     picklistValues({ data, error }) {
         
@@ -40,7 +46,10 @@ export default class CredentialTracking extends LightningElement {
         }
     }
 
-
+    /*
+        @description    :   Displays based on current logged user id assignment records 
+        @param          :   userIds
+    */
     connectedCallback() {
         getUserCredentials({ userId: this.userIds })
             .then((res) => {
@@ -51,6 +60,11 @@ export default class CredentialTracking extends LightningElement {
                 console.log("error" + JSON.stringify(error));
             });
     }
+
+    /*
+        @description    :   Displays all active user credential records when status value is not equal to completed 
+        @param          :   event target value & event target title
+    */
     handleClick(event) {
        
         updateUserCredential({ id: event.target.value, status: event.target.title })
@@ -70,6 +84,10 @@ export default class CredentialTracking extends LightningElement {
                 console.log("error" + JSON.stringify(error));
             });
     }
+
+    /*
+        @description    :   Update status value
+    */
     processStatusValues() {
         
         
@@ -89,20 +107,19 @@ export default class CredentialTracking extends LightningElement {
             }, 0);
         }
     }
+
+    /*
+        @description    :   Displays current logged user id assignment records and title name. 
+                            Icon displays when no records are found
+        @param          :   data
+    */
     processData(data) { 
-        this.totalUserCredentials = data;
-        this.countRec = data.length;
-        let selectedRec = [];
-        if (!this.showMoreRecords) {
-            if (data.length === 0) {
-                this.showIcon = true;
-                this.emptyRecords = false;
-            }
-            this.initialRecords = true;
-            this.userCredentialsData = data;
-        } else {
-            this.userCredentialsData = data; 
+            this.countRec = data.length;
+        if (data.length === 0) {
+            this.showIcon = true;
+            this.emptyRecords = false;
         }
+            this.userCredentialsData = data;
         if(this.countRec > 0){
             this.title = this.label.CompTitle + " (" + data.length + ")";
         }else{
