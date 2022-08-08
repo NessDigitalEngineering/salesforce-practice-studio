@@ -5,33 +5,31 @@ import getUserCredentials from "@salesforce/apex/CredentialTrackingController.ge
 import updateUserCredential from "@salesforce/apex/CredentialTrackingController.updateUserCredential";
 import USER_ID from "@salesforce/user/Id";
 import CompTitle from "@salesforce/label/c.CredentialTracking_Title";
-import ShowmoreTitle from "@salesforce/label/c.CredentialTracking_ShowmoreTitle";
-import ShowlessTitle from "@salesforce/label/c.CredentialTracking_ShowlessTitle";
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 
 export default class CredentialTracking extends LightningElement {
-	label = { CompTitle, ShowmoreTitle, ShowlessTitle };
+	label = { CompTitle };
 	userIds = USER_ID;
 	title;
 	Icn = TasksIcon;
-	userCredData;
 	statusValuesReady = false;
 	@track userCredentialsData;
 	@track statusValues = [];
 	@track countRec;
-	@track showMore = false;
-	@track showMre = false;
-	@track initialRecords = false;
-	@track showMoreRecords = false;
-	@track showLess = false;
-	@track userCredData;
 	@track showIcon = false;
 	@track emptyRecords = true;
-	@track showModal = false;
-	@track displayExamDetailsModal = false;
+
+	/*
+        @description    :   Wire service is used to get metadata for a single object 
+        @param          :   passing object(User_Credential__c) API name 
+    */
 	@wire(getObjectInfo, { objectApiName: "User_Credential__c" })
 	userCredentialMetadata;
 
+	/*
+        @description    :   Using wire service to get all picklist values 
+        @param          :   defaultRecordTypeId & STATUS
+    */
 	@wire(getPicklistValues, { recordTypeId: "$userCredentialMetadata.data.defaultRecordTypeId", fieldApiName: STATUS })
 	picklistValues({ data, error }) {
 		if (data) {
@@ -45,6 +43,10 @@ export default class CredentialTracking extends LightningElement {
 		}
 	}
 
+	/*
+        @description    :   Displays logged IN user current assignments. 
+        @param          :   userIds
+    */
 	connectedCallback() {
 		getUserCredentials({ userId: this.userIds })
 			.then((res) => {
@@ -55,6 +57,11 @@ export default class CredentialTracking extends LightningElement {
 				console.log("error" + JSON.stringify(error));
 			});
 	}
+
+	/*
+        @description    :   Displays all active user credential records when status value is not equal to completed 
+        @param          :   event target value & event target title
+    */
 	handleClick(event) {
 		updateUserCredential({ id: event.target.value, status: event.target.title })
 			.then((result) => {
@@ -73,22 +80,17 @@ export default class CredentialTracking extends LightningElement {
 				console.log("error" + JSON.stringify(error));
 			});
 	}
+
+	/*
+        @description    :   Update status value
+    */
 	processStatusValues() {
 		if (this.statusValuesReady) {
 			this.totalUserCredentials.forEach((e) => {
 				if (e.Status__c && e.Status__c != "Completed") {
-					if (e.Status__c != "Ready") {
-						// this.hideModalBox();
-						e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
-						e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
-						e.credentialName = e.Credential__r.Name;
-					} else {
-						e.credentialName = e.Credential__r.Name;
-						this.voucherRequestModal();
-					}
-					// e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
-					// e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
-					// e.credentialName = e.Credential__r.Name;
+					e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
+					e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
+					e.credentialName = e.Credential__r.Name;
 				}
 			});
 			this.processData(this.totalUserCredentials);
@@ -99,69 +101,22 @@ export default class CredentialTracking extends LightningElement {
 			}, 0);
 		}
 	}
+
+	/*
+        @description    :   Displays logged IN user current assignments and title, also shows the Icon if no records are found.
+        @param          :   data
+    */
 	processData(data) {
-		this.totalUserCredentials = data;
 		this.countRec = data.length;
-		let selectedRec = [];
-		if (!this.showMoreRecords) {
-			if (this.countRec > 2) {
-				this.showMore = true;
-				this.initialRecords = true;
-				for (let i = 0; i < this.countRec; i++) {
-					if (i < 2) {
-						selectedRec.push(data[i]);
-					}
-				}
-				this.userCredentialsData = selectedRec;
-				this.userCredData = selectedRec;
-			} else {
-				if (data.length === 0) {
-					this.showIcon = true;
-					this.emptyRecords = false;
-				}
-				this.showMore = false;
-				this.initialRecords = true;
-				this.userCredentialsData = data;
-			}
-		} else {
-			this.userCredentialsData = data;
+		if (data.length === 0) {
+			this.showIcon = true;
+			this.emptyRecords = false;
 		}
+		this.userCredentialsData = data;
 		if (this.countRec > 0) {
 			this.title = this.label.CompTitle + " (" + data.length + ")";
 		} else {
 			this.title = this.label.CompTitle;
 		}
-	}
-
-	showMoreRec() {
-		this.initialRecords = false;
-		this.showMoreRecords = true;
-		this.showMore = false;
-		this.showLess = true;
-		this.userCredentialsData = this.totalUserCredentials;
-	}
-
-	showLessRec() {
-		this.initialRecords = false;
-		this.showMoreRecords = false;
-		this.showMore = true;
-		this.showLess = false;
-		this.userCredentialsData = this.userCredData;
-	}
-
-	voucherRequestModal() {
-		this.showModal = true;
-	}
-
-	hideModalBox() {
-		this.showModal = false;
-	}
-
-	closeModal() {
-		this.displayExamDetailsModal = false;
-	}
-
-	showExamDetailsModal() {
-		this.displayExamDetailsModal = true;
 	}
 }
