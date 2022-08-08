@@ -63,5 +63,11 @@
         <shortDescription>Select Credentials</shortDescription>
         <value>Select Credentials</value>
     </labels>
-
+    <labels>
+        <fullName>CredentailAssignment_EmptyMsg</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentailAssignment_EmptyMsg</shortDescription>
+        <value>You don’t have any assignments in this list. Check back later.</value>
+    </labels>
 </CustomLabels>
