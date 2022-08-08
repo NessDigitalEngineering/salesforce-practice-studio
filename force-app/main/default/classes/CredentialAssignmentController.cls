@@ -11,7 +11,7 @@ public with sharing class CredentialAssignmentController {
 	 */
 
 	@AuraEnabled
-  public static List<CredentialData> getUserCredentials(Map<String, String> credmap, string userId) {
+	public static List<CredentialData> getUserCredentials(Map<String, String> credmap, string userId) {
 		List<CredentialData> credenlsData = new List<CredentialData>();
 		List<CredentialData> credenlsData2 = new List<CredentialData>();
 
@@ -19,13 +19,13 @@ public with sharing class CredentialAssignmentController {
 
 		List<User_Credential__c> credentialsRec = usCredService.getActiveUserCredentials(userId);
 		List<Id> lststring = new List<Id>();
-       System.debug('456'+credentialsRec);
+		System.debug('456' + credentialsRec);
 		for (User_Credential__c userCred : credentialsRec) {
 			if (userCred.Status__c != 'Completed') {
 				CredentialData data = new CredentialData();
 				data.CredName = userCred.Credential__r.name;
 				data.AssignedDate = userCred.Assigned_Date__c;
-				data.DueData = userCred.Due_Date__c;
+				data.dueDate = userCred.Due_Date__c;
 				data.Status = userCred.Status__c;
 				data.deleteIcon = false;
 
@@ -50,14 +50,14 @@ public with sharing class CredentialAssignmentController {
 				if (credenlsData2.size() == 1) {
 					if (credenlsData.size() > 0) {
 						integer x = credenlsData.size();
-						data.dueData = credenlsData[x - 1].dueData + 90;
-						latestDate = Date.valueOf(credenlsData[x - 1].dueData) + 90;
+						data.dueDate = credenlsData[x - 1].dueDate + 90;
+						latestDate = Date.valueOf(credenlsData[x - 1].dueDate) + 90;
 					} else {
-						data.dueData = System.today() + 90;
+						data.dueDate = System.today() + 90;
 						latestDate = System.today() + 90;
 					}
 				} else {
-					data.dueData = latestDate + 90;
+					data.dueDate = latestDate + 90;
 					latestDate = latestDate + 90;
 				}
 				credenlsData.add(data);
@@ -79,7 +79,7 @@ public with sharing class CredentialAssignmentController {
 				User_Credential__c userCred = new User_Credential__c();
 				userCred.Credential__c = credData.credId;
 				userCred.Assigned_Date__c = credData.assignedDate;
-				userCred.Due_Date__c = credData.dueData;
+				userCred.Due_Date__c = credData.dueDate;
 				userCred.User__c = credData.assigneId;
 				userCred.Status__c = 'Assigned';
 				userCred.Assigned_By__c = UserInfo.getUserId();
@@ -99,7 +99,7 @@ public with sharing class CredentialAssignmentController {
 		@AuraEnabled
 		public Datetime assignedDate { get; set; }
 		@AuraEnabled
-		public Datetime dueData { get; set; }
+		public Datetime dueDate { get; set; }
 		@AuraEnabled
 		public String status { get; set; }
 		@AuraEnabled
