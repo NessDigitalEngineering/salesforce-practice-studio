@@ -6,9 +6,15 @@ import updateUserCredential from "@salesforce/apex/CredentialTrackingController.
 import USER_ID from "@salesforce/user/Id";
 import CompTitle from "@salesforce/label/c.CredentialTracking_Title";
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
+import Credential_Object from "@salesforce/schema/Credential_Exam_Attempt__c";
+import CredentialName from "@salesforce/schema/Credential_Exam_Attempt__c.Credential__c";
+import ExamDate from "@salesforce/schema/Credential_Exam_Attempt__c.Exam_Date_Time__c";
+import Comments from "@salesforce/schema/Credential_Exam_Attempt__c.Preparation_Comments__c";
 
 export default class CredentialTracking extends LightningElement {
 	label = { CompTitle };
+	examDetailsObject = Credential_Object;
+	examFields = [CredentialName, ExamDate, Comments];
 	userIds = USER_ID;
 	title;
 	Icn = TasksIcon;
@@ -18,6 +24,8 @@ export default class CredentialTracking extends LightningElement {
 	@track countRec;
 	@track showIcon = false;
 	@track emptyRecords = true;
+	@track isShowModal = false;
+	@track displayExamDetailsModal = false;
 
 	/*
         @description    :   Wire service is used to get metadata for a single object 
@@ -88,9 +96,18 @@ export default class CredentialTracking extends LightningElement {
 		if (this.statusValuesReady) {
 			this.totalUserCredentials.forEach((e) => {
 				if (e.Status__c && e.Status__c != "Completed") {
-					e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
-					e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
-					e.credentialName = e.Credential__r.Name;
+					if (e.Status__c != "Ready") {
+						this.hideModalBox();
+						e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
+						e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
+						e.credentialName = e.Credential__r.Name;
+					} else {
+						this.isShowModal = true;
+						e.credentialName = e.Credential__r.Name;
+					}
+					// e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
+					// e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
+					// e.credentialName = e.Credential__r.Name;
 				}
 			});
 			this.processData(this.totalUserCredentials);
@@ -118,5 +135,88 @@ export default class CredentialTracking extends LightningElement {
 		} else {
 			this.title = this.label.CompTitle;
 		}
+	}
+
+	@track date = "";
+	credential;
+	@track comments = "";
+
+	handleNameChange(event) {
+		this.credential = event.detail.value;
+		console.log("credential---" + this.credential);
+	}
+
+	handleDateChange(event) {
+		this.date = event.target.value;
+		console.log("date---" + this.date);
+	}
+
+	handleCommentChange(event) {
+		this.comments = event.target.value;
+		console.log("comments---" + this.comments);
+	}
+
+	createNewRecord() {
+		var fields = {
+			Credential__c: this.credential,
+			Exam_Date_Time__c: this.date,
+			Preparation_Comments__c: this.comments
+		};
+		console.log("fields" + JSON.stringify(fields));
+		var objRecordInput = { apiName: "Credential_Exam_Attempt__c", fields };
+		createRecord(objRecordInput)
+			.then((response) => {
+				alert("CredentialExamAttempt created with id:" + response.id);
+			})
+			.catch((error) => {
+				alert("Error: " + JSON.stringify(error));
+			});
+	}
+
+	navigateToDetails() {
+		this.CredentialName = this.credential;
+		this.ExamDate = this.date;
+		this.Comments = this.comments;
+
+		const recordInput = { fieldApiName: credentialExamAttempt.objectApiName, fields };
+		createRecord(recordInput)
+			.then((examAttemptObj) => {
+				this.examAttempId = examAttemptObj.Id;
+				this.dispatchEvent(
+					new ShowToastEvent({
+						title: "Success",
+						message: "Contact record has been created",
+						variant: "success"
+					})
+				);
+				this[NavigationMixin.Navigate]({
+					type: "standard__recordPage",
+					attributes: {
+						objectApiName: "Credential_Exam_Attempt__c",
+						actionName: "view"
+					}
+				});
+			})
+			.catch((error) => {
+				this.dispatchEvent(
+					new ShowToastEvent({
+						title: "Error creating record",
+						message: error.body.message,
+						variant: "error"
+					})
+				);
+			});
+	}
+
+	hideModalBox() {
+		this.isShowModal = false;
+	}
+
+	closeModal() {
+		this.displayExamDetailsModal = false;
+	}
+
+	showExamDetailsModal() {
+		this.displayExamDetailsModal = true;
 	}
 }
