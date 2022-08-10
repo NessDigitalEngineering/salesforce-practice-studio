@@ -90,6 +90,9 @@ export default class CredentialTracking extends LightningElement {
 		if (this.statusValuesReady) {
 			this.totalUserCredentials.forEach((e) => {
 				if (e.Status__c && e.Status__c != "Completed") {
+					if (e.nextStatus === "Ready") {
+						this.template.querySelector("c-voucher-request").handleStatus(e.Credential__r.Name);
+					}
 					e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
 					e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
 					e.credentialName = e.Credential__r.Name;
@@ -101,12 +104,9 @@ export default class CredentialTracking extends LightningElement {
 					// 	//this.isShowModal = true;
 					// 	console.log("credentialName---" + this.e.credentialName);
 					// }
-					if (e.Status__c === "Ready") {
-						e.credentialName = e.Credential__r.Name;
-						e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
-						e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
-						this.template.querySelector("c-voucher-request").handleStatus(e.credentialName);
-					}
+					// e.credentialName = e.Credential__r.Name;
+					// e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
+					// e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
 				}
 			});
 			this.processData(this.totalUserCredentials);
