@@ -45,6 +45,11 @@
                         Attempt Details</h2>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium">
+                    <!-- <div class="slds-grid slds-wrap">
+                        <lightning-record-form object-api-name={objectApiName} fields={fields}
+                            onsuccess={handleSuccess}>
+                        </lightning-record-form>
+                    </div> -->
                     <div class="slds-grid slds-wrap">
                         <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
                             <lightning-input name="credential" label="Credential Name" value={credentialValue} disabled>
@@ -63,16 +68,16 @@
                         </div>
                         <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
                             <lightning-input label="Preparation Documents" type="file" accept=".docx, .pdf, .jpg"
-                                value="" onchange={handleFileUploadChange}>
+                                onchange={handleFileUpload}>
+                                <lightning-helptext
+                                    content="Please upload the course completion evidences from the respective official training sites.">
+                                </lightning-helptext>
                             </lightning-input>
-                            <template if:true={fileData}>
+                            <!-- <template if:true={fileData}>
                                 <p>{fileData.filename}</p>
-                            </template>
-                            <lightning-button variant="brand" label="submit" title="Submit" onclick={handleClick}
+                            </template>  -->
+                            <lightning-button variant="brand" label="submit" title="Submit" onclick={creatExamRecord}
                                 class="slds-m-left_x-small"></lightning-button>
-                            <lightning-helptext
-                                content="Help: The document size cannot exceed 5MB and must be one of the format: docx, .pdf, .jpg.">
-                            </lightning-helptext>
                         </div>
                     </div>
                 </div>
