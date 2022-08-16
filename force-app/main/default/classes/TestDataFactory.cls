@@ -65,4 +65,26 @@ public class TestDataFactory {
                                         User__c = userId,
                                         Active__c = true);
     }
+
+    public static List<Credential_Exam_Attempt__c> createCredentialExamAttempt(Id usrCrdId){
+        List<Credential_Exam_Attempt__c> credExamAttemptLists = new List<Credential_Exam_Attempt__c>{new Credential_Exam_Attempt__c( 
+                
+                Exam_Date_Time__c=system.today(),
+                Status__c='Voucher Assigned',
+                Fail_Scorecard__c=true,
+                Pass_Certificate__c=true,
+                Preparation_Comments__c='prepared',
+                Proof_of_Preparation__c=true,
+                User_Credential__c=usrCrdId),
+            new Credential_Exam_Attempt__c(
+                
+                Exam_Date_Time__c=system.today(),
+                Status__c='Exam Scheduled',
+                Fail_Scorecard__c=true,
+                Pass_Certificate__c=true,
+                Preparation_Comments__c='Prepared',
+                Proof_of_Preparation__c=true,
+                User_Credential__c=usrCrdId)};
+        return credExamAttemptLists;
+    }
 }
