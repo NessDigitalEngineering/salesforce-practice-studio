@@ -11,59 +11,29 @@ public with sharing class CredentialAssignmentController {
 	 */
 
 	@AuraEnabled
-	public static List<CredentialData> getUserCredentials(Map<String, String> credmap, string userId) {
+	public static List<CredentialData> getUserCredentials(string userId) {
 		List<CredentialData> credenlsData = new List<CredentialData>();
-		List<CredentialData> credenlsData2 = new List<CredentialData>();
-
 		UserCredentialService usCredService = new UserCredentialService();
 
-		List<User_Credential__c> credentialsRec = usCredService.getActiveUserCredentials(userId);
-		List<Id> lststring = new List<Id>();
-		System.debug('456' + credentialsRec);
-		for (User_Credential__c userCred : credentialsRec) {
-			if (userCred.Status__c != 'Completed') {
-				CredentialData data = new CredentialData();
-				data.CredName = userCred.Credential__r.name;
-				data.AssignedDate = userCred.Assigned_Date__c;
-				data.dueDate = userCred.Due_Date__c;
-				data.Status = userCred.Status__c;
-				data.deleteIcon = false;
-
-				credenlsData.add(data);
-
-				lststring.add(userCred.Credential__r.Id);
-			}
-		}
-
-		date latestDate;
-
-		for (String c : credmap.keySet()) {
-			if (!lststring.contains(c)) {
-				CredentialData data = new CredentialData();
-				data.credName = credmap.get(c);
-				data.assignedDate = System.today();
-				data.status = '';
-				data.assigneId = userId;
-				data.credId = c;
-				credenlsData2.add(data);
-
-				if (credenlsData2.size() == 1) {
-					if (credenlsData.size() > 0) {
-						integer x = credenlsData.size();
-						data.dueDate = credenlsData[x - 1].dueDate + 90;
-						latestDate = Date.valueOf(credenlsData[x - 1].dueDate) + 90;
-					} else {
-						data.dueDate = System.today() + 90;
-						latestDate = System.today() + 90;
-					}
-				} else {
-					data.dueDate = latestDate + 90;
-					latestDate = latestDate + 90;
+		if(String.isNotBlank(userId)){
+			List<User_Credential__c> credentialsRec = usCredService.getActiveUserCredentials(userId);
+			List<Id> lststring = new List<Id>();
+			System.debug('456' + credentialsRec);
+			for (User_Credential__c userCred : credentialsRec) {
+				if (userCred.Status__c != 'Completed') {
+					CredentialData data = new CredentialData();
+					data.CredName = userCred.Credential__r.name;
+					data.AssignedDate = userCred.Assigned_Date__c;
+					data.dueDate = userCred.Due_Date__c;
+					data.Status = userCred.Status__c;
+					data.deleteIcon = false;
+	
+					credenlsData.add(data);
+	
+					lststring.add(userCred.Credential__r.Id);
 				}
-				credenlsData.add(data);
 			}
 		}
-
 		return credenlsData;
 	}
 	/*******************************************************************************************************
