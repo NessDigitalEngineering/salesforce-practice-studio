@@ -122,29 +122,18 @@ export default class CredentialTracking extends LightningElement {
 	}
 
 	/*
-<<<<<<< HEAD
 		@description    :   Update status value
 	*/
-=======
-        @description    :   Update status value
-    */
->>>>>>> origin/Pseudo-Develop
 	processStatusValues() {
 		if (this.statusValuesReady) {
 			this.totalUserCredentials.forEach((e) => {
 				if (e.Status__c && e.Status__c != "Completed") {
-<<<<<<< HEAD
 					if (e.Status__c === "Ready") {
 						this.template.querySelector("c-voucher-request").handleExamInputs(e.Credential__r.Name);
 					}
 					e.credentialName = e.Credential__r.Name;
 					e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
 					e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
-=======
-					e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
-					e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
-					e.credentialName = e.Credential__r.Name;
->>>>>>> origin/Pseudo-Develop
 				}
 			});
 			this.processData(this.totalUserCredentials);
@@ -157,15 +146,9 @@ export default class CredentialTracking extends LightningElement {
 	}
 
 	/*
-<<<<<<< HEAD
 		@description    :   Displays logged IN user current assignments and title, also shows the Icon if no records are found.
 		@param          :   data
 	*/
-=======
-        @description    :   Displays logged IN user current assignments and title, also shows the Icon if no records are found.
-        @param          :   data
-    */
->>>>>>> origin/Pseudo-Develop
 	processData(data) {
 		this.countRec = data.length;
 		if (data.length === 0) {
