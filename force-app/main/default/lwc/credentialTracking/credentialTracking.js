@@ -22,16 +22,16 @@ export default class CredentialTracking extends LightningElement {
 	@track credential;
 
 	/*
-        @description    :   Wire service is used to get metadata for a single object 
-        @param          :   passing object(User_Credential__c) API name 
-    */
+		@description    :   Wire service is used to get metadata for a single object 
+		@param          :   passing object(User_Credential__c) API name 
+	*/
 	@wire(getObjectInfo, { objectApiName: "User_Credential__c" })
 	userCredentialMetadata;
 
 	/*
-        @description    :   Using wire service to get all picklist values 
-        @param          :   defaultRecordTypeId & STATUS
-    */
+		@description    :   Using wire service to get all picklist values 
+		@param          :   defaultRecordTypeId & STATUS
+	*/
 	@wire(getPicklistValues, { recordTypeId: "$userCredentialMetadata.data.defaultRecordTypeId", fieldApiName: STATUS })
 	picklistValues({ data, error }) {
 		if (data) {
@@ -46,9 +46,9 @@ export default class CredentialTracking extends LightningElement {
 	}
 
 	/*
-        @description    :   Displays logged IN user current assignments. 
-        @param          :   userIds
-    */
+		@description    :   Displays logged IN user current assignments. 
+		@param          :   userIds
+	*/
 	connectedCallback() {
 		getUserCredentials({ userId: this.userIds })
 			.then((res) => {
@@ -61,9 +61,9 @@ export default class CredentialTracking extends LightningElement {
 	}
 
 	/*
-        @description    :   Displays all active user credential records when status value is not equal to completed 
-        @param          :   event target value & event target title
-    */
+		@description    :   Displays all active user credential records when status value is not equal to completed 
+		@param          :   event target value & event target title
+	*/
 	handleClick(event) {
 		updateUserCredential({ id: event.target.value, status: event.target.title })
 			.then((result) => {
@@ -84,29 +84,18 @@ export default class CredentialTracking extends LightningElement {
 	}
 
 	/*
-        @description    :   Update status value
-    */
+		@description    :   Update status value
+	*/
 	processStatusValues() {
 		if (this.statusValuesReady) {
 			this.totalUserCredentials.forEach((e) => {
 				if (e.Status__c && e.Status__c != "Completed") {
-					if (e.nextStatus === "Ready") {
-						this.template.querySelector("c-voucher-request").handleStatus(e.Credential__r.Name);
+					if (e.Status__c === "Ready") {
+						this.template.querySelector("c-voucher-request").handleExamInputs(e.Credential__r.Name);
 					}
+					e.credentialName = e.Credential__r.Name;
 					e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
 					e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
-					e.credentialName = e.Credential__r.Name;
-					// if (e.nextStatus === "Ready") {
-					// 	console.log("nextStatus---" + e.nextStatus);
-					// 	parameters = { credential: e.credentialName, isShowModal: true };
-					// 	console.log("paramters---" + JSON.stringify(parameters));
-					// 	this.dispatchEvent(new CustomEvent("modalevent", { detail: this.parameters }));
-					// 	//this.isShowModal = true;
-					// 	console.log("credentialName---" + this.e.credentialName);
-					// }
-					// e.credentialName = e.Credential__r.Name;
-					// e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
-					// e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
 				}
 			});
 			this.processData(this.totalUserCredentials);
@@ -119,9 +108,9 @@ export default class CredentialTracking extends LightningElement {
 	}
 
 	/*
-        @description    :   Displays logged IN user current assignments and title, also shows the Icon if no records are found.
-        @param          :   data
-    */
+		@description    :   Displays logged IN user current assignments and title, also shows the Icon if no records are found.
+		@param          :   data
+	*/
 	processData(data) {
 		this.countRec = data.length;
 		if (data.length === 0) {
