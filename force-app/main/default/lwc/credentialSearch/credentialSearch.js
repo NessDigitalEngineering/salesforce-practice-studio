@@ -1,121 +1,112 @@
 import { LightningElement, api, track } from "lwc";
 import getResults from "@salesforce/apex/CredentialSearchController.getCredentials";
 
+// eslint-disable-next-line @lwc/lwc/no-leading-uppercase-api-name
 export default class CredentialSearch extends LightningElement {
-  @api Label;
-  @track searchRecords = [];
-  @track selectedRecords = [];
-  @api required = false;
-  @api iconName;
-  @track txtclassname =
-    "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click";
-  @track messageFlag = false;
-  UserLabels = 'User';
-  title ='Select Credentials';
-  @api datesend = "";
-  @track iconDisplay = [];
-  searchField(event) {
-    const currentText = event.target.value;
-    const selectRecId = [];
+	@track searchRecords = [];
+	@track selectedRecords = [];
+	@track iconName;
+	@track txtclassname = "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click";
+	@api selecteduser = "";
 
-    for (const selRec of this.selectedRecords) {
-      selectRecId.push(selRec.recId);
-    }
+	/*
+    description: onchange event handler, gets credentials.
+  	*/
+	searchField(event) {
+		const currentText = event.target.value;
+		const selectRecId = [];
 
-   getResults({
-      searchKey: currentText,
-      selectedRecId: selectRecId,
-      userId: this.datesend,
-    })
-      .then((result) => {
-        this.searchRecords = result;
-        this.txtclassname =
-          result.length > 0
-            ? "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open "
-            : "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click ";
-        if (currentText.length > 0 && result.length == 0) {
-          this.messageFlag = true;
-        } else {
-          this.messageFlag = false;
-        }
+		for (const selRec of this.selectedRecords) {
+			selectRecId.push(selRec.recId);
+		}
 
-        if (this.selectRecordId != null && this.selectRecordId.length > 0) {
-          this.iconFlag = false;
-          this.clearIconFlag = true;
-        } else {
-          this.iconFlag = true;
-          this.clearIconFlag = false;
-        }
+		getResults({
+			searchKey: currentText,
+			selectedRecId: selectRecId,
+			userId: this.selecteduser
+		})
+			.then((result) => {
+				this.searchRecords = result;
+				this.txtclassname =
+					result.length > 0
+						? "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open "
+						: "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click ";
 
-        this.dispatchEvent(
-          new CustomEvent("credentialsevent", { detail: selectRecId })
-        );
-      })
-      .catch((error) => {
-        console.log("-------error-------------" + JSON.stringify(error));
-      });
-  }
+				this.dispatchEvent(new CustomEvent("credentialsevent", { detail: selectRecId }));
+			})
+			.catch((error) => {
+				console.log("-------error-------------" + JSON.stringify(error));
+			});
+	}
 
-  setSelectedRecord(event) {
-    const recId = event.currentTarget.dataset.id;
-    const selectName = event.currentTarget.dataset.name;
-    const iconName = event.currentTarget.dataset.icon;
+	/*
+    description: onclick event handler, selects the credential from dropdown
+  	*/
+	setSelectedRecord(event) {
+		const recId = event.currentTarget.dataset.id;
+		const selectName = event.currentTarget.dataset.name;
+		const iconName = event.currentTarget.dataset.icon;
 
-    
-    this.iconDisplay = iconName;
-    
+		let newsObject = { recId: recId, recName: selectName, recIcon: iconName };
 
-    
-    this.iconDisplay = iconName;
-    
-    let newsObject = { recId: recId, recName: selectName, recIcon: iconName };
+		this.selectedRecords.push(newsObject);
+		this.txtclassname = "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click ";
+		let selRecords = this.selectedRecords;
 
-    this.selectedRecords.push(newsObject);
-    this.txtclassname =
-      "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click ";
-    let selRecords = this.selectedRecords;
+		this.template.querySelectorAll("lightning-input").forEach((each) => {
+			each.value = "";
+		});
+		const selectedEvent = new CustomEvent("selected", {
+			detail: { selRecords, selectName }
+		});
+		// Dispatches the event.
+		this.dispatchEvent(selectedEvent);
+	}
 
-    this.template.querySelectorAll("lightning-input").forEach((each) => {
-      each.value = "";
-    });
-    const selectedEvent = new CustomEvent("selected", {
-      detail: { selRecords, selectName },
-    });
-    // Dispatches the event.
-    this.dispatchEvent(selectedEvent);
-  }
+	/*
+    description: onremove event handler, removes the selected credentials from pill cmp
+  	*/
+	removeRecord(event) {
+		let selectRecId = [];
 
-  removeRecord(event) {
-    let selectRecId = [];
+		for (const selRec of this.selectedRecords) {
+			if (event.detail.name !== selRec.recId) {
+				selectRecId.push(selRec);
+			}
+		}
 
-    for (const selRec of this.selectedRecords) {
-      if (event.detail.name !== selRec.recId) {
-        selectRecId.push(selRec);
-      }
-    }
+		this.selectedRecords = [...selectRecId];
+		let selRecords = this.selectedRecords;
+		const selectedEvent = new CustomEvent("selected", {
+			detail: { selRecords }
+		});
+		// Dispatches the event.
+		this.dispatchEvent(selectedEvent);
+	}
 
-    this.selectedRecords = [...selectRecId];
-    let selRecords = this.selectedRecords;
-    const selectedEvent = new CustomEvent("selected", {
-      detail: { selRecords },
-    });
-    // Dispatches the event.
-    this.dispatchEvent(selectedEvent);
-  }
-  @api
-  removeCredentials(assignments) {
-    for (const selRec of this.selectedRecords) {
-      if (assignments == selRec.recName) {
-        const index = this.selectedRecords.indexOf(selRec);
-        if (index > -1) {
-          this.selectedRecords.splice(index, 1); // 2nd parameter means remove one item only
-        }
-      }
-    }
-  }
+	/*
+    description: Method called from credentialAssignment cmp when the record is removed from datatable
+  	*/
+	@api
+	removeCredentials(assignments) {
+		for (const selRec of this.selectedRecords) {
+			if (assignments == selRec.recName) {
+				const index = this.selectedRecords.indexOf(selRec);
+				if (index > -1) {
+					this.selectedRecords.splice(index, 1); // 2nd parameter means remove one item only
+				}
+			}
+		}
+	}
 
-  @api
-  resetCredentials() {
-    this.selectedRecords = [];
-  }
+	/*
+    description: Method called from credentialAssignment cmp when the user is unselected
+  	*/
+	@api
+	resetCredentials() {
+		this.selectedRecords = [];
+		this.searchRecords = [];
+		this.template.querySelector('lightning-input[data-name="searchText"]').value = null;
+		this.txtclassname = "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click";
+	}
 }
