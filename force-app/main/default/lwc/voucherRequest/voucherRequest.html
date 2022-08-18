@@ -4,12 +4,6 @@
             aria-modal="true" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container confirmation_class">
                 <header class="slds-modal__header">
-                    <!-- <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
-                        title="Close" onclick={hideModalBox}>
-                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
-                            size="small">
-                        </lightning-icon> <span class="slds-assistive-text">Close</span>
-                    </button> -->
                     <h2 class="slds-text-heading_medium slds-hyphenate">
                         Confirmation</h2>
                 </header>
@@ -19,9 +13,9 @@
                         you need a Voucher?</div>
                 </div>
                 <footer class="slds-modal__footer">
-                    <lightning-button class="button" variant="neutral" label="Yes" onclick={showExamDetailsModal}>
+                    <lightning-button class="button" variant="neutral" label="Yes" onclick={showModalOnYes}>
                     </lightning-button>
-                    <lightning-button variant="brand" label="No" onclick={showExamDetailsModal}>
+                    <lightning-button variant="brand" label="No" onclick={showModalOnNo}>
                     </lightning-button>
                 </footer>
             </div>
@@ -57,23 +51,18 @@
                             </lightning-input>
                         </div>
                         <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
-                            <lightning-textarea label="Are you ready for your exam? Please share your comments" required
-                                value="" onchange={handleCommentChange}>
+                            <lightning-textarea label="Are you ready for your exam? Please
+                            share your comments" required value="" onchange={handleCommentChange}>
                             </lightning-textarea>
                         </div>
-                    </div>
-                    <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
-                        <lightning-input label="Preparation Documents" type="file" accept=".docx, .pdf, .jpg"
-                            onchange={handleFileUpload}>
-                            <lightning-helptext
-                                content="Please upload the course completion evidences from the respective official training sites.">
-                            </lightning-helptext>
-                        </lightning-input>
-                        <!-- <template if:true={fileData}>
-                            <p>{fileData.filename}</p>
-                        </template> -->
-                        <!-- <lightning-button variant="brand" label="submit" title="Submit" onclick={handleClick}
-                            class="slds-m-left_x-small"></lightning-button> -->
+                        <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
+                            <lightning-input label="Preparation Documents" type="file" accept=".docx, .pdf, .jpg"
+                                onchange={handleFileUpload}>
+                                <lightning-helptext
+                                    content="Please upload the course completion evidences from the respective official training sites.">
+                                </lightning-helptext>
+                            </lightning-input>
+                        </div>
                     </div>
                 </div>
                 <footer class="slds-modal__footer">
