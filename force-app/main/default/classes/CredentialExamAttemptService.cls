@@ -9,7 +9,7 @@ public with sharing class CredentialExamAttemptService {
       * @param userId SF id of user
       * @return List of Credential Exam Attempt
       */
-     @AuraEnabled(cacheable=true)
+      @AuraEnabled
      public static List<Credential_Exam_Attempt__c> getExamAttemptsForUser(String userId) {
          try {
              return [
@@ -27,7 +27,8 @@ public with sharing class CredentialExamAttemptService {
       */
          public List<Database.SaveResult> createExamAttempt(List<Credential_Exam_Attempt__c> examAttemptRecords){
              try {
-                 return Database.insert(examAttemptRecords, true);
+                Database.SaveResult[] examAttemptLst= Database.insert(examAttemptRecords, true);
+                return examAttemptLst;
              } catch (Exception ex) {
                  throw ex;
              }
