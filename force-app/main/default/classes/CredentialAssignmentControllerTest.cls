@@ -50,7 +50,7 @@ private class CredentialAssignmentControllerTest {
 
 		System.assertEquals(
 			'Platform Developer I',
-			[SELECT Credential__r.Name FROM User_Credential__c WHERE User__c = :usrs.Id AND status__c = ''][0]
+			[SELECT Credential__r.Name FROM User_Credential__c WHERE User__c = :usrs.Id AND status__c = 'Assigned'][0]
 			.Credential__r.Name,
 			'Success check'
 		);
