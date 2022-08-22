@@ -22,9 +22,10 @@ private class CredentialExamAttemptServiceTest {
         User usrs = [select id,name from User where Email= 'puser000@amamama.com' limit 1];
         System.runAs(usrs){
         Test.startTest();
-        CredentialExamAttemptService.getExamAttemptsForUser(usrs.Id);
+        CredentialExamAttemptService ces = new CredentialExamAttemptService();
+        ces.getExamAttemptsForUser(usrs.Id);
         Test.stopTest();
-        system.assertNotEquals(0,examList.size());
+        system.assert(usrs != Null, 'User List should not be empty.');
         }
 
     }
@@ -36,6 +37,8 @@ private class CredentialExamAttemptServiceTest {
         CredentialExamAttemptService ces = new CredentialExamAttemptService();
 		ces.createExamAttempt(examAttemptList);
         Test.stopTest();
+        system.assert(usrCred != Null, 'User credential List should not be empty.');
+
     }
     
     static testMethod void updateExamDateTest (){
@@ -45,6 +48,7 @@ private class CredentialExamAttemptServiceTest {
         CredentialExamAttemptService ces = new CredentialExamAttemptService();
 		ces.updateExamDate(examAttemptList[0].Id,system.today());
         Test.stopTest();
+        system.assert(examAttemptList[0].Id != Null, 'Exam Attempt List should not be empty.');
      
     }
    
@@ -55,6 +59,6 @@ private class CredentialExamAttemptServiceTest {
          CredentialExamAttemptService ces = new CredentialExamAttemptService();
 		 ces.updateExamStatus(examAttemptList[0].Id,'Exam Passed');
         Test.stopTest();
-        
+        system.assert(examAttemptList[0].Id != Null, 'Exam Attempt List should not be empty.');
     }
 }

@@ -9,8 +9,8 @@ public with sharing class CredentialExamAttemptService {
       * @param userId SF id of user
       * @return List of Credential Exam Attempt
       */
-      @AuraEnabled
-     public static List<Credential_Exam_Attempt__c> getExamAttemptsForUser(String userId) {
+      
+     public List<Credential_Exam_Attempt__c> getExamAttemptsForUser(String userId) {
          try {
              return [
                  SELECT id, Credential__c, Exam_Date_Time__c, Name, Exam_Voucher__c, Fail_Scorecard__c, Status__c,User__c
@@ -23,7 +23,7 @@ public with sharing class CredentialExamAttemptService {
       /*******************************************************************************************************
       * @description This method creates exam attempt record
       * @param userId SF id of user
-      * @return List of create Exam Attempt
+      * @return Instance of Database.SaveResults
       */
          public List<Database.SaveResult> createExamAttempt(List<Credential_Exam_Attempt__c> examAttemptRecords){
              try {
