@@ -70,4 +70,53 @@
         <shortDescription>CredentailAssignment_EmptyMsg</shortDescription>
         <value>You don’t have any assignments in this list. Check back later.</value>
     </labels>
+    <labels>
+        <fullName>CredentailAssignment_ConfirmationMsg</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentailAssignment_ConfirmationMsg</shortDescription>
+        <value>Are you sure you want to delete this item?</value>
+    </labels>
+    <labels>
+        <fullName>CredentailAssignment_Confirmation</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentailAssignment_Confirmation</shortDescription>
+        <value>Confirmation</value>
+    </labels>
+    <labels>
+        <fullName>CredentailAssignment_ListOfAssignments</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentailAssignment_ListOfAssignments</shortDescription>
+        <value>List of Assignments</value>
+    </labels>
+    <labels>
+        <fullName>CredentailAssignment_EmptyMsg1</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentailAssignment_EmptyMsg</shortDescription>
+        <value>Nothing needs your attention right now. Check back later.</value>
+    </labels>
+    <labels>
+        <fullName>CredentailAssignment_Success</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentailAssignment_Success</shortDescription>
+        <value>Credential(s) Successfully Assigned.</value>
+    </labels>
+    <labels>
+        <fullName>Cancel</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>OK</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>OK</shortDescription>
+        <value>OK</value>
+    </labels>
 </CustomLabels>

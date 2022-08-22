@@ -6,6 +6,15 @@ import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 import HeaderTitle from "@salesforce/label/c.headerTitle";
 import SelectUser from "@salesforce/label/c.Select_User";
 import SelectCredentials from "@salesforce/label/c.Select_Credentials";
+import ConfirmationMsg from "@salesforce/label/c.CredentailAssignment_ConfirmationMsg";
+import Confirmation from "@salesforce/label/c.CredentailAssignment_Confirmation";
+import EarnedCredentials from "@salesforce/label/c.Earned_Credentials";
+import ListOfAssignments from "@salesforce/label/c.CredentailAssignment_ListOfAssignments";
+import EmptyMsg from "@salesforce/label/c.CredentailAssignment_EmptyMsg1";
+import SuccessMsg from "@salesforce/label/c.CredentailAssignment_Success";
+import Cancel from "@salesforce/label/c.Cancel";
+import OK from "@salesforce/label/c.OK";
+
 const cols = [
 	{
 		type: "button-icon",
@@ -58,143 +67,216 @@ const cols = [
 
 export default class CredentialAssignment extends LightningElement {
 	@api constant = {
-		ERROR_TITLE: "Error Found",
 		ROWACTION_DELETE: "deleteIcon",
 		VAR_SUCCESS: "Success",
-		ROWACTION_SAVE: "save",
-		VAR_ERROR: "error",
-		MSG_DELETE: "Record Deleted",
-		MSG_ERR_DEL: "Error deleting record",
-		MSG_ERR_UPD_RELOAD: "Error updating or reloading record",
-		MSG_UPD: "Credential(s) Successfully Assigned.",
-		DEL_CONFIRM: "Are you sure you want to delete this item ?",
-		MODE_BATCH: "batch",
-		MODE_SINGLE: "single"
+		DEL_CONFIRM: ConfirmationMsg
 	};
-	label = { HeaderTitle, SelectUser, SelectCredentials };
-	@track columns;
-	@api removeCredentials;
-	@api selectedUserName = "";
+	label = {
+		HeaderTitle,
+		SelectUser,
+		SelectCredentials,
+		Confirmation,
+		ConfirmationMsg,
+		EarnedCredentials,
+		ListOfAssignments,
+		EmptyMsg,
+		SuccessMsg,
+		Cancel,
+		OK
+	};
+	columns = cols;
+	@track selectedUserName = "";
 	@track credentials;
-	@track selectedCredentials;
 	@track isDataAvaialable = false;
 	@track saveButtonHide = false;
-	draftValues = [];
-	title = "List of Assignments";
-	wiredRecords;
-	refreshTable;
-	myMap = {};
-	@track sortBy;
-	@track sortDirection;
+	@track sortBy = "dueDate";
+	@track sortDirection = "asc";
 	@track disableButton = false;
 	icon = TasksIcon;
 	@track showIcon = true;
 	@track isDialogVisible = false;
 	@track deleteRow;
-	confirmMessage = "Are you sure you want to delete this item ?";
-	conf = "Confirmation";
-	defaultMessage = "Nothing needs your attention right now. Check back later.";
-	dataTableStyle = false;
-	@track earnedCredentialsTitle = "Earned Credentials";
+	@track earnedCredentialsTitle = this.label.EarnedCredentials;
+	assignedCreds = [];
 
+	/*
+		@description: Event handler for user selection
+	*/
 	handleUserName(event) {
-		this.selectedUserName = event.detail.currentRecId;
-		this.handleCredential(event);
+		try {
+			this.selectedUserName = event.detail.currentRecId;
+			//this.handleCredential(event);
+
+			if (this.selectedUserName !== "") {
+				this.getdata();
+			} else {
+				this.template.querySelector("c-Credential-Search").resetCredentials();
+				this.template.querySelector("c-Earned-Credentials").resetCredentials();
+				this.credentials = [];
+				this.showIcon = true;
+				this.saveButtonHide = false;
+				this.isDataAvaialable = false;
+			}
+		} catch (error) {
+			console.log(JSON.stringify(error));
+		}
 	}
 
+	/*
+		@description: Event handler for Credential selection
+	*/
 	handleCredential(event) {
 		this.disableButton = true;
-		this.columns = cols;
-		let tempSelectRecords = [];
-		this.myMap = {};
+		// this.columns = cols;
+		console.log("sel Recs:", JSON.stringify(event.detail.selRecords));
 		if (this.selectedUserName && event.detail.selRecords) {
-			for (const rec of event.detail.selRecords) {
-				tempSelectRecords.push(rec.recId);
-				this.myMap[rec.recId] = rec.recName;
+			this.credentials = this.assignedCreds;
+			let currentSelection = event.detail.selRecords;
+			for (const rec of currentSelection) {
+				let tmpCredList = [];
+				tmpCredList.push(...this.credentials);
+				if (tmpCredList.length > 0) {
+					tmpCredList.push(
+						this.addCredentials(rec.recId, rec.recName, tmpCredList[tmpCredList.length - 1].dueDate)
+					);
+				} else {
+					tmpCredList.push(this.addCredentials(rec.recId, rec.recName, null));
+				}
+				this.credentials = tmpCredList;
 			}
-			this.selectedCredentials = tempSelectRecords;
+			this.sortCaseData("dueDate", "asc");
 			this.isDataAvaialable = true;
 			this.showIcon = false;
 		} else {
-			this.template.querySelector("c-Credential-Search").resetCredentials();
-			this.template.querySelector("c-Earned-Credentials").resetCredentials();
-			this.selectedCredentials = tempSelectRecords;
-
 			this.isDataAvaialable = false;
-			this.saveButtonHide = false;
 			this.showIcon = true;
-		}
-
-		if (this.selectedUserName != "") {
-			this.getdata();
+			this.saveButtonHide = false;
 		}
 	}
+
+	/*
+		@description: Method to add selected Credentials to the datatable
+		@param credId: Credential record id
+		@param credName: Credential Name
+		@param previousCredDate: Due date of previous credential
+	*/
+	addCredentials(credId, credName, previousCredDate) {
+		try {
+			let lastCred = {};
+			let credRec = {};
+			credRec.credName = credName;
+			credRec.credId = credId;
+			credRec.dueDate =
+				previousCredDate === null ? this.addDaysToDate(null) : this.addDaysToDate(previousCredDate);
+			credRec.assigneId = this.selectedUserName;
+			credRec.assignedDate = new Date();
+			credRec.deleteIcon = false;
+			credRec.controlEditField = true;
+			credRec.status = "";
+			this.saveButtonHide = true;
+			this.disableButton = false;
+
+			return credRec;
+		} catch (error) {
+			console.log("error: ", JSON.stringify(error));
+		}
+	}
+
+	/*
+		@description: Method to add days to due date
+		@param dt: Duedate of previous record
+		@return: date in ISO8061 format 
+	*/
+	addDaysToDate(dt) {
+		console.log("dt:", dt);
+		let date;
+		if (dt === null) {
+			date = new Date();
+			date.setDate(date.getDate() + 90);
+		} else {
+			date = new Date(dt);
+			date.setDate(date.getDate() + 90);
+			console.log("date:", date);
+		}
+		return date.toISOString();
+	}
+
+	/*
+		@description: Event handler to handle delete in datatable row
+	*/
 	handleDelete(event) {
 		this.isDialogVisible = true;
 		this.deleteRow = event;
 	}
+
+	/*
+		@description: Method to seggregate delete action
+	*/
 	deleteRecord() {
 		try {
 			const action = this.deleteRow.detail.action.name;
-			//check for save or delete action
-
-			if (action != "" && action == this.constant.ROWACTION_DELETE) {
+			if (action !== "" && action === this.constant.ROWACTION_DELETE) {
 				this.rowactionDelete(this.deleteRow);
 			}
 		} catch (errorMsg) {
 			console.log("error msg" + errorMsg);
 		}
 	}
-	rowactionDelete(event) {
-		//confirm to delete & invoke deleteRecord()
-		if (this.constant.DEL_CONFIRM) {
-			for (let cred in this.credentials) {
-				if (
-					this.credentials[cred].credName === event.detail.row.credName &&
-					this.credentials[cred].status == ""
-				) {
-					this.template
-						.querySelector("c-Credential-Search")
-						.removeCredentials(this.credentials[cred].credName);
-					this.credentials.splice(cred, 1);
-				}
-			}
 
-			let tempResponse = [];
-			let tempObject = {};
-			this.disableButton = true;
-			this.myMap = {};
-			for (const res of this.credentials) {
-				tempObject = { ...res };
-				tempResponse.push(tempObject);
-				tempObject = {};
-				if (res.status == "") {
-					this.saveButtonHide = true;
-					this.disableButton = false;
+	/*
+		@description: Method to delete row and change due date accordingly
+	*/
+	rowactionDelete(event) {
+		let tmpList = [];
+		let updatedList = [];
+		tmpList.push(...this.credentials);
+		updatedList.push(...this.credentials);
+		if (this.constant.DEL_CONFIRM) {
+			// eslint-disable-next-line guard-for-in
+			for (let cred in tmpList) {
+				if (tmpList[cred].credName === event.detail.row.credName && tmpList[cred].status === "") {
+					updatedList.splice(cred, 1);
+					this.credentials = updatedList;
+					this.isDialogVisible = false;
+					this.template.querySelector("c-Credential-Search").removeCredentials(tmpList[cred].credName);
+				} else if (tmpList[cred].status === "") {
+					let index = updatedList.findIndex((x) => x.credName === tmpList[cred].credName);
+					updatedList.splice(
+						index,
+						1,
+						this.addCredentials(
+							tmpList[cred].credId,
+							tmpList[cred].credName,
+							index > 0 ? updatedList[index - 1].dueDate : null
+						)
+					);
+
+					this.credentials = updatedList;
 				}
-			}
-			this.isDialogVisible = false;
-			this.credentials = tempResponse;
-			this.removeCredentials = this.credentials;
-			if (this.credentials.length == 0) {
-				this.isDataAvaialable = false;
-				this.showIcon = true;
 			}
 		}
 	}
+
+	/*
+		@description: Life cycle hook. Setting css for inner elements of datatable
+	*/
 	renderedCallback() {
 		try {
 			const style = document.createElement("style");
 			style.innerText = `c-credential-assignment .slds-table_header-fixed_container {
-          background-color: white;
-      }`;
+	      background-color: white;
+	  }`;
 			this.template.querySelector("lightning-datatable").appendChild(style);
 		} catch (error) {
 			console.log(JSON.stringify(error));
 		}
 	}
+
+	/*
+		@description: Method used to get the Credentials for selected user
+	*/
 	getdata() {
-		getUserCredentials({ credmap: this.myMap, userId: this.selectedUserName })
+		getUserCredentials({ userId: this.selectedUserName })
 			.then((response) => {
 				let tempResponse = [];
 				let tempObject = {};
@@ -202,29 +284,20 @@ export default class CredentialAssignment extends LightningElement {
 				if (response) {
 					for (const res of response) {
 						tempObject = { ...res };
-
-						if (res.status == "") {
-							tempObject.controlEditField = true;
-							tempObject.deleteIcon = false;
-							this.saveButtonHide = true;
-							this.disableButton = false;
-						} else {
-							tempObject.controlEditField = false;
-							tempObject.deleteIcon = true;
-
-							this.saveButtonHide = true;
-							this.disableButton = true;
-						}
-
+						tempObject.controlEditField = false;
+						tempObject.deleteIcon = true;
+						this.saveButtonHide = true;
+						this.disableButton = true;
 						tempResponse.unshift(tempObject);
 					}
 				}
-
 				this.credentials = tempResponse;
+				this.sortCaseData("dueDate", "asc");
+				this.assignedCreds = this.credentials;
+				console.log("credentials:", JSON.stringify(this.credentials));
 				if (this.credentials.length > 0) {
 					this.isDataAvaialable = true;
 					this.showIcon = false;
-					this.sortCaseData("dueDate", "asc");
 				} else {
 					this.isDataAvaialable = false;
 					this.showIcon = true;
@@ -235,9 +308,13 @@ export default class CredentialAssignment extends LightningElement {
 			});
 	}
 
+	/*
+		@description: Onclick event handler for Save button, responsible to insert user credentials selected on UI
+	*/
 	handleClick(event) {
+		console.log("final values:", JSON.stringify(this.credentials));
 		insertCredAssignments({ credAssignmentList: this.credentials })
-			.then((_result) => {
+			.then((result) => {
 				let tempResponse = [];
 				let tempObject = {};
 				for (const res of this.credentials) {
@@ -263,10 +340,11 @@ export default class CredentialAssignment extends LightningElement {
 				}
 
 				this.credentials = tempResponse;
+				this.sortCaseData("dueDate", "asc");
+				this.assignedCreds = this.credentials;
 				this.dispatchEvent(
 					new ShowToastEvent({
-						message: this.constant.MSG_UPD,
-
+						message: this.label.SuccessMsg,
 						variant: this.constant.VAR_SUCCESS
 					})
 				);
@@ -279,15 +357,20 @@ export default class CredentialAssignment extends LightningElement {
 			.catch((error) => {
 				console.log("Errorured:- " + error.body.message);
 			});
-
-		this.draftValues = event.detail.draftValues;
 	}
+
+	/*
+		@description: Event handler to sort rows in datatable
+	*/
 	handleSortCaseData(event) {
 		this.sortBy = event.detail.fieldName;
 		this.sortDirection = event.detail.sortDirection;
 		this.sortCaseData(this.sortBy, this.sortDirection);
 	}
 
+	/*
+		@description: Method responsible to sort the rows of datatable
+	*/
 	sortCaseData(fieldname, direction) {
 		let parseData = JSON.parse(JSON.stringify(this.credentials));
 		// Return the value stored in the field
@@ -305,12 +388,35 @@ export default class CredentialAssignment extends LightningElement {
 		});
 		this.credentials = parseData;
 	}
+
+	/*
+		@description: Method responsible to close the confirmation modal
+	*/
 	closeModal() {
 		this.isDialogVisible = false;
 	}
 
+	/*
+		@description: Event handler to set the title for Earned Credentials lightning card
+	*/
 	handleTitle(event) {
 		console.log("title is:", event.detail);
 		this.earnedCredentialsTitle = event.detail;
+	}
+
+	/*
+		@description: Event handler to detect changes in datatable row cells
+	*/
+	handleCellChange(event) {
+		console.log("draft values:", JSON.stringify(event.detail.draftValues[0]));
+		let draftValue = event.detail.draftValues[0];
+		let tmpCreds = [];
+		tmpCreds = [...this.credentials];
+		for (const cred of tmpCreds) {
+			if (cred.credName === draftValue.credName) {
+				cred.dueDate = draftValue.dueDate;
+			}
+		}
+		this.credentials = tmpCreds;
 	}
 }
