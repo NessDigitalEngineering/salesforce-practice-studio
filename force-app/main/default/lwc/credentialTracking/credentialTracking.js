@@ -20,7 +20,6 @@ export default class CredentialTracking extends LightningElement {
 	@track showIcon = false;
 	@track emptyRecords = true;
 
-
 	/*
 		@description    :   Wire service is used to get metadata for a single object
 		@param          :   passing object(User_Credential__c) API name
@@ -74,6 +73,12 @@ export default class CredentialTracking extends LightningElement {
 					getUserCredentials({ userId: this.userIds })
 						.then((rs) => {
 							this.totalUserCredentials = rs;
+							this.totalUserCredentials.forEach((e) => {
+								if (e.Status__c === "Ready") {
+									this.template.querySelector('c-voucher-request').handleCredentialName(e.Credential__r.Name);
+									this.template.querySelector('c-voucher-request').handleCredentialId(e.Id);
+								}
+							});
 							this.processStatusValues();
 						})
 						.catch((error) => {
@@ -93,18 +98,9 @@ export default class CredentialTracking extends LightningElement {
 		if (this.statusValuesReady) {
 			this.totalUserCredentials.forEach((e) => {
 				if (e.Status__c && e.Status__c != "Completed") {
-					if (e.Status__c === "Ready") {
-						this.template.querySelector('c-voucher-request').handleCredentialName(e.Credential__r.Name);
-						this.template.querySelector('c-voucher-request').handleCredentialId(e.Id);
-						// e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
-						// e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
-						// e.credentialName = e.Credential__r.Name;
-					}
-					else {
-						e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
-						e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
-						e.credentialName = e.Credential__r.Name;
-					}
+					e.nextStatusLbl = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1] + " >";
+					e.nextStatus = this.statusValues[this.statusValues.indexOf("" + e.Status__c) + 1];
+					e.credentialName = e.Credential__r.Name;
 				}
 			});
 			this.processData(this.totalUserCredentials);

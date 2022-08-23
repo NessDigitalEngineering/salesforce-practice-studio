@@ -1,19 +1,26 @@
 import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import uploadDocuments from "@salesforce/apex/documentsUploadController.uploadDocuments";
+import Voucher_Preparation from "@salesforce/label/c.Voucher_Preparation";
+import Voucher_ExamDate from "@salesforce/label/c.Voucher_ExamDate";
+import Voucher_CredentialName from "@salesforce/label/c.Voucher_CredentialName";
+import Voucher_Comments from "@salesforce/label/c.Voucher_Comments";
+import PreparationDocs_HelpText from "@salesforce/label/c.PreparationDocs_HelpText";
 
 const MAX_FILE_SIZE = 50000000;
 
 export default class VoucherRequest extends LightningElement {
+    label = { Voucher_Comments, Voucher_CredentialName, Voucher_ExamDate, Voucher_Preparation, PreparationDocs_HelpText };
     @track examDate;
     @track credentialValue;
     @track userCredentialId;
     @track examComments;
     @track status;
     @track fileData;
-    uploadedFiles = [];
+    fileNames = [];
+    @track fileContentsArray = [];
     file;
-    fileName;
+    fileName = '';
     fileReader;
     content;
     fileContents;
@@ -27,7 +34,6 @@ export default class VoucherRequest extends LightningElement {
     }
 
     @api handleCredentialId(credentialId) {
-        this.isShowModal = true;
         this.userCredentialId = credentialId;
     }
 
@@ -42,32 +48,36 @@ export default class VoucherRequest extends LightningElement {
     }
 
     handleFileUpload(event) {
+        console.log('files---' + event.target.files.length);
         if (event.target.files.length > 0) {
-            this.uploadedFiles = event.target.files;
-            this.fileName = event.target.files[0].name;
-            this.file = this.uploadedFiles[0];
-            if (this.file.size > this.MAX_FILE_SIZE) {
-                alert("File Size Can not exceed" + MAX_FILE_SIZE);
+            for (var i = 0; i < event.target.files.length; i++) {
+                this.file = event.target.files[i];
+                if (this.file.size > this.MAX_FILE_SIZE) {
+                    alert("File Size Can not exceed" + MAX_FILE_SIZE);
+                }
+                this.fileName = this.file.name;
+                console.log('fileName---' + this.fileName);
+                this.fileReader = new FileReader();
+                this.fileReader.onloadend = () => {
+                    let base64 = "base64,";
+                    this.content = this.fileContent.indexOf(base64) + base64.length;
+                    this.fileContents = this.fileContents.substring(this.content);
+                    this.fileContents = this.fileReader.result.split(',')[1];
+                    console.log('fileContents---' + this.fileContents);
+                    // this.fileContentsArray.push({ Title: this.fileName, VersionData: this.fileContents });
+                    // console.log('fileContentsArray---' + this.fileContentsArray);
+                    // this.fileNames.push(this.fileName);
+                    // this.fileContentsArray.push(this.fileContents);
+
+                }
+                this.fileReader.readAsDataURL(this.file);
+                this.fileNames.push(this.fileName);
+                console.log('fileNames---' + this.fileNames);
             }
         }
     }
 
     saveNewRecord() {
-        this.isShowModal = false;
-        this.fileReader = new FileReader();
-        this.fileReader.onloadend = () => {
-            this.fileContents = this.fileReader.result;
-            let base64 = "base64,";
-            this.content = this.fileContents.indexOf(base64) + base64.length;
-            this.fileContents = this.fileContents.substring(this.content);
-            console.log("fileContents----" + this.fileContents);
-            this.saveExamAttemptRecord();
-        };
-        this.fileReader.readAsDataURL(this.file);
-        this.isShowModal = false;
-    }
-
-    saveExamAttemptRecord() {
         this.isShowModal = false;
         const examAttemptFields = {
             'sobjectType': 'Credential_Exam_Attempt__c',
@@ -77,11 +87,13 @@ export default class VoucherRequest extends LightningElement {
             'Status__c': this.statusValue,
             'Proof_of_Preparation__c': true
         }
-
+        console.log('examAttemptRec---' + JSON.stringify(examAttemptFields));
+        console.log('fileData---' + JSON.stringify(fileNames));
+        // console.log('fileName---' + this.fileNames);
         uploadDocuments({
             examAttemptRec: examAttemptFields,
-            file: encodeURIComponent(this.fileContents),
-            fileName: this.fileName
+            fileData: JSON.stringify(this.fileContentsArray)
+            // fileName: this.fileName
         })
             .then((examAttemptRecId) => {
                 if (examAttemptRecId) {
@@ -92,6 +104,7 @@ export default class VoucherRequest extends LightningElement {
                             message: "Credential Exam Attempt Successfully created"
                         })
                     );
+                    this.isShowModal = false;
                 }
             })
             .catch((error) => {
@@ -101,8 +114,9 @@ export default class VoucherRequest extends LightningElement {
         this.displayExamDetailsModal = false;
     }
 
-    hideModalBox() {
-        this.isShowModal = false;
+    removeReceiptImage(event) {
+        var index = event.currentTarget.dataset.id;
+        this.uploadedFiles.splice(index, 1);
     }
 
     closeModal() {
@@ -122,4 +136,4 @@ export default class VoucherRequest extends LightningElement {
     showExamDetailsModal() {
         this.displayExamDetailsModal = true;
     }
-} 
+}

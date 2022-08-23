@@ -23,8 +23,8 @@
         <div class="slds-backdrop slds-backdrop_open"></div>
     </template>
     <template if:true={displayExamDetailsModal}>
-        <section key={u.id} role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
-            aria-describedby="modal-content-id-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-describedby="modal-content-id-1"
+            aria-modal="true" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
                 <header class="slds-modal__header">
                     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
@@ -41,28 +41,38 @@
                 <div class="slds-modal__content slds-p-around_medium">
                     <div class="slds-grid slds-wrap">
                         <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
-                            <lightning-input name="credential" label="Credential Name" value={credentialValue} disabled>
+                            <lightning-input label={label.Voucher_CredentialName} name="credential"
+                                value={credentialValue} disabled>
                             </lightning-input>
                         </div>
                         <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
-                            <lightning-input class="slds-datetime-picker" type="datetime"
-                                label="When are you planning for your exam?" date-style="short"
+                            <h6 class="headerText">{label.Voucher_ExamDate}</h6>
+                            <lightning-input variant="label-hidden" type="datetime" date-style="short"
                                 onchange={handleDateChange}>
                             </lightning-input>
                         </div>
                         <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
-                            <lightning-textarea label="Are you ready for your exam? Please
-                            share your comments" required value="" onchange={handleCommentChange}>
+                            <lightning-textarea label={label.Voucher_Comments} required value=""
+                                onchange={handleCommentChange}>
                             </lightning-textarea>
                         </div>
                         <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
-                            <lightning-input label="Preparation Documents" type="file" accept=".docx, .pdf, .jpg"
-                                onchange={handleFileUpload}>
-                                <lightning-helptext
-                                    content="Please upload the course completion evidences from the respective official training sites.">
+                            <h6 class="headerText">{label.Voucher_Preparation}
+                                <lightning-helptext content={label.PreparationDocs_HelpText}>
                                 </lightning-helptext>
-                            </lightning-input>
+                            </h6>
+                            <lightning-input type="file" accept=".docx, .pdf, .jpg" onchange={handleFileUpload}
+                                multiple></lightning-input>
                         </div>
+                    </div>
+                    <div class="slds-m-around_small">
+                        <template if:true={uploadedFiles}>
+                            <template for:each={uploadedFiles} for:item="filename" for:index="index">
+                                {filename.fileName}
+                                <span key={filename.fileName} data-id={index} onclick={removeReceiptImage}
+                                    class="removeImage">x</span> &nbsp;
+                            </template>
+                        </template>
                     </div>
                 </div>
                 <footer class="slds-modal__footer">
