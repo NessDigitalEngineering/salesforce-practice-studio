@@ -1,6 +1,8 @@
 public with sharing class documentsUploadController {
 	@AuraEnabled
 	public static String uploadDocuments(Credential_Exam_Attempt__c examAttemptRec, List<Object> fileData) {
+		System.debug('examAttemptRec---' + examAttemptRec);
+		System.debug('fileData---' + fileData);
 		String examAttemptRecId;
 		try {
 			insert examAttemptRec;

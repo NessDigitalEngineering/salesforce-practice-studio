@@ -18,7 +18,7 @@ export default class VoucherRequest extends LightningElement {
     @track status;
     @track fileData;
     fileNames = [];
-    @track fileContentsArray = [];
+    fileContentsArray = [];
     file;
     fileName = '';
     fileReader;
@@ -59,20 +59,21 @@ export default class VoucherRequest extends LightningElement {
                 console.log('fileName---' + this.fileName);
                 this.fileReader = new FileReader();
                 this.fileReader.onloadend = () => {
-                    let base64 = "base64,";
-                    this.content = this.fileContent.indexOf(base64) + base64.length;
-                    this.fileContents = this.fileContents.substring(this.content);
                     this.fileContents = this.fileReader.result.split(',')[1];
+                    let base64 = "base64,";
+                    this.content = this.fileContents.indexOf(base64) + base64.length;
+                    this.fileContents = this.fileContents.substring(this.content);
                     console.log('fileContents---' + this.fileContents);
-                    // this.fileContentsArray.push({ Title: this.fileName, VersionData: this.fileContents });
-                    // console.log('fileContentsArray---' + this.fileContentsArray);
+                    //this.fileContentsArray.push({ Title: this.fileName, VersionData: this.fileContents });
                     // this.fileNames.push(this.fileName);
                     // this.fileContentsArray.push(this.fileContents);
 
                 }
                 this.fileReader.readAsDataURL(this.file);
-                this.fileNames.push(this.fileName);
-                console.log('fileNames---' + this.fileNames);
+                // this.fileContentsArray.push(this.fileContents);
+                // console.log('fileContentsArray---' + this.fileContents);
+                this.fileContentsArray.push({ Title: this.fileName, VersionData: this.fileContents });
+                console.log('fileContentsArray---' + JSON.stringify(this.fileContentsArray));
             }
         }
     }
@@ -88,12 +89,11 @@ export default class VoucherRequest extends LightningElement {
             'Proof_of_Preparation__c': true
         }
         console.log('examAttemptRec---' + JSON.stringify(examAttemptFields));
-        console.log('fileData---' + JSON.stringify(fileNames));
-        // console.log('fileName---' + this.fileNames);
+        console.log('fileName---' + JSON.stringify(this.fileContentsArray));
         uploadDocuments({
             examAttemptRec: examAttemptFields,
-            fileData: JSON.stringify(this.fileContentsArray)
-            // fileName: this.fileName
+            fileData: this.fileContentsArray
+            //fileName: this.fileName
         })
             .then((examAttemptRecId) => {
                 if (examAttemptRecId) {

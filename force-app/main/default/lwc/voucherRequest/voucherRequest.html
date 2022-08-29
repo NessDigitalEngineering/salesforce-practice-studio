@@ -61,15 +61,16 @@
                                 <lightning-helptext content={label.PreparationDocs_HelpText}>
                                 </lightning-helptext>
                             </h6>
-                            <lightning-input type="file" accept=".docx, .pdf, .jpg" onchange={handleFileUpload}
-                                multiple></lightning-input>
+                            <lightning-input type="file" multiple accept=".docx, .pdf, .jpg"
+                                onchange={handleFileUpload}>
+                            </lightning-input>
                         </div>
                     </div>
                     <div class="slds-m-around_small">
                         <template if:true={uploadedFiles}>
-                            <template for:each={uploadedFiles} for:item="filename" for:index="index">
-                                {filename.fileName}
-                                <span key={filename.fileName} data-id={index} onclick={removeReceiptImage}
+                            <template for:each={uploadedFiles} for:item="file" for:index="index">
+                                {file.fileName}
+                                <span key={file.fileName} data-id={index} onclick={removeReceiptImage}
                                     class="removeImage">x</span> &nbsp;
                             </template>
                         </template>
