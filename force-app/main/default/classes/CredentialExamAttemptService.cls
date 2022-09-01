@@ -13,9 +13,9 @@ public with sharing class CredentialExamAttemptService {
      public List<Credential_Exam_Attempt__c> getExamAttemptsForUser(String userId) {
          try {
              return [
-                 SELECT id, Credential__c, Exam_Date_Time__c, Name, Exam_Voucher__c, Fail_Scorecard__c, Status__c,User__c
+                 SELECT id, Credential__c, Exam_Date_Time__c,User_Credential__r.Name, Name, Exam_Voucher__c, Fail_Scorecard__c, Status__c,User__c
                  FROM Credential_Exam_Attempt__c
-                 WHERE Name= :userId AND (Credential_Exam_Attempt__c.Status__c != 'Completed' OR Credential_Exam_Attempt__c.Status__c != 'Exam Passed' OR Credential_Exam_Attempt__c.Status__c != 'Exam Failed')];
+                 WHERE User__c= :userId OR (Status__c != 'Completed' OR Status__c != 'Exam Passed' OR Status__c != 'Exam Failed')];
          } catch (Exception ex) {
              throw ex;
          }
