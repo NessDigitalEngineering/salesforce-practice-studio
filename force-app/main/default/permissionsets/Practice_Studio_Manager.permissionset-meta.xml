@@ -275,6 +275,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Exam_Voucher__c.Voucher_Code_Masked__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>User.Employee_ID__c</field>
         <readable>true</readable>
