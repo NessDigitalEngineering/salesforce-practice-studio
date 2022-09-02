@@ -19,20 +19,32 @@ global with sharing class ExamVoucherService {
     String regExp = '(?<!^.{0,3}).(?!.{0,3}$)';
     String replacement = '*';
     for (Exam_Voucher__c examVoucher : examVouchers) {
-      //voucher.Voucher_Code_Masked__c = 'masked'+voucher.Voucher_Code__c;
       examVoucher.Voucher_Code_Masked__c = examVoucher.Voucher_Code__c.replaceAll(regExp, replacement);
     }
     return examVouchers;
   }
 
   public static List<Exam_Voucher__c> unsetVoucherCode(
-    List<Exam_Voucher__c> vouchers
+    List<Exam_Voucher__c> examVouchers
   ) {
-    for (Exam_Voucher__c voucher : vouchers) {
-      voucher.Voucher_Code__c = null;
+    for (Exam_Voucher__c examVoucher : examVouchers) {
+      examVoucher.Voucher_Code__c = null;
     }
-    return vouchers;
+    return examVouchers;
   }
+
+  public static List<Exam_Voucher__c> decryptVoucherCode(
+    List<Exam_Voucher__c> examVouchers
+  ) {
+    Practice_Studio_Setting__mdt defaultSetting = getEncryptionConfig();
+    for (Exam_Voucher__c examVoucher : examVouchers) {
+      Blob decrypted = Crypto.decrypt(defaultSetting.Algorithm_Name__c, EncodingUtil.base64Decode(defaultSetting.Private_Key__c), Blob.valueOf(defaultSetting.Initialization_Vector__c),  EncodingUtil.base64Decode(examVoucher.Voucher_Code_Encrypted__c));
+      String decryptedString = decrypted.toString();
+      examVoucher.Voucher_Code__c = decryptedString;
+    }
+    return examVouchers;
+  }
+
 
   private static Practice_Studio_Setting__mdt getEncryptionConfig() {
     Practice_Studio_Setting__mdt[] appSettings = [SELECT MasterLabel, QualifiedApiName, Algorithm_Name__c ,Initialization_Vector__c, Private_Key__c FROM Practice_Studio_Setting__mdt];
