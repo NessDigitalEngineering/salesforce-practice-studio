@@ -119,4 +119,39 @@
         <shortDescription>OK</shortDescription>
         <value>OK</value>
     </labels>
+    <labels>
+        <fullName>PreparationDocs_HelpText</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PreparationDocs_HelpText</shortDescription>
+        <value>Please upload the course completion evidences from the respective official training sites.</value>
+    </labels>
+    <labels>
+        <fullName>Voucher_Comments</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Voucher_Comments</shortDescription>
+        <value>Are you ready for your exam? Please share your comments.</value>
+    </labels>
+    <labels>
+        <fullName>Voucher_CredentialName</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Voucher_CredentialName</shortDescription>
+        <value>Credential Name</value>
+    </labels>
+    <labels>
+        <fullName>Voucher_ExamDate</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Voucher_ExamDate</shortDescription>
+        <value>When are you planning for your exam?</value>
+    </labels>
+    <labels>
+        <fullName>Voucher_Preparation</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Voucher_PreparationDocuments</shortDescription>
+        <value>Preparation Documents</value>
+    </labels>
 </CustomLabels>
