@@ -9,6 +9,7 @@ import PreparationDocs_HelpText from "@salesforce/label/c.PreparationDocs_HelpTe
 
 const MAX_FILE_SIZE = 50000000;
 
+
 export default class VoucherRequest extends LightningElement {
     label = { Voucher_Comments, Voucher_CredentialName, Voucher_ExamDate, Voucher_Preparation, PreparationDocs_HelpText };
     @track examDate;

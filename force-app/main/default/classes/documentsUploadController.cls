@@ -20,6 +20,7 @@ public with sharing class documentsUploadController {
                     cvList.add(conVer);
                 }
                 Insert cvList;
+				
                 
                 List<ContentDocumentLink> cdList = new List<ContentDocumentLink>();
                 for(ContentVersion cv : [SELECT ContentDocumentId FROM ContentVersion WHERE Id in: cvList]) {
