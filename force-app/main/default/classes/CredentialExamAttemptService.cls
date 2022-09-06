@@ -12,10 +12,9 @@ public with sharing class CredentialExamAttemptService {
       
      public List<Credential_Exam_Attempt__c> getExamAttemptsForUser(String userId) {
          try {
+            System.debug('userId=='+userId);
              return [
-                 SELECT id, Credential__c, Exam_Date_Time__c,User_Credential__r.Name, Name, Exam_Voucher__c, Fail_Scorecard__c, Status__c,User__c
-                 FROM Credential_Exam_Attempt__c
-                 WHERE User__c= :userId OR (Status__c != 'Completed' OR Status__c != 'Exam Passed' OR Status__c != 'Exam Failed')];
+                SELECT id, Credential__c, Exam_Date_Time__c,User_Credential__r.Name, Name, Exam_Voucher__c, Fail_Scorecard__c, Status__c,User__c FROM Credential_Exam_Attempt__c WHERE User__c =:userId OR ((Status__c != 'Completed') OR (Status__c != 'Exam Passed') OR (Status__c != 'Exam Failed'))];
          } catch (Exception ex) {
              throw ex;
          }
