@@ -1,14 +1,15 @@
-import { LightningElement, api, track } from "lwc";
+import { LightningElement, api, track, wire } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import uploadDocuments from "@salesforce/apex/documentsUploadController.uploadDocuments";
+//import uploadDocuments from "@salesforce/apex/documentsUploadController.uploadDocuments";
 import Voucher_Preparation from "@salesforce/label/c.Voucher_Preparation";
 import Voucher_ExamDate from "@salesforce/label/c.Voucher_ExamDate";
 import Voucher_CredentialName from "@salesforce/label/c.Voucher_CredentialName";
 import Voucher_Comments from "@salesforce/label/c.Voucher_Comments";
 import PreparationDocs_HelpText from "@salesforce/label/c.PreparationDocs_HelpText";
+import createCredExempt from '@salesforce/apex/VoucherRequestController.createCredExempt';
+import methodVRC from '@salesforce/apex/VoucherRequestController.methodVRC';
 
 const MAX_FILE_SIZE = 50000000;
-
 
 export default class VoucherRequest extends LightningElement {
     label = { Voucher_Comments, Voucher_CredentialName, Voucher_ExamDate, Voucher_Preparation, PreparationDocs_HelpText };
@@ -31,6 +32,7 @@ export default class VoucherRequest extends LightningElement {
     @api recordId;
     @track filesData = [];
     showSpinner = false;
+    @track credId;
 
     @api handleCredentialName(credentialName) {
         this.isShowModal = true;
@@ -44,6 +46,7 @@ export default class VoucherRequest extends LightningElement {
     handleDateChange(event) {
         this.examDate = event.target.value;
         console.log("date---" + this.examDate);
+        console.log("this.userCredentialId---" + this.userCredentialId);
     }
 
     handleCommentChange(event) {
@@ -70,17 +73,13 @@ export default class VoucherRequest extends LightningElement {
 
         console.log('files data :',this.filesData);
     }
-
     saveNewRecord() {
+        var credId;
         if(this.filesData == [] || this.filesData.length == 0) {
             this.showToast('Error', 'error', 'Please select files first'); return;
         }
         this.showSpinner = true;
         this.isShowModal = false;
-        /*saveNewRecord({
-            examAttemptRecId: this.userCredentialId,
-            filedata : JSON.stringify(this.filesData)
-        })*/
         const examAttemptFields = {
             'sobjectType': 'Credential_Exam_Attempt__c',
             'User_Credential__c': this.userCredentialId,
@@ -90,22 +89,42 @@ export default class VoucherRequest extends LightningElement {
             'Proof_of_Preparation__c': true
         }
         console.log('examAttemptRec---' + JSON.stringify(examAttemptFields));
-      //  console.log('fileName---' + JSON.stringify(this.fileContentsArray));
-       
+
       console.log('jsonData:',JSON.parse(JSON.stringify(this.filesData)));
-      
-      uploadDocuments({
-            examAttemptRec: examAttemptFields,
-            filedata: this.filesData
-            //fileName: this.fileName
-        })
-            .then((examAttemptRecId) => {
-                if (examAttemptRecId) {
-                    this.dispatchEvent(
+      createCredExempt({
+          examAttemptRec:examAttemptFields
+      })
+        .then((result)=>{
+           
+            console.log('result',result);
+            this.UploadFiles(result);
+             this.dispatchEvent(
                         new ShowToastEvent({
                             title: "Success",
                             variant: "success",
                             message: "Credential Exam Attempt Successfully created"
+                        })
+                    );
+        }).catch((error)=>{
+            console.log('Error',error);
+        }) 
+    }
+
+    UploadFiles(credId){
+            console.log('inside file upload');
+      methodVRC({
+           strId:credId,
+            filedata: this.filesData
+            //fileName: this.fileName
+        })
+            .then((result) => {
+                console.log('inside uploading...',result);
+                if (result == 'Success') {
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: "Success",
+                            variant: "success",
+                            message: "File Uploaded SuccessFully"
                         })
                     );
                     this.isShowModal = false;
@@ -116,8 +135,7 @@ export default class VoucherRequest extends LightningElement {
                 console.log("error ", error);
             }).finally(() => this.showSpinner = false );
         this.displayExamDetailsModal = false;
-    }
-
+   }
     removeReceiptImage(event) {
         var index = event.currentTarget.dataset.id;
         this.filesData.splice(index, 1);
