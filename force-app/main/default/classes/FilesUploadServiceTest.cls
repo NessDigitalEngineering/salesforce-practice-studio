@@ -5,8 +5,8 @@ public class FilesUploadServiceTest {
           Profile pf= [Select Id from profile where Name='System Administrator']; 
         String orgId=UserInfo.getOrganizationId(); 
         String dateString=String.valueof(Datetime.now()).replace(' ','').replace(':','').replace('-','') ;
-        Integer RandId=Integer.valueOf(Math.rint(Math.random()*1000000)); 
-        String uniqueName=orgId+dateString+RandId; 
+        Integer randId=Integer.valueOf(Math.rint(Math.random()*1000000)); 
+        String uniqueName=orgId+dateString+randId; 
         User uu=new User(firstname = 'ABC', 
                          lastName = 'XYZ', 
                          email = uniqueName + '@test' + orgId + '.org', 
@@ -43,6 +43,7 @@ public class FilesUploadServiceTest {
                                                                          Proof_of_Preparation__c=True);
         
         string recId = VoucherRequestController.createCredExempt(ceaObj);
+        system.assertNotEquals(null, recId);
         Account testAccount = new Account();
         testAccount.Name='Test Account' ;
         insert testAccount;
