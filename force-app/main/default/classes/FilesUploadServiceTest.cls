@@ -5,8 +5,8 @@ public class FilesUploadServiceTest {
           Profile pf= [Select Id from profile where Name='System Administrator']; 
         String orgId=UserInfo.getOrganizationId(); 
         String dateString=String.valueof(Datetime.now()).replace(' ','').replace(':','').replace('-','') ;
-        Integer RandomId=Integer.valueOf(Math.rint(Math.random()*1000000)); 
-        String uniqueName=orgId+dateString+RandomId; 
+        Integer RandId=Integer.valueOf(Math.rint(Math.random()*1000000)); 
+        String uniqueName=orgId+dateString+RandId; 
         User uu=new User(firstname = 'ABC', 
                          lastName = 'XYZ', 
                          email = uniqueName + '@test' + orgId + '.org', 
@@ -79,7 +79,7 @@ public class FilesUploadServiceTest {
         insert cdl;
         
         Test.startTest();
-     //  FilesUploadService.uploadDocuments(recId, vers);
+     
        VoucherRequestController.methodVRC(vers);
         
         

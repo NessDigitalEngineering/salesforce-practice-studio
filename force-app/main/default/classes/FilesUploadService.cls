@@ -3,7 +3,7 @@ public with sharing class FilesUploadService {
     public static String uploadDocuments(String credExamId, list<map<string ,object>> filedata) {
         
         List<ContentVersion> cvList = new List<ContentVersion>();
-        //String examAttemptRecId;
+        
         try {
             if(filedata.size()>0) {   
                 for(map<string , object> file : filedata) {
