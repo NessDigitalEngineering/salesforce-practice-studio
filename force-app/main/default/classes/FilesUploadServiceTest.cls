@@ -5,8 +5,8 @@ public class FilesUploadServiceTest {
           Profile pf= [Select Id from profile where Name='System Administrator']; 
         String orgId=UserInfo.getOrganizationId(); 
         String dateString=String.valueof(Datetime.now()).replace(' ','').replace(':','').replace('-','') ;
-        Integer RandId=Integer.valueOf(Math.rint(Math.random()*1000000)); 
-        String uniqueName=orgId+dateString+RandId; 
+        Integer randId=Integer.valueOf(Math.rint(Math.random()*1000000)); 
+        String uniqueName=orgId+dateString+randId; 
         User uu=new User(firstname = 'ABC', 
                          lastName = 'XYZ', 
                          email = uniqueName + '@test' + orgId + '.org', 
@@ -19,7 +19,7 @@ public class FilesUploadServiceTest {
                          ProfileId = pf.Id
                         ); 
         insert uu;
-        
+
         
         Credential__c crObj = new Credential__c(Name='Service Cloud Consultant',
                                                 Type__c='Trailhead',
