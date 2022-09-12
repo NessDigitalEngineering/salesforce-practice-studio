@@ -55,12 +55,12 @@ export default class VoucherRequest extends LightningElement {
 
     handleFileUpload(event) {
         if (event.target.files.length > 0) {
-            for(let i=0; i<event.target.files.length; i++){
-                if (event.target.files[i].size > MAX_FILE_SIZE) {
+            for( var x of event.target.files){
+                if (x.size > MAX_FILE_SIZE) {
                     this.showToast('Error!', 'error', 'File size exceeded the upload size limit.');
                     return;
                 }
-                let file = event.target.files[i];
+                let file = x;
                 let reader = new FileReader();
                 reader.onload = e => {
                     let fileContents = reader.result.split(',')[1]
