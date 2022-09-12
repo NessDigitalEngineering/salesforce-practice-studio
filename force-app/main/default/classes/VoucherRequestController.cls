@@ -4,9 +4,9 @@ public class VoucherRequestController {
     public static string createCredExempt(Credential_Exam_Attempt__c examAttemptRec){
        list<Database.SaveResult> saveResults;
         try{
-        	list<Credential_Exam_Attempt__c> ExamAttemptList = new list<Credential_Exam_Attempt__c>();
-            ExamAttemptList.add(examAttemptRec);
-        saveResults = CredentialExamAttemptService.createExamAttempt(ExamAttemptList);
+        	list<Credential_Exam_Attempt__c> examAttemptList = new list<Credential_Exam_Attempt__c>();
+            examAttemptList.add(examAttemptRec);
+        saveResults = CredentialExamAttemptService.createExamAttempt(examAttemptList);
         
            system.debug('RecId:'+ saveResults[0].Id);
             }

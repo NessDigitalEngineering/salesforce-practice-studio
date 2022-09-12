@@ -1,4 +1,4 @@
-import { LightningElement, api, track, wire } from "lwc";
+import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import Voucher_Preparation from "@salesforce/label/c.Voucher_Preparation";
 import Voucher_ExamDate from "@salesforce/label/c.Voucher_ExamDate";
@@ -55,7 +55,7 @@ export default class VoucherRequest extends LightningElement {
 
     handleFileUpload(event) {
         if (event.target.files.length > 0) {
-            for(var i=0; i< event.target.files.length; i++){
+            for(let i=0; i< event.target.files.length; i++){
                 if (event.target.files[i].size > MAX_FILE_SIZE) {
                     this.showToast('Error!', 'error', 'File size exceeded the upload size limit.');
                     return;
@@ -63,7 +63,7 @@ export default class VoucherRequest extends LightningElement {
                 let file = event.target.files[i];
                 let reader = new FileReader();
                 reader.onload = e => {
-                    var fileContents = reader.result.split(',')[1]
+                    let fileContents = reader.result.split(',')[1]
                     this.filesData.push({'fileName':file.name, 'fileContent':fileContents});
                 };
                 reader.readAsDataURL(file);
@@ -73,7 +73,7 @@ export default class VoucherRequest extends LightningElement {
         console.log('files data :',this.filesData);
     }
     saveNewRecord() {
-        var credId;
+        
         if(this.filesData == [] || this.filesData.length == 0) {
             this.showToast('Error', 'error', 'Please select files first'); return;
         }
@@ -136,7 +136,7 @@ export default class VoucherRequest extends LightningElement {
         this.displayExamDetailsModal = false;
    }
     removeReceiptImage(event) {
-        var index = event.currentTarget.dataset.id;
+        let index = event.currentTarget.dataset.id;
         this.filesData.splice(index, 1);
     }
 
