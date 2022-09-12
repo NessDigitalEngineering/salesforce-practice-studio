@@ -1,6 +1,5 @@
 import { LightningElement, api, track, wire } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-//import uploadDocuments from "@salesforce/apex/documentsUploadController.uploadDocuments";
 import Voucher_Preparation from "@salesforce/label/c.Voucher_Preparation";
 import Voucher_ExamDate from "@salesforce/label/c.Voucher_ExamDate";
 import Voucher_CredentialName from "@salesforce/label/c.Voucher_CredentialName";
@@ -89,7 +88,7 @@ export default class VoucherRequest extends LightningElement {
             'Proof_of_Preparation__c': true
         }
         console.log('examAttemptRec---' + JSON.stringify(examAttemptFields));
-        //List<credentialExamAttempt> examAttemptRecordList.add(examAttemptFields);//creating list of credentialExamAttempt Record
+        
     console.log('jsonData:',JSON.parse(JSON.stringify(this.filesData)));
       createCredExempt({
           examAttemptRec:examAttemptFields
@@ -110,12 +109,12 @@ export default class VoucherRequest extends LightningElement {
         }) 
     }
 
-    UploadFiles(credId){
+    UploadFiles(Cid){
             console.log('inside file upload');
       methodVRC({
-           strId:credId,
+            recid:Cid,
             filedata: this.filesData
-            //fileName: this.fileName
+            
         })
             .then((result) => {
                 console.log('inside uploading...',result);
@@ -157,5 +156,14 @@ export default class VoucherRequest extends LightningElement {
 
     showExamDetailsModal() {
         this.displayExamDetailsModal = true;
+    }
+    closeFirstModal(event){
+        this.isShowModal = false;
+
+    }
+     closeSecondModal(event){
+       this.displayExamDetailsModal = false;
+       this.isShowModal = false;
+
     }
 }

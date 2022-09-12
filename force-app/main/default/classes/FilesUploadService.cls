@@ -1,13 +1,11 @@
 public with sharing class FilesUploadService {
     @AuraEnabled
     public static String uploadDocuments(String credExamId, list<map<string ,object>> filedata) {
-        //System.debug('examAttemptRec---' + examAttemptRec);
-        //System.debug('fileData---' + fileData);
+        
         List<ContentVersion> cvList = new List<ContentVersion>();
         String examAttemptRecId;
         try {
-            //insert examAttemptRec;
-            //system.debug('ExamAttemptRecId:'+examAttemptRecId);
+            
             if(filedata.size()>0) {   
                 for(map<string , object> file : filedata) {
                     ContentVersion conVer = new ContentVersion();

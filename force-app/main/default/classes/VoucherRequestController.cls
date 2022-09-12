@@ -1,32 +1,34 @@
 public class VoucherRequestController {
+     
     @AuraEnabled()
-    public static string createCredExempt(List<Credential_Exam_Attempt__c> examAttemptRec){
+    public static string createCredExempt(Credential_Exam_Attempt__c examAttemptRec){
+       list<Database.SaveResult> saveResults;
         try{
-        insert examAttemptRec;
-           // CredentialExamAttemptService.createExamAttempt(examAttemptRec);
+        	list<Credential_Exam_Attempt__c> ExamAttemptList = new list<Credential_Exam_Attempt__c>();
+            ExamAttemptList.add(examAttemptRec);
+        saveResults = CredentialExamAttemptService.createExamAttempt(ExamAttemptList);
+        
+           system.debug('RecId:'+ saveResults[0].Id);
+            }
             
-        }
-        catch(exception e){
+                   catch(exception e){
             system.debug('Error :'+e.getMessage() + 'at line number:' + 'due to'+e.getCause() );
             
         }     
-        return examAttemptRec.Id;
+        return  saveResults[0].Id;
         
-  
     }
     
     @AuraEnabled()
-    public static string methodVRC(String strId, list<map<string , object>> filedata)
+    public static string methodVRC(string recid,list<map<string , object>> filedata)
     {
-   	system.debug('StrId'+strid);
+   	system.debug('StrId'+recid);
        
         try {
             if(filedata.size()>0) {
-                FilesUploadService.uploadDocuments(strId, filedata);
+                FilesUploadService.uploadDocuments(recid, filedata);
             }
-                
-                
-            
+                     
         } catch (Exception ex) {
             System.debug(ex.getMessage() + ' -> ' + ex.getStackTraceString());
             throw new AuraHandledException(ex.getMessage());

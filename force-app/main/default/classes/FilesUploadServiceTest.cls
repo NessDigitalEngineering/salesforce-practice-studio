@@ -80,7 +80,7 @@ public class FilesUploadServiceTest {
         
         Test.startTest();
      //  FilesUploadService.uploadDocuments(recId, vers);
-       VoucherRequestController.methodVRC(recId, vers);
+       VoucherRequestController.methodVRC(vers);
         
         
         Test.stopTest();
