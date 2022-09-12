@@ -2,8 +2,7 @@
 public class FilesUploadServiceTest {
     public static testMethod void documnetsUploadTest()
     {
-        
-        Profile pf= [Select Id from profile where Name='System Administrator']; 
+          Profile pf= [Select Id from profile where Name='System Administrator']; 
         String orgId=UserInfo.getOrganizationId(); 
         String dateString=String.valueof(Datetime.now()).replace(' ','').replace(':','').replace('-','') ;
         Integer RandomId=Integer.valueOf(Math.rint(Math.random()*1000000)); 

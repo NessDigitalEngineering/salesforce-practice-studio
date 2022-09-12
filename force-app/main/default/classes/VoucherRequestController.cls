@@ -1,8 +1,9 @@
 public class VoucherRequestController {
     @AuraEnabled()
-    public static string createCredExempt(Credential_Exam_Attempt__c examAttemptRec){
+    public static string createCredExempt(List<Credential_Exam_Attempt__c> examAttemptRec){
         try{
-            insert examAttemptRec;
+        insert examAttemptRec;
+           // CredentialExamAttemptService.createExamAttempt(examAttemptRec);
             
         }
         catch(exception e){

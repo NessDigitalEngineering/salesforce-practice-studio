@@ -7,10 +7,8 @@ public with sharing class FilesUploadService {
         String examAttemptRecId;
         try {
             //insert examAttemptRec;
-            
             //system.debug('ExamAttemptRecId:'+examAttemptRecId);
-            if(filedata.size()>0) {
-                
+            if(filedata.size()>0) {   
                 for(map<string , object> file : filedata) {
                     ContentVersion conVer = new ContentVersion();
                     conVer.ContentLocation = 'S'; // S = Salesforce, E = External Files
@@ -20,7 +18,6 @@ public with sharing class FilesUploadService {
                     cvList.add(conVer);
                 }
                 Insert cvList;
-
 
                 List<ContentDocumentLink> cdList = new List<ContentDocumentLink>();
                 for(ContentVersion cv : [SELECT ContentDocumentId FROM ContentVersion WHERE Id in: cvList]) {

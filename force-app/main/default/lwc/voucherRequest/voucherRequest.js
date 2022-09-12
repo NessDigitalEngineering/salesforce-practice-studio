@@ -89,8 +89,8 @@ export default class VoucherRequest extends LightningElement {
             'Proof_of_Preparation__c': true
         }
         console.log('examAttemptRec---' + JSON.stringify(examAttemptFields));
-
-      console.log('jsonData:',JSON.parse(JSON.stringify(this.filesData)));
+        //List<credentialExamAttempt> examAttemptRecordList.add(examAttemptFields);//creating list of credentialExamAttempt Record
+    console.log('jsonData:',JSON.parse(JSON.stringify(this.filesData)));
       createCredExempt({
           examAttemptRec:examAttemptFields
       })
