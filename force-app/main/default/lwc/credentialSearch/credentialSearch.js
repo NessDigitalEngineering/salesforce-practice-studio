@@ -7,6 +7,7 @@ export default class CredentialSearch extends LightningElement {
 	@track selectedRecords = [];
 	@track iconName;
 	@track txtclassname = "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click";
+	@track listBoxClass = this.setListBoxClass();
 	@api selecteduser = "";
 
 	/*
@@ -15,28 +16,37 @@ export default class CredentialSearch extends LightningElement {
 	searchField(event) {
 		const currentText = event.target.value;
 		const selectRecId = [];
+		// if (currentText === "") {
+		// 	console.log("currentText:", currentText);
+		// 	this.resetCredentials();
+		// }
 
 		for (const selRec of this.selectedRecords) {
 			selectRecId.push(selRec.recId);
 		}
-
-		getResults({
-			searchKey: currentText,
-			selectedRecId: selectRecId,
-			userId: this.selecteduser
-		})
-			.then((result) => {
-				this.searchRecords = result;
-				this.txtclassname =
-					result.length > 0
-						? "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open "
-						: "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click ";
-
-				this.dispatchEvent(new CustomEvent("credentialsevent", { detail: selectRecId }));
+		if (currentText) {
+			this.setListBoxClass();
+			getResults({
+				searchKey: currentText,
+				selectedRecId: selectRecId,
+				userId: this.selecteduser
 			})
-			.catch((error) => {
-				console.log("-------error-------------" + JSON.stringify(error));
-			});
+				.then((result) => {
+					this.searchRecords = result;
+					this.txtclassname =
+						result.length > 0
+							? "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open "
+							: "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click ";
+
+					this.dispatchEvent(new CustomEvent("credentialsevent", { detail: selectRecId }));
+				})
+				.catch((error) => {
+					console.log("-------error-------------" + JSON.stringify(error));
+				});
+		} else {
+			// this.searchRecords = [];
+			this.resetCredentials();
+		}
 	}
 
 	/*
@@ -56,6 +66,7 @@ export default class CredentialSearch extends LightningElement {
 		this.template.querySelectorAll("lightning-input").forEach((each) => {
 			each.value = "";
 		});
+		console.log("selRecords: ", JSON.stringify(selRecords));
 		const selectedEvent = new CustomEvent("selected", {
 			detail: { selRecords, selectName }
 		});
@@ -104,9 +115,18 @@ export default class CredentialSearch extends LightningElement {
   	*/
 	@api
 	resetCredentials() {
+		console.log("in reset");
 		this.selectedRecords = [];
 		this.searchRecords = [];
 		this.template.querySelector('lightning-input[data-name="searchText"]').value = null;
 		this.txtclassname = "slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click";
+		this.listBoxClass = "unsetDropDown";
+	}
+
+	/*
+    description: unset list box when there is no input in input box
+  	*/
+	setListBoxClass() {
+		this.listBoxClass = "slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid";
 	}
 }
