@@ -58,13 +58,13 @@
                             </lightning-input>
                         </div>
                         <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
-                            <h6 class="headerText">{label.Voucher_ExamDate}</h6>
-                            <lightning-input variant="label-hidden" type="datetime" date-style="short"
+                            <h6 class="headerText"> <span style="color:#ff0000">*</span>{label.Voucher_ExamDate}</h6>
+                            <lightning-input variant="label-hidden" class = "validate" type="datetime" required  date-style="short" 
                                 onchange={handleDateChange}>
                             </lightning-input>
                         </div>
                         <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
-                            <lightning-textarea label={label.Voucher_Comments} required value=""
+                            <lightning-textarea label={label.Voucher_Comments} class = "validate" required value=""
                                 onchange={handleCommentChange}>
                             </lightning-textarea>
                         </div>
@@ -76,17 +76,17 @@
                             <lightning-input type="file" multiple accept=".docx, .pdf, .jpg, .txt"
                                 onchange={handleFileUpload}>
                             </lightning-input>
-                        </div>
-                    </div>
-                    <div class="slds-m-around_small">
-                        <template if:true={uploadedFiles}>
-                            <template for:each={uploadedFiles} for:item="file" for:index="index">
-                                {file.fileName}
-                                <span key={file.fileName} data-id={index} onclick={removeReceiptImage}
-                                    class="removeImage">x</span> &nbsp;
+
+                             <div class="slds-m-around_small">
+                        <template if:true={filesData}>
+                            <template for:each={filesData} for:item="file" for:index="index">
+                                 <lightning-pill key ={file.fileName} label={file.fileName} data-id={index}  onclick={removeReceiptImage}></lightning-pill>
                             </template>
                         </template>
                     </div>
+                        </div>
+                    </div>
+                   
                 </div>
                 <footer class="slds-modal__footer">
                     <lightning-button class="button" variant="neutral" label="Cancel" onclick={closeSecondModal}>

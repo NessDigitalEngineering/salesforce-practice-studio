@@ -71,17 +71,29 @@ public class FilesUploadServiceTest {
         Blob beforeblob = Blob.valueOf(before);
         string paramvalue = EncodingUtil.base64Encode(beforeblob);        
         Map<String,Object> mapContent = new Map<String,Object>{ 'fileContent' => paramvalue , 'fileName' => 'Test'};
-        List<ContentDocument> documents = [SELECT Id, Title, LatestPublishedVersionId FROM ContentDocument];
+       
+        
+            List<ContentDocument> documents = [SELECT Id, Title, LatestPublishedVersionId FROM ContentDocument];
         vers.add(mapContent);
+         
         ContentDocumentLink cdl = New ContentDocumentLink();
         cdl.LinkedEntityId = acct.id;
         cdl.ContentDocumentId = documents[0].Id;
         cdl.shareType = 'V';
         insert cdl;
         
+       
         Test.startTest();
-     
-       VoucherRequestController.methodVRC(recId,vers);
+     FilesUploadService.FileDataWP obj = new FilesUploadService.FileDataWP();
+        obj.fileContent = paramvalue;
+        obj.fileName = 'test';
+        
+        list<FilesUploadService.FileDataWP> filelist = new list<FilesUploadService.FileDataWP>();
+        
+        filelist.add(obj);
+        string file = json.serialize(filelist);
+      // VoucherRequestController.methodVRC(recId,vers);
+     FilesUploadService.uploadFiles(recId, file);
           Test.stopTest();
     }
     

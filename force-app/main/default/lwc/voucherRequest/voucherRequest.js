@@ -6,8 +6,8 @@ import Voucher_CredentialName from "@salesforce/label/c.Voucher_CredentialName";
 import Voucher_Comments from "@salesforce/label/c.Voucher_Comments";
 import PreparationDocs_HelpText from "@salesforce/label/c.PreparationDocs_HelpText";
 import createCredExempt from '@salesforce/apex/VoucherRequestController.createCredExempt';
-import methodVRC from '@salesforce/apex/VoucherRequestController.methodVRC';
-
+//import methodVRC from '@salesforce/apex/VoucherRequestController.methodVRC';
+import uploadFiles from '@salesforce/apex/FilesUploadService.uploadFiles';
 const MAX_FILE_SIZE = 50000000;
 
 export default class VoucherRequest extends LightningElement {
@@ -55,7 +55,7 @@ export default class VoucherRequest extends LightningElement {
 
     handleFileUpload(event) {
         if (event.target.files.length > 0) {
-            for( let x of event.target.files){
+            for (let x of event.target.files) {
                 if (x.size > MAX_FILE_SIZE) {
                     this.showToast('Error!', 'error', 'File size exceeded the upload size limit.');
                     return;
@@ -64,61 +64,77 @@ export default class VoucherRequest extends LightningElement {
                 let reader = new FileReader();
                 reader.onload = e => {
                     let fileContents = reader.result.split(',')[1]
-                    this.filesData.push({'fileName':file.name, 'fileContent':fileContents});
+                    this.filesData.push({ 'fileName': file.name, 'fileContent': fileContents });
                 };
                 reader.readAsDataURL(file);
             }
         }
 
-        console.log('files data :',this.filesData);
+        console.log('files data :', this.filesData);
     }
     saveNewRecord() {
-        
-        if(this.filesData == [] || this.filesData.length == 0) {
-            this.showToast('Error', 'error', 'Please select files first'); return;
+        //validate
+        const allValid = [
+            ...this.template.querySelectorAll('.validate'),
+        ].reduce((validSoFar, inputCmp) => {
+            inputCmp.reportValidity();
+            return validSoFar && inputCmp.checkValidity();
+        }, true);
+        if (allValid) {
+
+            console.log('Errors when a user didnt put value');
         }
-        this.showSpinner = true;
-        this.isShowModal = false;
-        const examAttemptFields = {
-            'sobjectType': 'Credential_Exam_Attempt__c',
-            'User_Credential__c': this.userCredentialId,
-            'Exam_Date_Time__c': this.examDate,
-            'Preparation_Comments__c': this.examComments,
-            'Status__c': this.statusValue,
-            'Proof_of_Preparation__c': true
-        }
-        console.log('examAttemptRec---' + JSON.stringify(examAttemptFields));
-        
-    console.log('jsonData:',JSON.parse(JSON.stringify(this.filesData)));
-      createCredExempt({
-          examAttemptRec:examAttemptFields
-      })
-        .then((result)=>{
-           
-            console.log('result',result);
-            this.UploadFiles(result);
-             this.dispatchEvent(
+        else {
+
+
+
+
+            if (this.filesData == [] || this.filesData.length == 0) {
+                this.showToast('Error', 'error', 'Please select files first'); return;
+            }
+            this.showSpinner = true;
+            this.isShowModal = false;
+            const examAttemptFields = {
+                'sobjectType': 'Credential_Exam_Attempt__c',
+                'User_Credential__c': this.userCredentialId,
+                'Exam_Date_Time__c': this.examDate,
+                'Preparation_Comments__c': this.examComments,
+                'Status__c': this.statusValue,
+                'Proof_of_Preparation__c': true
+            }
+            console.log('examAttemptRec---' + JSON.stringify(examAttemptFields));
+
+            console.log('jsonData:', JSON.stringify(this.filesData));
+            createCredExempt({
+                examAttemptRec: examAttemptFields
+            })
+                .then((result) => {
+
+                    console.log('result', result);
+                    this.UploadFilest(result);
+                    this.dispatchEvent(
                         new ShowToastEvent({
                             title: "Success",
                             variant: "success",
                             message: "Credential Exam Attempt Successfully created"
                         })
                     );
-        }).catch((error)=>{
-            console.log('Error',error);
-        }) 
+                }).catch((error) => {
+                    console.log('Error', error);
+                })
+        }
     }
 
-    UploadFiles(Cid){
-            console.log('inside file upload');
-      methodVRC({
-            recid:Cid,
-            filedata: this.filesData
-            
+    UploadFilest(Cid) {
+        console.log('inside file upload');
+        uploadFiles({
+            ParentRecId: Cid,
+            filedata: JSON.stringify(this.filesData)
+
         })
             .then((result) => {
-                console.log('inside uploading...',result);
-                if (result == 'Success') {
+                console.log('inside uploading...', result);
+                if (result == 'success') {
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: "Success",
@@ -132,9 +148,9 @@ export default class VoucherRequest extends LightningElement {
             .catch((error) => {
                 alert('error');
                 console.log("error ", error);
-            }).finally(() => this.showSpinner = false );
+            }).finally(() => this.showSpinner = false);
         this.displayExamDetailsModal = false;
-   }
+    }
     removeReceiptImage(event) {
         let index = event.currentTarget.dataset.id;
         this.filesData.splice(index, 1);
@@ -157,13 +173,15 @@ export default class VoucherRequest extends LightningElement {
     showExamDetailsModal() {
         this.displayExamDetailsModal = true;
     }
-    closeFirstModal(event){
+    closeFirstModal(event) {
         this.isShowModal = false;
 
     }
-     closeSecondModal(event){
-       this.displayExamDetailsModal = false;
-       this.isShowModal = false;
+    closeSecondModal(event) {
+        this.displayExamDetailsModal = false;
+        this.isShowModal = false;
 
     }
+
+
 }

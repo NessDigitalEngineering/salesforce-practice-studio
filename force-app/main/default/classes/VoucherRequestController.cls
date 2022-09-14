@@ -1,5 +1,14 @@
+/*
+ * @author Lavanya Bonthala
+ * @date   13/09/2022
+ * @description Service Class containing methods that helps to request Voucher for Exam attempt
+ */
 public class VoucherRequestController {
-     
+ /*******************************************************************************************************
+      * @description This method creates Credential Exam Attempt object
+      * @param examAttemptRec SF Id of Credential Exam Attempt
+      * @return Id of the inserted record
+      */ 
     @AuraEnabled()
     public static string createCredExempt(Credential_Exam_Attempt__c examAttemptRec){
        list<Database.SaveResult> saveResults;
@@ -18,8 +27,14 @@ public class VoucherRequestController {
         return  saveResults[0].Id;
         
     }
+
+    /*******************************************************************************************************
+      * @description This method uploads file specific to record Id
+      * @param  recid SF id of the record inserted, filedata content of the file
+      * @return  Success message on file upload
+      */
     
-    @AuraEnabled()
+  /*  @AuraEnabled()
     public static string methodVRC(string recid,list<map<string , object>> filedata)
     {
    	system.debug('StrId'+recid);
@@ -36,4 +51,5 @@ public class VoucherRequestController {
         
         return 'Success';
     }
+    */
 }
