@@ -65,7 +65,6 @@ export default class CredentialPrioritize extends LightningElement {
 		if (dragValName === dropValName) {
 			return false;
 		}
-		const index = dropValName;
 		const currentIndex = dragValName;
 		const newIndex = dropValName;
 		Array.prototype.move = function (from, to) {

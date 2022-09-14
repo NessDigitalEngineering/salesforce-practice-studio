@@ -16,10 +16,6 @@ export default class CredentialSearch extends LightningElement {
 	searchField(event) {
 		const currentText = event.target.value;
 		const selectRecId = [];
-		// if (currentText === "") {
-		// 	console.log("currentText:", currentText);
-		// 	this.resetCredentials();
-		// }
 
 		for (const selRec of this.selectedRecords) {
 			selectRecId.push(selRec.recId);
@@ -44,7 +40,6 @@ export default class CredentialSearch extends LightningElement {
 					console.log("-------error-------------" + JSON.stringify(error));
 				});
 		} else {
-			// this.searchRecords = [];
 			this.resetCredentials();
 		}
 	}
