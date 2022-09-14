@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
         <fullName>UserSearchLabel</fullName>
@@ -118,5 +118,33 @@
         <protected>true</protected>
         <shortDescription>OK</shortDescription>
         <value>OK</value>
+    </labels>
+    <labels>
+        <fullName>CredentialPrioritySuccess</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialPrioritySuccess</shortDescription>
+        <value>Credential Priority Updated Sucessfully</value>
+    </labels>
+    <labels>
+        <fullName>CredentialPriorityTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialPriorityTitle</shortDescription>
+        <value>Credential Prioritization</value>
+    </labels>
+    <labels>
+        <fullName>CredentialPriorityCol</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialPriorityCol</shortDescription>
+        <value>Priority</value>
+    </labels>
+    <labels>
+        <fullName>CredentialPriorityName</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialPriorityName</shortDescription>
+        <value>Credential Name</value>
     </labels>
 </CustomLabels>
