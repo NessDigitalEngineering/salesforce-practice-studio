@@ -10,12 +10,12 @@ public with sharing class CredentialExamAttemptService {
       * @return List of Credential Exam Attempt
       */
       
-     public List<Credential_Exam_Attempt__c> getExamAttemptsForUser(String userId) {
+     public List<Credential_Exam_Attempt__c> getActiveExamAttemptsForUser(String userId) {
          try {
             userInfo.getUserId();
             System.debug('userId=='+userId);
              return [
-                SELECT id, Credential__c, Button_Label__c, Button_Check__c, Exam_Date_Time__c,User_Credential__r.Name, Name, Exam_Voucher__c, Fail_Scorecard__c, Status__c,User__c FROM Credential_Exam_Attempt__c WHERE User_Credential__r.User__c =:userId AND ((Credential_Exam_Attempt__c.Status__c != 'Voucher Declined') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Passed') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Failed'))];
+                SELECT id, Credential__c, Button_Label__c, Button_Check__c, Exam_Date_Time__c,User_Credential__r.Name, Name, Exam_Voucher__c, Fail_Scorecard__c, Status__c,User__c FROM Credential_Exam_Attempt__c WHERE User_Credential__r.User__c =:userId AND ((Credential_Exam_Attempt__c.Status__c != 'Voucher Declined') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Passed') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Failed')) WITH SECURITY_ENFORCED];
          } catch (Exception ex) {
              throw ex;
          }

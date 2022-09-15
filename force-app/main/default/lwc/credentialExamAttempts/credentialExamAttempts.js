@@ -1,10 +1,14 @@
 import { LightningElement , api, track } from 'lwc';
-import getExamAttemptsForUser from "@salesforce/apex/credentialExamAttemptController.getExamAttempts";
+import getActiveExamAttemptsForUser from "@salesforce/apex/credentialExamAttemptController.getExamAttempts";
 import updateStatus from "@salesforce/apex/credentialExamAttemptController.updateStatus";
 import updateDate from "@salesforce/apex/credentialExamAttemptController.updateDate";
 import USER_ID from "@salesforce/user/Id";
-import EXAM_DATE from "@salesforce/schema/Credential_Exam_Attempt__c.Exam_Date_Time__c";
 import Exam from "@salesforce/label/c.Exam";
+import ExamAttemptID from "@salesforce/label/c.CredentialExamAttempt_ExamAttemptID";
+import User_Credential from "@salesforce/label/c.credentailExamAttempt_User_Credential";
+import Credential_Name from "@salesforce/label/c.credentialExamAttempt_Credential_Name";
+import Exam_Date_Time from "@salesforce/label/c.credentialExamAttempt_Exam_Date_Time";
+import Status from "@salesforce/label/c.credentailExamAttempt_Status";
 import ExamAttempt_EmptyMsg from "@salesforce/label/c.ExamAttempt_EmptyMsg";
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 import LOCALE from '@salesforce/i18n/locale';
@@ -14,7 +18,6 @@ export default class CredentialExamAttempts extends LightningElement {
     @track timeZone = TIME_ZONE;
     @track locale =LOCALE;
     @track searchRecords;
-    label = { Exam, ExamAttempt_EmptyMsg };
     userIds = USER_ID;
     title;
     Icn = TasksIcon;
@@ -28,9 +31,17 @@ export default class CredentialExamAttempts extends LightningElement {
     @track credExamAttemptId;
     dt;
 
-
+    label = {
+		ExamAttemptID,
+        User_Credential,
+        Credential_Name,
+        Exam_Date_Time,
+        Status,
+        Exam, 
+        ExamAttempt_EmptyMsg
+	};
     connectedCallback() {
-        getExamAttemptsForUser({ userId: this.userIds })
+        getActiveExamAttemptsForUser({ userId: this.userIds })
         .then((res) => {
             this.searchRecords = res;
             

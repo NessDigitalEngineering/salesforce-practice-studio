@@ -12,25 +12,46 @@ public with sharing class credentialExamAttemptController {
     @AuraEnabled
     public static List<Credential_Exam_Attempt__c> getExamAttempts(String userId)
     {
-        system.debug('==>userId'+userId);
+        try {
+            system.debug('==>userId'+userId);
         CredentialExamAttemptService ceas = new CredentialExamAttemptService();
-        List<Credential_Exam_Attempt__c> totalExamAttempts = ceas.getExamAttemptsForUser(userId);
+        List<Credential_Exam_Attempt__c> totalExamAttempts = ceas.getActiveExamAttemptsForUser(userId);
         system.debug('==>totalExamAttempts'+totalExamAttempts);
         return totalExamAttempts;  
+        } catch (AuraHandledException  ex) {
+            throw ex;
+        }
+        
     } 
-
+ /*******************************************************************************************************
+      * @description Returns Credentials Exam attempts that are in progress
+      * @param examAttemptRecordId and  examStatus of credential Exam Attempts
+      */ 
     @AuraEnabled
     public static void updateStatus(String examAttemptRecordId, String examStatus)
     {
-        CredentialExamAttemptService ceas = new CredentialExamAttemptService();
-        ceas.updateExamStatus(examAttemptRecordId,examStatus);
+        try {
+            CredentialExamAttemptService ceas = new CredentialExamAttemptService();
+            ceas.updateExamStatus(examAttemptRecordId,examStatus); 
+        } catch (AuraHandledException  ex) {
+            throw ex;
+        }
+       
     } 
 
-    
+     /*******************************************************************************************************
+      * @description Returns Credentials Exam attempts that are in progress
+      * @param examAttemptRecordId and dt of  credential exam Attempts
+      */ 
     @AuraEnabled
     public static void updateDate(String examAttemptRecordId, DateTime dt)
     {
-        CredentialExamAttemptService ceas = new CredentialExamAttemptService();
+        try {
+            CredentialExamAttemptService ceas = new CredentialExamAttemptService();
         ceas.updateExamDate(examAttemptRecordId,dt);
+        } catch (AuraHandledException  ex) {
+            throw ex;
+        }
+        
     } 
 }
