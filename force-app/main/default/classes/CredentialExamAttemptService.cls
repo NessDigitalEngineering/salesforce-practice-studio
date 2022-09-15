@@ -54,11 +54,8 @@ public with sharing class CredentialExamAttemptService {
       * @param userId SF id of user
       * @return Update Exam Status
       */
-      
       public Database.SaveResult updateExamStatus(String examAttemptRecordId, String examStatus){
          try {
-            system.debug('examAttemptRecordId '+examAttemptRecordId);
-            system.debug('examStatus '+examStatus);
              Credential_Exam_Attempt__c examAttempt = new Credential_Exam_Attempt__c();
              examAttempt.Id = examAttemptRecordId;
              examAttempt.Status__c = examStatus;
