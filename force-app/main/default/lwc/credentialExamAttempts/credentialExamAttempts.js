@@ -7,8 +7,12 @@ import EXAM_DATE from "@salesforce/schema/Credential_Exam_Attempt__c.Exam_Date_T
 import Exam from "@salesforce/label/c.Exam";
 import ExamAttempt_EmptyMsg from "@salesforce/label/c.ExamAttempt_EmptyMsg";
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
+import LOCALE from '@salesforce/i18n/locale';
+import TIME_ZONE from '@salesforce/i18n/timeZone';
 export default class CredentialExamAttempts extends LightningElement {
     userIds = USER_ID;
+    @track timeZone = TIME_ZONE;
+    @track locale =LOCALE;
     @track searchRecords;
     label = { Exam, ExamAttempt_EmptyMsg };
     userIds = USER_ID;
@@ -23,6 +27,7 @@ export default class CredentialExamAttempts extends LightningElement {
     @track exmDate;
     @track credExamAttemptId;
     dt;
+
 
     connectedCallback() {
         getExamAttemptsForUser({ userId: this.userIds })
@@ -54,7 +59,7 @@ export default class CredentialExamAttempts extends LightningElement {
     handleDateEdit() {
         this.editExamDate = true;
       }
-
+     
       updateExmDate(event){
         this.credExamAttemptId = event.target.name;
         this.exmDate = event.target.value;
