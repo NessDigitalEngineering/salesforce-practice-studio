@@ -18,4 +18,19 @@ public with sharing class credentialExamAttemptController {
         system.debug('==>totalExamAttempts'+totalExamAttempts);
         return totalExamAttempts;  
     } 
+
+    @AuraEnabled
+    public static void updateStatus(String examAttemptRecordId, String examStatus)
+    {
+        CredentialExamAttemptService ceas = new CredentialExamAttemptService();
+        ceas.updateExamStatus(examAttemptRecordId,examStatus);
+    } 
+
+    
+    @AuraEnabled
+    public static void updateDate(String examAttemptRecordId, DateTime dt)
+    {
+        CredentialExamAttemptService ceas = new CredentialExamAttemptService();
+        ceas.updateExamDate(examAttemptRecordId,dt);
+    } 
 }

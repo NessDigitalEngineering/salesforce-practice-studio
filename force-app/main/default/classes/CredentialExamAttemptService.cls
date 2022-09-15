@@ -12,9 +12,10 @@ public with sharing class CredentialExamAttemptService {
       
      public List<Credential_Exam_Attempt__c> getExamAttemptsForUser(String userId) {
          try {
+            userInfo.getUserId();
             System.debug('userId=='+userId);
              return [
-                SELECT id, Credential__c, Exam_Date_Time__c,User_Credential__r.Name, Name, Exam_Voucher__c, Fail_Scorecard__c, Status__c,User__c FROM Credential_Exam_Attempt__c WHERE User__c =:userId OR ((Status__c != 'Completed') OR (Status__c != 'Exam Passed') OR (Status__c != 'Exam Failed'))];
+                SELECT id, Credential__c, Button_Label__c, Button_Check__c, Exam_Date_Time__c,User_Credential__r.Name, Name, Exam_Voucher__c, Fail_Scorecard__c, Status__c,User__c FROM Credential_Exam_Attempt__c WHERE User_Credential__r.User__c =:userId AND ((Credential_Exam_Attempt__c.Status__c != 'Voucher Declined') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Passed') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Failed'))];
          } catch (Exception ex) {
              throw ex;
          }
@@ -53,8 +54,11 @@ public with sharing class CredentialExamAttemptService {
       * @param userId SF id of user
       * @return Update Exam Status
       */
+      
       public Database.SaveResult updateExamStatus(String examAttemptRecordId, String examStatus){
          try {
+            system.debug('examAttemptRecordId '+examAttemptRecordId);
+            system.debug('examStatus '+examStatus);
              Credential_Exam_Attempt__c examAttempt = new Credential_Exam_Attempt__c();
              examAttempt.Id = examAttemptRecordId;
              examAttempt.Status__c = examStatus;
