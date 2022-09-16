@@ -81,11 +81,12 @@ export default class CredentialPrioritize extends LightningElement {
 	handleCredential(event) {
 		if (event.detail.selRecords.length > 0) {
 			let existingPriorityRecs = [];
+			this.elementList = this.existingElementList;
 			existingPriorityRecs.push(...this.elementList);
 			for (const rec of event.detail.selRecords) {
 				existingPriorityRecs.push(this.createNode(rec));
 			}
-			this.elementList = existingPriorityRecs;
+			this.elementList = [...existingPriorityRecs];
 			this.isPriorityChanged = true;
 			this.resetIndex();
 			console.log("element list:", JSON.stringify(this.elementList));
