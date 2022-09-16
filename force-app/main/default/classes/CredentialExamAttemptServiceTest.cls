@@ -22,8 +22,13 @@ private class CredentialExamAttemptServiceTest {
         User usrs = [select id,name from User where Email= 'puser000@amamama.com' limit 1];
         System.runAs(usrs){
         Test.startTest();
-        CredentialExamAttemptService ces = new CredentialExamAttemptService();
+        try {
+            CredentialExamAttemptService ces = new CredentialExamAttemptService();
         ces.getActiveExamAttemptsForUser(usrs.Id);
+        } catch (Exception ex) {
+            system.assert(ex.getMessage().contains('Insufficient permissions'));
+        }
+        
         Test.stopTest();
         system.assert(usrs != Null, 'User List should not be empty.');
         }
