@@ -92,8 +92,11 @@ public class FilesUploadServiceTest {
         
         filelist.add(obj);
         string file = json.serialize(filelist);
-      // VoucherRequestController.methodVRC(recId,vers);
-     FilesUploadService.uploadFiles(recId, file);
+     
+        list<string> files = new list<string>();
+        files.add(file);
+            // VoucherRequestController.methodVRC(recId,vers);
+    	 FilesUploadService.uploadFiles(recId, files);
           Test.stopTest();
     }
     

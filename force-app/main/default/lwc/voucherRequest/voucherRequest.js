@@ -8,6 +8,15 @@ import PreparationDocs_HelpText from "@salesforce/label/c.PreparationDocs_HelpTe
 import createCredExempt from '@salesforce/apex/VoucherRequestController.createCredExempt';
 //import methodVRC from '@salesforce/apex/VoucherRequestController.methodVRC';
 import uploadFiles from '@salesforce/apex/FilesUploadService.uploadFiles';
+	
+import ConfirmationVoucherRequestComponent  from "@salesforce/label/c.ConfirmationVoucherRequestComponent";
+import VoucherRequestDoYouNeedVoucher from "@salesforce/label/c.VoucherRequestDoYouNeedVoucher";
+//import ConfirmationVoucherRequestDoYouNeedVoucherVoucherRequestComponent  from "@salesforce/label/c.ConfirmationVoucherRequestDoYouNeedVoucherVoucherRequestComponent";
+import CredentialExamAttemptVoucherRequest from "@salesforce/label/c.CredentialExamAttemptVoucherRequest";
+import FileSizeErrorLimitMessage from "@salesforce/label/c.FileSizeErrorLimitMessage";
+import FilesnotselectedErrorMessage from "@salesforce/label/c.FilesnotselectedErrorMessage";
+import CredentialCreatedSuccessMessage from "@salesforce/label/c.CredentialCreatedSuccessMessage";
+import FileUploadSuccessFully from "@salesforce/label/c.FileUploadSuccessFully";
 const MAX_FILE_SIZE = 50000000;
 
 export default class VoucherRequest extends LightningElement {
@@ -32,7 +41,15 @@ export default class VoucherRequest extends LightningElement {
     @track filesData = [];
     showSpinner = false;
     @track credId;
-
+    @track  confirm = ConfirmationVoucherRequestComponent;
+     @track DoYouNeedVoucher = VoucherRequestDoYouNeedVoucher;
+     @track CredentialExamAttempt = CredentialExamAttemptVoucherRequest;
+     @track VoucherExamDate = Voucher_ExamDate;
+     @track  filelimitError = FileSizeErrorLimitMessage;
+    @track fileNotSelect = FilesnotselectedErrorMessage;
+    @track sucessmsg = CredentialCreatedSuccessMessage;
+  @track fileUploadMsg = FileUploadSuccessFully;
+  @track Filelist = [];
     @api handleCredentialName(credentialName) {
         this.isShowModal = true;
         this.credentialValue = credentialName;
@@ -54,10 +71,11 @@ export default class VoucherRequest extends LightningElement {
     }
 
     handleFileUpload(event) {
+        var obj = {};
         if (event.target.files.length > 0) {
             for (let x of event.target.files) {
                 if (x.size > MAX_FILE_SIZE) {
-                    this.showToast('Error!', 'error', 'File size exceeded the upload size limit.');
+                    this.showToast('Error!', 'error', this.filelimitError);
                     return;
                 }
                 let file = x;
@@ -73,6 +91,9 @@ export default class VoucherRequest extends LightningElement {
         console.log('files data :', this.filesData);
     }
     saveNewRecord() {
+      this.Filelist.push( JSON.stringify(this.filesData));
+      console.log('New FileData:' ,this.Filelist);
+      try{ 
         //validate
         const allValid = [
             ...this.template.querySelectorAll('.validate'),
@@ -80,17 +101,14 @@ export default class VoucherRequest extends LightningElement {
             inputCmp.reportValidity();
             return validSoFar && inputCmp.checkValidity();
         }, true);
-        if (allValid) {
+        if (!allValid) {
 
             console.log('Errors when a user didnt put value');
         }
         else {
 
-
-
-
             if (this.filesData == [] || this.filesData.length == 0) {
-                this.showToast('Error', 'error', 'Please select files first'); return;
+                this.showToast('Error', 'error', this.fileNotSelect); return;
             }
             this.showSpinner = true;
             this.isShowModal = false;
@@ -116,20 +134,24 @@ export default class VoucherRequest extends LightningElement {
                         new ShowToastEvent({
                             title: "Success",
                             variant: "success",
-                            message: "Credential Exam Attempt Successfully created"
+                            message: this.sucessmsg
                         })
                     );
                 }).catch((error) => {
                     console.log('Error', error);
                 })
         }
+      }catch(error){
+            console.log('error',error);
+
+      }
     }
 
     UploadFilest(Cid) {
         console.log('inside file upload');
         uploadFiles({
             ParentRecId: Cid,
-            filedata: JSON.stringify(this.filesData)
+            filedata: this.Filelist
 
         })
             .then((result) => {
@@ -139,7 +161,7 @@ export default class VoucherRequest extends LightningElement {
                         new ShowToastEvent({
                             title: "Success",
                             variant: "success",
-                            message: "File Uploaded SuccessFully"
+                            message: this.fileUploadMsg
                         })
                     );
                     this.isShowModal = false;
