@@ -124,7 +124,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>PreparationDocs_HelpText</shortDescription>
-        <value>Please upload the course completion evidences from the respective official training sites.</value>
+        <value>Please Upload Your Exam Reciept</value>
     </labels>
     <labels>
         <fullName>Voucher_Comments</fullName>
@@ -153,5 +153,62 @@
         <protected>true</protected>
         <shortDescription>Voucher_PreparationDocuments</shortDescription>
         <value>Preparation Documents</value>
+    </labels>
+    <labels>
+        <fullName>ConfirmationVoucherRequestComponent</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ConfirmationVoucherRequestComponent</shortDescription>
+        <value>Confirmation</value>
+    </labels>
+    <labels>
+        <fullName>CredentialCreatedSuccessMessage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialCreatedSuccessMessage</shortDescription>
+        <value>Credential Exam Attempt successfully created</value>
+    </labels>
+    <labels>
+        <fullName>CredentialExamAttemptVoucherRequest</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialExamAttemptVoucherRequest</shortDescription>
+        <value>Credential Exam
+Attempt Details</value>
+    </labels>
+    <labels>
+        <fullName>FileSizeErrorLimitMessage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FileSizeErrorLimit</shortDescription>
+        <value>File size exceeded the upload size limit</value>
+    </labels>
+    <labels>
+        <fullName>FileUploadSuccessFully</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FileUploadSuccessFully</shortDescription>
+        <value>File Uploaded Successfully</value>
+    </labels>
+    <labels>
+        <fullName>FilesnotselectedErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FilesnotselectedErrorMessage</shortDescription>
+        <value>Files not selected</value>
+    </labels>
+    <labels>
+        <fullName>RecordIdisBlank</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RecordIdisBlank</shortDescription>
+        <value>Record Id is blank</value>
+    </labels>
+    <labels>
+        <fullName>VoucherRequestDoYouNeedVoucher</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>VoucherRequestDoYouNeedVoucher</shortDescription>
+        <value>Do you need a Voucher?</value>
     </labels>
 </CustomLabels>
