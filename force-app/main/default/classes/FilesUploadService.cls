@@ -21,10 +21,8 @@ public with sharing class FilesUploadService {
                     files = (List<FileDataWP>) JSON.deserialize(str, List<FileDataWP>.class);
                     System.debug(files);
                     
-                    
-                    
                 }
-              
+                
                 for(FileDataWP file : files) {
                     system.debug('inside files:'+file);
                     ContentVersion conVer = new ContentVersion();
@@ -61,8 +59,26 @@ public with sharing class FilesUploadService {
     }
     
     public class FileDataWP {
-        public String fileName;
-        public String fileContent;
+        @TestVisible
+        private String fileName;
+        @TestVisible
+        private String fileContent;
+        
+        
+        public FileDataWP(){
+            SetfileName();
+            SetfileContent();
+            
+            
+        }  
+        @TestVisible   
+        private void SetfileName() {
+            this.fileName = fileName;
+        }
+        @TestVisible
+        private void SetfileContent() {
+            this.fileContent = fileContent;
+        }
     }
     
 }
