@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
         <fullName>UserSearchLabel</fullName>
@@ -146,5 +146,61 @@
         <protected>true</protected>
         <shortDescription>CredentialPriorityName</shortDescription>
         <value>Credential Name</value>
+    </labels>
+    <labels>
+        <fullName>CredentialExamAttempt_ExamAttemptID</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialExamAttempt ExamAttemptID</shortDescription>
+        <value>Exam Attempt ID</value>
+    </labels>
+    <labels>
+        <fullName>Exam</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ExamAttempt_Title</shortDescription>
+        <value>Credential Exam Attempts</value>
+    </labels>
+    <labels>
+        <fullName>ExamAttempt_EmptyMsg</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ExamAttempt_EmptyMsg</shortDescription>
+        <value>Looks like you&apos;re free and clear the rest of the day.</value>
+    </labels>
+    <labels>
+        <fullName>credentailExamAttempt_Status</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>credentailExamAttempt Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>credentailExamAttempt_User_Credential</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>credentailExamAttempt User Credential</shortDescription>
+        <value>User Credential</value>
+    </labels>
+    <labels>
+        <fullName>credentialExamAttempt_Credential_Name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>credentialExamAttempt Credential Name</shortDescription>
+        <value>Credential Name</value>
+    </labels>
+    <labels>
+        <fullName>credentialExamAttempt_Exam_Date_Time</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>credentialExamAttempt Exam Date Time</shortDescription>
+        <value>Exam Date Time</value>
+    </labels>
+    <labels>
+        <fullName>voucher_Assignment</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>voucher Assignment</shortDescription>
+        <value>Exam Attempts- Pending Voucher Assignment</value>
     </labels>
 </CustomLabels>
