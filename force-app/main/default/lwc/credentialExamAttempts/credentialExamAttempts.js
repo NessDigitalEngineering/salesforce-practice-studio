@@ -29,8 +29,9 @@ export default class CredentialExamAttempts extends LightningElement {
     @track editExamDate = false;
     @track exmDate;
     @track credExamAttemptId;
-    dt;
 
+    dt;
+        
     label = {
 		ExamAttemptID,
         User_Credential,
@@ -41,10 +42,35 @@ export default class CredentialExamAttempts extends LightningElement {
         ExamAttempt_EmptyMsg
 	};
     connectedCallback() {
+        let srchRecords = [];
         getActiveExamAttemptsForUser({ userId: this.userIds })
         .then((res) => {
             this.searchRecords = res;
+            for(const r of res){
+                srchRecords.push(r);
+            }
+            var index=0;
+            for(var rs=0; rs < srchRecords.length; rs++){
+                srchRecords[rs].showButton=false;
+
+           if(srchRecords[rs].Status__c == 'Voucher Assigned' )
+           {
+            srchRecords[rs].showButton=true;
+
+            srchRecords[rs].buttonName='Exam Schedule';
             
+           }
+           if( srchRecords[rs].Status__c == 'Exam Scheduled')
+           {
+            srchRecords[rs].showButton=true;
+            
+            srchRecords[rs].buttonName='Upload Result';
+            
+           }
+            }
+
+            console.log('SRCH'+JSON.stringify(srchRecords));
+
             this.countRec = res.length;
             if (res.length === 0) {
                 this.showIcon = true;
