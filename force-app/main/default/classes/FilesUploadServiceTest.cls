@@ -68,7 +68,7 @@ public class FilesUploadServiceTest {
         version.add(contentVersion);
         database.insert(version);
         
-        //   insert version;   
+         
         string before = 'Testing encoding record';
         Blob beforeblob = Blob.valueOf(before);
         string paramvalue = EncodingUtil.base64Encode(beforeblob);        
@@ -97,7 +97,7 @@ public class FilesUploadServiceTest {
      
         list<string> files = new list<string>();
         files.add(file);
-            // VoucherRequestController.methodVRC(recId,vers);
+            
     	 FilesUploadService.uploadFiles(recId, files);
           Test.stopTest();
     }
