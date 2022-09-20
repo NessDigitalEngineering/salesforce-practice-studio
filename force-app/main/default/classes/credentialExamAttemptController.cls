@@ -2,14 +2,14 @@
  * @author Dipshika Nalawade
  * @date   27/08/2022
  * @description controller Class containing methods  to call service class methods Credential Exam Attempt
- */ 
-public with sharing class CredentialExamAttemptController {
+ */
+public with sharing class credentialExamAttemptController{
     /*******************************************************************************************************
       * @description Returns Credentials Exam attempts that are in progress
       * @param userId SF id of user
       * @return List of Credentials Exam attempts
       */ 
-    @AuraEnabled 
+    @AuraEnabled
     public static List<Credential_Exam_Attempt__c> getExamAttempts(String userId)
     {
         try {

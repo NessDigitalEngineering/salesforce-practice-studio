@@ -1,5 +1,5 @@
 @isTest
-private class CredentialExamAttemptControllerTest {
+private class credentialExamAttemptControllerTest{
     @TestSetup
     static void setup() {
         User usrs = TestDataFactory.createUser();
@@ -15,7 +15,7 @@ private class CredentialExamAttemptControllerTest {
             insert credExamAttempt;
         }
     }
-     
+    
     static testMethod void getActiveExamAttemptsForUserTest (){
 
         User usrs = [select id,name from User where Email= 'puser000@amamama.com' limit 1];
@@ -32,7 +32,7 @@ private class CredentialExamAttemptControllerTest {
         system.assert(usrs != Null, 'User List should not be empty.');
         }
 
-    } 
+    }
     
       static testMethod void updateDateTest (){
         List<Credential_Exam_Attempt__c> examAttemptList = [select id,Status__c from Credential_Exam_Attempt__c where Status__c='Voucher Assigned' LIMIT 1];
