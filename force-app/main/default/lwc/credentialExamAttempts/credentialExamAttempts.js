@@ -1,4 +1,4 @@
-import { LightningElement , api, track } from 'lwc';
+import { LightningElement, track } from 'lwc';
 import getActiveExamAttemptsForUser from "@salesforce/apex/credentialExamAttemptController.getExamAttempts";
 import updateStatus from "@salesforce/apex/credentialExamAttemptController.updateStatus";
 import updateDate from "@salesforce/apex/credentialExamAttemptController.updateDate";
@@ -55,8 +55,7 @@ export default class CredentialExamAttempts extends LightningElement {
             for(const r of res){
                 srchRecords.push(r);
             }
-            var index=0;
-            for(var rs=0; rs < srchRecords.length; rs++){
+            for(let rs=0; rs < srchRecords.length; rs++){
                 srchRecords[rs].showButton=false;
 
            if(srchRecords[rs].Status__c == 'Voucher Assigned' )

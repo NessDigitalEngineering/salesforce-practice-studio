@@ -1,5 +1,5 @@
 @isTest
-private class credentialExamAttemptControllerTest {
+private class CredentialExamAttemptControllerTest {
     @TestSetup
     static void setup() {
         User usrs = TestDataFactory.createUser();
@@ -17,8 +17,7 @@ private class credentialExamAttemptControllerTest {
     }
     
     static testMethod void getActiveExamAttemptsForUserTest (){
-        Map<String,String> userId = new Map<String,String>();
-        List<Credential_Exam_Attempt__c> examList= [select id,Name from Credential_Exam_Attempt__c ];
+
         User usrs = [select id,name from User where Email= 'puser000@amamama.com' limit 1];
         System.runAs(usrs){
         Test.startTest();
@@ -36,7 +35,6 @@ private class credentialExamAttemptControllerTest {
     }
     
       static testMethod void updateDateTest (){
-        User_Credential__c usrCred = [select id,Name from User_Credential__c where Status__c='Assigned' LIMIT 1];
         List<Credential_Exam_Attempt__c> examAttemptList = [select id,Status__c from Credential_Exam_Attempt__c where Status__c='Voucher Assigned' LIMIT 1];
         Test.startTest();
         credentialExamAttemptController.updateDate(examAttemptList[0].Id,system.today());
@@ -46,7 +44,6 @@ private class credentialExamAttemptControllerTest {
     }
    
     static testMethod void updateStatusTest (){
-        User_Credential__c usrCred = [select id,Name from User_Credential__c where Status__c='Assigned' LIMIT 1];
         List<Credential_Exam_Attempt__c> examAttemptList = [select id,Status__c from Credential_Exam_Attempt__c where Status__c='Voucher Assigned' LIMIT 1];
         Test.startTest();
          credentialExamAttemptController.updateStatus(examAttemptList[0].Id,'Exam Passed');
