@@ -41,6 +41,12 @@ export default class CredentialExamAttempts extends LightningElement {
         Exam, 
         ExamAttempt_EmptyMsg
 	};
+
+    /*
+        @description    :   This Method is to itrate data and show the buttons as per status.
+        @param          :   event
+    */ 
+
     connectedCallback() {
         let srchRecords = [];
         getActiveExamAttemptsForUser({ userId: this.userIds })
@@ -86,17 +92,28 @@ export default class CredentialExamAttempts extends LightningElement {
             console.log("error" + JSON.stringify(error));
         });
     }
-
+/*
+        @description    :   This Method is to update the Status.
+        @param          :   event
+    */
     handleClick(event){
         updateStatus({examAttemptRecordId : event.target.value, examStatus: 'Exam Scheduled'}).then((response)=>{
             console.log('Record updated successfully');
         }).catch((error) => {});
        
     }
+    /*
+        @description    :   This Method is make boolean value True..
+    */
+
     handleDateEdit() {
         this.editExamDate = true;
       }
      
+	/*
+        @description    :   This Method is to update the Exam Date and Time.
+        @param          :   event
+    */
       updateExmDate(event){
         this.credExamAttemptId = event.target.name;
         this.exmDate = event.target.value;
