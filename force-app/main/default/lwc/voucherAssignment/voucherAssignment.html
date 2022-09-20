@@ -1,0 +1,19 @@
+<template>
+    <lightning-card title={title}>
+        <template if:true={emptyRecords}>  
+            <div class="slds-var-p-around_small slds-scrollable_y  setHeight">
+                
+            </div>
+        </template>
+
+ <template if:true={showIcon}>
+    <div class="slds-text-align_center imgAdjustment">
+        <img src={Icn} aria-hidden="true" alt="Assignment Logo"></img>
+    </div>
+
+    <div class="slds-text-align_center">
+        <h2>{label.ExamAttempt_EmptyMsg}</h2><br>
+    </div>
+</template> 
+</lightning-card>
+</template>

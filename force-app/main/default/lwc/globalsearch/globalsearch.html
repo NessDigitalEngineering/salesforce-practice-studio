@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="Global Search">
+        <lightning-input label="" type="search" onchange={onsrchFunctionality}></lightning-input>
+    </lightning-card>
+
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item size="12">
+            <span style="font-size:16px;font-weight:bold">Account</span>
+            <lightning-datatable key-field="id" data={accData} columns={accColumns}></lightning-datatable>
+        </lightning-layout-item>
+
+        <lightning-layout-item size="12">
+            <span style="font-size:16px;font-weight:bold">Contact</span>
+            <lightning-datatable key-field="id" data={conData} columns={conColumns}></lightning-datatable>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
