@@ -1,4 +1,4 @@
-public class FileUploadMultiController {
+public with sharing class FileUploadMultiController {
     
     @AuraEnabled
     public static String uploadFiles(String recordId, String filedata) {
@@ -19,7 +19,7 @@ public class FileUploadMultiController {
                 Insert cvList;
 
                 List<ContentDocumentLink> cdList = new List<ContentDocumentLink>();
-                for(ContentVersion cv : [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: cvList]) {
+                for(ContentVersion cv : [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: cvList ]) {
                     ContentDocumentLink conDocLink = New ContentDocumentLink();
                     conDocLink.LinkedEntityId = recordId;
                     conDocLink.ContentDocumentId = cv.ContentDocumentId;
