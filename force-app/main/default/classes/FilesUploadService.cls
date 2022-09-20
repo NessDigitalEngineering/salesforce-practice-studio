@@ -9,8 +9,8 @@ public with sharing class FilesUploadService {
 * @param RecordId and filedata
 * @return show success message on file upload
 */
-    @AuraEnabled
-    public static String uploadFiles(String ParentRecId, list<String> filedata) {
+   
+    public  String uploadFiles(String ParentRecId, list<String> filedata) {
         system.debug('Filesdata:'+filedata);
         system.debug('files size:'+filedata.size());
         try {
