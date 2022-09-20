@@ -6,7 +6,8 @@ import Voucher_CredentialName from "@salesforce/label/c.Voucher_CredentialName";
 import Voucher_Comments from "@salesforce/label/c.Voucher_Comments";
 import PreparationDocs_HelpText from "@salesforce/label/c.PreparationDocs_HelpText";
 import createCredExempt from '@salesforce/apex/VoucherRequestController.createCredExempt';
-import uploadFiles from '@salesforce/apex/FilesUploadService.uploadFiles';
+import methodVRC from '@salesforce/apex/VoucherRequestController.methodVRC';
+
 	
 import ConfirmationVoucherRequestComponent  from "@salesforce/label/c.ConfirmationVoucherRequestComponent";
 import VoucherRequestDoYouNeedVoucher from "@salesforce/label/c.VoucherRequestDoYouNeedVoucher";
@@ -44,10 +45,10 @@ export default class VoucherRequest extends LightningElement {
      @track CredentialExamAttempt = CredentialExamAttemptVoucherRequest;
      @track VoucherExamDate = Voucher_ExamDate;
      @track  filelimitError = FileSizeErrorLimitMessage;
-     @track fileNotSelect = FilesnotselectedErrorMessage;
-     @track sucessmsg = CredentialCreatedSuccessMessage;
-    @track fileUploadMsg = FileUploadSuccessFully;
-    @track Filelist = [];
+    @track fileNotSelect = FilesnotselectedErrorMessage;
+    @track sucessmsg = CredentialCreatedSuccessMessage;
+  @track fileUploadMsg = FileUploadSuccessFully;
+  @track Filelist = [];
     @api handleCredentialName(credentialName) {
         this.isShowModal = true;
         this.credentialValue = credentialName;
@@ -69,7 +70,7 @@ export default class VoucherRequest extends LightningElement {
     }
 
     handleFileUpload(event) {
-        let obj = {};
+        var obj = {};
         if (event.target.files.length > 0) {
             for (let x of event.target.files) {
                 if (x.size > MAX_FILE_SIZE) {
@@ -147,14 +148,14 @@ export default class VoucherRequest extends LightningElement {
 
     UploadFilest(Cid) {
         console.log('inside file upload');
-        uploadFiles({
+        methodVRC({
             ParentRecId: Cid,
             filedata: this.Filelist
 
         })
             .then((result) => {
                 console.log('inside uploading...', result);
-                if (result == 'success') {
+                if (result == 'Success') {
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: "Success",
