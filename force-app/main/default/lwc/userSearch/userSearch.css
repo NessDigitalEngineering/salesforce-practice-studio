@@ -1,0 +1,16 @@
+.slds-input-has-icon .slds-input__icon {
+	top: 2.4rem !important;
+}
+.slds-icon_small,
+.slds-icon--small {
+	width: 1.5rem;
+	height: 1rem;
+	line-height: 2;
+}
+
+.addMarginTop {
+	margin-top: -1.938rem;
+}
+.addClearmargin {
+	margin-top: -3rem;
+}

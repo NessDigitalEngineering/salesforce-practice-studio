@@ -423,4 +423,8 @@
         <tab>User_Credential__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    <customPermissions>
+        <name>Assign_Credentials</name>
+        <enabled>true</enabled>
+    </customPermissions>
 </PermissionSet>
