@@ -9,7 +9,7 @@ public with sharing class CredentialExamAttemptController {
       * @param userId SF id of user
       * @return List of Credentials Exam attempts
       */ 
-    @AuraEnabled
+    @AuraEnabled 
     public static List<Credential_Exam_Attempt__c> getExamAttempts(String userId)
     {
         try {
@@ -20,8 +20,7 @@ public with sharing class CredentialExamAttemptController {
         return totalExamAttempts;  
         } catch (AuraHandledException  ex) {
             throw ex;
-        }
-        
+        }   
     } 
  /*******************************************************************************************************
       * @description Returns Credentials Exam attempts that are in progress
@@ -35,8 +34,7 @@ public with sharing class CredentialExamAttemptController {
             ceas.updateExamStatus(examAttemptRecordId,examStatus); 
         } catch (AuraHandledException  ex) {
             throw ex;
-        }
-       
+        }     
     } 
 
      /*******************************************************************************************************
@@ -51,7 +49,6 @@ public with sharing class CredentialExamAttemptController {
         ceas.updateExamDate(examAttemptRecordId,dt);
         } catch (AuraHandledException  ex) {
             throw ex;
-        }
-        
+        }    
     } 
 }

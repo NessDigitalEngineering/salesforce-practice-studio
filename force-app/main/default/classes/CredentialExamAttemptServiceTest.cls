@@ -15,7 +15,7 @@ private class CredentialExamAttemptServiceTest {
             insert credExamAttempt;
         }
     }
-    
+     
     static testMethod void getActiveExamAttemptsForUserTest (){
         Map<String,String> userId = new Map<String,String>();
         List<Credential_Exam_Attempt__c> examList= [select id,Name from Credential_Exam_Attempt__c ];

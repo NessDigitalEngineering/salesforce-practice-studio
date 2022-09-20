@@ -18,7 +18,7 @@ public with sharing class CredentialExamAttemptService {
          } catch (Exception ex) {
              throw ex;
          }
-     }
+     } 
       /*******************************************************************************************************
       * @description This method creates exam attempt record
       * @param userId SF id of user

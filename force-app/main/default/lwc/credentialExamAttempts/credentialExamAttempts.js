@@ -46,7 +46,6 @@ export default class CredentialExamAttempts extends LightningElement {
         @description    :   This Method is to itrate data and show the buttons as per status.
         @param          :   event
     */ 
-
     connectedCallback() {
         let srchRecords = [];
         getActiveExamAttemptsForUser({ userId: this.userIds })
