@@ -66,4 +66,4 @@ private class CredentialExamAttemptServiceTest {
         Test.stopTest();
         system.assert(examAttemptList[0].Id != Null, 'Exam Attempt List should not be empty.');
     }
-}
+} 

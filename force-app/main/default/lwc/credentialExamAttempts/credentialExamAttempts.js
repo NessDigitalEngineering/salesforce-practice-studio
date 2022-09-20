@@ -1,7 +1,7 @@
 import { LightningElement, track } from 'lwc';
-import getActiveExamAttemptsForUser from "@salesforce/apex/credentialExamAttemptController.getExamAttempts";
-import updateStatus from "@salesforce/apex/credentialExamAttemptController.updateStatus";
-import updateDate from "@salesforce/apex/credentialExamAttemptController.updateDate";
+import getActiveExamAttemptsForUser from "@salesforce/apex/CredentialExamAttemptController.getExamAttempts";
+import updateStatus from "@salesforce/apex/CredentialExamAttemptController.updateStatus";
+import updateDate from "@salesforce/apex/CredentialExamAttemptController.updateDate";
 import USER_ID from "@salesforce/user/Id";
 import Exam from "@salesforce/label/c.Exam";
 import ExamAttemptID from "@salesforce/label/c.CredentialExamAttempt_ExamAttemptID";

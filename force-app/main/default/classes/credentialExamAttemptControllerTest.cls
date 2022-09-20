@@ -32,7 +32,7 @@ private class CredentialExamAttemptControllerTest {
         system.assert(usrs != Null, 'User List should not be empty.');
         }
 
-    }
+    } 
     
       static testMethod void updateDateTest (){
         List<Credential_Exam_Attempt__c> examAttemptList = [select id,Status__c from Credential_Exam_Attempt__c where Status__c='Voucher Assigned' LIMIT 1];

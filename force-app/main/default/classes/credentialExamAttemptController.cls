@@ -2,7 +2,7 @@
  * @author Dipshika Nalawade
  * @date   27/08/2022
  * @description controller Class containing methods  to call service class methods Credential Exam Attempt
- */
+ */ 
 public with sharing class CredentialExamAttemptController {
     /*******************************************************************************************************
       * @description Returns Credentials Exam attempts that are in progress

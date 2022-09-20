@@ -9,7 +9,7 @@ public with sharing class CredentialExamAttemptService {
       * @param userId SF id of user
       * @return List of Credential Exam Attempt
       */
-      
+       
      public List<Credential_Exam_Attempt__c> getActiveExamAttemptsForUser(String userId) {
          try {
             userInfo.getUserId();
