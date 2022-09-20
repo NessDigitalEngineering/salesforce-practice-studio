@@ -6,12 +6,10 @@ import Voucher_CredentialName from "@salesforce/label/c.Voucher_CredentialName";
 import Voucher_Comments from "@salesforce/label/c.Voucher_Comments";
 import PreparationDocs_HelpText from "@salesforce/label/c.PreparationDocs_HelpText";
 import createCredExempt from '@salesforce/apex/VoucherRequestController.createCredExempt';
-//import methodVRC from '@salesforce/apex/VoucherRequestController.methodVRC';
 import uploadFiles from '@salesforce/apex/FilesUploadService.uploadFiles';
 	
 import ConfirmationVoucherRequestComponent  from "@salesforce/label/c.ConfirmationVoucherRequestComponent";
 import VoucherRequestDoYouNeedVoucher from "@salesforce/label/c.VoucherRequestDoYouNeedVoucher";
-//import ConfirmationVoucherRequestDoYouNeedVoucherVoucherRequestComponent  from "@salesforce/label/c.ConfirmationVoucherRequestDoYouNeedVoucherVoucherRequestComponent";
 import CredentialExamAttemptVoucherRequest from "@salesforce/label/c.CredentialExamAttemptVoucherRequest";
 import FileSizeErrorLimitMessage from "@salesforce/label/c.FileSizeErrorLimitMessage";
 import FilesnotselectedErrorMessage from "@salesforce/label/c.FilesnotselectedErrorMessage";
@@ -71,7 +69,7 @@ export default class VoucherRequest extends LightningElement {
     }
 
     handleFileUpload(event) {
-        var obj = {};
+        let obj = {};
         if (event.target.files.length > 0) {
             for (let x of event.target.files) {
                 if (x.size > MAX_FILE_SIZE) {
