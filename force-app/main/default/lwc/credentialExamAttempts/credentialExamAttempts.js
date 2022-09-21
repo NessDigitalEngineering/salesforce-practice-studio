@@ -68,7 +68,7 @@ export default class CredentialExamAttempts extends LightningElement {
             srchRecords[rs].buttonName='Upload Result';
 
            }
-           rs++;
+           
             }
 
             console.log('SRCH'+JSON.stringify(srchRecords));
