@@ -15,15 +15,20 @@ private class CredentialExamAttemptServiceTest {
             insert credExamAttempt;
         }
     }
-    
-    static testMethod void getExamAttemptsForUserTest (){
+     
+    static testMethod void getActiveExamAttemptsForUserTest (){
         Map<String,String> userId = new Map<String,String>();
         List<Credential_Exam_Attempt__c> examList= [select id,Name from Credential_Exam_Attempt__c ];
         User usrs = [select id,name from User where Email= 'puser000@amamama.com' limit 1];
         System.runAs(usrs){
         Test.startTest();
-        CredentialExamAttemptService ces = new CredentialExamAttemptService();
-        ces.getExamAttemptsForUser(usrs.Id);
+        try {
+            CredentialExamAttemptService ces = new CredentialExamAttemptService();
+        ces.getActiveExamAttemptsForUser(usrs.Id);
+        } catch (Exception ex) {
+            system.assert(ex.getMessage().contains('Insufficient permissions'));
+        }
+        
         Test.stopTest();
         system.assert(usrs != Null, 'User List should not be empty.');
         }
@@ -61,4 +66,4 @@ private class CredentialExamAttemptServiceTest {
         Test.stopTest();
         system.assert(examAttemptList[0].Id != Null, 'Exam Attempt List should not be empty.');
     }
-}
+} 
