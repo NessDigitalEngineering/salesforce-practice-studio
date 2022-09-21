@@ -6,17 +6,17 @@ private class CredentialExamAttemptControllerTest{
         TestDataFactory.assignPboAdminPermissions(usrs);
         System.runAs(usrs){
             List<Credential__c> credList = TestDataFactory.createCredentials(); 
-            User_Credential__c usrCred = TestDataFactory.createUserCredentials(usrs.id,credList[0].id);
-            usrCred.Status__c='Assigned';
-            usrCred.Due_Date__c= system.today();
-            usrCred.Assigned_By__c = userinfo.getUserId(); 
-            insert usrCred;
-            list<Credential_Exam_Attempt__c> credExamAttempt = TestDataFactory.createCredentialExamAttempt(usrCred.id);           
-            insert credExamAttempt;
+             User_Credential__c userCred = TestDataFactory.createUserCredentials(usrs.id,credList[0].id);
+             userCred.Status__c='Assigned';
+             userCred.Due_Date__c= system.today();
+             userCred.Assigned_By__c = userinfo.getUserId(); 
+             insert userCred;
+             list<Credential_Exam_Attempt__c> credExamAttempt = TestDataFactory.createCredentialExamAttempt(userCred.id);           
+             insert credExamAttempt;
         }
     }
     
-    static testMethod void getActiveExamAttemptsForUserTest (){
+    static testMethod void getExamAttemptsForUserTest (){
 
         User usrs = [select id,name from User where Email= 'puser000@amamama.com' limit 1];
         System.runAs(usrs){
@@ -34,20 +34,20 @@ private class CredentialExamAttemptControllerTest{
 
     }
     
-      static testMethod void updateDateTest (){
-        List<Credential_Exam_Attempt__c> examAttemptList = [select id,Status__c from Credential_Exam_Attempt__c where Status__c='Voucher Assigned' LIMIT 1];
+      static testMethod void updateDateAndTimeTest (){
+        List<Credential_Exam_Attempt__c> examAttemptsList = [select id,Status__c from Credential_Exam_Attempt__c where Status__c='Voucher Assigned' LIMIT 1];
         Test.startTest();
-        CredentialExamAttemptController.updateDate(examAttemptList[0].Id,system.today());
+        CredentialExamAttemptController.updateDate(examAttemptsList[0].Id,system.today());
         Test.stopTest();
-        system.assert(examAttemptList[0].Id != Null, 'Exam Attempt List should not be empty.');
+        system.assert(examAttemptsList[0].Id != Null, 'Exam Attempt List Should Not Be Empty.');
      
     }
    
-    static testMethod void updateStatusTest (){
-        List<Credential_Exam_Attempt__c> examAttemptList = [select id,Status__c from Credential_Exam_Attempt__c where Status__c='Voucher Assigned' LIMIT 1];
+    static testMethod void updateExamStatusTest (){
+        List<Credential_Exam_Attempt__c> examAttemptsList = [select id,Status__c from Credential_Exam_Attempt__c where Status__c='Voucher Assigned' LIMIT 1];
         Test.startTest();
-         CredentialExamAttemptController.updateStatus(examAttemptList[0].Id,'Exam Passed');
+         CredentialExamAttemptController.updateStatus(examAttemptsList[0].Id,'Exam Passed');
         Test.stopTest();
-        system.assert(examAttemptList[0].Id != Null, 'Exam Attempt List should not be empty.');
+        system.assert(examAttemptsList[0].Id != Null, 'Exam Attempt List Should Not Be Empty.');
     }
 }
