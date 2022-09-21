@@ -60,16 +60,12 @@ export default class CredentialExamAttempts extends LightningElement {
            if(srchRecords[rs].Status__c == 'Voucher Assigned' )
            {
             srchRecords[rs].showButton=true;
-
             srchRecords[rs].buttonName='Exam Schedule';
-            
            }
            if( srchRecords[rs].Status__c == 'Exam Scheduled')
            {
             srchRecords[rs].showButton=true;
-            
             srchRecords[rs].buttonName='Upload Result';
-            
            }
             }
 
