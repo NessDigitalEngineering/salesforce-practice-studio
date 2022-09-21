@@ -54,7 +54,7 @@ export default class CredentialExamAttempts extends LightningElement {
             for(const r of res){
                 srchRecords.push(r);
             }
-            for(let rs=0; rs < srchRecords.length; rs++){
+            for(let rs of srchRecords.keys()){
                 srchRecords[rs].showButton=false;
 
            if(srchRecords[rs].Status__c == 'Voucher Assigned' )
@@ -66,7 +66,9 @@ export default class CredentialExamAttempts extends LightningElement {
            {
             srchRecords[rs].showButton=true;
             srchRecords[rs].buttonName='Upload Result';
+
            }
+           rs++;
             }
 
             console.log('SRCH'+JSON.stringify(srchRecords));
