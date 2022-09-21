@@ -99,7 +99,7 @@ export default class VoucherRequest extends LightningElement {
            @param - Standard Event
     */
     handleFileUpload(event) {
-        var obj = {};
+        let obj = {};
         if (event.target.files.length > 0) {
             for (let x of event.target.files) {
                 if (x.size > MAX_FILE_SIZE) {
@@ -232,8 +232,8 @@ export default class VoucherRequest extends LightningElement {
     }
 
 
- /* 
-      @description - closeModal this is used to close the modal from UI   ;
+  /* 
+      @description - showModalOnNo this is used to open  the Exam Details  modal on value no from UI;
          @param-  Did'nt recieve any parameter
     */
     showModalOnNo() {
@@ -242,7 +242,7 @@ export default class VoucherRequest extends LightningElement {
     }
 
  /* 
-      @description - closeModal this is used to close the modal from UI   ;
+      @description - showModalOnYes this is used to open  the Exam Details  modal on value yes from UI;
          @param-  Did'nt recieve any parameter
     */
     showModalOnYes() {
@@ -250,23 +250,23 @@ export default class VoucherRequest extends LightningElement {
         this.displayExamDetailsModal = true;
     }
  /* 
-      @description - closeModal this is used to close the modal from UI   ;
-         @param-  Did'nt recieve any parameter
+      @description - showExamDetailsModal this is used to open Exam details  modal from UI;
+         @param-   Standard Event
     */
     showExamDetailsModal() {
         this.displayExamDetailsModal = true;
     }
 
-     /* 
-      @description - closeModal this is used to close the modal from UI   ;
+    /* 
+      @description - closeFirstModal this is used to close the first modal from UI   ;
          @param-   Standard Event
     */
     closeFirstModal(event) {
         this.isShowModal = false;
 
     }
-     /* 
-      @description - closeModal this is used to close the modal from UI   ;
+    /* 
+      @description - closeSecondModal this is used to close the second modal from UI   ;
          @param-   Standard Event
     */
     closeSecondModal(event) {
