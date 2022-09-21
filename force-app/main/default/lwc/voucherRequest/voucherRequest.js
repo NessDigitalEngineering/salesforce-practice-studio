@@ -49,14 +49,30 @@ export default class VoucherRequest extends LightningElement {
     @track sucessmsg = CredentialCreatedSuccessMessage;
   @track fileUploadMsg = FileUploadSuccessFully;
   @track Filelist = [];
+    /* 
+       @ description  handleCredentialName this is a function which is used to pass the credential value;
+       @ param  - credentialName
+    */
     @api handleCredentialName(credentialName) {
         this.isShowModal = true;
         this.credentialValue = credentialName;
     }
-
+  
+  
+   /* 
+      @description  handleCredentialId this is a function which is used to pass the credentialId;
+     @ param  - credentialId
+    */
     @api handleCredentialId(credentialId) {
         this.userCredentialId = credentialId;
     }
+ 
+ 
+ /* 
+       @ description  handleDateChange this is a function which is used to get the Exam Date from user  ;
+       @ param - Standard Event
+    */
+
 
     handleDateChange(event) {
         this.examDate = event.target.value;
@@ -64,11 +80,24 @@ export default class VoucherRequest extends LightningElement {
         console.log("this.userCredentialId---" + this.userCredentialId);
     }
 
+
+
+/* 
+       @description  handleCommentChange this is a function which is used to comments from user  ;
+     @param - Standard Event
+    */
+
     handleCommentChange(event) {
         this.examComments = event.target.value;
         console.log("comments---" + this.examComments);
     }
 
+
+
+/* 
+      @description  handleFileUpload this is a function which is used to get files data  from user  ;
+           @param - Standard Event
+    */
     handleFileUpload(event) {
         var obj = {};
         if (event.target.files.length > 0) {
@@ -89,6 +118,13 @@ export default class VoucherRequest extends LightningElement {
 
         console.log('files data :', this.filesData);
     }
+
+
+/* 
+      @description - saveNewRecord this is a function which is used to  send the data in apex classes   ;
+         @param-  Did'nt recieve any parameter
+    */
+
     saveNewRecord() {
       this.Filelist.push( JSON.stringify(this.filesData));
       console.log('New FileData:' ,this.Filelist);
@@ -145,6 +181,10 @@ export default class VoucherRequest extends LightningElement {
 
       }
     }
+/* 
+      @description - saveNewRecord this is a function which is used to  send the data in apex classes   ;
+         @param- recieves credential Exam RecordId
+    */
 
     UploadFilest(Cid) {
         console.log('inside file upload');
@@ -172,32 +212,63 @@ export default class VoucherRequest extends LightningElement {
             }).finally(() => this.showSpinner = false);
         this.displayExamDetailsModal = false;
     }
+
+    /* 
+      @description - removeReceiptImage this is used to delete the selected document files from UI   ;
+         @param-  Did'nt recieve any parameter
+    */
+
     removeReceiptImage(event) {
         let index = event.currentTarget.dataset.id;
         this.filesData.splice(index, 1);
-    }
-
+    } 
+    
+    /* 
+      @description - closeModal this is used to close the modal from UI   ;
+         @param-  Did'nt recieve any parameter
+    */
     closeModal() {
         this.displayExamDetailsModal = false;
     }
 
+
+ /* 
+      @description - closeModal this is used to close the modal from UI   ;
+         @param-  Did'nt recieve any parameter
+    */
     showModalOnNo() {
         this.statusValue = "Voucher Assigned";
         this.displayExamDetailsModal = true;
     }
 
+ /* 
+      @description - closeModal this is used to close the modal from UI   ;
+         @param-  Did'nt recieve any parameter
+    */
     showModalOnYes() {
         this.statusValue = "Voucher Requested";
         this.displayExamDetailsModal = true;
     }
-
+ /* 
+      @description - closeModal this is used to close the modal from UI   ;
+         @param-  Did'nt recieve any parameter
+    */
     showExamDetailsModal() {
         this.displayExamDetailsModal = true;
     }
+
+     /* 
+      @description - closeModal this is used to close the modal from UI   ;
+         @param-   Standard Event
+    */
     closeFirstModal(event) {
         this.isShowModal = false;
 
     }
+     /* 
+      @description - closeModal this is used to close the modal from UI   ;
+         @param-   Standard Event
+    */
     closeSecondModal(event) {
         this.displayExamDetailsModal = false;
         this.isShowModal = false;
