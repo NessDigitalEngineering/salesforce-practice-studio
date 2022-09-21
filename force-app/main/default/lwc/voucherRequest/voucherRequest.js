@@ -18,6 +18,7 @@ import CredentialCreatedSuccessMessage from "@salesforce/label/c.CredentialCreat
 import FileUploadSuccessFully from "@salesforce/label/c.FileUploadSuccessFully";
 const MAX_FILE_SIZE = 50000000;
 
+
 export default class VoucherRequest extends LightningElement {
     label = { Voucher_Comments, Voucher_CredentialName, Voucher_ExamDate, Voucher_Preparation, PreparationDocs_HelpText };
     @track examDate;
