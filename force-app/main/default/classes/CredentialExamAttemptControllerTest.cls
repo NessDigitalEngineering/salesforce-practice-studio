@@ -17,21 +17,17 @@ private class CredentialExamAttemptControllerTest{
     }
     
     static testMethod void getExamAttemptsForUserTest (){
-
-        User usrs = [select id,name from User where Email= 'puser000@amamama.com' limit 1];
+        User usrs = [select id,name from User where Email= 'puser000@amamama.com' limit 1 ];
         System.runAs(usrs){
         Test.startTest();
         try {
-            CredentialExamAttemptController.getExamAttempts(usrs.Id); 
-            
-        } catch (Exception ex) {
+            CredentialExamAttemptController.getExamAttempts(usrs.Id);             
+        } catch (Exception ex) {        
             system.assert(ex.getMessage().contains('Insufficient permissions'));
-        }
-        
+        }        
         Test.stopTest();
         system.assert(usrs != Null, 'User List should not be empty.');
         }
-
     }
     
       static testMethod void updateDateAndTimeTest (){
@@ -39,8 +35,7 @@ private class CredentialExamAttemptControllerTest{
         Test.startTest();
         CredentialExamAttemptController.updateDate(examAttemptsList[0].Id,system.today());
         Test.stopTest();
-        system.assert(examAttemptsList[0].Id != Null, 'Exam Attempt List Should Not Be Empty.');
-     
+        system.assert(examAttemptsList[0].Id != Null, 'Exam Attempt List Should Not Be Empty.');     
     }
    
     static testMethod void updateExamStatusTest (){
@@ -49,5 +44,5 @@ private class CredentialExamAttemptControllerTest{
          CredentialExamAttemptController.updateStatus(examAttemptsList[0].Id,'Exam Passed');
         Test.stopTest();
         system.assert(examAttemptsList[0].Id != Null, 'Exam Attempt List Should Not Be Empty.');
-    }
+    }  
 }
