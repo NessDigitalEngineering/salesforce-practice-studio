@@ -4,7 +4,7 @@ private class   ExamVoucherServiceTest {
     static void makeData(){
         TestDataFactory.createExamVoucher();        
     }
-
+@isTest
     private static void getExamVoucherCodeTest(){
         User usr = TestDataFactory.createUser();
         TestDataFactory.assignPboAdminPermissions(usr);
