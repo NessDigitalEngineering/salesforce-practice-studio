@@ -30,7 +30,7 @@ public with sharing class EncryptDecryptService {
     
     public String decryptData(String value)
     {  
-       Blob encryptedValue=Blob.valueof(value);
+       Blob encryptedValue=EncodingUtil.base64Decode(value);
        Blob decrypted = Crypto.decrypt(algorithm, blobKey, blobIv, encryptedValue);
        String decryptedString = decrypted.toString();
        return decryptedString;
