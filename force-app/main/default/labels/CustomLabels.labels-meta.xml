@@ -7,7 +7,7 @@
         <shortDescription>UserSearchLabel</shortDescription>
         <value>No result found.</value>
     </labels>
-    
+
     <labels>
         <fullName>CredentialTracking_ShowlessTitle</fullName>
         <language>en_US</language>
@@ -69,7 +69,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>CredentailAssignment_EmptyMsg</shortDescription>
-        <value>You don’t have any assignments in this list. Check back later.</value>
+        <value>You don't have any assignments in this list. Check back later.</value>
     </labels>
     <labels>
         <fullName>CredentailAssignment_ConfirmationMsg</fullName>
@@ -198,13 +198,13 @@ Attempt Details</value>
         <shortDescription>FilesnotselectedErrorMessage</shortDescription>
         <value>Files not selected</value>
     </labels>
-    <labels>
+    <!--<labels>
         <fullName>RecordIdisBlank</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>RecordIdisBlank</shortDescription>
         <value>Record Id is blank</value>
-    </labels>
+    </labels>-->
     <labels>
         <fullName>VoucherRequestDoYouNeedVoucher</fullName>
         <language>en_US</language>
