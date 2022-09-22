@@ -3,7 +3,7 @@ private class TriggerHandler_Test {
 
   private static final String TRIGGER_CONTEXT_ERROR = 'Trigger handler called outside of Trigger execution';
   private static final String TRIGGER_BYPASS_MESSAGE = 'test handler should be bypassed';
-
+  private static final String EXCEPTION_MESSAGE='the exception thrown was not expected:';
   private static String lastMethodCalled;
 
   private static TriggerHandler_Test.TestHandler handler;
@@ -77,7 +77,7 @@ private class TriggerHandler_Test {
     } catch(TriggerHandler.TriggerHandlerException te) {
       System.assertEquals(TRIGGER_CONTEXT_ERROR, te.getMessage(), 'the exception message should match');
     } catch(Exception e) {
-      System.assert(false, 'the exception thrown was not expected: ' + e.getTypeName() + ': ' + e.getMessage());
+      System.assert(false, EXCEPTION_MESSAGE + e.getTypeName() + ': ' + e.getMessage());
     }
   }
 
@@ -140,7 +140,7 @@ private class TriggerHandler_Test {
       // we're expecting to get here
       System.assertEquals(null, lastMethodCalled, 'last method should be null');
     } catch(Exception e) {  
-      System.assert(false, 'the exception thrown was not expected: ' + e.getTypeName() + ': ' + e.getMessage());
+      System.assert(false, EXCEPTION_MESSAGE + e.getTypeName() + ': ' + e.getMessage());
     }
 
     // clear the tests
@@ -156,7 +156,7 @@ private class TriggerHandler_Test {
     } catch(TriggerHandler.TriggerHandlerException te) {
       System.assert(false, 'running the handler after clearing the loop count should not throw');
     } catch(Exception e) {  
-      System.assert(false, 'the exception thrown was not expected: ' + e.getTypeName() + ': ' + e.getMessage());
+      System.assert(false, EXCEPTION_MESSAGE + e.getTypeName() + ': ' + e.getMessage());
     }
   }
 
