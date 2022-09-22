@@ -211,4 +211,11 @@ Attempt Details</value>
         <shortDescription>VoucherRequestDoYouNeedVoucher</shortDescription>
         <value>Do you need a Voucher?</value>
     </labels>
+    <labels>
+        <fullName>Helpt</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>HelpTextVoucherRequest</shortDescription>
+        <value>Please upload the course completion evidences from the respective official training sites.</value>
+    </labels>
 </CustomLabels>
