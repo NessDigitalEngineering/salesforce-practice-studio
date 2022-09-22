@@ -1,7 +1,18 @@
+/**
+ * @author Trinesh Bhargava
+ * @date   09/20/2022
+ * @description Apex class for Exam Voucher Service
+ */
+
+
 global with sharing class ExamVoucherService {
   public class ExamVoucherException extends Exception {}
-  
-  public static List<Exam_Voucher__c> handleEncryptService(List<Exam_Voucher__c> examVouchers)
+  	/*******************************************************************************************************
+	 * @description Returns Encrypted Voucher Codes
+	 * @param examVouchers data inseretd via UI/Data Loader
+	 * @return List of examVouchers
+	 */
+  public static List<Exam_Voucher__c> encryptVoucherCode(List<Exam_Voucher__c> examVouchers)
   {
     EncryptDecryptService service= EncryptDecryptService.getInstance();
     for(Exam_Voucher__c examVoucher:examVouchers)
@@ -10,7 +21,12 @@ global with sharing class ExamVoucherService {
     }
       return examVouchers;
   }
-  public static List<Exam_Voucher__c> setVoucherCodeMasked(
+   	/*******************************************************************************************************
+	 * @description Returns masked Voucher Codes
+	 * @param examVouchers data inseretd via UI/Data Loader
+	 * @return List of examVouchers
+	 */
+  public static List<Exam_Voucher__c> maskVoucherCode(
     List<Exam_Voucher__c> examVouchers
   ) {
     String regExp = '(?<!^.{0,3}).(?!.{0,3}$)';
@@ -20,7 +36,11 @@ global with sharing class ExamVoucherService {
     }
     return examVouchers;
   }
-
+ 	/*******************************************************************************************************
+	 * @description Returns blank Voucher Codes
+	 * @param examVouchers data inseretd via UI/Data Loader
+	 * @return List of examVouchers
+	 */
   public static List<Exam_Voucher__c> unsetVoucherCode(
     List<Exam_Voucher__c> examVouchers
   ) {

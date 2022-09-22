@@ -10,8 +10,8 @@ public class ExamVoucherTriggerHandler extends TriggerHandler {
     }
     public override void beforeInsert() 
     {   
-        ExamVoucherService.handleEncryptService(this.examVoucherNewList);
-        ExamVoucherService.setVoucherCodeMasked(this.examVoucherNewList);
+        ExamVoucherService.encryptVoucherCode(this.examVoucherNewList);
+        ExamVoucherService.maskVoucherCode(this.examVoucherNewList);
         ExamVoucherService.unsetVoucherCode(this.examVoucherNewList);
         
     }
