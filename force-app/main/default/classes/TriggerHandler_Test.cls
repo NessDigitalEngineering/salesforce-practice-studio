@@ -2,6 +2,7 @@
 private class TriggerHandler_Test {
 
   private static final String TRIGGER_CONTEXT_ERROR = 'Trigger handler called outside of Trigger execution';
+  private static final String TRIGGER_BYPASS_MESSAGE = 'test handler should be bypassed';
 
   private static String lastMethodCalled;
 
@@ -90,21 +91,21 @@ private class TriggerHandler_Test {
     TriggerHandler.bypass('TestHandler');
     handler.run();
     System.assertEquals(null, lastMethodCalled, 'last method should be null when bypassed');
-    System.assertEquals(true, TriggerHandler.isBypassed('TestHandler'), 'test handler should be bypassed');
+    System.assertEquals(true, TriggerHandler.isBypassed('TestHandler'),TRIGGER_BYPASS_MESSAGE);
     resetTest();
 
     // clear that bypass and run handler
     TriggerHandler.clearBypass('TestHandler');
     handler.run();
     System.assertEquals('afterUpdate', lastMethodCalled, 'last method called should be afterUpdate');
-    System.assertEquals(false, TriggerHandler.isBypassed('TestHandler'), 'test handler should be bypassed');
+    System.assertEquals(false, TriggerHandler.isBypassed('TestHandler'), TRIGGER_BYPASS_MESSAGE);
     resetTest();
 
     // test a re-bypass and run handler
     TriggerHandler.bypass('TestHandler');
     handler.run();
     System.assertEquals(null, lastMethodCalled, 'last method should be null when bypassed');
-    System.assertEquals(true, TriggerHandler.isBypassed('TestHandler'), 'test handler should be bypassed');
+    System.assertEquals(true, TriggerHandler.isBypassed('TestHandler'), TRIGGER_BYPASS_MESSAGE);
     resetTest();
 
     // clear all bypasses and run handler
