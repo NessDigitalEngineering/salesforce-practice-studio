@@ -66,6 +66,17 @@ public class TestDataFactory {
                                         Active__c = true);
     }
 
+    public static List<Exam_Voucher__c> createExamVoucher(){
+        List<Exam_Voucher__c> examVoucherList=new List<Exam_Voucher__c>();
+        Exam_Voucher__c examVoucher =new Exam_Voucher__c();
+        examVoucher.Voucher_Code__c='abcdefghijklmnopqrst';
+        examVoucherList.add(examVoucher);
+        insert examVoucherList;
+        
+        return examVoucherList;
+    }
+
+
     public static List<Credential_Exam_Attempt__c> createCredentialExamAttempt(Id usrCrdId){
         List<Credential_Exam_Attempt__c> credExamAttemptLists = new List<Credential_Exam_Attempt__c>{new Credential_Exam_Attempt__c( 
                 
