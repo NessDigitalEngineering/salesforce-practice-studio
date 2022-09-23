@@ -120,6 +120,105 @@
         <value>OK</value>
     </labels>
     <labels>
+
+        <fullName>PreparationDocs_HelpText</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PreparationDocs_HelpText</shortDescription>
+        <value>Please Upload Your Exam Reciept</value>
+    </labels>
+    <labels>
+        <fullName>Voucher_Comments</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Voucher_Comments</shortDescription>
+        <value>Are you ready for your exam? Please share your comments.</value>
+    </labels>
+    <labels>
+        <fullName>Voucher_CredentialName</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Voucher_CredentialName</shortDescription>
+        <value>Credential Name</value>
+    </labels>
+    <labels>
+        <fullName>Voucher_ExamDate</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Voucher_ExamDate</shortDescription>
+        <value>When are you planning for your exam?</value>
+    </labels>
+    <labels>
+        <fullName>Voucher_Preparation</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Voucher_PreparationDocuments</shortDescription>
+        <value>Preparation Documents</value>
+    </labels>
+    <labels>
+        <fullName>ConfirmationVoucherRequestComponent</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ConfirmationVoucherRequestComponent</shortDescription>
+        <value>Confirmation</value>
+    </labels>
+    <labels>
+        <fullName>CredentialCreatedSuccessMessage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialCreatedSuccessMessage</shortDescription>
+        <value>Credential Exam Attempt successfully created</value>
+    </labels>
+    <labels>
+        <fullName>CredentialExamAttemptVoucherRequest</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialExamAttemptVoucherRequest</shortDescription>
+        <value>Credential Exam Attempt Details</value>
+    </labels>
+    <labels>
+        <fullName>FileSizeErrorLimitMessage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FileSizeErrorLimit</shortDescription>
+        <value>File size exceeded the upload size limit</value>
+    </labels>
+    <labels>
+        <fullName>FileUploadSuccessFully</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FileUploadSuccessFully</shortDescription>
+        <value>File Uploaded Successfully</value>
+    </labels>
+    <labels>
+        <fullName>FilesnotselectedErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FilesnotselectedErrorMessage</shortDescription>
+        <value>Files not selected</value>
+    </labels>
+    <labels>
+        <fullName>RecordIdisBlank</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RecordIdisBlank</shortDescription>
+        <value>Record Id is blank</value>
+    </labels>
+    <labels>
+        <fullName>VoucherRequestDoYouNeedVoucher</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>VoucherRequestDoYouNeedVoucher</shortDescription>
+        <value>Do you need a Voucher?</value>
+    </labels>
+    <labels>
+        <fullName>Helpt</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>HelpTextVoucherRequest</shortDescription>
+        <value>Please upload the course completion evidences from the respective official training sites.</value>
+    </labels>
+    <labels>
         <fullName>CredentialPrioritySuccess</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -202,5 +301,6 @@
         <protected>true</protected>
         <shortDescription>voucher Assignment</shortDescription>
         <value>Exam Attempts- Pending Voucher Assignment</value>
+
     </labels>
 </CustomLabels>
