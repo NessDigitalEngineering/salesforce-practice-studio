@@ -217,6 +217,7 @@
         <protected>true</protected>
         <shortDescription>HelpTextVoucherRequest</shortDescription>
         <value>Please upload the course completion evidences from the respective official training sites.</value>
+    </labels>
     <labels>
         <fullName>CredentialPrioritySuccess</fullName>
         <language>en_US</language>
