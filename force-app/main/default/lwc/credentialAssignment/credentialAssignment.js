@@ -105,8 +105,6 @@ export default class CredentialAssignment extends LightningElement {
 	handleUserName(event) {
 		try {
 			this.selectedUserName = event.detail.currentRecId;
-			//this.handleCredential(event);
-
 			if (this.selectedUserName !== "") {
 				this.getdata();
 			} else {
