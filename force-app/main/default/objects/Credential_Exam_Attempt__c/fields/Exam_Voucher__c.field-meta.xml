@@ -4,6 +4,15 @@
     <deleteConstraint>Restrict</deleteConstraint>
     <externalId>false</externalId>
     <label>Exam Voucher</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Exam_Voucher__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Available</value>
+        </filterItems>
+        <isOptional>true</isOptional>
+    </lookupFilter>
     <referenceTo>Exam_Voucher__c</referenceTo>
     <relationshipLabel>Credential Exam Attempts</relationshipLabel>
     <relationshipName>Credential_Exam_Attempts</relationshipName>

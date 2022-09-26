@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
         <fullName>UserSearchLabel</fullName>
@@ -120,6 +120,105 @@
         <value>OK</value>
     </labels>
     <labels>
+
+        <fullName>PreparationDocs_HelpText</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PreparationDocs_HelpText</shortDescription>
+        <value>Please Upload Your Exam Reciept</value>
+    </labels>
+    <labels>
+        <fullName>Voucher_Comments</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Voucher_Comments</shortDescription>
+        <value>Are you ready for your exam? Please share your comments.</value>
+    </labels>
+    <labels>
+        <fullName>Voucher_CredentialName</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Voucher_CredentialName</shortDescription>
+        <value>Credential Name</value>
+    </labels>
+    <labels>
+        <fullName>Voucher_ExamDate</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Voucher_ExamDate</shortDescription>
+        <value>When are you planning for your exam?</value>
+    </labels>
+    <labels>
+        <fullName>Voucher_Preparation</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Voucher_PreparationDocuments</shortDescription>
+        <value>Preparation Documents</value>
+    </labels>
+    <labels>
+        <fullName>ConfirmationVoucherRequestComponent</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ConfirmationVoucherRequestComponent</shortDescription>
+        <value>Confirmation</value>
+    </labels>
+    <labels>
+        <fullName>CredentialCreatedSuccessMessage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialCreatedSuccessMessage</shortDescription>
+        <value>Credential Exam Attempt successfully created</value>
+    </labels>
+    <labels>
+        <fullName>CredentialExamAttemptVoucherRequest</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialExamAttemptVoucherRequest</shortDescription>
+        <value>Credential Exam Attempt Details</value>
+    </labels>
+    <labels>
+        <fullName>FileSizeErrorLimitMessage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FileSizeErrorLimit</shortDescription>
+        <value>File size exceeded the upload size limit</value>
+    </labels>
+    <labels>
+        <fullName>FileUploadSuccessFully</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FileUploadSuccessFully</shortDescription>
+        <value>File Uploaded Successfully</value>
+    </labels>
+    <labels>
+        <fullName>FilesnotselectedErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FilesnotselectedErrorMessage</shortDescription>
+        <value>Files not selected</value>
+    </labels>
+    <labels>
+        <fullName>RecordIdisBlank</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RecordIdisBlank</shortDescription>
+        <value>Record Id is blank</value>
+    </labels>
+    <labels>
+        <fullName>VoucherRequestDoYouNeedVoucher</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>VoucherRequestDoYouNeedVoucher</shortDescription>
+        <value>Do you need a Voucher?</value>
+    </labels>
+    <labels>
+        <fullName>Helpt</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>HelpTextVoucherRequest</shortDescription>
+        <value>Please upload the course completion evidences from the respective official training sites.</value>
+    </labels>
+    <labels>
         <fullName>CredentialPrioritySuccess</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -146,5 +245,62 @@
         <protected>true</protected>
         <shortDescription>CredentialPriorityName</shortDescription>
         <value>Credential Name</value>
+    </labels>
+    <labels>
+        <fullName>CredentialExamAttempt_ExamAttemptID</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CredentialExamAttempt ExamAttemptID</shortDescription>
+        <value>Exam Attempt ID</value>
+    </labels>
+    <labels>
+        <fullName>Exam</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ExamAttempt_Title</shortDescription>
+        <value>Credential Exam Attempts</value>
+    </labels>
+    <labels>
+        <fullName>ExamAttempt_EmptyMsg</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ExamAttempt_EmptyMsg</shortDescription>
+        <value>Looks like you&apos;re free and clear the rest of the day.</value>
+    </labels>
+    <labels>
+        <fullName>credentailExamAttempt_Status</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>credentailExamAttempt Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>credentailExamAttempt_User_Credential</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>credentailExamAttempt User Credential</shortDescription>
+        <value>User Credential</value>
+    </labels>
+    <labels>
+        <fullName>credentialExamAttempt_Credential_Name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>credentialExamAttempt Credential Name</shortDescription>
+        <value>Credential Name</value>
+    </labels>
+    <labels>
+        <fullName>credentialExamAttempt_Exam_Date_Time</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>credentialExamAttempt Exam Date Time</shortDescription>
+        <value>Exam Date Time</value>
+    </labels>
+    <labels>
+        <fullName>voucher_Assignment</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>voucher Assignment</shortDescription>
+        <value>Exam Attempts- Pending Voucher Assignment</value>
+
     </labels>
 </CustomLabels>
