@@ -118,7 +118,7 @@ export default class CredentialAssignment extends LightningElement {
 				this.isDataAvaialable = false;
 			}
 		} catch (error) {
-			console.log(JSON.stringify(error));
+			console.error(error.message);
 		}
 	}
 
@@ -129,28 +129,32 @@ export default class CredentialAssignment extends LightningElement {
 		this.disableButton = true;
 		// this.columns = cols;
 		console.log("sel Recs:", JSON.stringify(event.detail.selRecords));
-		if (this.selectedUserName && event.detail.selRecords) {
-			this.credentials = this.assignedCreds;
-			let currentSelection = event.detail.selRecords;
-			for (const rec of currentSelection) {
-				let tmpCredList = [];
-				tmpCredList.push(...this.credentials);
-				if (tmpCredList.length > 0) {
-					tmpCredList.push(
-						this.addCredentials(rec.recId, rec.recName, tmpCredList[tmpCredList.length - 1].dueDate)
-					);
-				} else {
-					tmpCredList.push(this.addCredentials(rec.recId, rec.recName, null));
+		try {
+			if (this.selectedUserName && event.detail.selRecords) {
+				this.credentials = this.assignedCreds;
+				let currentSelection = event.detail.selRecords;
+				for (const rec of currentSelection) {
+					let tmpCredList = [];
+					tmpCredList.push(...this.credentials);
+					if (tmpCredList.length > 0) {
+						tmpCredList.push(
+							this.addCredentials(rec.recId, rec.recName, tmpCredList[tmpCredList.length - 1].dueDate)
+						);
+					} else {
+						tmpCredList.push(this.addCredentials(rec.recId, rec.recName, null));
+					}
+					this.credentials = tmpCredList;
 				}
-				this.credentials = tmpCredList;
+				this.sortCaseData("dueDate", "asc");
+				this.isDataAvaialable = true;
+				this.showIcon = false;
+			} else {
+				this.isDataAvaialable = false;
+				this.showIcon = true;
+				this.saveButtonHide = false;
 			}
-			this.sortCaseData("dueDate", "asc");
-			this.isDataAvaialable = true;
-			this.showIcon = false;
-		} else {
-			this.isDataAvaialable = false;
-			this.showIcon = true;
-			this.saveButtonHide = false;
+		} catch (error) {
+			console.error(error.message);
 		}
 	}
 
@@ -178,7 +182,7 @@ export default class CredentialAssignment extends LightningElement {
 
 			return credRec;
 		} catch (error) {
-			console.log("error: ", JSON.stringify(error));
+			console.error(error.message);
 		}
 	}
 
@@ -189,16 +193,21 @@ export default class CredentialAssignment extends LightningElement {
 	*/
 	addDaysToDate(dt) {
 		console.log("dt:", dt);
-		let date;
-		if (dt === null) {
-			date = new Date();
-			date.setDate(date.getDate() + 90);
-		} else {
-			date = new Date(dt);
-			date.setDate(date.getDate() + 90);
-			console.log("date:", date);
+		// eslint-disable-next-line no-useless-catch
+		try {
+			let date;
+			if (dt === null) {
+				date = new Date();
+				date.setDate(date.getDate() + 90);
+			} else {
+				date = new Date(dt);
+				date.setDate(date.getDate() + 90);
+				console.log("date:", date);
+			}
+			return date.toISOString();
+		} catch (error) {
+			console.error(error.message);
 		}
-		return date.toISOString();
 	}
 
 	/*
