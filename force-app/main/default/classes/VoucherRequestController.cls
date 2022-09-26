@@ -3,7 +3,11 @@
  * @date   13/09/2022
  * @description Service Class containing methods that helps to request Voucher for Exam attempt
  */
+<<<<<<< HEAD
 public class VoucherRequestController {
+=======
+public with sharing class VoucherRequestController {
+>>>>>>> origin/Pseudo-Develop
  /*******************************************************************************************************
       * @description This method creates Credential Exam Attempt object
       * @param examAttemptRec SF Id of Credential Exam Attempt
@@ -15,6 +19,7 @@ public class VoucherRequestController {
         try{
         	list<Credential_Exam_Attempt__c> examAttemptList = new list<Credential_Exam_Attempt__c>();
             examAttemptList.add(examAttemptRec);
+<<<<<<< HEAD
         saveResults = CredentialExamAttemptService.createExamAttempt(examAttemptList);
         
            system.debug('RecId:'+ saveResults[0].Id);
@@ -22,6 +27,15 @@ public class VoucherRequestController {
             
                    catch(exception e){
             system.debug('Error :'+e.getMessage() + 'at line number:' + 'due to'+e.getCause() );
+=======
+            saveResults = new CredentialExamAttemptService().createExamAttempt(examAttemptList);
+        
+            system.debug('RecId:'+ saveResults[0].Id);
+        }
+            
+        catch(exception e){
+            throw new AuraHandledException(e.getMessage());
+>>>>>>> origin/Pseudo-Develop
             
         }     
         return  saveResults[0].Id;

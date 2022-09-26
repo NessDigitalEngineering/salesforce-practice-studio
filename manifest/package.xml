@@ -3,6 +3,10 @@
     <types>
         <members>CredentialAssignmentController</members>
         <members>CredentialAssignmentControllerTest</members>
+        <members>CredentialExamAttemptService</members>
+        <members>CredentialExamAttemptServiceTest</members>
+        <members>CredentialPrioritizeController</members>
+        <members>CredentialPrioritizeControllerTest</members>
         <members>CredentialSearchController</members>
         <members>CredentialSearchControllerTest</members>
         <members>CredentialTrackingController</members>
@@ -115,10 +119,26 @@
         <name>CustomField</name>
     </types>
     <types>
+        <members>Cancel</members>
+        <members>CredentailAssignment_Confirmation</members>
+        <members>CredentailAssignment_ConfirmationMsg</members>
+        <members>CredentailAssignment_EmptyMsg</members>
+        <members>CredentailAssignment_EmptyMsg1</members>
+        <members>CredentailAssignment_ListOfAssignments</members>
+        <members>CredentailAssignment_Success</members>
+        <members>CredentialPriorityCol</members>
+        <members>CredentialPriorityName</members>
+        <members>CredentialPrioritySuccess</members>
+        <members>CredentialPriorityTitle</members>
         <members>CredentialTracking_ShowlessTitle</members>
         <members>CredentialTracking_ShowmoreTitle</members>
         <members>CredentialTracking_Title</members>
+        <members>Earned_Credentials</members>
+        <members>OK</members>
+        <members>Select_Credentials</members>
+        <members>Select_User</members>
         <members>UserSearchLabel</members>
+        <members>emptyCard</members>
         <members>headerTitle</members>
         <name>CustomLabel</name>
     </types>
@@ -179,6 +199,7 @@
     </types>
     <types>
         <members>credentialAssignment</members>
+        <members>credentialPrioritize</members>
         <members>credentialSearch</members>
         <members>credentialTracking</members>
         <members>earnedCredentials</members>
