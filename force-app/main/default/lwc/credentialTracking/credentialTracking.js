@@ -110,7 +110,6 @@ export default class CredentialTracking extends LightningElement {
 			}, 0);
 		}
 	}
-
 	/*
 		@description    :   Displays logged IN user current assignments and title, also shows the Icon if no records are found.
 		@param          :   data
