@@ -4,7 +4,8 @@
  * @description Service Class containing methods that helps to request Voucher for Exam attempt
  */
 public with sharing class VoucherRequestController {
- /*******************************************************************************************************
+
+    /*******************************************************************************************************
       * @description This method creates Credential Exam Attempt object
       * @param examAttemptRec SF Id of Credential Exam Attempt
       * @return Id of the inserted record
@@ -15,6 +16,7 @@ public with sharing class VoucherRequestController {
         try{
         	list<Credential_Exam_Attempt__c> examAttemptList = new list<Credential_Exam_Attempt__c>();
             examAttemptList.add(examAttemptRec);
+
             saveResults = new CredentialExamAttemptService().createExamAttempt(examAttemptList);
         
             system.debug('RecId:'+ saveResults[0].Id);
@@ -22,6 +24,7 @@ public with sharing class VoucherRequestController {
             
         catch(exception e){
             throw new AuraHandledException(e.getMessage());
+
             
         }     
         return  saveResults[0].Id;
