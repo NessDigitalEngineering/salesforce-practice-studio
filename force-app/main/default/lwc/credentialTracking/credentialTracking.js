@@ -89,6 +89,7 @@ export default class CredentialTracking extends LightningElement {
 				console.log("error" + JSON.stringify(error));
 			});
 	}
+	
 	/*
 		@description    :   Update status value
 	*/
