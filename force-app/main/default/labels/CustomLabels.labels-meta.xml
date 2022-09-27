@@ -7,7 +7,6 @@
         <shortDescription>UserSearchLabel</shortDescription>
         <value>No result found.</value>
     </labels>
-
     <labels>
         <fullName>CredentialTracking_ShowlessTitle</fullName>
         <language>en_US</language>
@@ -69,7 +68,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>CredentailAssignment_EmptyMsg</shortDescription>
-        <value>You don't have any assignments in this list. Check back later.</value>
+        <value>You don’t have any assignments in this list. Check back later.</value>
     </labels>
     <labels>
         <fullName>CredentailAssignment_ConfirmationMsg</fullName>
@@ -121,10 +120,7 @@
         <value>OK</value>
     </labels>
     <labels>
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/Pseudo-Develop
         <fullName>PreparationDocs_HelpText</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -178,12 +174,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>CredentialExamAttemptVoucherRequest</shortDescription>
-<<<<<<< HEAD
-        <value>Credential Exam
-Attempt Details</value>
-=======
         <value>Credential Exam Attempt Details</value>
->>>>>>> origin/Pseudo-Develop
     </labels>
     <labels>
         <fullName>FileSizeErrorLimitMessage</fullName>
@@ -206,22 +197,13 @@ Attempt Details</value>
         <shortDescription>FilesnotselectedErrorMessage</shortDescription>
         <value>Files not selected</value>
     </labels>
-<<<<<<< HEAD
-    <!--<labels>
-=======
     <labels>
->>>>>>> origin/Pseudo-Develop
         <fullName>RecordIdisBlank</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>RecordIdisBlank</shortDescription>
         <value>Record Id is blank</value>
-<<<<<<< HEAD
-    </labels>-->
-    
-=======
     </labels>
->>>>>>> origin/Pseudo-Develop
     <labels>
         <fullName>VoucherRequestDoYouNeedVoucher</fullName>
         <language>en_US</language>
@@ -236,8 +218,6 @@ Attempt Details</value>
         <shortDescription>HelpTextVoucherRequest</shortDescription>
         <value>Please upload the course completion evidences from the respective official training sites.</value>
     </labels>
-<<<<<<< HEAD
-=======
     <labels>
         <fullName>CredentialPrioritySuccess</fullName>
         <language>en_US</language>
@@ -323,5 +303,4 @@ Attempt Details</value>
         <value>Exam Attempts- Pending Voucher Assignment</value>
 
     </labels>
->>>>>>> origin/Pseudo-Develop
 </CustomLabels>
