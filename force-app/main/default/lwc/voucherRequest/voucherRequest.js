@@ -11,13 +11,13 @@ import methodVRC from '@salesforce/apex/VoucherRequestController.methodVRC';
 	
 import ConfirmationVoucherRequestComponent  from "@salesforce/label/c.ConfirmationVoucherRequestComponent";
 import VoucherRequestDoYouNeedVoucher from "@salesforce/label/c.VoucherRequestDoYouNeedVoucher";
-//import ConfirmationVoucherRequestDoYouNeedVoucherVoucherRequestComponent  from "@salesforce/label/c.ConfirmationVoucherRequestDoYouNeedVoucherVoucherRequestComponent";
 import CredentialExamAttemptVoucherRequest from "@salesforce/label/c.CredentialExamAttemptVoucherRequest";
 import FileSizeErrorLimitMessage from "@salesforce/label/c.FileSizeErrorLimitMessage";
 import FilesnotselectedErrorMessage from "@salesforce/label/c.FilesnotselectedErrorMessage";
 import CredentialCreatedSuccessMessage from "@salesforce/label/c.CredentialCreatedSuccessMessage";
 import FileUploadSuccessFully from "@salesforce/label/c.FileUploadSuccessFully";
 const MAX_FILE_SIZE = 50000000;
+
 
 export default class VoucherRequest extends LightningElement {
     label = { Voucher_Comments, Voucher_CredentialName, Voucher_ExamDate, Voucher_Preparation, PreparationDocs_HelpText };
@@ -100,7 +100,7 @@ export default class VoucherRequest extends LightningElement {
            @param - Standard Event
     */
     handleFileUpload(event) {
-        var obj = {};
+        let obj = {};
         if (event.target.files.length > 0) {
             for (let x of event.target.files) {
                 if (x.size > MAX_FILE_SIZE) {
@@ -130,7 +130,7 @@ export default class VoucherRequest extends LightningElement {
       this.Filelist.push( JSON.stringify(this.filesData));
       console.log('New FileData:' ,this.Filelist);
       try{ 
-        //validate
+        
         const allValid = [
             ...this.template.querySelectorAll('.validate'),
         ].reduce((validSoFar, inputCmp) => {
@@ -233,7 +233,7 @@ export default class VoucherRequest extends LightningElement {
     }
 
 
- /* 
+  /* 
       @description - showModalOnNo this is used to open  the Exam Details  modal on value no from UI;
          @param-  Did'nt recieve any parameter
     */
@@ -243,7 +243,6 @@ export default class VoucherRequest extends LightningElement {
     }
 
  /* 
-    
       @description - showModalOnYes this is used to open  the Exam Details  modal on value yes from UI;
          @param-  Did'nt recieve any parameter
     */
@@ -251,34 +250,31 @@ export default class VoucherRequest extends LightningElement {
         this.statusValue = "Voucher Requested";
         this.displayExamDetailsModal = true;
     }
-   /* 
-      @description - showExamDetailsModal this is used to open Exam details  modal from UI   ;
+ /* 
+      @description - showExamDetailsModal this is used to open Exam details  modal from UI;
          @param-   Standard Event
     */
     showExamDetailsModal() {
         this.displayExamDetailsModal = true;
     }
 
-   /* 
+    /* 
       @description - closeFirstModal this is used to close the first modal from UI   ;
          @param-   Standard Event
     */
-
     closeFirstModal(event) {
         this.isShowModal = false;
 
     }
-     
-/* 
+    /* 
       @description - closeSecondModal this is used to close the second modal from UI   ;
          @param-   Standard Event
     */
-
     closeSecondModal(event) {
         this.displayExamDetailsModal = false;
         this.isShowModal = false;
 
     }
 
- 
+
 }
