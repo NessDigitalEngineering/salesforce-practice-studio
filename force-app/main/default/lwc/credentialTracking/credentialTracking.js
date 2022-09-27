@@ -65,7 +65,6 @@ export default class CredentialTracking extends LightningElement {
 		@description    :   Displays all active user credential records when status value is not equal to completed
 		@param          :   event target value & event target title
 	*/
-
 	handleClick(event) {
 		updateUserCredential({ id: event.target.value, status: event.target.title })
 			.then((result) => {
