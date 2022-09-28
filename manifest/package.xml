@@ -3,6 +3,8 @@
     <types>
         <members>CredentialAssignmentController</members>
         <members>CredentialAssignmentControllerTest</members>
+        <members>CredentialExamAttemptController</members>
+        <members>CredentialExamAttemptControllerTest</members>
         <members>CredentialExamAttemptService</members>
         <members>CredentialExamAttemptServiceTest</members>
         <members>CredentialPrioritizeController</members>
@@ -11,11 +13,14 @@
         <members>CredentialSearchControllerTest</members>
         <members>CredentialTrackingController</members>
         <members>CredentialTrackingControllerTest</members>
+        <members>FilesUploadService</members>
+        <members>FilesUploadServiceTest</members>
         <members>TestDataFactory</members>
         <members>UserCredentialService</members>
         <members>UserCredentialServiceTest</members>
         <members>UserSearchController</members>
         <members>UserSearchControllerTest</members>
+        <members>VoucherRequestController</members>
         <name>ApexClass</name>
     </types>
     <types>
@@ -92,6 +97,7 @@
         <members>Exam_Voucher__c.User__c</members>
         <members>Exam_Voucher__c.Value__c</members>
         <members>Exam_Voucher__c.Voucher_Code_Encrypted__c</members>
+        <members>Exam_Voucher__c.Voucher_Code_Masked__c</members>
         <members>Exam_Voucher__c.Voucher_Code__c</members>
         <members>Practice_Studio_Setting__mdt.Algorithm_Name__c</members>
         <members>Practice_Studio_Setting__mdt.Initialization_Vector__c</members>
@@ -120,12 +126,16 @@
     </types>
     <types>
         <members>Cancel</members>
+        <members>ConfirmationVoucherRequestComponent</members>
         <members>CredentailAssignment_Confirmation</members>
         <members>CredentailAssignment_ConfirmationMsg</members>
         <members>CredentailAssignment_EmptyMsg</members>
         <members>CredentailAssignment_EmptyMsg1</members>
         <members>CredentailAssignment_ListOfAssignments</members>
         <members>CredentailAssignment_Success</members>
+        <members>CredentialCreatedSuccessMessage</members>
+        <members>CredentialExamAttemptVoucherRequest</members>
+        <members>CredentialExamAttempt_ExamAttemptID</members>
         <members>CredentialPriorityCol</members>
         <members>CredentialPriorityName</members>
         <members>CredentialPrioritySuccess</members>
@@ -134,12 +144,30 @@
         <members>CredentialTracking_ShowmoreTitle</members>
         <members>CredentialTracking_Title</members>
         <members>Earned_Credentials</members>
+        <members>Exam</members>
+        <members>ExamAttempt_EmptyMsg</members>
+        <members>FileSizeErrorLimitMessage</members>
+        <members>FileUploadSuccessFully</members>
+        <members>FilesnotselectedErrorMessage</members>
+        <members>Helpt</members>
         <members>OK</members>
+        <members>PreparationDocs_HelpText</members>
+        <members>RecordIdisBlank</members>
         <members>Select_Credentials</members>
         <members>Select_User</members>
         <members>UserSearchLabel</members>
+        <members>VoucherRequestDoYouNeedVoucher</members>
+        <members>Voucher_Comments</members>
+        <members>Voucher_CredentialName</members>
+        <members>Voucher_ExamDate</members>
+        <members>Voucher_Preparation</members>
+        <members>credentailExamAttempt_Status</members>
+        <members>credentailExamAttempt_User_Credential</members>
+        <members>credentialExamAttempt_Credential_Name</members>
+        <members>credentialExamAttempt_Exam_Date_Time</members>
         <members>emptyCard</members>
         <members>headerTitle</members>
+        <members>voucher_Assignment</members>
         <name>CustomLabel</name>
     </types>
     <types>
@@ -199,11 +227,13 @@
     </types>
     <types>
         <members>credentialAssignment</members>
+        <members>credentialExamAttempts</members>
         <members>credentialPrioritize</members>
         <members>credentialSearch</members>
         <members>credentialTracking</members>
         <members>earnedCredentials</members>
         <members>userSearch</members>
+        <members>voucherRequest</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
