@@ -74,8 +74,10 @@ export default class CredentialTracking extends LightningElement {
 							this.totalUserCredentials = rs;
 							this.totalUserCredentials.forEach((e) => {
 								if (e.Status__c === "Ready") {
-									this.template.querySelector('c-voucher-request').handleCredentialName(e.Credential__r.Name);
-									this.template.querySelector('c-voucher-request').handleCredentialId(e.Id);
+									this.template
+										.querySelector("c-voucher-request")
+										.handleCredentialName(e.Credential__r.Name);
+									this.template.querySelector("c-voucher-request").handleCredentialId(e.Id);
 								}
 							});
 							this.processStatusValues();
@@ -89,7 +91,7 @@ export default class CredentialTracking extends LightningElement {
 				console.log("error" + JSON.stringify(error));
 			});
 	}
-	
+
 	/*
 		@description    :   Update status value
 	*/
