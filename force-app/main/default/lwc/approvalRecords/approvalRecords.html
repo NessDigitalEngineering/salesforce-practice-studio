@@ -1,8 +1,8 @@
 <template>
     <lightning-card title={title} icon-name="standard:approval">
-        <lightning-button slot="actions" label="Refresh" icon-name="utility:refresh" variant="brand"
+        <!--<lightning-button slot="actions" label="Refresh" icon-name="utility:refresh" variant="brand"
             alternative-text="Refresh" class="slds-m-left_xx-small" title="Refresh" onclick={reloadrecords}>
-        </lightning-button>
+        </lightning-button>-->
         <template if:true={wrapperListtrue}>
             <lightning-button slot="actions" variant="success" label="Approve" title="Approve" disabled={enable_app_rej}
                 icon-name="action:approval" class="slds-m-left_x-small" onclick={handleconformClick}></lightning-button>
@@ -28,9 +28,9 @@
         <div if:true={showLoadingSpinner}>
             <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
         </div>
-        <p slot="footer">
+       <!-- <p slot="footer">
             <lightning-formatted-text value={footertext}></lightning-formatted-text>
-        </p>
+        </p>-->
         <c-confirmation-dialog title='Confirmation' message='Do you want to proceed?' confirm-label='Yes'
             cancel-label='No' visible={isDialogVisible} original-message={originalMessage} name="confirmModal"
             onclick={handleconformClick}>
