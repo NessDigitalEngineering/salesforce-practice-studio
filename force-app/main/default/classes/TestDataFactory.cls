@@ -37,6 +37,7 @@ public class TestDataFactory {
                                                             Type__c = 'Trailhead',
                                                             URL__c = 'https://trailhead.salesforce.com/help?article=Salesforce-Certified-Platform-Developer-II-Exam-Guide',
                                                             US_Target__c = 2,Priority__c=1,
+															
                                                             Visible_in_Partner_Community_Cert_Tab__c = true),
                                         new Credential__c(                                                           
                                                             Alias__c= 'Salesforce Certified Platform Developer II',
