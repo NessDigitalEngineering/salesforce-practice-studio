@@ -13,15 +13,25 @@
         <members>CredentialSearchControllerTest</members>
         <members>CredentialTrackingController</members>
         <members>CredentialTrackingControllerTest</members>
+        <members>EncryptDecryptService</members>
+        <members>ExamVoucherService</members>
+        <members>ExamVoucherServiceTest</members>
+        <members>ExamVoucherTriggerHandler</members>
         <members>FilesUploadService</members>
         <members>FilesUploadServiceTest</members>
         <members>TestDataFactory</members>
+        <members>TriggerHandler</members>
+        <members>TriggerHandler_Test</members>
         <members>UserCredentialService</members>
         <members>UserCredentialServiceTest</members>
         <members>UserSearchController</members>
         <members>UserSearchControllerTest</members>
         <members>VoucherRequestController</members>
         <name>ApexClass</name>
+    </types>
+    <types>
+        <members>ExamVoucherTrigger</members>
+        <name>ApexTrigger</name>
     </types>
     <types>
         <members>Credential_Exam_Attempt__c.Credential_Exam_Attempt_Compact_Layout</members>
@@ -173,6 +183,10 @@
     <types>
         <members>CustomLabels</members>
         <name>CustomLabels</name>
+    </types>
+    <types>
+        <members>Practice_Studio_Setting.AES_128_Algorithm</members>
+        <name>CustomMetadata</name>
     </types>
     <types>
         <members>Credential_Exam_Attempt__c</members>
