@@ -10,11 +10,13 @@ public class FilesUploadServiceTest {
  Preparation_Comments__c='Test comments',
  Proof_of_Preparation__c=True);
  string recId = VoucherRequestController.createCredExempt(ceaObj);
+
  // Exam Schedule Screen Changes.
  
      ExamScheduleController.getExamDetails(recId);
      ExamScheduleController.UpdateCredExempt(ceaObj);
      Account testAccount = new Account();
+
  testAccount.Name='Test Account' ;
  insert testAccount;
 
@@ -68,8 +70,10 @@ public class FilesUploadServiceTest {
  list<string> files = new list<string>();
  files.add(file);
  VoucherRequestController.methodVRC(recId,files);
+
      // Exam Schedule Screen Changes.
 ExamScheduleController.UploadReciept(recId,files);
+
  Test.stopTest();
  }
 }
