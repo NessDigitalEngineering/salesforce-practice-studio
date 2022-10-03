@@ -1,0 +1,79 @@
+<template>
+    <lightning-card title={title}>
+        <template if:true={emptyRecords}>  
+            <div class="slds-var-p-around_small slds-scrollable_y  setHeight">
+                <lightning-button variant="brand" disabled={disableButton} label="Assign" title="Primary action"
+                onclick={showModalBox} class="slds-m-right_x-medium slds-size_10-of-12"></lightning-button>
+                <lightning-card class="" title="">
+                    <lightning-datatable max-row-selection=1 key-field="id" data={lstCred} columns={columns}>
+                    </lightning-datatable>
+                </lightning-card>
+            </div>
+        </template>
+
+         <!-- modal start -->
+        <template if:true={isShowModal}>
+          <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+  <div class="slds-modal__container">
+    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+        <lightning-icon icon-name="utility:close"
+           alternative-text="close"
+           variant="inverse"
+           size="small" ></lightning-icon>
+        <span class="slds-assistive-text">Close</span>
+     </button>
+    <div class="slds-modal__header">
+      <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{credentialName}</h1>
+    </div>
+    <div class="slds-modal__content slds-p-around_medium slds-var-p-around_small slds-scrollable_y" id="modal-content-id-1">
+        <lightning-datatable max-row-selection=1 key-field="id" data={lstVoucher} columns={columns1}>
+        </lightning-datatable>
+    </div>
+    <div class="slds-modal__footer">
+        <lightning-button  class=" slds-button " disabled={disableButton} label="Close" title="Close" onclick={hideModalBox}></lightning-button>
+        <lightning-button variant="brand" class=" slds-button " disabled={disableButton} label="Assign" title="Assign" name="Assign" onclick={handleClick}></lightning-button>
+    </div>
+  </div>
+</section>
+<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+   
+ </template>
+  <!-- modal end -->
+  <template if:true={openDialog}>
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+<div class="slds-modal__container">
+<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideDialog}>
+  <lightning-icon icon-name="utility:close"
+     alternative-text="close"
+     variant="inverse"
+     size="small" ></lightning-icon>
+  <span class="slds-assistive-text">Close</span>
+</button>
+<div class="slds-modal__header">
+<h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Confirmation</h1>
+</div>
+<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+<p>Voucher Prize is more than Exam cost.</p>
+<p>Do you want to continue?</p>
+</div>
+<div class="slds-modal__footer">
+  <lightning-button  class=" slds-button " disabled={disableButton} label="Close" title="Close" onclick={hideDialog}></lightning-button>
+  <lightning-button variant="brand" class=" slds-button " disabled={disableButton} label="confirm" title="confirm"></lightning-button>
+</div>
+</div>
+</section>
+<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+
+</template>
+  <!-- to show the image if there is no records -->
+ <template if:true={showIcon}>
+    <div class="slds-text-align_center imgAdjustment">
+        <img src={Icn} aria-hidden="true" alt="Assignment Logo"></img>
+    </div>
+
+    <div class="slds-text-align_center">
+        <h2>{label.ExamAttempt_EmptyMsg}</h2><br>
+    </div>
+</template> 
+</lightning-card>
+</template>

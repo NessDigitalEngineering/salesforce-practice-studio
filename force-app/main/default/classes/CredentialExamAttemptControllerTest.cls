@@ -37,7 +37,7 @@ private class CredentialExamAttemptControllerTest{
         Test.stopTest();
         system.assert(examAttemptsList[0].Id != Null, 'Exam Attempt List Should Not Be Empty.');     
     }
-   
+    
     static testMethod void updateExamStatusTest (){
         List<Credential_Exam_Attempt__c> examAttemptsList = [select id,Status__c from Credential_Exam_Attempt__c where Status__c='Voucher Assigned' LIMIT 1];
         Test.startTest();

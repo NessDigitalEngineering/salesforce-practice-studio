@@ -11,7 +11,7 @@ public with sharing class CredentialExamAttemptController{
       */ 
     @AuraEnabled
     public static List<Credential_Exam_Attempt__c> getExamAttempts(String userId)
-    {
+    { 
         try {
             system.debug('==>userId'+userId);
         CredentialExamAttemptService ceas = new CredentialExamAttemptService();
@@ -62,4 +62,21 @@ public with sharing class CredentialExamAttemptController{
 			throw new AuraHandledException(e.getMessage());
 		}
     } 
+
+    /*******************************************************************************************************
+      * @description Returns All Voucher Approved Credential Exam Attempts that are in progress
+      * @return List of Voucher Approved
+      */ 
+      @AuraEnabled
+      public static List<Credential_Exam_Attempt__c> getVoucherApprovedUsers()
+      { 
+          try {
+            CredentialExamAttemptService ceas = new CredentialExamAttemptService();
+          List<Credential_Exam_Attempt__c> totalVoucherApprovedUsers = ceas.getVoucherAssignedUser();
+          return totalVoucherApprovedUsers;  
+              
+          } catch (Exception e) {
+              throw new AuraHandledException(e.getMessage());
+          }  
+      } 
 }

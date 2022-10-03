@@ -1,0 +1,25 @@
+.h2 {
+	text-align: center;
+}
+.icon {
+	padding-top: 5rem;
+	padding-left: 5rem;
+}
+.content {
+	overflow: auto;
+}
+.imgAdjustment {
+	padding-top: 4.5rem;
+}
+.setHeight {
+	height: 20.3rem !important;
+}
+.setWidth {
+	height: 20.3rem !important;
+}
+.text-align {
+	white-space: normal;
+}
+.slds-box{
+	margin-bottom: 0.625rem;
+} 
