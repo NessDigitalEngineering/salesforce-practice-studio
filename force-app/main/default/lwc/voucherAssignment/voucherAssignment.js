@@ -47,7 +47,7 @@ export default class VoucherAssignment extends LightningElement {
             this.showIcon = true;
             this.emptyRecords = false;
          }
-         
+
         if (this.countRec > 0) {
             this.title = this.label.voucher_Assignment + " (" + res.length + ")";
         } else {
@@ -70,7 +70,7 @@ export default class VoucherAssignment extends LightningElement {
         });
     }
     showModalBox() {  
-        var selectedRec = this.template.querySelector("lightning-datatable").getSelectedRows();
+        let selectedRec = this.template.querySelector("lightning-datatable").getSelectedRows();
         if(selectedRec.length > 0){
             console.log('selectedRecord '+selectedRec);
             let credName = '';
@@ -88,7 +88,7 @@ export default class VoucherAssignment extends LightningElement {
         this.openDialog = false;
     }
     handleClick(){
-        var selectedRecord = this.template.querySelector("lightning-datatable").getSelectedRows();
+        let selectedRecord = this.template.querySelector("lightning-datatable").getSelectedRows();
         if(selectedRecord.length > 0){
             this.openDialog = true;
     }
