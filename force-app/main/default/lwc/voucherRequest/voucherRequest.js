@@ -143,9 +143,10 @@ export default class VoucherRequest extends LightningElement {
         }
         else {
 
-            if (this.filesData == [] || this.filesData.length == 0) {
+           /* if (this.filesData == [] || this.filesData.length == 0) {
                 this.showToast('Error', 'error', this.fileNotSelect); return;
             }
+            */
             this.showSpinner = true;
             this.isShowModal = false;
             const examAttemptFields = {
@@ -163,7 +164,7 @@ export default class VoucherRequest extends LightningElement {
                 examAttemptRec: examAttemptFields
             })
                 .then((result) => {
-
+                         this.isShowExamModal = false;
                     console.log('result', result);
                     this.UploadFilest(result);
                     this.dispatchEvent(
@@ -195,16 +196,18 @@ export default class VoucherRequest extends LightningElement {
 
         })
             .then((result) => {
+                    this.isShowExamModal = false;
                 console.log('inside uploading...', result);
                 if (result == 'Success') {
-                    this.dispatchEvent(
+                  /*  this.dispatchEvent(
                         new ShowToastEvent({
                             title: "Success",
                             variant: "success",
                             message: this.fileUploadMsg
                         })
                     );
-                    this.isShowModal = false;
+                    */
+                   // this.isShowModal = false;
                 }
             })
             .catch((error) => {

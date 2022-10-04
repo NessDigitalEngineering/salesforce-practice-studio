@@ -120,12 +120,11 @@
         <value>OK</value>
     </labels>
     <labels>
-
         <fullName>PreparationDocs_HelpText</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>PreparationDocs_HelpText</shortDescription>
-        <value>Please Upload Your Exam Reciept</value>
+        <value>Please upload the course completion evidence from the respective official training websites.</value>
     </labels>
     <labels>
         <fullName>Voucher_Comments</fullName>
@@ -301,6 +300,5 @@
         <protected>true</protected>
         <shortDescription>voucher Assignment</shortDescription>
         <value>Exam Attempts- Pending Voucher Assignment</value>
-
     </labels>
 </CustomLabels>

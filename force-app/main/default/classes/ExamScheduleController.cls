@@ -1,4 +1,4 @@
-public class ExamScheduleController {
+public with sharing class ExamScheduleController {
     @AuraEnabled(cacheable = true)
      public static map<string , object> getExamDetails(string examId){
          map<string , object> returnMap = new map<string , object> ();

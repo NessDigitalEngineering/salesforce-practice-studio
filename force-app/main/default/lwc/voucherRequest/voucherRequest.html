@@ -58,7 +58,7 @@
                             </lightning-input>
                         </div>
                         <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
-                            <h6 class="headerText"> <span  class = "abbr" >*</span>{VoucherExamDate}</h6>
+                            <h6 class="headerText"  style ="font-size: 12px;"> <span class = "abbr"  style ="color: red;">*</span>{VoucherExamDate}</h6>
                             <lightning-input variant="label-hidden" class = "validate" type="datetime" required  date-style="short" 
                                 onchange={handleDateChange}>
                             </lightning-input>
@@ -69,7 +69,7 @@
                             </lightning-textarea>
                         </div>
                         <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
-                            <h6 class="headerText">{label.Voucher_Preparation}
+                            <h6 class="headerText"  style ="font-size: 12px;margin-bottom: -7px;">{label.Voucher_Preparation}
                                 <lightning-helptext content={label.PreparationDocs_HelpText}>
                                 </lightning-helptext>
                             </h6>
