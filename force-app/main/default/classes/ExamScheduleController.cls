@@ -8,6 +8,7 @@ public with sharing class ExamScheduleController {
          return returnMap;    
      }
      
+     
      @AuraEnabled()
      public static string UpdateCredExempt(Credential_Exam_Attempt__c examAttemptRec){
            update examAttemptRec;

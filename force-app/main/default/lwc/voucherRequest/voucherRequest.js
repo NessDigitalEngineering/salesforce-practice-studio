@@ -187,7 +187,7 @@ export default class VoucherRequest extends LightningElement {
       @description - saveNewRecord this is a function which is used to  send the data in apex classes   ;
          @param- recieves credential Exam RecordId
     */
-
+    
     UploadFilest(Cid) {
         console.log('inside file upload');
         methodVRC({
