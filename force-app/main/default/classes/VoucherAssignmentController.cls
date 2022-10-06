@@ -10,11 +10,11 @@ public with sharing class VoucherAssignmentController {
       * @return List of Voucher Approved
       */ 
       @AuraEnabled
-      public static List<Exam_Voucher__c> getAllExamVouchers()
+      public static List<Exam_Voucher__c> getAllExamVouchers(string credentialType, integer credentialCost)
       { 
           try {
             VoucherAssignmentService vas = new VoucherAssignmentService();
-          List<Exam_Voucher__c> totalExamVouchers = vas.getAvailableExamVouchers();
+          List<Exam_Voucher__c> totalExamVouchers = vas.getAvailableExamVouchers(credentialType,credentialCost);
           return totalExamVouchers;  
               
           } catch (Exception e) {

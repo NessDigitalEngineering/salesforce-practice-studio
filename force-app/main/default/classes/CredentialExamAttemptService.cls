@@ -72,10 +72,25 @@ public with sharing class CredentialExamAttemptService {
         try {
            
             return [
-                SELECT id, Credential__c, Name, Status__c, CreatedById FROM Credential_Exam_Attempt__c WHERE Credential_Exam_Attempt__c.Status__c = 'Voucher Approved' WITH SECURITY_ENFORCED];
-        } catch (Exception ex) {
+                SELECT id, Credential__c, Name, Status__c,User_Credential__r.Credential__r.Type__c,User_Credential__r.Credential__r.Registration_fee__c, User__c FROM Credential_Exam_Attempt__c WHERE Credential_Exam_Attempt__c.Status__c = 'Voucher Approved' WITH SECURITY_ENFORCED];
+               
+            } catch (Exception ex) {
             throw ex;
         }
     }
-
+/*******************************************************************************************************
+      * @description This method updates exam attempt status
+      * @param userId SF id of user
+      * @return Update Exam Status
+      */
+      public Database.SaveResult updateExamRecord(String examVoucher, String status){
+        try {
+            Credential_Exam_Attempt__c examVcher = new Credential_Exam_Attempt__c();
+            examVcher.Exam_Voucher__c = examVoucher;
+            examVcher.Status__c = status;
+            return Database.update(examVcher, true);
+        } catch (Exception ex) {
+            throw ex;
+        }
+     }
  }

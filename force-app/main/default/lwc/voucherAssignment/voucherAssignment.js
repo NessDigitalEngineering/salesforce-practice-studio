@@ -4,11 +4,11 @@ import ExamAttempt_EmptyMsg from "@salesforce/label/c.ExamAttempt_EmptyMsg";
 import voucher_Assignment from "@salesforce/label/c.voucher_Assignment";
 import getVoucherApprovedUsers from "@salesforce/apex/CredentialExamAttemptController.getVoucherApprovedUsers";
 import getAllExamVouchers from "@salesforce/apex/VoucherAssignmentController.getAllExamVouchers";
-
+import updateExamRecords from "@salesforce/apex/CredentialExamAttemptController.updateExamRecords";
 const columns = [
     { label: 'Exam Attempt Id', fieldName: 'Name' },
     { label: 'Credential Name', fieldName: 'Credential__c' },
-    { label: 'Submitted By', fieldName: 'CreatedById' },
+    { label: 'Submitted By', fieldName: 'User__c' },
     { label: 'Status', fieldName: 'Status__c' },
 ];
 const columns1 = [
@@ -31,6 +31,9 @@ export default class VoucherAssignment extends LightningElement {
     Icn = TasksIcon;
     @track emptyRecords = true;
     @track credentialName;
+    @track voucherCost;
+    @track credType;
+    @track credCost;
     label = {
 		ExamAttempt_EmptyMsg,
         voucher_Assignment
@@ -41,7 +44,7 @@ export default class VoucherAssignment extends LightningElement {
     connectedCallback() {   
         getVoucherApprovedUsers().then((res) => {
             this.lstCred = res;
-            this.examVoucherData();
+        
          this.countRec = res.length;
          if (res.length === 0) {
             this.showIcon = true;
@@ -59,14 +62,14 @@ export default class VoucherAssignment extends LightningElement {
     });
     }   
 
-
     examVoucherData()
     {
-        getAllExamVouchers().then((response) => {
+        getAllExamVouchers({credentialType:this.credType,credentialCost:this.credCost}).then((response) => {
             this.lstVoucher= response;
+            console.log('response=='+ this.lstVoucher);
         })
         .catch((error) => {
-            console.log("error" + JSON.stringify(error));
+            console.log("error==" + JSON.stringify(error));
         });
     }
     showModalBox() {  
@@ -75,11 +78,14 @@ export default class VoucherAssignment extends LightningElement {
             console.log('selectedRecord '+selectedRec);
             let credName = '';
             selectedRec.forEach(currentItem => {
-                credName = currentItem.Credential__c + ' ' +currentItem.Cost__c;
+                this.credType= currentItem.User_Credential__r.Credential__r.Type__c;
+                this.credCost= currentItem.User_Credential__r.Credential__r.Registration_fee__c; 
+                credName = currentItem.Credential__c + '$' +currentItem.User_Credential__r.Credential__r.Registration_fee__c;
                 this.credentialName = credName;
             });
             this.isShowModal = true;
         }
+      this.examVoucherData();
     }
     hideModalBox() {  
         this.isShowModal = false;
@@ -87,11 +93,23 @@ export default class VoucherAssignment extends LightningElement {
     hideDialog() {  
         this.openDialog = false;
     }
-    handleClick(){
-        let selectedRecord = this.template.querySelector("lightning-datatable").getSelectedRows();
-        if(selectedRecord.length > 0){
-            this.openDialog = true;
+
+    handleClick(event){
+        let selectedRows = event.detail.selectedRows;
+        for (let i = 0; i < selectedRows.length; i++) {
+            if(selectedRows[i].Cost__c > this.credCost){
+                this.openDialog = true;
+            }                       
+        }
     }
 
-    }
+    /*
+        @description    :   This Method is to update the Exam Status and Exam Voucher record.      
+    */
+   updateExmRecord(){
+    updateExamRecords({examVoucher : selectedRows[i].Id, status: 'Voucher Assigned'}).then((response)=>{
+        console.log('Record updated successfully');
+        this.openDialog = false;
+    }).catch((error) => {});
+}
 }

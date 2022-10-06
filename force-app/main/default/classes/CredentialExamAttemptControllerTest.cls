@@ -45,4 +45,6 @@ private class CredentialExamAttemptControllerTest{
         Test.stopTest();
         system.assert(examAttemptsList[0].Id != Null, 'Exam Attempt List Should Not Be Empty.');
     }  
+
+    
 }

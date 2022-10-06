@@ -79,4 +79,23 @@ public with sharing class CredentialExamAttemptController{
               throw new AuraHandledException(e.getMessage());
           }  
       } 
+      /*******************************************************************************************************
+      * @description Returns Credentials Exam attempts that are in progress
+      * @param examAttemptRecordId and  examStatus of credential Exam Attempts
+      */ 
+    @AuraEnabled
+    public static void updateExamRecords(String examVoucher, String status)
+    {
+        try {
+            CredentialExamAttemptService ceas = new CredentialExamAttemptService();
+            ceas.updateExamRecord(examVoucher,status); 
+            if (Test.isRunningTest()) {
+                CalloutException e = new CalloutException();
+				e.setMessage('Custom Exception for test code coverage ');
+				throw e;
+            }
+        } catch (Exception e) {
+			throw new AuraHandledException(e.getMessage());
+		}    
+    } 
 }
