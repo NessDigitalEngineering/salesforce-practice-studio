@@ -83,11 +83,11 @@ public with sharing class CredentialExamAttemptService {
       * @param userId SF id of user
       * @return Update Exam Status
       */
-      public Database.SaveResult updateExamRecord(String examVoucher, String status){
+      public Database.SaveResult updateExamRecord( String recordId , String examVoucher){
         try {
             Credential_Exam_Attempt__c examVcher = new Credential_Exam_Attempt__c();
+            examVcher.Id = recordId;
             examVcher.Exam_Voucher__c = examVoucher;
-            examVcher.Status__c = status;
             return Database.update(examVcher, true);
         } catch (Exception ex) {
             throw ex;

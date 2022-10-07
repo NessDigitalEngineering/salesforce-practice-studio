@@ -106,10 +106,18 @@ export default class VoucherAssignment extends LightningElement {
     /*
         @description    :   This Method is to update the Exam Status and Exam Voucher record.      
     */
-   updateExmRecord(){
-    updateExamRecords({examVoucher : selectedRows[i].Id, status: 'Voucher Assigned'}).then((response)=>{
+   updateExmRecord(event){
+    updateExamRecords({recordId : event.target.value, examVoucher: selectedRows[i].ID}).then((response)=>{
         console.log('Record updated successfully');
         this.openDialog = false;
     }).catch((error) => {});
+
+    updateStatus({ examAttemptRecordId: event.target.value, examStatus: "Voucher Assigned" })
+			.then((response) => {
+				console.log("Record updated successfully");
+			})
+			.catch((error) => {});
 }
+
+
 }

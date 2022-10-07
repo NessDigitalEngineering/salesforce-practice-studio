@@ -84,11 +84,11 @@ public with sharing class CredentialExamAttemptController{
       * @param examAttemptRecordId and  examStatus of credential Exam Attempts
       */ 
     @AuraEnabled
-    public static void updateExamRecords(String examVoucher, String status)
+    public static void updateExamRecords( String recordId , String examVoucher)
     {
         try {
             CredentialExamAttemptService ceas = new CredentialExamAttemptService();
-            ceas.updateExamRecord(examVoucher,status); 
+            ceas.updateExamRecord(recordId,examVoucher); 
             if (Test.isRunningTest()) {
                 CalloutException e = new CalloutException();
 				e.setMessage('Custom Exception for test code coverage ');

@@ -293,11 +293,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>credentialExamAttempt Exam Date Time</shortDescription>
-<<<<<<< HEAD
-        <value>Exam Date Time</value>
-=======
         <value>Exam Date</value>
->>>>>>> origin/Pseudo-Develop
     </labels>
     <labels>
         <fullName>voucher_Assignment</fullName>
@@ -305,11 +301,6 @@
         <protected>true</protected>
         <shortDescription>voucher Assignment</shortDescription>
         <value>Exam Attempts- Pending Voucher Assignment</value>
-<<<<<<< HEAD
-    </labels>
-</CustomLabels>
-=======
 
     </labels>
 </CustomLabels>
->>>>>>> origin/Pseudo-Develop
