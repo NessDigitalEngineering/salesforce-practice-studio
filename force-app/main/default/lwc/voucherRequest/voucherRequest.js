@@ -17,8 +17,6 @@ import FilesnotselectedErrorMessage from "@salesforce/label/c.FilesnotselectedEr
 import CredentialCreatedSuccessMessage from "@salesforce/label/c.CredentialCreatedSuccessMessage";
 import FileUploadSuccessFully from "@salesforce/label/c.FileUploadSuccessFully";
 const MAX_FILE_SIZE = 50000000;
-
-
 export default class VoucherRequest extends LightningElement {
     label = { Voucher_Comments, Voucher_CredentialName, Voucher_ExamDate, Voucher_Preparation, PreparationDocs_HelpText };
     @track examDate;
@@ -59,7 +57,6 @@ export default class VoucherRequest extends LightningElement {
         this.credentialValue = credentialName;
     }
   
-  
    /* 
       @description  handleCredentialId this is a function which is used to pass the credentialId;
      @ param  - credentialId
@@ -82,7 +79,6 @@ export default class VoucherRequest extends LightningElement {
     }
 
 
-
 /* 
        @description  handleCommentChange this is a function which is used to comments from user  ;
      @param - Standard Event
@@ -92,15 +88,11 @@ export default class VoucherRequest extends LightningElement {
         this.examComments = event.target.value;
         console.log("comments---" + this.examComments);
     }
-
-
-
 /* 
       @description  handleFileUpload this is a function which is used to get files data  from user  ;
            @param - Standard Event
     */
     handleFileUpload(event) {
-        let obj = {};
         if (event.target.files.length > 0) {
             for (let x of event.target.files) {
                 if (x.size > MAX_FILE_SIZE) {
@@ -142,8 +134,6 @@ export default class VoucherRequest extends LightningElement {
             console.log('Errors when a user didnt put value');
         }
         else {
-
-           
             this.showSpinner = true;
             this.isShowModal = false;
             const examAttemptFields = {
@@ -196,8 +186,6 @@ export default class VoucherRequest extends LightningElement {
                     this.isShowExamModal = false;
                 console.log('inside uploading...', result);
                 if (result == 'Success') {
-                  
-                   
                 }
             })
             .catch((error) => {
@@ -206,17 +194,14 @@ export default class VoucherRequest extends LightningElement {
             }).finally(() => this.showSpinner = false);
         this.displayExamDetailsModal = false;
     }
-
     /* 
       @description - removeReceiptImage this is used to delete the selected document files from UI   ;
          @param-  Did'nt recieve any parameter
     */
-
     removeReceiptImage(event) {
         let index = event.currentTarget.dataset.id;
         this.filesData.splice(index, 1);
     } 
-    
     /* 
       @description - closeModal this is used to close the modal from UI   ;
          @param-  Did'nt recieve any parameter
@@ -224,8 +209,6 @@ export default class VoucherRequest extends LightningElement {
     closeModal() {
         this.displayExamDetailsModal = false;
     }
-
-
   /* 
       @description - showModalOnNo this is used to open  the Exam Details  modal on value no from UI;
          @param-  Did'nt recieve any parameter
@@ -257,7 +240,6 @@ export default class VoucherRequest extends LightningElement {
     */
     closeFirstModal(event) {
         this.isShowModal = false;
-
     }
     /* 
       @description - closeSecondModal this is used to close the second modal from UI   ;
@@ -268,5 +250,6 @@ export default class VoucherRequest extends LightningElement {
         this.isShowModal = false;
 
     }
+
 
 }

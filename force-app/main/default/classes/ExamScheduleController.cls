@@ -8,9 +8,8 @@ public with sharing class ExamScheduleController {
          return returnMap;    
      }
      
-     
      @AuraEnabled()
-     public static string UpdateCredExempt(Credential_Exam_Attempt__c examAttemptRec){
+     public static string updateCredExempt(Credential_Exam_Attempt__c examAttemptRec){
            update examAttemptRec;
          return examAttemptRec.Id;
          
@@ -18,13 +17,13 @@ public with sharing class ExamScheduleController {
      }
    
    @AuraEnabled()
-          public static string UploadReciept(string ParentId ,list<string> filedata){
-             system.debug('StrId'+ParentId);
+          public static string uploadReciept(string parentId ,list<string> filedata){
+             system.debug('StrId'+parentId);
         
          try {
              if(filedata.size()>0) {
                 FilesUploadService fp = new FilesUploadService();
-                fp.uploadFiles(ParentId, filedata);
+                fp.uploadFiles(parentId, filedata);
               
              }
                       
