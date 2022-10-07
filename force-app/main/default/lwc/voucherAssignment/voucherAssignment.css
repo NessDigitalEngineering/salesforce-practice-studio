@@ -23,3 +23,7 @@
 .slds-box{
 	margin-bottom: 0.625rem;
 } 
+.setWidth{
+	width: 40% !important;
+	max-width: 40% !important;
+}

@@ -11,7 +11,6 @@ public with sharing class VoucherAssignmentService {
       */
       public List<Exam_Voucher__c> getAvailableExamVouchers(string credType, integer credentialCost) {
         try {
-           System.debug('credType' +credType +'credentialCost'+ credentialCost);
             return [
                 SELECT id, Credential_Type__c, Name, Cost__c, Value__c, Sponsor__c, Expiry_Date__c FROM Exam_Voucher__c WHERE ((Credential_Type__c=:credType) AND  (Cost__c >=: credentialCost)) WITH SECURITY_ENFORCED];
         } catch (Exception ex) {

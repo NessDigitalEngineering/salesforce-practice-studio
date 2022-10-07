@@ -44,7 +44,7 @@ export default class VoucherAssignment extends LightningElement {
     connectedCallback() {   
         getVoucherApprovedUsers().then((res) => {
             this.lstCred = res;
-        
+
          this.countRec = res.length;
          if (res.length === 0) {
             this.showIcon = true;
@@ -118,6 +118,4 @@ export default class VoucherAssignment extends LightningElement {
 			})
 			.catch((error) => {});
 }
-
-
 }
