@@ -5,7 +5,6 @@ import voucher_Assignment from "@salesforce/label/c.voucher_Assignment";
 import getVoucherApprovedUsers from "@salesforce/apex/CredentialExamAttemptController.getVoucherApprovedUsers";
 import getAllExamVouchers from "@salesforce/apex/VoucherRequestController.getAllExamVouchers";
 import updateExamRecords from "@salesforce/apex/CredentialExamAttemptController.updateExamRecords";
-import updateStatus from "@salesforce/apex/CredentialExamAttemptController.updateStatus";
 const columns = [
     { label: 'Exam Attempt Id', fieldName: 'Name' },
     { label: 'Credential Name', fieldName: 'Credential__c' },
@@ -102,7 +101,7 @@ export default class VoucherAssignment extends LightningElement {
 
     handleClick(event){
         let selectedRows = event.detail.selectedRows;
-                for (let i = 0; i < selectedRows.length; i++) {
+                for (let i of selectedRows.length) {
             this.exmVoucher=selectedRows[i].Id;
             if(selectedRows[i].Cost__c > this.credCost){
                 this.openDialog = true;

@@ -47,7 +47,6 @@ private class CredentialExamAttemptServiceTest {
     }
     
     static testMethod void updateExamDateTest (){
-        User_Credential__c usrCred = [select id,Name from User_Credential__c where Status__c='Assigned' LIMIT 1];
         List<Credential_Exam_Attempt__c> examAttemptList = [select id,Status__c from Credential_Exam_Attempt__c where Status__c='Voucher Assigned' LIMIT 1];
         Test.startTest();
         CredentialExamAttemptService ces = new CredentialExamAttemptService();
@@ -58,18 +57,15 @@ private class CredentialExamAttemptServiceTest {
     }
    
     static testMethod void updateExamStatusTest (){
-        User_Credential__c usrCred = [select id,Name from User_Credential__c where Status__c='Assigned' LIMIT 1];
         List<Credential_Exam_Attempt__c> examAttemptList = [select id,Status__c from Credential_Exam_Attempt__c where Status__c='Voucher Assigned' LIMIT 1];
         Test.startTest();
          CredentialExamAttemptService ces = new CredentialExamAttemptService();
 		 ces.updateExamStatus(examAttemptList[0].Id,'Exam Passed');
         Test.stopTest();
-        system.assert(examAttemptList[0].Id != Null, 'Exam Attempt List should not be empty.');
+        system.assert(examAttemptList[0].Id != Null, 'Exam Attempt List should not empty.');
     }
     
     static testMethod void getVoucherAssignedUserTest (){
-        Map<String,String> userId = new Map<String,String>();
-        List<Credential_Exam_Attempt__c> examList= [select id,Name from Credential_Exam_Attempt__c ];
         User usrs = [select id,name from User where Email= 'puser000@amamama.com' limit 1];
         System.runAs(usrs){
         Test.startTest();
@@ -86,13 +82,12 @@ private class CredentialExamAttemptServiceTest {
     }
     
      static testMethod void updateExamRecordTest (){
-        User_Credential__c usrCred = [select id,Name from User_Credential__c where Status__c='Assigned' LIMIT 1];
         List<Credential_Exam_Attempt__c> examAttemptList = [select id,Exam_Voucher__c from Credential_Exam_Attempt__c where Status__c='Voucher Assigned' LIMIT 1];
         List<Exam_Voucher__c> examVchrList = [select id from Exam_Voucher__c LIMIT 1];
          Test.startTest();
          CredentialExamAttemptService ces = new CredentialExamAttemptService();
 		 ces.updateExamRecord(examAttemptList[0].Id,examVchrList[0].Id);
         Test.stopTest();
-        system.assert(examAttemptList[0].Id != Null, 'Exam Attempt List should not be empty.');
+        system.assert(examAttemptList[0].Id != Null, 'List should not be empty.');
     }
 }
