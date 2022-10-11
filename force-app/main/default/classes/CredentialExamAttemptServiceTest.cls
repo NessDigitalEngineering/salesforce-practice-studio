@@ -7,6 +7,7 @@ private class CredentialExamAttemptServiceTest {
         System.runAs(usrs){
             List<Credential__c> credList = TestDataFactory.createCredentials(); 
             User_Credential__c usrCred = TestDataFactory.createUserCredentials(usrs.id,credList[0].id);
+             TestDataFactory.createExamVoucher();
             usrCred.Status__c='Assigned';
             usrCred.Due_Date__c= system.today();
             usrCred.Assigned_By__c = userinfo.getUserId(); 
