@@ -66,4 +66,33 @@ private class CredentialExamAttemptServiceTest {
         Test.stopTest();
         system.assert(examAttemptList[0].Id != Null, 'Exam Attempt List should not be empty.');
     }
-} 
+    
+    static testMethod void getVoucherAssignedUserTest (){
+        Map<String,String> userId = new Map<String,String>();
+        List<Credential_Exam_Attempt__c> examList= [select id,Name from Credential_Exam_Attempt__c ];
+        User usrs = [select id,name from User where Email= 'puser000@amamama.com' limit 1];
+        System.runAs(usrs){
+        Test.startTest();
+        try {
+            CredentialExamAttemptService ces = new CredentialExamAttemptService();
+        ces.getVoucherAssignedUser();
+        } catch (Exception ex) {
+            system.assert(ex.getMessage().contains('Insufficient permissions'));
+        }   
+        Test.stopTest();
+        system.assert(usrs != Null, 'User List should not be empty.');
+        }
+
+    }
+    
+     static testMethod void updateExamRecordTest (){
+        User_Credential__c usrCred = [select id,Name from User_Credential__c where Status__c='Assigned' LIMIT 1];
+        List<Credential_Exam_Attempt__c> examAttemptList = [select id,Exam_Voucher__c from Credential_Exam_Attempt__c where Status__c='Voucher Assigned' LIMIT 1];
+        List<Exam_Voucher__c> examVchrList = [select id from Exam_Voucher__c LIMIT 1];
+         Test.startTest();
+         CredentialExamAttemptService ces = new CredentialExamAttemptService();
+		 ces.updateExamRecord(examAttemptList[0].Id,examVchrList[0].Id);
+        Test.stopTest();
+        system.assert(examAttemptList[0].Id != Null, 'Exam Attempt List should not be empty.');
+    }
+}

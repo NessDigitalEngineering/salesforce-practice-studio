@@ -33,11 +33,6 @@ public with sharing class CredentialExamAttemptController{
         try {
             CredentialExamAttemptService ceas = new CredentialExamAttemptService();
             ceas.updateExamStatus(examAttemptRecordId,examStatus); 
-            if (Test.isRunningTest()) {
-                CalloutException e = new CalloutException();
-				e.setMessage('Custom Exception for test code coverage ');
-				throw e;
-            }
         } catch (Exception e) {
 			throw new AuraHandledException(e.getMessage());
 		}    
@@ -53,11 +48,6 @@ public with sharing class CredentialExamAttemptController{
         try {
             CredentialExamAttemptService ceas = new CredentialExamAttemptService();
               ceas.updateExamDate(examAttemptRecordId,dt);
-            if (Test.isRunningTest()) {
-                CalloutException e = new CalloutException();
-				e.setMessage('Custom Exception for test code coverage ');
-				throw e;
-            }
         } catch (Exception e) {
 			throw new AuraHandledException(e.getMessage());
 		}
@@ -89,11 +79,6 @@ public with sharing class CredentialExamAttemptController{
         try {
             CredentialExamAttemptService ceas = new CredentialExamAttemptService();
             ceas.updateExamRecord(recordId,examVoucher); 
-            if (Test.isRunningTest()) {
-                CalloutException e = new CalloutException();
-				e.setMessage('Custom Exception for test code coverage ');
-				throw e;
-            }
         } catch (Exception e) {
 			throw new AuraHandledException(e.getMessage());
 		}    

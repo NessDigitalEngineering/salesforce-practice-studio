@@ -7,6 +7,7 @@ private class CredentialExamAttemptControllerTest{
         System.runAs(usrs){
             List<Credential__c> credList = TestDataFactory.createCredentials(); 
              User_Credential__c userCred = TestDataFactory.createUserCredentials(usrs.id,credList[0].id);
+             List<Exam_Voucher__c> exmVchr = TestDataFactory.createExamVoucher();
              userCred.Status__c='Assigned';
              userCred.Due_Date__c= system.today();
              userCred.Assigned_By__c = userinfo.getUserId(); 
@@ -47,4 +48,27 @@ private class CredentialExamAttemptControllerTest{
     }  
 
     
+    static testMethod void updateExamRecordsTest (){
+        User_Credential__c usrCred = [select id,Name from User_Credential__c where Status__c='Assigned' LIMIT 1];
+        List<Credential_Exam_Attempt__c> examAttemptList = [select id,Exam_Voucher__c from Credential_Exam_Attempt__c where Status__c='Voucher Assigned' LIMIT 1];
+        List<Exam_Voucher__c> examVchrList = [select id from Exam_Voucher__c LIMIT 1];
+         Test.startTest();
+         CredentialExamAttemptController.updateExamRecords(examAttemptList[0].Id,examVchrList[0].Id);
+        Test.stopTest();
+        system.assert(examAttemptList[0].Id != Null, 'Exam Attempt List should not be empty.');
+    }
+    
+     static testMethod void getVoucherApprovedUsersTest (){
+        User usrs = [select id,name from User where Email= 'puser000@amamama.com' limit 1 ];
+        System.runAs(usrs){
+        Test.startTest();
+        try {
+            CredentialExamAttemptController.getVoucherApprovedUsers();             
+        } catch (Exception ex) {        
+            system.assert(ex.getMessage().contains('Insufficient permissions'));
+        }        
+        Test.stopTest();
+        system.assert(usrs != Null, 'User List should not be empty.');
+        }
+    }
 }

@@ -24,6 +24,9 @@
 	margin-bottom: 0.625rem;
 } 
 .setWidth{
-	width: 40% !important;
-	max-width: 40% !important;
+	width: 100px;
+	height: 50px;
+	position:fixed; 
+	top: calc(30% - 25px);
+	left: calc(40% - 50px);
 }

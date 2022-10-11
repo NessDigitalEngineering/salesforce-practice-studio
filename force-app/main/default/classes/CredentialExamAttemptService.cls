@@ -88,7 +88,9 @@ public with sharing class CredentialExamAttemptService {
             Credential_Exam_Attempt__c examVcher = new Credential_Exam_Attempt__c();
             examVcher.Id = recordId;
             examVcher.Exam_Voucher__c = examVoucher;
+            examVcher.Status__c = 'Voucher Assigned';
             return Database.update(examVcher, true);
+           
         } catch (Exception ex) {
             throw ex;
         }
