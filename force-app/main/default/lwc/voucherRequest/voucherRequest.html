@@ -55,14 +55,15 @@
 					<lightning-layout multiple-rows="true">
 						<lightning-layout-item size="12" padding="around-small" small-device-size="9"
 							medium-device-size="6" large-device-size="6">
-							<lightning-input label={label.Voucher_CredentialName} name="credential"
+							<h6 class="headerText" style ="margin-bottom: -18px; font-size:13px;">{label.Voucher_CredentialName} </h6>
+							<lightning-input class = "cred"   name="credential" 
 								value={credentialValue} disabled>
 							</lightning-input>
 
 						</lightning-layout-item>
 						<lightning-layout-item size="12" padding="around-small" small-device-size="9"
 							medium-device-size="6" large-device-size="6">
-						<h6 class="headerText" style ="margin-top: -1px;font-size:12px;"> <span  class = "abbr" style ="color:red;">*</span>When are  you  planning for your exam? </h6>
+	<h6 class="headerText" style ="margin-top: -1px;font-size:13px;"> <span  class = "abbr" style ="color:red;">* </span>When are  you  planning for your exam? </h6>
 							<lightning-input variant="label-hidden" class="validate" type="datetime" required
 								date-style="short" onchange={handleDateChange}>
 							</lightning-input>
@@ -71,16 +72,17 @@
 						</lightning-layout-item>
 						<lightning-layout-item size="12" padding="around-small" small-device-size="9"
 							medium-device-size="6" large-device-size="6">
-							<lightning-textarea label={label.Voucher_Comments} class="validate" required value=""
+							<h6 class="headerText" style ="margin-bottom: -23px; font-size:13px;"> <span  class = "abbr" style ="color:red;">* </span>  {label.Voucher_Comments}</h6>
+							<lightning-textarea class="validate" 
 								onchange={handleCommentChange}>
 							</lightning-textarea>
 							
 						</lightning-layout-item>
 						<lightning-layout-item size="12" padding="around-small" small-device-size="9"
 							medium-device-size="6" large-device-size="6">
-							<h6 class="headerText" style="font-size: 12px;margin-bottom: -7px;">
+							<h6 class="headerText" style="font-size: 13px;margin-bottom: -1px;">
 								{label.Voucher_Preparation}
-								<lightning-helptext content={label.PreparationDocs_HelpText}>
+								<lightning-helptext  style = "margin-top:-5px;" content={label.PreparationDocs_HelpText}>
 								</lightning-helptext>
 							</h6>
 							<lightning-input type="file" multiple
@@ -94,11 +96,23 @@
 											onclick={removeReceiptImage}></lightning-pill>
 									</template>
 								</template>
-								</div>
+
+
+							</div>
+
 						</lightning-layout-item>
+
+
+	
+
+
+
 					</lightning-layout>
-					</div>
-				<footer class="slds-modal__footer">
+
+				</div>
+
+			
+			<footer class="slds-modal__footer">
 				<lightning-button class="button" variant="neutral" label="Cancel" onclick={closeSecondModal}>
 				</lightning-button>
 				<lightning-button variant="brand" label="Save" onclick={saveNewRecord}>

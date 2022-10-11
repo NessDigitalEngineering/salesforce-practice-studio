@@ -2,9 +2,9 @@ public with sharing class ExamScheduleController {
     @AuraEnabled(cacheable = true)
      public static map<string , object> getExamDetails(string examId){
          map<string , object> returnMap = new map<string , object> ();
-         list<Credential_Exam_Attempt__c> CredentialsExamAttemptList = [select id , name,Credential__c from Credential_Exam_Attempt__c  where id =:examId];
-         returnmap.put('ExamId',CredentialsExamAttemptList[0].NaMe);
-         returnmap.put('credentialId',CredentialsExamAttemptList[0].Credential__c);
+         list<Credential_Exam_Attempt__c> credentialsExamAttemptList = [select id , name,Credential__c from Credential_Exam_Attempt__c  where id =:examId];
+         returnmap.put('ExamId',credentialsExamAttemptList[0].NaMe);
+         returnmap.put('credentialId',credentialsExamAttemptList[0].Credential__c);
          return returnMap;    
      }
      
