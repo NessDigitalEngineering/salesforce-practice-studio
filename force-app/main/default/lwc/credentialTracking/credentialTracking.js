@@ -65,7 +65,7 @@ export default class CredentialTracking extends LightningElement {
 		@description    :   Displays all active user credential records when status value is not equal to completed
 		@param          :   event target value & event target title
 	*/
-	handleClick(event) {
+	handleClick1(event) {
 		updateUserCredential({ id: event.target.value, status: event.target.title })
 			.then((result) => {
 				if (result === true) {
@@ -92,6 +92,36 @@ export default class CredentialTracking extends LightningElement {
 			});
 	}
 
+	handleClick(event) {
+		let credName = event.target.name;
+		let credId = event.target.value;
+		let credStatus = event.target.title;
+		if (credStatus === "Ready") {
+			this.template.querySelector("c-voucher-request").handleCredentialInput(credName, credId, credStatus);
+			// this.template.querySelector("c-voucher-request").handleCredentialId(credId);
+		} else if (credStatus !== "Completed") {
+			this.updateStatus(credId, credStatus);
+		}
+	}
+
+	updateStatus(recordId, status) {
+		updateUserCredential({ id: recordId, status: status })
+			.then((result) => {
+				if (result) {
+					getUserCredentials({ userId: this.userIds })
+						.then((rs) => {
+							this.totalUserCredentials = rs;
+							this.processStatusValues();
+						})
+						.catch((error) => {
+							console.error(error.message);
+						});
+				}
+			})
+			.catch((error) => {
+				console.error(error.message);
+			});
+	}
 	/*
 		@description    :   Update status value
 	*/
