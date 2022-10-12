@@ -185,7 +185,7 @@ export default class CredentialExamAttempts extends LightningElement {
                     let reader = new FileReader();
                     console.log('reader:', reader);
                     reader.onload = e => {
-                        var fileContents = reader.result.split(',')[1]
+                        let fileContents = reader.result.split(',')[1]
                         this.filesData.push({ 'fileName': file.name, 'fileContent': fileContents });
                     };
                     reader.readAsDataURL(file);
@@ -275,7 +275,7 @@ export default class CredentialExamAttempts extends LightningElement {
                 console.log("error ", error);
                 this.isShowExamModal = false;
             }).finally(() => this.showSpinner = false);
-      //  window.location.reload();
+      
     }
     showToast(toastTitle, toastMessage, variant) {
         const event = new ShowToastEvent({
