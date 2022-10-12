@@ -72,7 +72,7 @@
 						</lightning-layout-item>
 						<lightning-layout-item size="12" padding="around-small" small-device-size="9"
 							medium-device-size="6" large-device-size="6">
-							<h6 class="headerText" style ="margin-bottom: -23px; font-size:13px;"> <span  class = "abbr" style ="color:red;">* </span>  {label.Voucher_Comments}</h6>
+							<h6 class="headerText" style ="margin-bottom: -15px; font-size:13px;"> <span  class = "abbr" style ="color:red;">* </span>  {label.Voucher_Comments}</h6>
 							<lightning-textarea class="validate" 
 								onchange={handleCommentChange}>
 							</lightning-textarea>
@@ -82,7 +82,7 @@
 							medium-device-size="6" large-device-size="6">
 							<h6 class="headerText" style="font-size: 13px;margin-bottom: -1px;">
 								{label.Voucher_Preparation}
-								<lightning-helptext  style = "margin-top:-5px;" content={label.PreparationDocs_HelpText}>
+								<lightning-helptext  style = "position: relative;bottom: 2px; right:-3px;" content={label.PreparationDocs_HelpText}>
 								</lightning-helptext>
 							</h6>
 							<lightning-input type="file" multiple
