@@ -74,8 +74,10 @@ export default class CredentialTracking extends LightningElement {
 							this.totalUserCredentials = rs;
 							this.totalUserCredentials.forEach((e) => {
 								if (e.Status__c === "Ready") {
+
 									this.template.querySelector('c-voucher-request').handleCredentialName(e.Credential__r.Name);
 									this.template.querySelector('c-voucher-request').handleCredentialId(e.Id);
+
 								}
 							});
 							this.processStatusValues();
