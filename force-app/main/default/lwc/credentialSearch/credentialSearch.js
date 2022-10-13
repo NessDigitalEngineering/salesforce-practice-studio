@@ -20,7 +20,7 @@ export default class CredentialSearch extends LightningElement {
 		for (const selRec of this.selectedRecords) {
 			selectRecId.push(selRec.recId);
 		}
-		if (currentText) {
+		if (currentText.length > 2) {
 			this.setListBoxClass();
 			getResults({
 				searchKey: currentText,
@@ -39,7 +39,7 @@ export default class CredentialSearch extends LightningElement {
 				.catch((error) => {
 					console.log("-------error-------------" + JSON.stringify(error));
 				});
-		} else {
+		} else if (currentText.length === 0) {
 			this.resetCredentials();
 		}
 	}
