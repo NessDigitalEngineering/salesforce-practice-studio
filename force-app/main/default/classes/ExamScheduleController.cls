@@ -46,7 +46,6 @@ public with sharing class ExamScheduleController {
             System.debug(ex.getMessage() + ' -> ' + ex.getStackTraceString());
             throw new AuraHandledException(ex.getMessage());
         }
-        
         return 'Success';    
     }
 }

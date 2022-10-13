@@ -26,12 +26,53 @@
 	height:3rem;
 }
 .cred{
-	font-size: 12px;
+   	font-size: 12px;
+	   position: relative;
+    bottom: 28px;
 
 }
 .validate{
-font-size: 12px;
+font-size: 13px;
+    position: relative;
+    bottom: 4px;
 }
 .slds-button__icon{
 	margin-top:-5px;
+}
+.fileUpload{
+	position: relative;
+	bottom: 2px;
+	 right:-3px;
+}
+.abbr{
+		color:red;
+}
+.headerText{
+	 
+	font-size:13px;
+	position: relative;
+    bottom: 12px;
+}
+.headerText2{
+	 
+	font-size:13px;
+	position: relative;
+    bottom: 5px;
+}
+.headerText1{
+	
+	font-size:13px;
+	position: relative;
+    bottom: 10px;
+}
+
+.headerText3{
+	font-size: 13px;
+	position: relative;
+    bottom: 5px;
+}
+.fup{
+	position: relative;
+    bottom:9px;
+
 }

@@ -55,37 +55,41 @@
 					<lightning-layout multiple-rows="true">
 						<lightning-layout-item size="12" padding="around-small" small-device-size="9"
 							medium-device-size="6" large-device-size="6">
-							<h6 class="headerText" style ="margin-bottom: -18px; font-size:13px;">{label.Voucher_CredentialName} </h6>
-							<lightning-input class = "cred"   name="credential" 
-								value={credentialValue} disabled>
+							<h6 class="headerText" >
+								{label.Voucher_CredentialName} </h6>
+							<lightning-input class="cred" name="credential" value={credentialValue} disabled>
 							</lightning-input>
 
 						</lightning-layout-item>
 						<lightning-layout-item size="12" padding="around-small" small-device-size="9"
 							medium-device-size="6" large-device-size="6">
-	<h6 class="headerText" style ="margin-top: -1px;font-size:13px;"> <span  class = "abbr" style ="color:red;">* </span>When are  you  planning for your exam? </h6>
+							<h6 class="headerText1" >
+								<span  class = "abbr">* </span>When are you planning for your exam?
+							</h6>
 							<lightning-input variant="label-hidden" class="validate" type="datetime" required
 								date-style="short" onchange={handleDateChange}>
 							</lightning-input>
-							
-							
+
+
 						</lightning-layout-item>
 						<lightning-layout-item size="12" padding="around-small" small-device-size="9"
 							medium-device-size="6" large-device-size="6">
-							<h6 class="headerText" style ="margin-bottom: -15px; font-size:13px;"> <span  class = "abbr" style ="color:red;">* </span>  {label.Voucher_Comments}</h6>
-							<lightning-textarea class="validate" 
-								onchange={handleCommentChange}>
+						<h6 class="headerText2" >
+								<span  class = "abbr">* </span>{label.Voucher_Comments}
+							</h6>	
+							<lightning-textarea required variant="label-hidden"   class= "validate"   onchange={handleCommentChange}>
 							</lightning-textarea>
-							
+
 						</lightning-layout-item>
 						<lightning-layout-item size="12" padding="around-small" small-device-size="9"
 							medium-device-size="6" large-device-size="6">
-							<h6 class="headerText" style="font-size: 13px;margin-bottom: -1px;">
+							<h6 class="headerText3" >
 								{label.Voucher_Preparation}
-								<lightning-helptext  style = "position: relative;bottom: 2px; right:-3px;" content={label.PreparationDocs_HelpText}>
+								<lightning-helptext  class ="fileUpload" 
+									content={label.PreparationDocs_HelpText}>
 								</lightning-helptext>
 							</h6>
-							<lightning-input type="file" multiple
+							<lightning-input type="file" multiple class ="fup" 
 								accept=".docx, .pdf, .jpg, .txt, .png, .csv, .html, .zip" onchange={handleFileUpload}>
 							</lightning-input>
 
@@ -96,28 +100,17 @@
 											onclick={removeReceiptImage}></lightning-pill>
 									</template>
 								</template>
-
-
 							</div>
 
 						</lightning-layout-item>
-
-
-	
-
-
-
 					</lightning-layout>
-
 				</div>
-
-			
-			<footer class="slds-modal__footer">
-				<lightning-button class="button" variant="neutral" label="Cancel" onclick={closeSecondModal}>
-				</lightning-button>
-				<lightning-button variant="brand" label="Save" onclick={saveNewRecord}>
-				</lightning-button>
-			</footer>
+				<footer class="slds-modal__footer">
+					<lightning-button class="button" variant="neutral" label="Cancel" onclick={closeSecondModal}>
+					</lightning-button>
+					<lightning-button variant="brand" label="Save" onclick={saveNewRecord}>
+					</lightning-button>
+				</footer>
 			</div>
 		</section>
 	</template>

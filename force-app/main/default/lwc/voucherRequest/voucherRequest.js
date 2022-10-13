@@ -7,8 +7,6 @@ import Voucher_Comments from "@salesforce/label/c.Voucher_Comments";
 import PreparationDocs_HelpText from "@salesforce/label/c.PreparationDocs_HelpText";
 import createCredExempt from '@salesforce/apex/VoucherRequestController.createCredExempt';
 import methodVRC from '@salesforce/apex/VoucherRequestController.methodVRC';
-
-	
 import ConfirmationVoucherRequestComponent  from "@salesforce/label/c.ConfirmationVoucherRequestComponent";
 import VoucherRequestDoYouNeedVoucher from "@salesforce/label/c.VoucherRequestDoYouNeedVoucher";
 import CredentialExamAttemptVoucherRequest from "@salesforce/label/c.CredentialExamAttemptVoucherRequest";

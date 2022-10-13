@@ -150,12 +150,7 @@ export default class CredentialExamAttempts extends LightningElement {
     */
     handleDateEdit() {
         this.editExamDate = true;
-    }
-
-	/*
-        @description    :   This Method is to update the Exam Date and Time.
-        @param          :   event
-    */
+    }sss
     /* 
         @description -this function is used to close modal.
          @param - event.
