@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <description>Initiates approval process</description>
         <name>Initiate_Voucher_Approval</name>
         <label>Initiate Voucher Approval</label>
         <locationX>176</locationX>
-        <locationY>335</locationY>
+        <locationY>158</locationY>
         <actionName>submit</actionName>
-        <actionType>submit</actionType> 
+        <actionType>submit</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>processDefinitionNameOrId</name>
@@ -17,7 +18,7 @@
         <inputParameters>
             <name>objectId</name>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -29,8 +30,9 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <description>Initiates voucher approval request</description>
     <interviewLabel>Initiate Voucher Approval {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Initiate Voucher Approval</label>
+    <label>Initiate Voucher Approval Process</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -56,17 +58,14 @@
         <connector>
             <targetReference>Initiate_Voucher_Approval</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Voucher Requested</stringValue>
-            </value>
-        </filters>
-        <object>Credential_Exam_Attempt__c</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
-        <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <variables>
+        <description>Record id of the record to be submitted for approval</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
 </Flow>
