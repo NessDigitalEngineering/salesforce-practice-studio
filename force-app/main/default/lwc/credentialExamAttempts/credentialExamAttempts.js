@@ -146,11 +146,14 @@ export default class CredentialExamAttempts extends LightningElement {
         }
     }
     /*
-        @description    :   This Method is make boolean value True..
+        @description    :   This Method is to update the Exam Date and Time.
+        @param          :   event
     */
     handleDateEdit() {
         this.editExamDate = true;
-    }sss
+    }
+
+	
     /* 
         @description -this function is used to close modal.
          @param - event.
