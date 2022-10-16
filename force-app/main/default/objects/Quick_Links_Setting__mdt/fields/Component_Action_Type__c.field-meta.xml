@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Component_Action_Type__c</fullName>
+    <description>Applicable only for Components</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>Component Action Type</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Modal Popup</fullName>
+                <default>true</default>
+                <label>Modal Popup</label>
+            </value>
+            <value>
+                <fullName>Navigation</fullName>
+                <default>false</default>
+                <label>Navigation</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
