@@ -274,7 +274,7 @@ export default class NewCredentialComponent extends LightningElement {
                 console.log('Errors when a user didnt put value');
             }
             else {
-                for (var hj of this.userCredentialsData) {
+                for (let hj of this.userCredentialsData) {
                     if (this.credIds == hj.Id) {
                         hj.nextStatusLbl = 'Completed';
                         hj.nextStatus = 'Completed';
@@ -303,9 +303,7 @@ export default class NewCredentialComponent extends LightningElement {
                         console.log('result', result);
                         this.UploadFilest(result);
                         
-                        //  ===================================================
 
-                        // =======================================================
                         this.dispatchEvent(
                             new ShowToastEvent({
                                 title: "Success",
