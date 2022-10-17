@@ -14,9 +14,6 @@
 .setHeight {
 	height: 13.25rem !important;
 }
-.setWidth {
-	height: 20.3rem !important;
-}
 .text-align {
 	white-space: normal;
 }
@@ -25,7 +22,7 @@
 } 
 .setPopupWidth{
 	width: 100px;
-	height: 50px;
+	height: 20.3rem !important;
 	position:fixed; 
 	top: calc(30% - 25px);
 	left: calc(40% - 50px);
