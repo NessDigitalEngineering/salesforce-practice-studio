@@ -22,7 +22,7 @@ import FileSizeErrorLimitMessage from "@salesforce/label/c.FileSizeErrorLimitMes
 import FilesnotselectedErrorMessage from "@salesforce/label/c.FilesnotselectedErrorMessage";
 import CredentialCreatedSuccessMessage from "@salesforce/label/c.CredentialCreatedSuccessMessage";
 import FileUploadSuccessFully from "@salesforce/label/c.FileUploadSuccessFully";
-const MAX_FILE_SIZE = 50000000;
+const MAX_FILE_SIZE = 50000000; 
 export default class NewCredentialComponent extends LightningElement {
     label = { CompTitle, EmptyMsg };
     userIds = USER_ID;
