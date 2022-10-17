@@ -72,4 +72,19 @@ public with sharing class VoucherRequestController {
               throw new AuraHandledException(e.getMessage());
           }  
       } 
+
+       /*******************************************************************************************************
+      * @description Returns Credentials Exam attempts that are in progress
+      * @param examAttemptRecordId and  examStatus of credential Exam Attempts
+      */ 
+    @AuraEnabled
+    public static void updateVouchersStatus(String voucherId, String voucherStatus)
+    {
+        try {
+            ExamVoucherService evs = new ExamVoucherService();
+            evs.updateVoucherStatus(voucherId,voucherStatus); 
+        } catch (Exception e) {
+			throw new AuraHandledException(e.getMessage());
+		}    
+    } 
 }

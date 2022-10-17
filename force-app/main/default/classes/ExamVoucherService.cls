@@ -57,9 +57,26 @@ global with sharing class ExamVoucherService {
       public List<Exam_Voucher__c> getAvailableExamVouchers(string credType, integer credentialCost) {
         try {
             return [
-                SELECT id, Credential_Type__c, Name, Cost__c, Value__c, Sponsor__c, Expiry_Date__c FROM Exam_Voucher__c WHERE ((Credential_Type__c=:credType) AND  (Cost__c >=: credentialCost)) WITH SECURITY_ENFORCED];
+                SELECT id, Credential_Type__c, Name, Cost__c, Value__c, Sponsor__c, Expiry_Date__c, Status__c FROM Exam_Voucher__c WHERE Status__c='Available' AND ((Credential_Type__c=:credType) AND  (Cost__c >=: credentialCost)) WITH SECURITY_ENFORCED];
         } catch (Exception ex) {
             throw ex;
         }
     }
+
+    /*******************************************************************************************************
+      * @description This method updates exam attempt status
+      * @param userId SF id of user
+      * @return Update Exam Status
+      */
+      public Database.SaveResult updateVoucherStatus(String voucherId, String voucherStatus){
+        try {
+          Exam_Voucher__c voucherAssignment = new Exam_Voucher__c();
+            voucherAssignment.Id = voucherId;
+            voucherAssignment.Status__c = voucherStatus;
+            return Database.update(voucherAssignment, true);
+        } catch (Exception ex) {
+            throw ex;
+        }
+     }
+
 }

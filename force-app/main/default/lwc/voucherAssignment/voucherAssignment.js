@@ -5,6 +5,7 @@ import voucher_Assignment from "@salesforce/label/c.voucher_Assignment";
 import getVoucherApprovedUsers from "@salesforce/apex/CredentialExamAttemptController.getVoucherApprovedUsers";
 import getAllExamVouchers from "@salesforce/apex/VoucherRequestController.getAllExamVouchers";
 import updateExamRecords from "@salesforce/apex/CredentialExamAttemptController.updateExamRecords";
+import updateVouchersStatus from "@salesforce/apex/VoucherRequestController.updateVouchersStatus";
 const columns = [
     { label: 'Exam Attempt Id', fieldName: 'Name' },
     { label: 'Credential Name', fieldName: 'Credential__c' },
@@ -16,8 +17,8 @@ const columns1 = [
     { label: 'Credential Type', fieldName: 'Credential_Type__c' },
     { label: 'Cost', fieldName: 'Cost__c' },
     { label: 'Value', fieldName: 'Value__c' },
-    { label: 'Sponsor', fieldName: 'Sponsor__c' },
-    { label: 'Expiry Date', fieldName: 'Expiry_Date__c' },
+    { label: 'Sponsor', fieldName: 'Sponsor__c' , sortable: "true"},
+    { label: 'Expiry Date', fieldName: 'Expiry_Date__c' , sortable: "true" },
 ];
 export default class VoucherAssignment extends LightningElement {
     @track lstCred;
@@ -36,6 +37,8 @@ export default class VoucherAssignment extends LightningElement {
     @track credCost;
     @track exmVoucher;
     @track parentID;
+    @track sortBy
+    @track sortDirection;
 
     label = {
 		ExamAttempt_EmptyMsg,
@@ -43,7 +46,9 @@ export default class VoucherAssignment extends LightningElement {
 	};
     @track isDialogVisible = false;
     @track originalMessage;
-
+/*
+        @description    :   This Method is to show available Voucher Approved User.      
+    */
     connectedCallback() {   
         getVoucherApprovedUsers().then((res) => {
             this.lstCred = res;
@@ -64,17 +69,24 @@ export default class VoucherAssignment extends LightningElement {
         console.log("error" + JSON.stringify(error));
     });
     }   
-
+/*
+        @description    :   This Method is to show available Exam Voucher.      
+    */
     examVoucherData()
     {
         getAllExamVouchers({credentialType:this.credType,credentialCost:this.credCost}).then((response) => {
             this.lstVoucher= response;
+            //this.sortData("Expiry_Date__c","asc");
             console.log('response=='+ this.lstVoucher);
         })
         .catch((error) => {
             console.log("error==" + JSON.stringify(error));
         });
     }
+
+     /*
+        @description    :   This Method is to show available Exam Voucher.      
+    */
     showModalBox() {  
         let selectedRec = this.template.querySelector("lightning-datatable").getSelectedRows();
         if(selectedRec.length > 0){
@@ -84,7 +96,7 @@ export default class VoucherAssignment extends LightningElement {
             selectedRec.forEach(currentItem => {
                 this.credType= currentItem.User_Credential__r.Credential__r.Type__c;
                 this.credCost= currentItem.User_Credential__r.Credential__r.Registration_fee__c; 
-                credName = currentItem.Credential__c + '$' +currentItem.User_Credential__r.Credential__r.Registration_fee__c;
+                credName = currentItem.Credential__c + ' $' +currentItem.User_Credential__r.Credential__r.Registration_fee__c;
                 this.credentialName = credName;
                 this.parentID=currentItem.Id;
             });
@@ -98,10 +110,13 @@ export default class VoucherAssignment extends LightningElement {
     hideDialog() {  
         this.openDialog = false;
     }
-
+ /*
+        @description    :   This Method is to show confirmation Message.      
+    */
     handleClick(event){
         let selectedRows = event.detail.selectedRows;
-                for (let i of selectedRows.length) {
+        console.log(JSON.stringify(selectedRows));
+                for (let i of selectedRows.keys()) {
             this.exmVoucher=selectedRows[i].Id;
             if(selectedRows[i].Cost__c > this.credCost){
                 this.openDialog = true;
@@ -120,5 +135,40 @@ export default class VoucherAssignment extends LightningElement {
         this.isShowModal = false;
     }).catch((error) => {});
 
+    updateVouchersStatus({voucherId: this.exmVoucher ,voucherStatus : "Assigned"}).then((response)=>{
+         this.isShowModal = false;
+     }).catch((error) => {});
 }
+
+  /*
+        @description    :   This Method is to sort Expiry Date.      
+    */
+        handleSortdata(event) {
+            // field name
+            this.sortBy = event.detail.fieldName;
+            // sort direction
+            this.sortDirection = event.detail.sortDirection;
+            // calling sortdata function to sort the data based on direction and selected field
+            this.sortData(this.sortBy, this.sortDirection);
+        }
+
+        sortData(fieldname, direction) {
+            // serialize the data before calling sort function
+            let parseData = JSON.parse(JSON.stringify(this.lstVoucher));
+            // Return the value stored in the field
+            let keyValue = (a) => {
+                return a[fieldname];
+            };
+            // cheking reverse direction
+            let isReverse = direction === 'asc' ? 1: -1;
+            // sorting data
+            parseData.sort((x, y) => {
+                x = keyValue(x) ? keyValue(x) : ''; // handling null values
+                y = keyValue(y) ? keyValue(y) : '';
+                // sorting values based on direction
+                return isReverse * ((x > y) - (y > x));
+            });
+            // set the sorted data to data table data
+            this.lstVoucher = parseData;
+        }
 }

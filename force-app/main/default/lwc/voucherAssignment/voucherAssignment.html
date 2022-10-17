@@ -2,14 +2,15 @@
     <lightning-card title={title}>
         <template if:true={emptyRecords}>  
             <div class="slds-var-p-around_small slds-scrollable_y  setHeight">
-                <p align="right">
-                <lightning-button align="right" variant="brand" disabled={disableButton} label="Assign" title="Primary action"
-                onclick={showModalBox} class="slds-m-right_x-medium slds-size_10-of-12"></lightning-button>
-            </p>
+                
                 <lightning-card class="" title="">
                     <lightning-datatable max-row-selection=1 key-field="id" data={lstCred} columns={columns}>
                     </lightning-datatable>
                 </lightning-card>
+                <p align="right">
+                    <lightning-button align="right" variant="brand" disabled={disableButton} label="Assign" title="Primary action"
+                    onclick={showModalBox} class="slds-m-right_x-medium slds-size_10-of-12"></lightning-button>
+                </p>
             </div>
         </template>
 
@@ -28,8 +29,8 @@
       <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{credentialName}</h1>
     </div>
     <div class="slds-modal__content slds-p-around_medium slds-var-p-around_small slds-scrollable_y" id="modal-content-id-1">
-        <lightning-datatable data-id="exmVoucher" max-row-selection=1 key-field="id" onrowselection={handleClick} data={lstVoucher} columns={columns1}>
-        </lightning-datatable>
+        <lightning-datatable data-id="exmVoucher" sorted-by={sortBy} sorted-direction={sortDirection} onsort={handleSortdata} max-row-selection=1 key-field="id" onrowselection={handleClick} data={lstVoucher} columns={columns1}>
+</lightning-datatable>
     </div>
     <div class="slds-modal__footer">
         <lightning-button  class=" slds-button " disabled={disableButton} label="Close" title="Close" onclick={hideModalBox}></lightning-button>
