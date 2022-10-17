@@ -74,12 +74,8 @@ export default class VoucherAssignment extends LightningElement {
     });
     }   
 
-    getSelectedName(event) {
-        const selectedRows = event.detail.selectedRows;
-        // Display that fieldName of the selected rows
-        for (let i of selectedRows.keys()) {
+    getSelectedName() {
             this.isShowButton = true;
-        }
     }
 /*
         @description    :   This Method is to show available Exam Voucher.      
