@@ -114,7 +114,7 @@ export default class NewCredentialComponent extends LightningElement {
         let credStatus = event.target.title;
         console.log('cred status :', credStatus);
         console.log('StatusValueReady:',this.statusValuesReady);
-        if (credStatus == "Ready") {
+       if (credStatus == "Ready") {
             console.log('insides clicks:');
             this.handleCredentialName(credName);
             this.handleCredentialId(credId);
@@ -122,13 +122,8 @@ export default class NewCredentialComponent extends LightningElement {
             this.Filelist = [];
            console.log('files data',this.filesData);
             this.isShowModal = true;
-        }
-         else if (credStatus != "Completed") {
-            this.updateStatus(credId, credStatus);
-            this.getuserDetails();
-            this.processData(this.totalUserCredentials);
-        }
-        else if (credStatus == "Completed") {
+        } 
+        else if (credStatus == "Completed" || credStatus!='Completed') {
             this.updateStatus(credId, credStatus);
             this.getuserDetails();
             this.processData(this.totalUserCredentials);
@@ -302,7 +297,9 @@ export default class NewCredentialComponent extends LightningElement {
                         this.isShowExamModal = false;
                         console.log('result', result);
                         this.UploadFilest(result);
-      
+      //  ===================================================
+
+                        // =======================================================
                         this.dispatchEvent(
                             new ShowToastEvent({
                                 title: "Success",
@@ -401,4 +398,4 @@ export default class NewCredentialComponent extends LightningElement {
         this.displayExamDetailsModal = false;
     }
 
-}
+} 
