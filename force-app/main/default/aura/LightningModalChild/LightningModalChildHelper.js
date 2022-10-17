@@ -4,14 +4,14 @@
 		component.destroy();
 	},
     initHandler : function(component, event, helper) { 
-        var componentName=component.get("v.componentName");
+        let componentName=component.get("v.componentName");
         $A.createComponent(componentName,{
             'componentName' : componentName
         },
         function(modalComponent, status, errorMessage) {
             if (status === "SUCCESS") {
                 //Appending the newly created component in div              
-                var body = component.find( 'modalId' ).get("v.body");
+                let body = component.find( 'modalId' ).get("v.body");
                 body.push(modalComponent);
                 component.find('modalId').set("v.body", body);
             } else if (status === "INCOMPLETE") {

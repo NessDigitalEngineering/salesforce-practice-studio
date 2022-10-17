@@ -36,12 +36,11 @@ export default class QuickLinkComponent extends NavigationMixin(LightningElement
 
     handleNavigation(event) {
 
-        var url=event.currentTarget.dataset.url;
-        var navigationType=event.currentTarget.dataset.navigationtype;
-        var componentActionType=event.currentTarget.dataset.actiontype;
-        var componentName=event.currentTarget.dataset.componentname;
-        var tabName=event.currentTarget.dataset.tabName;
-        console.log(navigationType,componentName,componentActionType);
+        let url=event.currentTarget.dataset.url;
+        let navigationType=event.currentTarget.dataset.navigationtype;
+        let componentActionType=event.currentTarget.dataset.actiontype;
+        let componentName=event.currentTarget.dataset.componentname;
+        let tabName=event.currentTarget.dataset.tabName;
         switch (navigationType)
         {
             case 'URL':
