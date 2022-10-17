@@ -112,6 +112,9 @@ export default class NewCredentialComponent extends LightningElement {
         let credId = event.target.value;
         this.credIds = event.target.value;
         let credStatus = event.target.title;
+        console.log('cred status :', credStatus);
+        console.log('StatusValueReady:',this.statusValuesReady);
+       
         if (credStatus == "Ready") {
             console.log('insides clicks:');
             this.handleCredentialName(credName);
@@ -120,9 +123,9 @@ export default class NewCredentialComponent extends LightningElement {
             this.Filelist = [];
            console.log('files data',this.filesData);
             this.isShowModal = true;
-        
-
+    
         } else if (credStatus != "Completed") {
+        
             this.updateStatus(credId, credStatus);
             this.getuserDetails();
             this.processData(this.totalUserCredentials);
@@ -303,7 +306,7 @@ export default class NewCredentialComponent extends LightningElement {
                         console.log('result', result);
                         this.UploadFilest(result);
                         
-
+                    
                         this.dispatchEvent(
                             new ShowToastEvent({
                                 title: "Success",
