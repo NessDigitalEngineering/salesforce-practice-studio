@@ -23,7 +23,7 @@
 .slds-box{
 	margin-bottom: 0.625rem;
 } 
-.setWidth{
+.setPopupWidth{
 	width: 100px;
 	height: 50px;
 	position:fixed; 

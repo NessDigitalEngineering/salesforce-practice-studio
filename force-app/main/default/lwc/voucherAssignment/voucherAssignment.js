@@ -77,7 +77,7 @@ export default class VoucherAssignment extends LightningElement {
     getSelectedName(event) {
         const selectedRows = event.detail.selectedRows;
         // Display that fieldName of the selected rows
-        for (let i = 0; i < selectedRows.length; i++) {
+        for (let i of selectedRows.keys()) {
             this.isShowButton = true;
         }
     }
@@ -88,7 +88,6 @@ export default class VoucherAssignment extends LightningElement {
     {
         getAllExamVouchers({credentialType:this.credType,credentialCost:this.credCost}).then((response) => {
             this.lstVoucher= response;
-            //this.sortData("Expiry_Date__c","asc");
             console.log('response=='+ this.lstVoucher);
         })
         .catch((error) => {
