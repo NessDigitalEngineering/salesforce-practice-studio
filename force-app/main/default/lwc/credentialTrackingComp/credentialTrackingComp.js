@@ -122,7 +122,8 @@ export default class NewCredentialComponent extends LightningElement {
             this.Filelist = [];
            console.log('files data',this.filesData);
             this.isShowModal = true;
-        } else if (credStatus != "Completed") {
+        }
+         else if (credStatus != "Completed") {
             this.updateStatus(credId, credStatus);
             this.getuserDetails();
             this.processData(this.totalUserCredentials);
