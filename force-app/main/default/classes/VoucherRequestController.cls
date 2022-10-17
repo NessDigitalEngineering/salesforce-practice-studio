@@ -87,4 +87,36 @@ public with sharing class VoucherRequestController {
 			throw new AuraHandledException(e.getMessage());
 		}    
     } 
+     /*******************************************************************************************************
+      * @description Returns Credentials Exam attempts that are in progress
+      * @param examAttemptRecordId and  examStatus of credential Exam Attempts
+      */ 
+      @AuraEnabled
+      public static void updateExamRecords( String recordId , String examVoucher)
+      {
+          try {
+              CredentialExamAttemptService ceas = new CredentialExamAttemptService();
+              ceas.updateExamRecord(recordId,examVoucher); 
+          } catch (Exception e) {
+              throw new AuraHandledException(e.getMessage());
+          }    
+      } 
+      
+       /*******************************************************************************************************
+      * @description Returns All Voucher Approved Credential Exam Attempts that are in progress
+      * @return List of Voucher Approved
+      */ 
+      @AuraEnabled
+      public static List<Credential_Exam_Attempt__c> getVoucherApprovedUsers()
+      { 
+          try {
+            CredentialExamAttemptService ceas = new CredentialExamAttemptService();
+          List<Credential_Exam_Attempt__c> totalVoucherApprovedUsers = ceas.getVoucherAssignedUser();
+          return totalVoucherApprovedUsers;  
+              
+          } catch (Exception e) {
+              throw new AuraHandledException(e.getMessage());
+          }  
+      } 
+     
 }

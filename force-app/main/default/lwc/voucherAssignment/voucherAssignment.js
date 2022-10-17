@@ -2,10 +2,12 @@ import { LightningElement ,track } from 'lwc';
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 import ExamAttempt_EmptyMsg from "@salesforce/label/c.ExamAttempt_EmptyMsg";
 import voucher_Assignment from "@salesforce/label/c.voucher_Assignment";
-import getVoucherApprovedUsers from "@salesforce/apex/CredentialExamAttemptController.getVoucherApprovedUsers";
+import VoucherAssigned_ToastMessage from "@salesforce/label/c.VoucherAssigned_ToastMessage";
+import getVoucherApprovedUsers from "@salesforce/apex/VoucherRequestController.getVoucherApprovedUsers";
 import getAllExamVouchers from "@salesforce/apex/VoucherRequestController.getAllExamVouchers";
-import updateExamRecords from "@salesforce/apex/CredentialExamAttemptController.updateExamRecords";
+import updateExamRecords from "@salesforce/apex/VoucherRequestController.updateExamRecords";
 import updateVouchersStatus from "@salesforce/apex/VoucherRequestController.updateVouchersStatus";
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 const columns = [
     { label: 'Exam Attempt Id', fieldName: 'Name' },
     { label: 'Credential Name', fieldName: 'Credential__c' },
@@ -21,6 +23,7 @@ const columns1 = [
     { label: 'Expiry Date', fieldName: 'Expiry_Date__c' , sortable: "true" },
 ];
 export default class VoucherAssignment extends LightningElement {
+    variant = 'success';
     @track lstCred;
     @track lstVoucher;
     columns = columns;
@@ -42,7 +45,8 @@ export default class VoucherAssignment extends LightningElement {
 
     label = {
 		ExamAttempt_EmptyMsg,
-        voucher_Assignment
+        voucher_Assignment,
+        VoucherAssigned_ToastMessage
 	};
     @track isDialogVisible = false;
     @track originalMessage;
@@ -130,7 +134,11 @@ export default class VoucherAssignment extends LightningElement {
    updateExmRecord(event){
 
     updateExamRecords({recordId : this.parentID, examVoucher: this.exmVoucher}).then((response)=>{
-        alert('Record updated successfully');
+        const evt = new ShowToastEvent({
+            message: this.label.VoucherAssigned_ToastMessage,
+            variant: this.variant,
+        });
+        this.dispatchEvent(evt);
         this.openDialog = false;
         this.isShowModal = false;
     }).catch((error) => {});

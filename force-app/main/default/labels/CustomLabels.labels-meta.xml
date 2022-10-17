@@ -120,7 +120,6 @@
         <value>OK</value>
     </labels>
     <labels>
-
         <fullName>PreparationDocs_HelpText</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -301,6 +300,12 @@
         <protected>true</protected>
         <shortDescription>voucher Assignment</shortDescription>
         <value>Exam Attempts- Pending Voucher Assignment</value>
-
+    </labels>
+    <labels>
+        <fullName>VoucherAssigned_ToastMessage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>VoucherAssigned_ToastMessage</shortDescription>
+        <value>Voucher Assigned Successfully.</value>
     </labels>
 </CustomLabels>
