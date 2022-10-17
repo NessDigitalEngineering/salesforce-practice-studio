@@ -1,7 +1,7 @@
 <template>   
-    <lightning-card >
+    <lightning-card title="Quick Links" >
     <template for:each={mapData} for:item="data">  
-    <div class="slds-m-top_x-small slds-m-around_x-small" key={data.key}> {data.key}</div>
+    <div class="custom-box" key={data.key}> {data.key}</div>
     <lightning-layout multiple-rows="true" key={data.key}>
     <template for:each={data.value} for:item="innerData">     
     <div class="slds-m-top_x-small" key={data.key}>
