@@ -29,6 +29,7 @@ export default class VoucherAssignment extends LightningElement {
     columns = columns;
     columns1 = columns1;
     @track countRec;
+    @track isShowButton = false;
     @track isShowModal = false;
     @track openDialog = false;
     @track showIcon = false;
@@ -56,7 +57,6 @@ export default class VoucherAssignment extends LightningElement {
     connectedCallback() {   
         getVoucherApprovedUsers().then((res) => {
             this.lstCred = res;
-
          this.countRec = res.length;
          if (res.length === 0) {
             this.showIcon = true;
@@ -73,6 +73,14 @@ export default class VoucherAssignment extends LightningElement {
         console.log("error" + JSON.stringify(error));
     });
     }   
+
+    getSelectedName(event) {
+        const selectedRows = event.detail.selectedRows;
+        // Display that fieldName of the selected rows
+        for (let i = 0; i < selectedRows.length; i++) {
+            this.isShowButton = true;
+        }
+    }
 /*
         @description    :   This Method is to show available Exam Voucher.      
     */

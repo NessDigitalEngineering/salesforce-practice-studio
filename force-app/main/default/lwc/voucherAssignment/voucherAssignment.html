@@ -4,13 +4,15 @@
             <div class="slds-var-p-around_small slds-scrollable_y  setHeight">
                 
                 <lightning-card class="" title="">
-                    <lightning-datatable max-row-selection=1 key-field="id" data={lstCred} columns={columns}>
+                    <lightning-datatable max-row-selection=1 key-field="id" data={lstCred} onrowselection={getSelectedName} columns={columns}>
                     </lightning-datatable>
                 </lightning-card>
+                <template if:true={isShowButton}>
                 <p align="right">
                     <lightning-button align="right" variant="brand" disabled={disableButton} label="Assign" title="Primary action"
                     onclick={showModalBox} class="slds-m-right_x-medium slds-size_10-of-12"></lightning-button>
                 </p>
+            </template>
             </div>
         </template>
 
