@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
         <fullName>UserSearchLabel</fullName>
@@ -300,5 +300,12 @@
         <protected>true</protected>
         <shortDescription>voucher Assignment</shortDescription>
         <value>Exam Attempts- Pending Voucher Assignment</value>
+    </labels>
+    <labels>
+        <fullName>VoucherAssigned_ToastMessage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>VoucherAssigned_ToastMessage</shortDescription>
+        <value>Voucher Assigned Successfully.</value>
     </labels>
 </CustomLabels>

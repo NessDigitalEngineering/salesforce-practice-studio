@@ -1,7 +1,5 @@
 import { LightningElement, track, wire } from 'lwc';
 import getActiveExamAttemptsForUser from "@salesforce/apex/CredentialExamAttemptController.getExamAttempts";
-import updateStatus from "@salesforce/apex/CredentialExamAttemptController.updateStatus";
-import updateDate from "@salesforce/apex/CredentialExamAttemptController.updateDate";
 import USER_ID from "@salesforce/user/Id";
 import Exam from "@salesforce/label/c.Exam";
 import ExamAttemptID from "@salesforce/label/c.CredentialExamAttempt_ExamAttemptID";
@@ -23,9 +21,7 @@ export default class CredentialExamAttempts extends LightningElement {
     @track timeZone = TIME_ZONE;
     @track locale = LOCALE;
     @track searchRecords;
-    userIds = USER_ID;
     title;
-    @track Filelist = [];
     Icn = TasksIcon;
     @track userCredentialsData;
     @track countRec;
@@ -37,9 +33,9 @@ export default class CredentialExamAttempts extends LightningElement {
     @track credExamAttemptId;
     @track isShowExamModal = false;
     @track examAttemptIdForModal;
-    dt;
+
+    @track credentialName;    
     @track Filelist = [];
-    @track credentialName;
     @track examId;
     @track examname;
     @track examComments;
@@ -278,7 +274,7 @@ export default class CredentialExamAttempts extends LightningElement {
                             message: 'success'
                         })
                     );
-                    this.getAllActiveExamAttemptUsers();
+                    // this.getAllActiveExamAttemptUsers();
                 }
             })
             .catch((error) => {

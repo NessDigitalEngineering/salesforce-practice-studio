@@ -14,7 +14,7 @@ public with sharing class CredentialExamAttemptService {
          try {
             userInfo.getUserId();
              return [
-                SELECT id, Credential__c, Exam_Date_Time__c,User_Credential__r.Name, Name, Exam_Voucher__c, Fail_Scorecard__c, Status__c,User__c FROM Credential_Exam_Attempt__c WHERE User_Credential__r.User__c =:userId AND ((Credential_Exam_Attempt__c.Status__c != 'Voucher Declined') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Passed') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Failed')) WITH SECURITY_ENFORCED];
+                SELECT id, Credential__c , Exam_Date_Time__c,User_Credential__r.Name, Name, Exam_Voucher__c, Fail_Scorecard__c, Status__c,User__c FROM Credential_Exam_Attempt__c WHERE User_Credential__r.User__c =:userId AND ((Credential_Exam_Attempt__c.Status__c != 'Voucher Declined') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Passed') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Failed')) WITH SECURITY_ENFORCED];
          } catch (Exception ex) {
              throw ex;
          }
@@ -63,4 +63,36 @@ public with sharing class CredentialExamAttemptService {
              throw ex;
          }
       }
+
+      /*******************************************************************************************************
+      * @description This method retrieves voucher Approved  user
+      * @return List of Credential Exam Attempt
+      */
+      public List<Credential_Exam_Attempt__c> getVoucherAssignedUser() {
+        try {
+           
+            return [
+                SELECT id, Credential__c, Name, Status__c,User_Credential__r.Credential__r.Type__c,User_Credential__r.Credential__r.Registration_fee__c, User__c FROM Credential_Exam_Attempt__c WHERE Credential_Exam_Attempt__c.Status__c = 'Voucher Approved' WITH SECURITY_ENFORCED];
+               
+            } catch (Exception ex) {
+            throw ex;
+        }
+    }
+/*******************************************************************************************************
+      * @description This method updates exam attempt status
+      * @param userId SF id of user
+      * @return Update Exam Status
+      */
+      public Database.SaveResult updateExamRecord(String recordId, String examVoucher){
+        try {
+            Credential_Exam_Attempt__c examVcher = new Credential_Exam_Attempt__c();
+            examVcher.Id = recordId;
+            examVcher.Exam_Voucher__c = examVoucher;
+            examVcher.Status__c = 'Voucher Assigned';
+            return Database.update(examVcher, true);
+           
+        } catch (Exception ex) {
+            throw ex;
+        }
+     }
  }
