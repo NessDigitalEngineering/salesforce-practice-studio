@@ -9,16 +9,16 @@ import Exam_Date_Time from "@salesforce/label/c.credentialExamAttempt_Exam_Date_
 import Status from "@salesforce/label/c.credentailExamAttempt_Status";
 import ExamAttempt_EmptyMsg from "@salesforce/label/c.ExamAttempt_EmptyMsg";
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
-import LOCALE from '@salesforce/i18n/locale';
-import TIME_ZONE from '@salesforce/i18n/timeZone';
+import LOCALE from '@salesforce/i18n/Locale';
+import TIME_ZONE from '@salesforce/i18n/TimeZone';
 import updateCredExempt from '@salesforce/apex/CredentialExamAttemptController.updateCredExempt';
 import uploadReciept from '@salesforce/apex/CredentialExamAttemptController.uploadReciept';
 import getExamDetails from '@salesforce/apex/CredentialExamAttemptController.getExamDetails';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 const MAX_FILE_SIZE = 5000000;
 export default class CredentialExamAttempts extends LightningElement { 
-    @track timeZone = TIME_ZONE;
-    @track locale = LOCALE;
+    @track TimeZone = TIME_ZONE;
+    @track Locale = LOCALE;
     @track searchRecords;
     userIds = USER_ID;
     title;
