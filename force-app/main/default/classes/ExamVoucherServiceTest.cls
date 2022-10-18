@@ -17,4 +17,14 @@ private class   ExamVoucherServiceTest {
         }
 
     }
+     static testMethod void getAvailableExamVouchersTest (){
+        Test.startTest();
+        try {
+            ExamVoucherService ces = new ExamVoucherService();
+            ces.getAvailableExamVouchers('trailhead', 400);
+        } catch (Exception ex) {
+            system.assert(ex.getMessage().contains('Insufficient permissions'));
+        }   
+        Test.stopTest();
+    }
 }
