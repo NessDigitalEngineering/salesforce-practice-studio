@@ -15,7 +15,7 @@ import updateCredExempt from '@salesforce/apex/CredentialExamAttemptController.u
 import uploadReciept from '@salesforce/apex/CredentialExamAttemptController.uploadReciept';
 import getExamDetails from '@salesforce/apex/CredentialExamAttemptController.getExamDetails';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-const MAX_FILE_SIZE = 50000000;
+const MAX_FILE_SIZE = 5000000;
 export default class CredentialExamAttempts extends LightningElement { 
     @track timeZone = TIME_ZONE;
     @track locale = LOCALE;
