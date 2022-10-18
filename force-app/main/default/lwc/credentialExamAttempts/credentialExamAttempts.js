@@ -30,15 +30,9 @@ export default class CredentialExamAttempts extends LightningElement {
     @track emptyRecords = true;
     @track editDate = false;
     @track editExamDate = false;
-    @track exmDate;
-    @track credExamAttemptId;
     @track isShowExamModal = false;
-    @track examAttemptIdForModal;
     dt;
-    @track credentialName;
     @track examId;
-    @track examname;
-    @track examComments;
     @track filesData = [];
     /* 
      @description - this method is used to fetch the credenntial Id
@@ -49,8 +43,6 @@ export default class CredentialExamAttempts extends LightningElement {
         console.log('Function Executed;--');
         if (result.data) {
             console.log('result', result.data);
-            this.examname = result.data.ExamId;
-            this.credentialName = result.data.credentialId;
         }
         else {
             console.log('error', result.error);
@@ -128,6 +120,9 @@ export default class CredentialExamAttempts extends LightningElement {
             this.searchRecords.forEach(Element => {
                 if (Element.Id == event.target.value) {
                     console.log('Inside If');
+                    this.filesData = [];
+                    this.Filelist =[];
+                     
                     this.isShowExamModal = true;
                     console.log('showModal', this.isShowExamModal);
                 }
