@@ -237,7 +237,6 @@ export default class CredentialExamAttempts extends LightningElement {
             }
         } catch (error) {
             console.log('error', error);
-
         }
     }
     /* 
