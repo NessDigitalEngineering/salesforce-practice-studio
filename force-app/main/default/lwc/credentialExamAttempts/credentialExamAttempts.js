@@ -274,7 +274,7 @@ export default class CredentialExamAttempts extends LightningElement {
                             message: 'success'
                         })
                     );
-                    this.getAllActiveExamAttemptUsers();
+                    // this.getAllActiveExamAttemptUsers();
                 }
             })
             .catch((error) => {
