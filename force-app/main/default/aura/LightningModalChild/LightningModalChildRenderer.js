@@ -1,7 +1,6 @@
 ({
-    render : function(component, helper) {
+    sonarMethod : function(component, helper) {
         console.log('Rendering for Sonar');
     }
-       
     })
     
