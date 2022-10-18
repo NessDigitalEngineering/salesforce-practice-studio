@@ -11,17 +11,18 @@ import ExamAttempt_EmptyMsg from "@salesforce/label/c.ExamAttempt_EmptyMsg";
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 import LOCALE from '@salesforce/i18n/locale';
 import TIME_ZONE from '@salesforce/i18n/timeZone';
-import updateCredExempt from '@salesforce/apex/ExamScheduleController.updateCredExempt';
-import uploadReciept from '@salesforce/apex/ExamScheduleController.uploadReciept';
-import getExamDetails from '@salesforce/apex/ExamScheduleController.getExamDetails';
+import updateCredExempt from '@salesforce/apex/CredentialExamAttemptController.updateCredExempt';
+import uploadReciept from '@salesforce/apex/CredentialExamAttemptController.uploadReciept';
+import getExamDetails from '@salesforce/apex/CredentialExamAttemptController.getExamDetails';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 const MAX_FILE_SIZE = 50000000;
-export default class CredentialExamAttempts extends LightningElement {
-    userIds = USER_ID;
+export default class CredentialExamAttempts extends LightningElement { 
     @track timeZone = TIME_ZONE;
     @track locale = LOCALE;
     @track searchRecords;
+    userIds = USER_ID;
     title;
+    @track Filelist = [];
     Icn = TasksIcon;
     @track userCredentialsData;
     @track countRec;
@@ -33,14 +34,12 @@ export default class CredentialExamAttempts extends LightningElement {
     @track credExamAttemptId;
     @track isShowExamModal = false;
     @track examAttemptIdForModal;
-
-    @track credentialName;    
-    @track Filelist = [];
+    dt;
+    @track credentialName;
     @track examId;
     @track examname;
     @track examComments;
     @track filesData = [];
-
     /* 
      @description - this method is used to fetch the credenntial Id
       @param - ExamId.
@@ -55,7 +54,6 @@ export default class CredentialExamAttempts extends LightningElement {
         }
         else {
             console.log('error', result.error);
-
         }
     }
 
@@ -68,7 +66,6 @@ export default class CredentialExamAttempts extends LightningElement {
         Exam,
         ExamAttempt_EmptyMsg
     };
-
     /*
         @description    :   This Method is to itrate data and show the buttons as per status.
         @param          :   event
@@ -76,7 +73,6 @@ export default class CredentialExamAttempts extends LightningElement {
     connectedCallback() {
         this.getAllActiveExamAttemptUsers();
     }
-
     /* 
         @description - this method is used to get all Active Exam Attempt users.
          @param - userId.
@@ -148,8 +144,6 @@ export default class CredentialExamAttempts extends LightningElement {
     handleDateEdit() {
         this.editExamDate = true;
     }
-
-	
     /* 
         @description -this function is used to close modal.
          @param - event.
@@ -185,7 +179,7 @@ export default class CredentialExamAttempts extends LightningElement {
                     let reader = new FileReader();
                     console.log('reader:', reader);
                     reader.onload = e => {
-                        let fileContents = reader.result.split(',')[1]
+                        var fileContents = reader.result.split(',')[1]
                         this.filesData.push({ 'fileName': file.name, 'fileContent': fileContents });
                     };
                     reader.readAsDataURL(file);
@@ -266,7 +260,6 @@ export default class CredentialExamAttempts extends LightningElement {
                 this.isShowExamModal = false;
                 console.log('inside uploading...', result);
                 if (result == 'success') {
-
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: "Success",
@@ -274,14 +267,14 @@ export default class CredentialExamAttempts extends LightningElement {
                             message: 'success'
                         })
                     );
-                    // this.getAllActiveExamAttemptUsers();
+                    this.getAllActiveExamAttemptUsers();
                 }
             })
             .catch((error) => {
                 console.log("error ", error);
                 this.isShowExamModal = false;
             }).finally(() => this.showSpinner = false);
-        
+        //  window.location.reload();
     }
     /* 
    @description -this function is used to showToast message.
@@ -303,7 +296,6 @@ export default class CredentialExamAttempts extends LightningElement {
     handleDateChange(event) {
         this.examDate = event.target.value;
         console.log("date---" + this.examDate);
-
     }
 
 }
