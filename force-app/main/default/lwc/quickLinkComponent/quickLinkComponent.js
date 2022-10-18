@@ -1,7 +1,7 @@
 import { LightningElement,wire } from 'lwc';
 import metaDataList from '@salesforce/apex/QuickLinkController.fetchQuickLinksList';
 import { NavigationMixin } from 'lightning/navigation';
-import   {MessageContext,APPLICATION_SCOPE, publish} from 'lightning/messageService';
+import   {MessageContext, publish} from 'lightning/messageService';
 import modalMC from '@salesforce/messageChannel/ModalMessageChannel__c';
 export default class QuickLinkComponent extends NavigationMixin(LightningElement) 
 {
