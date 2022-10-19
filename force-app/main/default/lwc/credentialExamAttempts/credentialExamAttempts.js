@@ -199,7 +199,7 @@ export default class CredentialExamAttempts extends LightningElement {
         this.Fileslist.push(JSON.stringify(this.filesDatas));
         console.log('New FilesData:', this.Fileslist);
         try {
-            //validate
+            
             const allValids = [
                 ...this.template.querySelectorAll('.validate'),
             ].reduce((validSoFar, inputCmp) => {
