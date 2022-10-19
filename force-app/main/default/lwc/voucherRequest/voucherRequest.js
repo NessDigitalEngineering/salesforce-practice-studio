@@ -1,36 +1,38 @@
 import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import Voucher_Preparation from "@salesforce/label/c.Voucher_Preparation";
-import Voucher_ExamDate from "@salesforce/label/c.Voucher_ExamDate";
 import Voucher_CredentialName from "@salesforce/label/c.Voucher_CredentialName";
 import Voucher_Comments from "@salesforce/label/c.Voucher_Comments";
 import PreparationDocs_HelpText from "@salesforce/label/c.PreparationDocs_HelpText";
 import createCredExempt from "@salesforce/apex/VoucherRequestController.createCredExempt";
 import methodVRC from "@salesforce/apex/VoucherRequestController.methodVRC";
-
-import ConfirmationVoucherRequestComponent from "@salesforce/label/c.ConfirmationVoucherRequestComponent";
-import VoucherRequestDoYouNeedVoucher from "@salesforce/label/c.VoucherRequestDoYouNeedVoucher";
-import CredentialExamAttemptVoucherRequest from "@salesforce/label/c.CredentialExamAttemptVoucherRequest";
-import FileSizeErrorLimitMessage from "@salesforce/label/c.FileSizeErrorLimitMessage";
-import FilesnotselectedErrorMessage from "@salesforce/label/c.FilesnotselectedErrorMessage";
-import CredentialCreatedSuccessMessage from "@salesforce/label/c.CredentialCreatedSuccessMessage";
-import FileUploadSuccessFully from "@salesforce/label/c.FileUploadSuccessFully";
+import Confirmation from "@salesforce/label/c.ConfirmationVoucherRequestComponent";
+import DoYouNeedVoucher from "@salesforce/label/c.VoucherRequestDoYouNeedVoucher";
+import CredentialExamAttempt from "@salesforce/label/c.CredentialExamAttemptVoucherRequest";
+import ExamPlan from "@salesforce/label/c.Exam_Plan";
 const MAX_FILE_SIZE = 50000000;
-
 export default class VoucherRequest extends LightningElement {
 	label = {
 		Voucher_Comments,
 		Voucher_CredentialName,
-		Voucher_ExamDate,
 		Voucher_Preparation,
-		PreparationDocs_HelpText
+		PreparationDocs_HelpText,
+		Confirmation,
+		DoYouNeedVoucher,
+		CredentialExamAttempt,
+		ExamPlan
 	};
 	@track examDate;
-	@track credentialValue;
-	@track userCredentialId;
 	@track examComments;
 	@track status;
 	@track fileData;
+	@track statusValue;
+	@track displayExamDetailsModal = false;
+	@track filesData = [];
+	@track fileList = [];
+	@track isShowModal = false;
+	@api credobj;
+
 	fileNames = [];
 	fileContentsArray = [];
 	file;
@@ -38,41 +40,22 @@ export default class VoucherRequest extends LightningElement {
 	fileReader;
 	content;
 	fileContents;
-	@track statusValue;
-	@track displayExamDetailsModal = false;
-	@track isShowModal = false;
-	@api recordId;
-	@track filesData = [];
 	showSpinner = false;
-	@track credId;
-	@track confirm = ConfirmationVoucherRequestComponent;
-	@track DoYouNeedVoucher = VoucherRequestDoYouNeedVoucher;
-	@track CredentialExamAttempt = CredentialExamAttemptVoucherRequest;
-	@track VoucherExamDate = Voucher_ExamDate;
-	@track filelimitError = FileSizeErrorLimitMessage;
-	@track fileNotSelect = FilesnotselectedErrorMessage;
-	@track sucessmsg = CredentialCreatedSuccessMessage;
-	@track fileUploadMsg = FileUploadSuccessFully;
-	@track Filelist = [];
 	credentialStatus;
-	/* 
-       @ description  handleCredentialName this is a function which is used to pass the credential value;
-       @ param  - credentialName
-    */
-	@api handleCredentialInput(credentialName, credentialId, credentialStatus) {
-		this.isShowModal = true;
-		this.credentialValue = credentialName;
-		this.userCredentialId = credentialId;
-		this.credentialStatus = credentialStatus;
-	}
+	credentialName;
+	userCredentialId;
 
-	// /* 
-    //   @description  handleCredentialId this is a function which is used to pass the credentialId;
-    //  @ param  - credentialId
-    // */
-	// @api handleCredentialId(credentialId) {
-	// 	this.userCredentialId = credentialId;
-	// }
+	/* 
+       @ description setting variables
+    */
+
+	connectedCallback() {
+		console.log("credObj:", JSON.stringify(this.credobj));
+		this.isShowModal = true;
+		this.credentialName = this.credobj.credName;
+		this.userCredentialId = this.credobj.credId;
+		this.credentialStatus = this.credobj.credStatus;
+	}
 
 	/* 
        @ description  handleDateChange this is a function which is used to get the Exam Date from user  ;
@@ -94,13 +77,11 @@ export default class VoucherRequest extends LightningElement {
 		this.examComments = event.target.value;
 		console.log("comments---" + this.examComments);
 	}
-
 	/* 
       @description  handleFileUpload this is a function which is used to get files data  from user  ;
            @param - Standard Event
     */
 	handleFileUpload(event) {
-		let obj = {};
 		if (event.target.files.length > 0) {
 			for (let x of event.target.files) {
 				if (x.size > MAX_FILE_SIZE) {
@@ -126,8 +107,9 @@ export default class VoucherRequest extends LightningElement {
     */
 
 	saveNewRecord() {
-		this.Filelist.push(JSON.stringify(this.filesData));
-		console.log("New FileData:", this.Filelist);
+		this.showSpinner = true;
+		this.fileList.push(JSON.stringify(this.filesData));
+		console.log("New FileData:", this.fileList);
 		try {
 			const allValid = [...this.template.querySelectorAll(".validate")].reduce((validSoFar, inputCmp) => {
 				inputCmp.reportValidity();
@@ -136,10 +118,6 @@ export default class VoucherRequest extends LightningElement {
 			if (!allValid) {
 				console.log("Errors when a user didnt put value");
 			} else {
-				if (this.filesData == [] || this.filesData.length == 0) {
-					this.showToast("Error", "error", this.fileNotSelect);
-					return;
-				}
 				this.showSpinner = true;
 				this.isShowModal = false;
 				const examAttemptFields = {
@@ -157,12 +135,19 @@ export default class VoucherRequest extends LightningElement {
 					examAttemptRec: examAttemptFields
 				})
 					.then((result) => {
+						this.isShowExamModal = false;
 						console.log("result", result);
-						this.UploadFilest(result);
-                        //Nitin:Change here
-                        this.dispatchEvent(new CustomEvent('changeStatus', {
-                            detail: {this.userCredentialId, this.credentialStatus}
-                          }));
+						if (this.fileList.length > 0) {
+							this.UploadFilest(result);
+						}
+						//Nitin:Change here
+						let recId = this.userCredentialId;
+						let statusToBeUpdated = this.credentialStatus;
+						this.dispatchEvent(
+							new CustomEvent("success", {
+								detail: { recId, statusToBeUpdated }
+							})
+						);
 						this.dispatchEvent(
 							new ShowToastEvent({
 								title: "Success",
@@ -170,6 +155,8 @@ export default class VoucherRequest extends LightningElement {
 								message: this.sucessmsg
 							})
 						);
+						this.displayExamDetailsModal = false;
+						this.showSpinner = false;
 					})
 					.catch((error) => {
 						console.log("Error", error);
@@ -188,39 +175,27 @@ export default class VoucherRequest extends LightningElement {
 		console.log("inside file upload");
 		methodVRC({
 			ParentRecId: Cid,
-			filedata: this.Filelist
+			filedata: this.fileList
 		})
 			.then((result) => {
+				this.isShowExamModal = false;
 				console.log("inside uploading...", result);
 				if (result == "Success") {
-					this.dispatchEvent(
-						new ShowToastEvent({
-							title: "Success",
-							variant: "success",
-							message: this.fileUploadMsg
-						})
-					);
-					this.isShowModal = false;
 				}
 			})
 			.catch((error) => {
 				alert("error");
 				console.log("error ", error);
-			})
-			.finally(() => (this.showSpinner = false));
-		this.displayExamDetailsModal = false;
+			});
 	}
-
 	/* 
       @description - removeReceiptImage this is used to delete the selected document files from UI   ;
          @param-  Did'nt recieve any parameter
     */
-
 	removeReceiptImage(event) {
 		let index = event.currentTarget.dataset.id;
 		this.filesData.splice(index, 1);
 	}
-
 	/* 
       @description - closeModal this is used to close the modal from UI   ;
          @param-  Did'nt recieve any parameter
@@ -228,13 +203,13 @@ export default class VoucherRequest extends LightningElement {
 	closeModal() {
 		this.displayExamDetailsModal = false;
 	}
-
 	/* 
       @description - showModalOnNo this is used to open  the Exam Details  modal on value no from UI;
          @param-  Did'nt recieve any parameter
     */
 	showModalOnNo() {
 		this.statusValue = "Voucher Assigned";
+		// this.isShowModal = false;
 		this.displayExamDetailsModal = true;
 	}
 
@@ -245,6 +220,7 @@ export default class VoucherRequest extends LightningElement {
 	showModalOnYes() {
 		this.statusValue = "Voucher Requested";
 		this.displayExamDetailsModal = true;
+		// this.isShowModal = false;
 	}
 	/* 
       @description - showExamDetailsModal this is used to open Exam details  modal from UI;
@@ -260,6 +236,7 @@ export default class VoucherRequest extends LightningElement {
     */
 	closeFirstModal(event) {
 		this.isShowModal = false;
+		this.closeEvent();
 	}
 	/* 
       @description - closeSecondModal this is used to close the second modal from UI   ;
@@ -268,5 +245,18 @@ export default class VoucherRequest extends LightningElement {
 	closeSecondModal(event) {
 		this.displayExamDetailsModal = false;
 		this.isShowModal = false;
+		this.closeEvent();
+	}
+
+	/* 
+      @description - fires event on close of any modal to reset voucher request flag
+    */
+	closeEvent() {
+		let recId = this.userCredentialId;
+		this.dispatchEvent(
+			new CustomEvent("close", {
+				detail: { recId }
+			})
+		);
 	}
 }

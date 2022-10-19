@@ -19,6 +19,8 @@ export default class CredentialTracking extends LightningElement {
 	@track countRec;
 	@track showIcon = false;
 	@track emptyRecords = true;
+	@track showVoucherReq = false;
+	@track credObj = {};
 
 	/*
 		@description    :   Wire service is used to get metadata for a single object
@@ -65,39 +67,44 @@ export default class CredentialTracking extends LightningElement {
 		@description    :   Displays all active user credential records when status value is not equal to completed
 		@param          :   event target value & event target title
 	*/
-	handleClick1(event) {
-		updateUserCredential({ id: event.target.value, status: event.target.title })
-			.then((result) => {
-				if (result === true) {
-					getUserCredentials({ userId: this.userIds })
-						.then((rs) => {
-							this.totalUserCredentials = rs;
-							this.totalUserCredentials.forEach((e) => {
-								if (e.Status__c === "Ready") {
-									this.template
-										.querySelector("c-voucher-request")
-										.handleCredentialName(e.Credential__r.Name);
-									this.template.querySelector("c-voucher-request").handleCredentialId(e.Id);
-								}
-							});
-							this.processStatusValues();
-						})
-						.catch((error) => {
-							console.log("error" + JSON.stringify(error));
-						});
-				}
-			})
-			.catch((error) => {
-				console.log("error" + JSON.stringify(error));
-			});
-	}
+	// handleClick1(event) {
+	// 	updateUserCredential({ id: event.target.value, status: event.target.title })
+	// 		.then((result) => {
+	// 			if (result === true) {
+	// 				getUserCredentials({ userId: this.userIds })
+	// 					.then((rs) => {
+	// 						this.totalUserCredentials = rs;
+	// 						this.totalUserCredentials.forEach((e) => {
+	// 							if (e.Status__c === "Ready") {
+	// 								this.template
+	// 									.querySelector("c-voucher-request")
+	// 									.handleCredentialName(e.Credential__r.Name);
+	// 								this.template.querySelector("c-voucher-request").handleCredentialId(e.Id);
+	// 							}
+	// 						});
+	// 						this.processStatusValues();
+	// 					})
+	// 					.catch((error) => {
+	// 						console.log("error" + JSON.stringify(error));
+	// 					});
+	// 			}
+	// 		})
+	// 		.catch((error) => {
+	// 			console.log("error" + JSON.stringify(error));
+	// 		});
+	// }
 
 	handleClick(event) {
 		let credName = event.target.name;
 		let credId = event.target.value;
 		let credStatus = event.target.title;
+		this.credObj = { credName: credName, credId: credId, credStatus: credStatus };
+		console.log("credStatus:", credStatus);
 		if (credStatus === "Ready") {
-			this.template.querySelector("c-voucher-request").handleCredentialInput(credName, credId, credStatus);
+			let index = this.userCredentialsData.findIndex((x) => x.Id === credId);
+			this.userCredentialsData[index].showVoucherReq = true;
+			// this.showVoucherReq = true;
+			// this.template.querySelector("c-voucher-request").handleCredentialInput(this.credObj);
 			// this.template.querySelector("c-voucher-request").handleCredentialId(credId);
 		} else if (credStatus !== "Completed") {
 			this.updateStatus(credId, credStatus);
@@ -105,6 +112,8 @@ export default class CredentialTracking extends LightningElement {
 	}
 
 	updateStatus(recordId, status) {
+		console.log("recordId:", recordId);
+		console.log("status: ", status);
 		updateUserCredential({ id: recordId, status: status })
 			.then((result) => {
 				if (result) {
@@ -121,6 +130,18 @@ export default class CredentialTracking extends LightningElement {
 			.catch((error) => {
 				console.error(error.message);
 			});
+	}
+
+	handleSuccess(event) {
+		console.log("i am in handle success");
+		this.updateStatus(event.detail.recId, event.detail.statusToBeUpdated);
+		let index = this.userCredentialsData.findIndex((x) => x.Id === event.detail.recId);
+		this.userCredentialsData[index].showVoucherReq = false;
+	}
+
+	resetVoucherReq(event) {
+		let index = this.userCredentialsData.findIndex((x) => x.Id === event.detail.recId);
+		this.userCredentialsData[index].showVoucherReq = false;
 	}
 	/*
 		@description    :   Update status value
