@@ -11,6 +11,7 @@ export default class QuickLinkComponent extends NavigationMixin(LightningElement
     mapData = [];
     @wire(MessageContext)
     context;
+    //wired method to get the data from Metadata that's been configured for Section,Button Names & respective functionalities
     @wire(metaDataList)  
     wiredRecs( value ) {
 
@@ -32,13 +33,17 @@ export default class QuickLinkComponent extends NavigationMixin(LightningElement
         }
 
     } 
-
+//Navigation handler to redirect respective functions based on the Metadata Configration
     handleNavigation(event) {
-
+        //On clicking of the button,the URL to which it needs to be redirected.
         let url=event.currentTarget.dataset.url;
+        //Type of Navigation URL,Component 
         let navigationType=event.currentTarget.dataset.navigationtype;
+        //Applicable only for Component whether redirection should be Modal Poup/Tab Navigation
         let componentActionType=event.currentTarget.dataset.actiontype;
+        //Name of the component for redirection
         let componentName=event.currentTarget.dataset.componentname;
+        //Applicable if the navigation is TAB type
         let tabName=event.currentTarget.dataset.tabName;
         switch (navigationType)
         {
@@ -70,14 +75,17 @@ export default class QuickLinkComponent extends NavigationMixin(LightningElement
         
        
     }
+    //Navigation to WebPage
     navigateToWebPage(url) {
         this[NavigationMixin.Navigate]({
             "type": "standard__webPage",
             "attributes": {
+                //URL String
                 "url":url 
             }
         });
     }
+     //Navigation to Tab
     navigateToTab(tabName) {
         this[NavigationMixin.Navigate]({
             type: 'standard__navItemPage',
@@ -87,6 +95,7 @@ export default class QuickLinkComponent extends NavigationMixin(LightningElement
             },
         });
     }
+    //Navigation to Component
     navigateToComponent(componentName) {
         let cmpDef = {
           componentDef: componentName
@@ -100,12 +109,12 @@ export default class QuickLinkComponent extends NavigationMixin(LightningElement
           }
         });
       }
-
+//Navigation to Component through Modal Popip
       navigateToModal(componentName) {
-
         let payload = {
             component: componentName
        };
+       //Event published through LMS where Aura component subscribes to invoke the modal.
         publish(this.context, modalMC, payload);
       }
 }
