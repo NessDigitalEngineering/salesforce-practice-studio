@@ -140,7 +140,6 @@ export default class VoucherRequest extends LightningElement {
 						if (this.fileList.length > 0) {
 							this.UploadFilest(result);
 						}
-						//Nitin:Change here
 						let recId = this.userCredentialId;
 						let statusToBeUpdated = this.credentialStatus;
 						this.dispatchEvent(
@@ -209,7 +208,6 @@ export default class VoucherRequest extends LightningElement {
     */
 	showModalOnNo() {
 		this.statusValue = "Voucher Assigned";
-		// this.isShowModal = false;
 		this.displayExamDetailsModal = true;
 	}
 
@@ -220,7 +218,6 @@ export default class VoucherRequest extends LightningElement {
 	showModalOnYes() {
 		this.statusValue = "Voucher Requested";
 		this.displayExamDetailsModal = true;
-		// this.isShowModal = false;
 	}
 	/* 
       @description - showExamDetailsModal this is used to open Exam details  modal from UI;
