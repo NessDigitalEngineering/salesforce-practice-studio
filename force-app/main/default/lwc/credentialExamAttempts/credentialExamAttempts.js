@@ -9,20 +9,20 @@ import Exam_Date_Time from "@salesforce/label/c.credentialExamAttempt_Exam_Date_
 import Status from "@salesforce/label/c.credentailExamAttempt_Status";
 import ExamAttempt_EmptyMsg from "@salesforce/label/c.ExamAttempt_EmptyMsg";
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
-import LOCALE from '@salesforce/i18n/Locale';
-import TIME_ZONE from '@salesforce/i18n/TimeZone';
+import LOCALE from '@salesforce/i18n/locale';
+import TIME_ZONE from '@salesforce/i18n/timeZone';
 import updateCredExempt from '@salesforce/apex/CredentialExamAttemptController.updateCredExempt';
 import uploadReciept from '@salesforce/apex/CredentialExamAttemptController.uploadReciept';
 import getExamDetails from '@salesforce/apex/CredentialExamAttemptController.getExamDetails';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-const MAX_FILE_SIZE = 5000000;
+const MAX_FILE_SIZE = 50000000;
 export default class CredentialExamAttempts extends LightningElement { 
-    @track TimeZone = TIME_ZONE;
-    @track Locale = LOCALE;
+    @track timeZone = TIME_ZONE;
+    @track locale = LOCALE;
     @track searchRecords;
     userIds = USER_ID;
     title;
-    @track Filelist = [];
+    @track Fileslist = [];
     Icn = TasksIcon;
     @track userCredentialsData;
     @track countRec;
@@ -30,11 +30,17 @@ export default class CredentialExamAttempts extends LightningElement {
     @track emptyRecords = true;
     @track editDate = false;
     @track editExamDate = false;
+    @track exmDate;
+    @track credExamAttemptId;
     @track isShowExamModal = false;
+    @track examAttemptIdForModal;
     dt;
+    @track credentialName;
     @track examId;
-    @track filesData = [];
-    /* 
+    @track examname;
+    @track examComments;
+    @track filesDatas = [];
+    /* filesDataslist
      @description - this method is used to fetch the credenntial Id
       @param - ExamId.
     */
@@ -43,6 +49,8 @@ export default class CredentialExamAttempts extends LightningElement {
         console.log('Function Executed;--');
         if (result.data) {
             console.log('result', result.data);
+            this.examname = result.data.ExamId;
+            this.credentialName = result.data.credentialId;
         }
         else {
             console.log('error', result.error);
@@ -120,9 +128,8 @@ export default class CredentialExamAttempts extends LightningElement {
             this.searchRecords.forEach(Element => {
                 if (Element.Id == event.target.value) {
                     console.log('Inside If');
-                    this.filesData = [];
-                    this.Filelist =[];
-                     
+                    this.filesDatas = [];
+                    this.Fileslist = [];
                     this.isShowExamModal = true;
                     console.log('showModal', this.isShowExamModal);
                 }
@@ -152,7 +159,7 @@ export default class CredentialExamAttempts extends LightningElement {
    */
     removeReceiptImage(event) {
         let index = event.currentTarget.dataset.id;
-        this.filesData.splice(index, 1);
+        this.filesDatas.splice(index, 1);
     }
 
     /* 
@@ -174,12 +181,12 @@ export default class CredentialExamAttempts extends LightningElement {
                     let reader = new FileReader();
                     console.log('reader:', reader);
                     reader.onload = e => {
-                        let fileContents = reader.result.split(',')[1]
-                        this.filesData.push({ 'fileName': file.name, 'fileContent': fileContents });
+                        var fileContents = reader.result.split(',')[1]
+                        this.filesDatas.push({ 'fileName': file.name, 'fileContent': fileContents });
                     };
                     reader.readAsDataURL(file);
                 }
-                console.log('Files Data: ', this.filesData);
+                console.log('Files : ', this.filesDatas);
             }
         } catch (error) {
             console.log('error', error);
@@ -188,23 +195,23 @@ export default class CredentialExamAttempts extends LightningElement {
     /* 
     @description -this function is used to update exam details and upload files.
    */
-    saveNewRecord() {
-        this.Filelist.push(JSON.stringify(this.filesData));
-        console.log('New FileData:', this.Filelist);
+    saveRecord() {
+        this.Fileslist.push(JSON.stringify(this.filesDatas));
+        console.log('New FilesData:', this.Fileslist);
         try {
             //validate
-            const allValid = [
+            const allValids = [
                 ...this.template.querySelectorAll('.validate'),
             ].reduce((validSoFar, inputCmp) => {
                 inputCmp.reportValidity();
                 return validSoFar && inputCmp.checkValidity();
             }, true);
-            if (!allValid) {
+            if (!allValids) {
 
-                console.log('Errors when a user didnt put value');
+                console.log('Errors when a user not put value');
             }
             else {
-                this.showSpinner = true;
+             
                 this.isShowModal = false;
                 const examAttemptFields = {
                     'sobjectType': 'Credential_Exam_Attempt__c',
@@ -214,7 +221,7 @@ export default class CredentialExamAttempts extends LightningElement {
                 }
                 console.log('examAttemptRec---' + JSON.stringify(examAttemptFields));
 
-                console.log('jsonData:', JSON.stringify(this.filesData));
+                console.log('jsonData:', JSON.stringify(this.filesDatas));
                 updateCredExempt({
                     examAttemptRec: examAttemptFields
                 })
@@ -237,6 +244,7 @@ export default class CredentialExamAttempts extends LightningElement {
             }
         } catch (error) {
             console.log('error', error);
+
         }
     }
     /* 
@@ -247,7 +255,7 @@ export default class CredentialExamAttempts extends LightningElement {
         console.log('inside file upload');
         uploadReciept({
             parentId: Cid,
-            filedata: this.Filelist
+            filedata: this.Fileslist
 
         })
             .then((result) => {
@@ -267,9 +275,8 @@ export default class CredentialExamAttempts extends LightningElement {
             .catch((error) => {
                 console.log("error ", error);
                 this.isShowExamModal = false;
-            }).finally(() => this.showSpinner = false);
-        
-    }
+            })
+            }
     /* 
    @description -this function is used to showToast message.
   */
