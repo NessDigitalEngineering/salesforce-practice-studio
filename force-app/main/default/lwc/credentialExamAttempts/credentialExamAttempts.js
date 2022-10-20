@@ -43,10 +43,7 @@ export default class CredentialExamAttempts extends LightningElement {
     @track examname;
     @track examComments;
     @track filesDatas = [];
-    /* filesDataslist
-     @description - this method is used to fetch the credenntial Id
-      @param - ExamId.
-    */
+   
     label = {
         ExamAttemptID,
         User_Credential,
@@ -130,7 +127,7 @@ export default class CredentialExamAttempts extends LightningElement {
         }
     }
     /*
-        @description    :   This Method is to update the Exam Date and Time.
+        @description    :   This Method is used to enabled edit date field.
         @param          :   event
     */
     handleDateEdit(event) {
