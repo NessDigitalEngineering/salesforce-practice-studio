@@ -303,6 +303,13 @@
         <value>Exam Attempts- Pending Voucher Assignment</value>
     </labels>
     <labels>
+        <fullName>Exam_Plan</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Exam Plan</shortDescription>
+        <value>When are you planning for your exam?</value>
+    </labels>
+    <labels>
         <fullName>VoucherAssigned_ToastMessage</fullName>
         <language>en_US</language>
         <protected>true</protected>
