@@ -120,11 +120,12 @@
         <value>OK</value>
     </labels>
     <labels>
+
         <fullName>PreparationDocs_HelpText</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>PreparationDocs_HelpText</shortDescription>
-        <value>Please Upload Your Exam Reciept</value>
+        <value>Please Upload Preparation Proof</value>
     </labels>
     <labels>
         <fullName>Voucher_Comments</fullName>
