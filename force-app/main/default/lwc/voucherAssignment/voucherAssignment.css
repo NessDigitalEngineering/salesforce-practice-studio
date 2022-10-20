@@ -20,7 +20,9 @@
 .slds-box{
 	margin-bottom: 0.625rem;
 } 
-
+.setupHeight{
+	height: 20.25rem !important;
+}
 .setPopupWidth{
 	width: 100px;
 	height: 20.3rem !important;

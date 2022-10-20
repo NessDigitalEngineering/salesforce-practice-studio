@@ -8,7 +8,7 @@
                     </lightning-datatable>
                 </lightning-card>
                 <template if:true={isShowButton}>
-                <div class="slds-float_right">
+                <div class="slds-float_right slds-p-right_medium">
                     <lightning-button  variant="brand" disabled={disableButton} label="Assign" title="Primary action"
                     onclick={showModalBox} class="slds-m-right_x-medium slds-size_10-of-12 slds-float_right"></lightning-button>
                 </div>
@@ -30,7 +30,7 @@
     <div class="slds-modal__header">
       <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{credentialName}</h1>
     </div>
-    <div class="slds-modal__content slds-p-around_medium slds-var-p-around_small slds-scrollable_y" id="modal-content-id-1">
+    <div class="slds-modal__content  slds-scrollable_y setupHeight" id="modal-content-id-1">
         <lightning-datatable data-id="exmVoucher" sorted-by={sortBy} sorted-direction={sortDirection} onsort={handleSortdata} max-row-selection=1 key-field="id" onrowselection={handleClick} data={lstVoucher} columns={columns1}>
 </lightning-datatable>
     </div>
@@ -56,7 +56,7 @@
 </div>
 <div class="slds-modal__footer">
   <lightning-button  class=" slds-button " disabled={disableButton} label="Close" title="Close" onclick={hideDialog}></lightning-button>
-  <lightning-button variant="brand" class=" slds-button " disabled={disableButton} label="confirm" title="confirm" onclick={updateExmRecord}></lightning-button>
+  <lightning-button variant="brand" class=" slds-button " disabled={disableButton} label="Assign" title="Assign" onclick={updateExmRecord}></lightning-button>
 </div>
 </div>
 </section>
