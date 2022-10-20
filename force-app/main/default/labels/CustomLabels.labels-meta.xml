@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
         <fullName>UserSearchLabel</fullName>
@@ -124,7 +124,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>PreparationDocs_HelpText</shortDescription>
-        <value>Please Upload Your Exam Reciept</value>
+        <value>Please Upload Preparation Proof</value>
     </labels>
     <labels>
         <fullName>Voucher_Comments</fullName>
@@ -300,6 +300,13 @@
         <protected>true</protected>
         <shortDescription>voucher Assignment</shortDescription>
         <value>Exam Attempts- Pending Voucher Assignment</value>
+    </labels>
+    <labels>
+        <fullName>Exam_Plan</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Exam Plan</shortDescription>
+        <value>When are you planning for your exam?</value>
     </labels>
     <labels>
         <fullName>VoucherAssigned_ToastMessage</fullName>
