@@ -19,6 +19,8 @@ export default class CredentialTracking extends LightningElement {
 	@track countRec;
 	@track showIcon = false;
 	@track emptyRecords = true;
+	@track showVoucherReq = false;
+	@track credObj = {};
 
 	/*
 		@description    :   Wire service is used to get metadata for a single object
@@ -62,34 +64,72 @@ export default class CredentialTracking extends LightningElement {
 	}
 
 	/*
-		@description    :   Displays all active user credential records when status value is not equal to completed
+		@description    :   Event handler to update the status of user credential record
 		@param          :   event target value & event target title
 	*/
+
 	handleClick(event) {
-		updateUserCredential({ id: event.target.value, status: event.target.title })
+		let credName = event.target.name;
+		let credId = event.target.value;
+		let credStatus = event.target.title;
+		this.credObj = { credName: credName, credId: credId, credStatus: credStatus };
+		if (credStatus === "Ready") {
+			let index = this.userCredentialsData.findIndex((x) => x.Id === credId);
+			this.userCredentialsData[index].showVoucherReq = true;
+		} else if (credStatus !== "Completed") {
+			this.updateStatus(credId, credStatus);
+		}
+	}
+
+	/*
+		@description    :  Updates the status of user credential record
+		@param  recordId :record id of User Credential record
+		@param status: record status to be updated
+	*/
+	updateStatus(recordId, status) {
+		updateUserCredential({ id: recordId, status: status })
 			.then((result) => {
-				if (result === true) {
+				if (result) {
 					getUserCredentials({ userId: this.userIds })
 						.then((rs) => {
 							this.totalUserCredentials = rs;
+<<<<<<< HEAD
 							this.totalUserCredentials.forEach((e) => {
 								if (e.Status__c === "Ready") {
 									this.template.querySelector('c-voucher-request').handleCredentialName(e.Credential__r.Name);
 									this.template.querySelector('c-voucher-request').handleCredentialId(e.Id);
 								}
 							});
+=======
+>>>>>>> origin/Pseudo-Develop
 							this.processStatusValues();
 						})
 						.catch((error) => {
-							console.log("error" + JSON.stringify(error));
+							console.error(error.message);
 						});
 				}
 			})
 			.catch((error) => {
-				console.log("error" + JSON.stringify(error));
+				console.error(error.message);
 			});
 	}
 	
+	/*
+		@description    :  Event handler on sucessfully creation of exam attempt record
+	*/
+	handleSuccess(event) {
+		this.updateStatus(event.detail.recId, event.detail.statusToBeUpdated);
+		let index = this.userCredentialsData.findIndex((x) => x.Id === event.detail.recId);
+		this.userCredentialsData[index].showVoucherReq = false;
+	}
+
+	/*
+		@description    : Resets voucher request flag
+	*/
+	resetVoucherReq(event) {
+		let index = this.userCredentialsData.findIndex((x) => x.Id === event.detail.recId);
+		this.userCredentialsData[index].showVoucherReq = false;
+	}
 	/*
 		@description    :   Update status value
 	*/
