@@ -25,7 +25,7 @@
 	white-space: normal;
 }
 .button {
-	padding-right: 0.5rem;
+    padding-right: 0.5rem;
 }
 .confirmationModal {
 	max-width: 20rem !important;
@@ -102,3 +102,27 @@
 .textAreaStyle {
 	margin-top: -1rem;
 }
+.headerText2{
+     
+    font-size:13px;
+    position: relative;
+    bottom: 5px;
+}
+.headerText1{
+    
+    font-size:13px;
+    position: relative;
+    bottom: 10px;
+}
+
+.headerText3{
+    font-size: 13px;
+    position: relative;
+    bottom: 5px;
+}
+.fup{
+    position: relative;
+    bottom:9px;
+
+	}
+	
