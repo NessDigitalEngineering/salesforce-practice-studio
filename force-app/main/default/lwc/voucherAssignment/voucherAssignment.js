@@ -43,6 +43,7 @@ export default class VoucherAssignment extends LightningElement {
     @track parentID;
     @track sortBy
     @track sortDirection;
+    @track cost;
 
     label = {
 		ExamAttempt_EmptyMsg,
@@ -97,7 +98,6 @@ export default class VoucherAssignment extends LightningElement {
     showModalBox() {  
         let selectedRec = this.template.querySelector("lightning-datatable").getSelectedRows();
         if(selectedRec.length > 0){
-            console.log('selectedRecord '+selectedRec);
             let credName = '';
             
             selectedRec.forEach(currentItem => {
@@ -125,6 +125,7 @@ export default class VoucherAssignment extends LightningElement {
         console.log(JSON.stringify(selectedRows));
                 for (let i of selectedRows.keys()) {
             this.exmVoucher=selectedRows[i].Id;
+            this.cost=selectedRows[i].Cost__c;
             if(selectedRows[i].Cost__c > this.credCost){
                 this.openDialog = true;
             }                    
@@ -135,7 +136,7 @@ export default class VoucherAssignment extends LightningElement {
         @description    :   This Method is to update the Exam Status and Exam Voucher record.      
     */
    updateExmRecord(event){
-
+      
     updateExamRecords({recordId : this.parentID, examVoucher: this.exmVoucher}).then((response)=>{
         const evt = new ShowToastEvent({
             message: this.label.VoucherAssigned_ToastMessage,

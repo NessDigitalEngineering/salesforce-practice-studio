@@ -1,7 +1,5 @@
-import { LightningElement, track } from "lwc";
+import { LightningElement, track, wire } from "lwc";
 import getActiveExamAttemptsForUser from "@salesforce/apex/CredentialExamAttemptController.getExamAttempts";
-import updateStatus from "@salesforce/apex/CredentialExamAttemptController.updateStatus";
-import updateDate from "@salesforce/apex/CredentialExamAttemptController.updateDate";
 import USER_ID from "@salesforce/user/Id";
 import Exam from "@salesforce/label/c.Exam";
 import ExamAttemptID from "@salesforce/label/c.CredentialExamAttempt_ExamAttemptID";
@@ -13,19 +11,42 @@ import ExamAttempt_EmptyMsg from "@salesforce/label/c.ExamAttempt_EmptyMsg";
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 import LOCALE from "@salesforce/i18n/locale";
 import TIME_ZONE from "@salesforce/i18n/timeZone";
+import updateCredExempt from "@salesforce/apex/CredentialExamAttemptController.updateCredExempt";
+import uploadReciept from "@salesforce/apex/CredentialExamAttemptController.uploadReciept";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import { subscribe, unsubscribe, APPLICATION_SCOPE, MessageContext } from "lightning/messageService";
+import refreshChannel from "@salesforce/messageChannel/RefreshComponent__c";
+
+const MAX_FILE_SIZE = 50000000;
+
+//import updateStatus from "@salesforce/apex/CredentialExamAttemptController.updateStatus";
+import updateDate from "@salesforce/apex/CredentialExamAttemptController.updateDate";
+
 export default class CredentialExamAttempts extends LightningElement {
-	userId = USER_ID;
 	@track timeZone = TIME_ZONE;
 	@track locale = LOCALE;
 	@track searchRecords;
+	userId = USER_ID;
 	title;
+	@track Fileslist = [];
 	Icn = TasksIcon;
+	@track userCredentialsData;
 	@track countRec;
 	@track showIcon = false;
 	@track emptyRecords = true;
-
+	@track editDate = false;
+	@track editExamDate = false;
+	@track exmDate;
+	@track credExamAttemptId;
+	@track isShowExamModal = false;
+	@track examAttemptIdForModal;
 	dt;
+	@track credentialName;
+	@track examId;
+	@track examname;
+	@track examComments;
+	@track filesDatas = [];
+	subscription = null;
 
 	label = {
 		ExamAttemptID,
@@ -36,22 +57,59 @@ export default class CredentialExamAttempts extends LightningElement {
 		Exam,
 		ExamAttempt_EmptyMsg
 	};
-
 	/*
         @description    :   This Method is to itrate data and show the buttons as per status.
         @param          :   event
     */
+	@wire(MessageContext)
+	messageContext;
+
 	connectedCallback() {
+		this.subscribeToMessageChannel();
+		this.getAllActiveExamAttemptUsers();
+	}
+
+	disconnectedCallback() {
+		this.unsubscribeToMessageChannel();
+	}
+
+	subscribeToMessageChannel() {
+		if (!this.subscription) {
+			this.subscription = subscribe(
+				this.messageContext,
+				refreshChannel,
+				(message) => this.handleMessage(message),
+				{ scope: APPLICATION_SCOPE }
+			);
+		}
+	}
+
+	handleMessage(message) {
+		if (message.refresh && message.userId === this.userId) {
+			this.getAllActiveExamAttemptUsers();
+		}
+	}
+
+	unsubscribeToMessageChannel() {
+		unsubscribe(this.subscription);
+		this.subscription = null;
+	}
+	/* 
+        @description - this method is used to get all Active Exam Attempt users.
+         @param - userId.
+       */
+	getAllActiveExamAttemptUsers() {
 		let srchRecords = [];
 		getActiveExamAttemptsForUser({ userId: this.userId })
 			.then((res) => {
 				this.searchRecords = res;
+				console.log("search records:", this.searchRecords);
 				for (const r of res) {
 					srchRecords.push(r);
 				}
 				for (let rs of srchRecords.keys()) {
 					srchRecords[rs].showButton = false;
-					srchRecords[rs].editExamDate = false;
+
 					if (srchRecords[rs].Status__c == "Voucher Assigned") {
 						srchRecords[rs].showButton = true;
 						srchRecords[rs].buttonName = "Exam Schedule";
@@ -61,8 +119,7 @@ export default class CredentialExamAttempts extends LightningElement {
 						srchRecords[rs].buttonName = "Upload Result";
 					}
 				}
-
-				console.log("SRCH" + JSON.stringify(this.searchRecords));
+				console.log("SRCH" + JSON.stringify(srchRecords));
 
 				this.countRec = res.length;
 				if (res.length === 0) {
@@ -80,31 +137,48 @@ export default class CredentialExamAttempts extends LightningElement {
 			});
 	}
 	/*
-        @description    :   This Method is to update the Status.
-        @param          :   event
-    */
+            @description    :   This Method is to update the open exam schedule .
+            @param          :   event
+        */
 	handleClick(event) {
-		updateStatus({ examAttemptRecordId: event.target.value, examStatus: "Exam Scheduled" })
-			.then((response) => {
-				console.log("Record updated successfully");
-			})
-			.catch((error) => {});
+		try {
+			this.examId = event.target.value;
+			this.credentialName = event.target.dataset.credentialname;
+			this.examname = event.target.dataset.name;
+			console.log("RecId on Button Click :", event.target.value);
+			this.searchRecords.forEach((Element) => {
+				if (Element.Id == event.target.value) {
+					console.log("Inside If");
+					this.filesDatas = [];
+					this.Fileslist = [];
+					this.isShowExamModal = true;
+					console.log("showModal", this.isShowExamModal);
+				}
+			});
+		} catch (error) {
+			console.log("error", error);
+		}
 	}
 	/*
-        @description    :   Enables edit for exam date
+        @description    :   This Method is used to enabled edit date field.
+        @param          :   event
     */
-
 	handleDateEdit(event) {
-		let credId = event.target.value;
-		let index = this.searchRecords.findIndex((x) => x.Id === credId);
-		console.log("index: ", index);
-		this.searchRecords[index].editExamDate = true;
-		// this.editExamDate = true;
-	}
+		try {
+			this.editExamDate = true;
+			let credId = event.target.value;
+			let index = this.searchRecords.findIndex((x) => x.Id === credId);
+			console.log("index: ", index);
 
+			this.searchRecords[index].editExamDate = true;
+		} catch (error) {
+			console.log("error", error);
+		}
+	}
 	/*
         @description    :   Saves any change in exam date
     */
+
 	handleActionCheck(event) {
 		try {
 			let credId = event.target.name;
@@ -130,13 +204,6 @@ export default class CredentialExamAttempts extends LightningElement {
 	}
 
 	/*
-        @description    :   Closes edit option
-    */
-	handleActionClose(event) {
-		this.disableEditOfDate(event.target.value);
-	}
-
-	/*
         @description    :  Helper method to target element of list
     */
 	disableEditOfDate(credId) {
@@ -144,10 +211,9 @@ export default class CredentialExamAttempts extends LightningElement {
 		console.log("index to disable: ", index);
 		this.searchRecords[index].editExamDate = false;
 	}
-
 	/*
     description: method to display notification as toast message
-  	*/
+  */
 	showNotification(title, message, variant) {
 		const evt = new ShowToastEvent({
 			title: title,
@@ -155,5 +221,157 @@ export default class CredentialExamAttempts extends LightningElement {
 			variant: variant
 		});
 		this.dispatchEvent(evt);
+	}
+	/*
+        @description    :   Closes edit option
+    */
+	handleActionClose(event) {
+		this.disableEditOfDate(event.target.value);
+	}
+
+	/* 
+        @description -this function is used to close modal.
+         @param - event.
+       */
+	hideModalBox(event) {
+		this.isShowExamModal = false;
+	}
+	/* 
+    @description -this function is used to remove the uploaded files.
+     @param - event.
+   */
+	removeReceiptImage(event) {
+		let index = event.currentTarget.dataset.id;
+		this.filesDatas.splice(index, 1);
+	}
+
+	/* 
+        @description -this function is used to  upload files.
+         @param - event.
+       */
+	handleFileUploaded(event) {
+		try {
+			console.log("File Upload :", event.target.files);
+			if (event.target.files.length > 0) {
+				console.log("Inside file upload");
+				for (let x of event.target.files) {
+					if (x.size > MAX_FILE_SIZE) {
+						this.showToast("Error!", "error", "File Limit Exceed");
+						return;
+					}
+					let file = x;
+					console.log("file:", file);
+					let reader = new FileReader();
+					console.log("reader:", reader);
+					reader.onload = (e) => {
+						let fileContents = reader.result.split(",")[1];
+						this.filesDatas.push({ fileName: file.name, fileContent: fileContents });
+					};
+					reader.readAsDataURL(file);
+				}
+				console.log("Files : ", this.filesDatas);
+			}
+		} catch (error) {
+			console.log("error", error);
+		}
+	}
+	/* 
+    @description -this function is used to update exam details and upload files.
+   */
+	saveRecord() {
+		this.Fileslist.push(JSON.stringify(this.filesDatas));
+		console.log("New FilesData:", this.Fileslist);
+		try {
+			//validate
+			const allValids = [...this.template.querySelectorAll(".validate")].reduce((validSoFar, inputCmp) => {
+				inputCmp.reportValidity();
+				return validSoFar && inputCmp.checkValidity();
+			}, true);
+			if (!allValids) {
+				console.log("Errors when a user not put value");
+			} else {
+				this.isShowModal = false;
+				const examAttemptFields = {
+					sobjectType: "Credential_Exam_Attempt__c",
+					Exam_Date_Time__c: this.examDate,
+					Id: this.examId,
+					Status__c: "Exam Scheduled"
+				};
+				console.log("examAttemptRec---" + JSON.stringify(examAttemptFields));
+
+				console.log("jsonData:", JSON.stringify(this.filesDatas));
+				updateCredExempt({
+					examAttemptRec: examAttemptFields
+				})
+					.then((result) => {
+						this.isShowExamModal = false;
+						console.log("result", result);
+						this.UploadFilest(result);
+						this.dispatchEvent(
+							new ShowToastEvent({
+								title: "Success",
+								variant: "success",
+								message: "success"
+							})
+						);
+						this.getAllActiveExamAttemptUsers();
+					})
+					.catch((error) => {
+						console.log("Error", error);
+						this.isShowExamModal = false;
+					});
+			}
+		} catch (error) {
+			console.log("error", error);
+		}
+	}
+	/* 
+       @description -this function is used to  upload files.
+       @param - examId
+      */
+	UploadFilest(Cid) {
+		console.log("inside file upload");
+		uploadReciept({
+			parentId: Cid,
+			filedata: this.Fileslist
+		})
+			.then((result) => {
+				this.isShowExamModal = false;
+				console.log("inside uploading...", result);
+				if (result == "success") {
+					this.dispatchEvent(
+						new ShowToastEvent({
+							title: "Success",
+							variant: "success",
+							message: "success"
+						})
+					);
+					this.getAllActiveExamAttemptUsers();
+				}
+			})
+			.catch((error) => {
+				console.log("error ", error);
+				this.isShowExamModal = false;
+			});
+	}
+	/* 
+   @description -this function is used to showToast message.
+  */
+	showToast(toastTitle, toastMessage, variant) {
+		const event = new ShowToastEvent({
+			title: toastTitle,
+			message: toastMessage,
+			variant: variant,
+			mode: "dismissable"
+		});
+		this.dispatchEvent(event);
+	}
+	/* 
+   @description -this function is used to handleDateChange.
+   @param - event
+  */
+	handleDateChange(event) {
+		this.examDate = event.target.value;
+		console.log("date---" + this.examDate);
 	}
 }

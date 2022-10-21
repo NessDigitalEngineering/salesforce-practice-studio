@@ -120,6 +120,7 @@
         <value>OK</value>
     </labels>
     <labels>
+
         <fullName>PreparationDocs_HelpText</fullName>
         <language>en_US</language>
         <protected>true</protected>
