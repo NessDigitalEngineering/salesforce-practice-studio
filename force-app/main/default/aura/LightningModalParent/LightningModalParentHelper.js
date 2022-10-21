@@ -3,9 +3,10 @@
 	openModalhandler : function(component, event, helper) {
         //Dynamic creation of lightningModalChild component and appending its markup in a div
         let componentName=component.get("v.componentName");
+        let headerText= component.get('v.headerText');
 		$A.createComponent( 'c:LightningModalChild', {
-                'componentName' : componentName
-            },
+                'componentName' : componentName,'headerText':headerText
+        },
             function(modalComponent, status, errorMessage) {
                 if (status === "SUCCESS") {
                     //Appending the newly created component in div
@@ -24,10 +25,11 @@
 	},
 
     messageHandler: function (component, event, helper) {
-        console.log('messageHandler');
         if (event != null) {
             const componentName = event.getParam('component');
+            const headerText= event.getParam('headerText');
             component.set("v.componentName", componentName);
+            component.set("v.headerText", headerText);
             let openModal = component.get('c.openModal');
             $A.enqueueAction(openModal);
 
