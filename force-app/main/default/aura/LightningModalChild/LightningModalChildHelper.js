@@ -5,6 +5,7 @@
 	},
     initHandler : function(component, event, helper) { 
         let componentName=component.get("v.componentName");
+        let headerText=component.get("v.headerText");
         $A.createComponent(componentName,{
             'componentName' : componentName
         },

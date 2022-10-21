@@ -1,6 +1,7 @@
 <aura:component >
 	<!-- Attriute to show header Text -->
 	<aura:attribute name="componentName" type="String"  />
+	<aura:attribute name="headerText" type="String" />
 	<aura:handler  name="init" value="{!this}" action="{!c.doinit}"/>
 	<!-- Modal Code -->
 	<div>
@@ -10,7 +11,7 @@
 				<header class="slds-modal__header" >
 					<h2 class="slds-card__header-title" aria-level="2">
 						<span class="slds-text-heading_small slds-truncate">
-							Credential Prioritization
+							{!v.headerText}
 						</span>
 					</h2>
 					<button 
@@ -24,7 +25,6 @@
 				</header>   	
 			     <!-- Main Body of Modal -->
 			      <div class="slds-modal__content"  aura:id="modalId">
-
 				  </div> 			
 			     <!-- Footer of Modal -->		    
 		    </div>
