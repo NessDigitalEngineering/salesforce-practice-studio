@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Component_Name__c</field>
-        <value xsi:type="xsd:string">c:credentialAssignment</value>
+        <value xsi:type="xsd:string">c:credentialPrioritize</value>
     </values>
     <values>
         <field>Navigation_Type__c</field>
