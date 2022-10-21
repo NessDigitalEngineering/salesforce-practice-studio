@@ -1,0 +1,32 @@
+.h2 {
+	text-align: center;
+}
+.icon {
+	padding-top: 5rem;
+	padding-left: 5rem;
+}
+.content {
+	overflow: auto;
+}
+.imgAdjustment {
+	padding-top: 4.5rem;
+}
+.setHeight {
+	height: 13.25rem !important;
+}
+.text-align {
+	white-space: normal;
+}
+.slds-box{
+	margin-bottom: 0.625rem;
+} 
+.setupHeight{
+	height: 20.25rem !important;
+}
+.setPopupWidth{
+	width: 100px;
+	height: 20.3rem !important;
+	position:fixed; 
+	top: calc(30% - 25px);
+	left: calc(40% - 50px);
+}
