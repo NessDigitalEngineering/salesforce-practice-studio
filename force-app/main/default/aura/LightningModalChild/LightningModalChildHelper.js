@@ -7,7 +7,7 @@
         let componentName=component.get("v.componentName");
         let headerText=component.get("v.headerText");
         $A.createComponent(componentName,{
-            'componentName' : componentName
+            'componentName' : componentName,'headerText':headerText
         },
         function(modalComponent, status, errorMessage) {
             if (status === "SUCCESS") {

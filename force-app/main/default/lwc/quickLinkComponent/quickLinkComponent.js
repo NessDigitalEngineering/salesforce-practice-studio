@@ -60,8 +60,6 @@ export default class QuickLinkComponent extends NavigationMixin(LightningElement
                 this.navigateToComponent(componentName);
                 else if(componentActionType=='Modal Popup')
                 this.navigateToModal(componentName,buttonLabel);
-                this.navigateToModal(componentName);
-
                 break;
                 }
             case 'Tab':
@@ -117,11 +115,7 @@ export default class QuickLinkComponent extends NavigationMixin(LightningElement
       navigateToModal(componentName,buttonLabel) {
         let payload = {
             component: componentName,headerText:buttonLabel
-      navigateToModal(componentName) {
-        let payload = {
-            component: componentName
-
-       };
+        };
        //Event published through LMS where Aura component subscribes to invoke the modal.
         publish(this.context, modalMC, payload);
       }
