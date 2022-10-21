@@ -8,6 +8,11 @@
 			
 		    <div class="slds-modal__container">	 
 				<header class="slds-modal__header" >
+					<h2 class="slds-card__header-title" aria-level="2">
+						<span class="slds-text-heading_small slds-truncate">
+							Credential Prioritization
+						</span>
+					</h2>
 					<button 
 					class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
 					onclick="{!c.closeModal}">
