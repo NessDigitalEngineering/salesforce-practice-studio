@@ -11,15 +11,14 @@ public with sharing class CredentialExamAttemptController{
       */ 
     @AuraEnabled
     public static List<Credential_Exam_Attempt__c> getExamAttempts(String userId)
-    { 
+    {
         try {
         CredentialExamAttemptService ceas = new CredentialExamAttemptService();
         List<Credential_Exam_Attempt__c> totalExamAttempts = ceas.getActiveExamAttemptsForUser(userId);
         return totalExamAttempts;  
-            
-        } catch (Exception e) {
-			throw new AuraHandledException(e.getMessage());
-		}  
+        } catch (AuraHandledException  ex) {
+            throw ex;
+        }   
     } 
  /*******************************************************************************************************
       * @description Returns Credentials Exam attempts that are in progress
@@ -31,9 +30,9 @@ public with sharing class CredentialExamAttemptController{
         try {
             CredentialExamAttemptService ceas = new CredentialExamAttemptService();
             ceas.updateExamStatus(examAttemptRecordId,examStatus); 
-        } catch (Exception e) {
-			throw new AuraHandledException(e.getMessage());
-		}    
+        } catch (AuraHandledException  ex) {
+            throw ex;
+        }     
     } 
 
      /*******************************************************************************************************

@@ -1,4 +1,4 @@
-import { api, LightningElement, track } from "lwc";
+import { api, LightningElement, track, wire } from "lwc";
 import getUserCredentials from "@salesforce/apex/CredentialAssignmentController.getUserCredentials";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import insertCredAssignments from "@salesforce/apex/CredentialAssignmentController.insertCredAssignments";
@@ -14,6 +14,8 @@ import EmptyMsg from "@salesforce/label/c.CredentailAssignment_EmptyMsg1";
 import SuccessMsg from "@salesforce/label/c.CredentailAssignment_Success";
 import Cancel from "@salesforce/label/c.Cancel";
 import OK from "@salesforce/label/c.OK";
+import { publish, MessageContext } from "lightning/messageService";
+import refreshChannel from "@salesforce/messageChannel/RefreshComponent__c";
 
 const cols = [
 	{
@@ -99,12 +101,16 @@ export default class CredentialAssignment extends LightningElement {
 	@track earnedCredentialsTitle = this.label.EarnedCredentials;
 	assignedCreds = [];
 
+	@wire(MessageContext)
+	messageContext;
+
 	/*
 		@description: Event handler for user selection
 	*/
 	handleUserName(event) {
 		try {
 			this.selectedUserName = event.detail.currentRecId;
+			console.log("userid: ", this.selectedUserName);
 			if (this.selectedUserName !== "") {
 				this.getdata();
 			} else {
@@ -355,7 +361,8 @@ export default class CredentialAssignment extends LightningElement {
 						variant: this.constant.VAR_SUCCESS
 					})
 				);
-
+				let payload = { refresh: true, userId: this.selectedUserName };
+				publish(this.messageContext, refreshChannel, payload);
 				this.template.querySelector("c-Credential-Search").resetCredentials();
 
 				this.disableButton = true;
