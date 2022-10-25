@@ -13,10 +13,8 @@ public with sharing class CredentialExamAttemptController{
     public static List<Credential_Exam_Attempt__c> getExamAttempts(String userId)
     { 
         try {
-            system.debug('==>userId'+userId);
         CredentialExamAttemptService ceas = new CredentialExamAttemptService();
         List<Credential_Exam_Attempt__c> totalExamAttempts = ceas.getActiveExamAttemptsForUser(userId);
-        system.debug('==>totalExamAttempts'+totalExamAttempts);
         return totalExamAttempts;  
             
         } catch (Exception e) {
@@ -53,5 +51,21 @@ public with sharing class CredentialExamAttemptController{
 		}
     } 
 
-   
+   /*******************************************************************************************************
+      * @description Returns Credentials Exam attempts that are in progress
+      * @param userId SF id of user
+      * @return List of Credentials Exam attempts
+      */ 
+      @AuraEnabled
+      public static List<Credential_Exam_Attempt__c> getUploadResultsList(String recordId)
+      { 
+          try {
+          CredentialExamAttemptService ceas = new CredentialExamAttemptService();
+          List<Credential_Exam_Attempt__c> totalExamAttempts = ceas.getUploadResultRecord(recordId);
+          return totalExamAttempts;  
+              
+          } catch (Exception e) {
+        throw new AuraHandledException(e.getMessage());
+      }  
+      } 
 }

@@ -9,11 +9,14 @@ import User_Credential from "@salesforce/label/c.credentailExamAttempt_User_Cred
 import Credential_Name from "@salesforce/label/c.credentialExamAttempt_Credential_Name";
 import Exam_Date_Time from "@salesforce/label/c.credentialExamAttempt_Exam_Date_Time";
 import Status from "@salesforce/label/c.credentailExamAttempt_Status";
+import Upload_Result from "@salesforce/label/c.Upload_Result";
 import ExamAttempt_EmptyMsg from "@salesforce/label/c.ExamAttempt_EmptyMsg";
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 import LOCALE from "@salesforce/i18n/locale";
 import TIME_ZONE from "@salesforce/i18n/timeZone";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import getUploadResultsList from "@salesforce/apex/CredentialExamAttemptController.getUploadResultsList";
+
 export default class CredentialExamAttempts extends LightningElement {
 	userId = USER_ID;
 	@track timeZone = TIME_ZONE;
@@ -24,8 +27,9 @@ export default class CredentialExamAttempts extends LightningElement {
 	@track countRec;
 	@track showIcon = false;
 	@track emptyRecords = true;
-
+    @track displayUploadResultModal = false;
 	dt;
+	@track response;
 
 	label = {
 		ExamAttemptID,
@@ -34,6 +38,7 @@ export default class CredentialExamAttempts extends LightningElement {
 		Exam_Date_Time,
 		Status,
 		Exam,
+		Upload_Result,
 		ExamAttempt_EmptyMsg
 	};
 
@@ -84,6 +89,8 @@ export default class CredentialExamAttempts extends LightningElement {
         @param          :   event
     */
 	handleClick(event) {
+			this.displayUploadResultModal = true;
+			
 		updateStatus({ examAttemptRecordId: event.target.value, examStatus: "Exam Scheduled" })
 			.then((response) => {
 				console.log("Record updated successfully");
@@ -156,4 +163,21 @@ export default class CredentialExamAttempts extends LightningElement {
 		});
 		this.dispatchEvent(evt);
 	}
+
+	/* 
+      @description - closeModal this is used to close the modal from UI   ;
+         @param-  Did'nt recieve any parameter
+    */
+		 closeModal() {
+			this.displayUploadResultModal = false;
+		}
+
+		uploadResult(event){
+			let credId =event.target.value;
+			getUploadResultsList({recordId: credId}).then((res) => {
+				this.response = res;
+			})
+			.catch((error) => {});
+		}
+
 }
