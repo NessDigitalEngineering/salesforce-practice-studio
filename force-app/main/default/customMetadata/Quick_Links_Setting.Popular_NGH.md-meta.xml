@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>Redirection_URL__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">https://github.com/NessDigitalEngineering</value>
     </values>
     <values>
         <field>Section_Name__c</field>

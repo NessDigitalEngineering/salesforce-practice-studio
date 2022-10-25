@@ -7,10 +7,12 @@ import USER_ID from "@salesforce/user/Id";
 import CompTitle from "@salesforce/label/c.CredentialTracking_Title";
 import EmptyMsg from "@salesforce/label/c.CredentailAssignment_EmptyMsg";
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
+import { subscribe, unsubscribe, APPLICATION_SCOPE, MessageContext } from "lightning/messageService";
+import refreshChannel from "@salesforce/messageChannel/RefreshComponent__c";
 
 export default class CredentialTracking extends LightningElement {
 	label = { CompTitle, EmptyMsg };
-	userIds = USER_ID;
+	userId = USER_ID;
 	title;
 	Icn = TasksIcon;
 	statusValuesReady = false;
@@ -21,7 +23,10 @@ export default class CredentialTracking extends LightningElement {
 	@track emptyRecords = true;
 	@track showVoucherReq = false;
 	@track credObj = {};
+	subscription = null;
 
+	@wire(MessageContext)
+	messageContext;
 	/*
 		@description    :   Wire service is used to get metadata for a single object
 		@param          :   passing object(User_Credential__c) API name
@@ -49,11 +54,42 @@ export default class CredentialTracking extends LightningElement {
 
 	/*
 		@description    :   Displays logged IN user current assignments.
-		@param          :   userIds
+		@param          :   userId
 	*/
 
 	connectedCallback() {
-		getUserCredentials({ userId: this.userIds })
+		this.subscribeToMessageChannel();
+		this.getUserCredentials();
+	}
+
+	disconnectedCallback() {
+		this.unsubscribeToMessageChannel();
+	}
+
+	subscribeToMessageChannel() {
+		if (!this.subscription) {
+			this.subscription = subscribe(
+				this.messageContext,
+				refreshChannel,
+				(message) => this.handleMessage(message),
+				{ scope: APPLICATION_SCOPE }
+			);
+		}
+	}
+
+	handleMessage(message) {
+		if (message.refresh && message.userId === this.userId) {
+			this.getUserCredentials();
+		}
+	}
+
+	unsubscribeToMessageChannel() {
+		unsubscribe(this.subscription);
+		this.subscription = null;
+	}
+
+	getUserCredentials() {
+		getUserCredentials({ userId: this.userId })
 			.then((res) => {
 				this.totalUserCredentials = res;
 				this.processStatusValues();
@@ -90,7 +126,7 @@ export default class CredentialTracking extends LightningElement {
 		updateUserCredential({ id: recordId, status: status })
 			.then((result) => {
 				if (result) {
-					getUserCredentials({ userId: this.userIds })
+					getUserCredentials({ userId: this.userId })
 						.then((rs) => {
 							this.totalUserCredentials = rs;
 <<<<<<< HEAD

@@ -19,6 +19,8 @@
         <members>ExamVoucherTriggerHandler</members>
         <members>FilesUploadService</members>
         <members>FilesUploadServiceTest</members>
+        <members>QuickLinkController</members>
+        <members>QuickLinkControllerTest</members>
         <members>TestDataFactory</members>
         <members>TriggerHandler</members>
         <members>TriggerHandler_Test</members>
@@ -26,12 +28,23 @@
         <members>UserCredentialServiceTest</members>
         <members>UserSearchController</members>
         <members>UserSearchControllerTest</members>
+        <members>VoucherAssignmentController</members>
+        <members>VoucherAssignmentService</members>
         <members>VoucherRequestController</members>
         <name>ApexClass</name>
     </types>
     <types>
         <members>ExamVoucherTrigger</members>
         <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>Credential_Exam_Attempt__c.Voucher_Request_Approval</members>
+        <name>ApprovalProcess</name>
+    </types>
+    <types>
+        <members>LightningModalChild</members>
+        <members>LightningModalParent</members>
+        <name>AuraDefinitionBundle</name>
     </types>
     <types>
         <members>Credential_Exam_Attempt__c.Credential_Exam_Attempt_Compact_Layout</members>
@@ -112,6 +125,14 @@
         <members>Practice_Studio_Setting__mdt.Algorithm_Name__c</members>
         <members>Practice_Studio_Setting__mdt.Initialization_Vector__c</members>
         <members>Practice_Studio_Setting__mdt.Private_Key__c</members>
+        <members>Quick_Links_Setting__mdt.Button_Label__c</members>
+        <members>Quick_Links_Setting__mdt.Component_Action_Type__c</members>
+        <members>Quick_Links_Setting__mdt.Component_Name__c</members>
+        <members>Quick_Links_Setting__mdt.Navigation_Type__c</members>
+        <members>Quick_Links_Setting__mdt.Order__c</members>
+        <members>Quick_Links_Setting__mdt.Redirection_URL__c</members>
+        <members>Quick_Links_Setting__mdt.Section_Name__c</members>
+        <members>Quick_Links_Setting__mdt.Tab_Name__c</members>
         <members>User.Employee_ID__c</members>
         <members>User.Navigator_Expertise__c</members>
         <members>User.Region__c</members>
@@ -156,6 +177,7 @@
         <members>Earned_Credentials</members>
         <members>Exam</members>
         <members>ExamAttempt_EmptyMsg</members>
+        <members>Exam_Plan</members>
         <members>FileSizeErrorLimitMessage</members>
         <members>FileUploadSuccessFully</members>
         <members>FilesnotselectedErrorMessage</members>
@@ -166,6 +188,7 @@
         <members>Select_Credentials</members>
         <members>Select_User</members>
         <members>UserSearchLabel</members>
+        <members>VoucherAssigned_ToastMessage</members>
         <members>VoucherRequestDoYouNeedVoucher</members>
         <members>Voucher_Comments</members>
         <members>Voucher_CredentialName</members>
@@ -186,6 +209,14 @@
     </types>
     <types>
         <members>Practice_Studio_Setting.AES_128_Algorithm</members>
+        <members>Quick_Links_Setting.PS_CA</members>
+        <members>Quick_Links_Setting.PS_CP</members>
+        <members>Quick_Links_Setting.Popular_NGH</members>
+        <members>Quick_Links_Setting.Popular_NM</members>
+        <members>Quick_Links_Setting.Popular_NSC</members>
+        <members>Quick_Links_Setting.Popular_PC</members>
+        <members>Quick_Links_Setting.Popular_PLC</members>
+        <members>Quick_Links_Setting.Popular_TH</members>
         <name>CustomMetadata</name>
     </types>
     <types>
@@ -193,6 +224,7 @@
         <members>Credential__c</members>
         <members>Exam_Voucher__c</members>
         <members>Practice_Studio_Setting__mdt</members>
+        <members>Quick_Links_Setting__mdt</members>
         <members>User_Credential__c</members>
         <name>CustomObject</name>
     </types>
@@ -211,6 +243,8 @@
     <types>
         <members>Practice_Studio</members>
         <members>Practice_Studio/Credential_Assigned_Template</members>
+        <members>Practice_Studio/Voucher_Request_Approval</members>
+        <members>Practice_Studio/Voucher_Request_Declined</members>
         <name>EmailTemplate</name>
     </types>
     <types>
@@ -219,6 +253,8 @@
         <name>FlexiPage</name>
     </types>
     <types>
+        <members>Credential_Exam_Attempt_Record_Trigger</members>
+        <members>Initiate_Voucher_Approval_Process</members>
         <members>Post_Creation_Actions_for_User_Credentials</members>
         <members>Update_User_Credentials_Before_Saving</members>
         <name>Flow</name>
@@ -246,9 +282,16 @@
         <members>credentialSearch</members>
         <members>credentialTracking</members>
         <members>earnedCredentials</members>
+        <members>quickLinkComponent</members>
         <members>userSearch</members>
+        <members>voucherAssignment</members>
         <members>voucherRequest</members>
         <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>ModalMessageChannel</members>
+        <members>RefreshComponent</members>
+        <name>LightningMessageChannel</name>
     </types>
     <types>
         <members>Credential_Exam_Attempt__c.All</members>
@@ -272,12 +315,20 @@
         <name>StaticResource</name>
     </types>
     <types>
+        <members>Credential_Exam_Attempt__c</members>
         <members>User_Credential__c</members>
         <name>Workflow</name>
     </types>
     <types>
+        <members>Credential_Exam_Attempt__c.Approval_Notification</members>
+        <members>Credential_Exam_Attempt__c.Decline_Notification</members>
         <members>User_Credential__c.Credential_Assigned</members>
         <name>WorkflowAlert</name>
+    </types>
+    <types>
+        <members>Credential_Exam_Attempt__c.Update_Approval_Status</members>
+        <members>Credential_Exam_Attempt__c.Update_Rejection_Status</members>
+        <name>WorkflowFieldUpdate</name>
     </types>
     <version>53.0</version>
 </Package>

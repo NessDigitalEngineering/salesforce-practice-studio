@@ -1,4 +1,4 @@
-import { LightningElement, api, track } from "lwc";
+import { LightningElement, api, track, wire } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import Voucher_Preparation from "@salesforce/label/c.Voucher_Preparation";
 import Voucher_CredentialName from "@salesforce/label/c.Voucher_CredentialName";
@@ -9,9 +9,16 @@ import methodVRC from "@salesforce/apex/VoucherRequestController.methodVRC";
 import Confirmation from "@salesforce/label/c.ConfirmationVoucherRequestComponent";
 import DoYouNeedVoucher from "@salesforce/label/c.VoucherRequestDoYouNeedVoucher";
 import CredentialExamAttempt from "@salesforce/label/c.CredentialExamAttemptVoucherRequest";
+import USER_ID from "@salesforce/user/Id";
 import ExamPlan from "@salesforce/label/c.Exam_Plan";
+import { publish, MessageContext } from "lightning/messageService";
+import refreshChannel from "@salesforce/messageChannel/RefreshComponent__c";
+
 const MAX_FILE_SIZE = 50000000;
 export default class VoucherRequest extends LightningElement {
+	@wire(MessageContext)
+	messageContext;
+
 	label = {
 		Voucher_Comments,
 		Voucher_CredentialName,
@@ -44,6 +51,7 @@ export default class VoucherRequest extends LightningElement {
 	credentialStatus;
 	credentialName;
 	userCredentialId;
+	userId = USER_ID;
 
 	/* 
        @ description setting variables
@@ -147,6 +155,8 @@ export default class VoucherRequest extends LightningElement {
 								detail: { recId, statusToBeUpdated }
 							})
 						);
+						let payload = { refresh: true, userId: this.userId };
+						publish(this.messageContext, refreshChannel, payload);
 						this.dispatchEvent(
 							new ShowToastEvent({
 								title: "Success",
