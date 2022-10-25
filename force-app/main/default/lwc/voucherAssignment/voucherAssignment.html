@@ -34,10 +34,12 @@
         <lightning-datatable data-id="exmVoucher" sorted-by={sortBy} sorted-direction={sortDirection} onsort={handleSortdata} max-row-selection=1 key-field="id" onrowselection={handleClick} data={lstVoucher} columns={columns1}>
 </lightning-datatable>
     </div>
+    <template if:true={showAssignButton}>
     <div class="slds-modal__footer">
         <lightning-button  class=" slds-button " disabled={disableButton} label="Close" title="Close" onclick={hideModalBox}></lightning-button>
         <lightning-button variant="brand" class=" slds-button " disabled={disableButton} label="Assign" title="Assign" name="Assign" onclick={updateExmRecord}></lightning-button>
     </div>
+</template>
   </div>
 </section>
 <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
@@ -56,7 +58,7 @@
 </div>
 <div class="slds-modal__footer">
   <lightning-button  class=" slds-button " disabled={disableButton} label="Close" title="Close" onclick={hideDialog}></lightning-button>
-  <lightning-button variant="brand" class=" slds-button " disabled={disableButton} label="Assign" title="Assign" onclick={updateExmRecord}></lightning-button>
+  <lightning-button variant="brand" class=" slds-button " disabled={disableButton} label="Assign" title="Assign" onclick={handleDialog}></lightning-button>
 </div>
 </div>
 </section>

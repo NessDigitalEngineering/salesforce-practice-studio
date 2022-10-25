@@ -30,6 +30,7 @@ export default class VoucherAssignment extends LightningElement {
     columns1 = columns1;
     @track countRec;
     @track isShowButton = false;
+    @track showAssignButton = false;
     @track isShowModal = false;
     @track openDialog = false;
     @track showIcon = false;
@@ -74,10 +75,9 @@ export default class VoucherAssignment extends LightningElement {
         console.log("error" + JSON.stringify(error));
     });
     }   
-
     getSelectedName() {
-            this.isShowButton = true;
-    }
+        this.isShowButton = true;
+}
 /*
         @description    :   This Method is to show available Exam Voucher.      
     */
@@ -117,26 +117,48 @@ export default class VoucherAssignment extends LightningElement {
     hideDialog() {  
         this.openDialog = false;
     }
+
  /*
         @description    :   This Method is to show confirmation Message.      
     */
+
     handleClick(event){
+        this.showAssignButton = true;
         let selectedRows = event.detail.selectedRows;
         console.log(JSON.stringify(selectedRows));
                 for (let i of selectedRows.keys()) {
             this.exmVoucher=selectedRows[i].Id;
             this.cost=selectedRows[i].Cost__c;
-            if(selectedRows[i].Cost__c > this.credCost){
-                this.openDialog = true;
-            }                    
-        }
+        //     if(selectedRows[i].Cost__c > this.credCost){
+        //         this.openDialog = true;
+        //     }                    
+         }
     }
 
     /*
         @description    :   This Method is to update the Exam Status and Exam Voucher record.      
     */
-   updateExmRecord(event){
-      
+   updateExmRecord(){
+    if(this.cost > this.credCost){
+        this.openDialog = true;
+    }else{   
+    updateExamRecords({recordId : this.parentID, examVoucher: this.exmVoucher}).then((response)=>{
+        const evt = new ShowToastEvent({
+            message: this.label.VoucherAssigned_ToastMessage,
+            variant: this.variant,
+        });
+        this.dispatchEvent(evt);
+        this.openDialog = false;
+        this.isShowModal = false;
+    }).catch((error) => {});
+
+    updateVouchersStatus({voucherId: this.exmVoucher ,voucherStatus : "Assigned"}).then((response)=>{
+         this.isShowModal = false;
+     }).catch((error) => {});
+    }
+}
+
+handleDialog(){
     updateExamRecords({recordId : this.parentID, examVoucher: this.exmVoucher}).then((response)=>{
         const evt = new ShowToastEvent({
             message: this.label.VoucherAssigned_ToastMessage,

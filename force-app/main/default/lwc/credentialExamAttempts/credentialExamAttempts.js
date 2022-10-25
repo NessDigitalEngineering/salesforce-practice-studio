@@ -117,7 +117,9 @@ export default class CredentialExamAttempts extends LightningElement {
 					if (srchRecords[rs].Status__c == "Exam Scheduled") {
 						srchRecords[rs].showButton = true;
 						srchRecords[rs].buttonName = "Upload Result";
+	
 					}
+					
 				}
 				console.log("SRCH" + JSON.stringify(srchRecords));
 
@@ -141,7 +143,7 @@ export default class CredentialExamAttempts extends LightningElement {
             @param          :   event
         */
 	handleClick(event) {
-			this.displayUploadResultModal = true;
+			
 			
 		try {
 			this.examId = event.target.value;
@@ -160,7 +162,11 @@ export default class CredentialExamAttempts extends LightningElement {
 		} catch (error) {
 			console.log("error", error);
 		}
-	}
+
+		if(	this.searchRecords.buttonName == "Upload Result"){
+			this.displayUploadResultModal = true;
+		}
+}
 	/*
         @description    :   This Method is used to enabled edit date field.
         @param          :   event
