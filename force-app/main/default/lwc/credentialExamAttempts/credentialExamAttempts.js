@@ -7,6 +7,9 @@ import User_Credential from "@salesforce/label/c.credentailExamAttempt_User_Cred
 import Credential_Name from "@salesforce/label/c.credentialExamAttempt_Credential_Name";
 import Exam_Date_Time from "@salesforce/label/c.credentialExamAttempt_Exam_Date_Time";
 import Status from "@salesforce/label/c.credentailExamAttempt_Status";
+import Exam_Attempt_Id from "@salesforce/label/c.Exam_Attempt_Id";
+import Exam_DateTime from "@salesforce/label/c.Exam_DateTime";
+import Reciept from "@salesforce/label/c.Reciept";
 import Upload_Result from "@salesforce/label/c.Upload_Result";
 import ExamAttempt_EmptyMsg from "@salesforce/label/c.ExamAttempt_EmptyMsg";
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
@@ -55,7 +58,10 @@ export default class CredentialExamAttempts extends LightningElement {
 		Status,
 		Exam,
 		Upload_Result,
-		ExamAttempt_EmptyMsg
+		ExamAttempt_EmptyMsg,
+		Reciept,
+		Exam_DateTime,
+		Exam_Attempt_Id
 	};
 	/*
         @description    :   This Method is to itrate data and show the buttons as per status.
