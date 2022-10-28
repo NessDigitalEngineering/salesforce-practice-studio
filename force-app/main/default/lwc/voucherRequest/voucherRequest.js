@@ -245,7 +245,7 @@ export default class VoucherRequest extends LightningElement {
 	showModalOnNo() {
 		this.statusValue = "Voucher Assigned";
 		this.displayExamDetailsModal = true;
-	}
+	} 
 
 	/* 
       @description - showModalOnYes this is used to open  the Exam Details  modal on value yes from UI;

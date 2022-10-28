@@ -250,7 +250,7 @@ export default class CredentialExamAttempts extends LightningElement {
         @description -this function is used to  upload files.
          @param - event.
        */
-	handleFileUploaded(event) {
+	handleFileUploaded(event) { 
 		try {
 			console.log("File Upload :", event.target.files);
 			let count = 0;
