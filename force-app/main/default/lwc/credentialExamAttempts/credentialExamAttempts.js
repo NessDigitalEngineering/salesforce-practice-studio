@@ -253,7 +253,7 @@ export default class CredentialExamAttempts extends LightningElement {
 	handleFileUploaded(event) {
 		try {
 			console.log("File Upload :", event.target.files);
-			var count = 0;
+			let count = 0;
 			if (event.target.files.length > 0) {
 				console.log("Inside file upload");
 				

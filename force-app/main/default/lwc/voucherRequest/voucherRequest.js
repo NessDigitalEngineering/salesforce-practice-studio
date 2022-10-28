@@ -115,7 +115,7 @@ export default class VoucherRequest extends LightningElement {
     */
 
 	saveNewRecord() {
-	//	this.showSpinner = true;
+	
 		this.fileList.push(JSON.stringify(this.filesData));
 		console.log("New FileData:", this.fileList);
 		console.log('query selector:',this.template.querySelector('.textAreaStyle').value);
@@ -146,7 +146,7 @@ export default class VoucherRequest extends LightningElement {
 
 			}
 			
-			  // console.log('cancel :====>', this.template.querySelector('[data-id="validate"]').type);
+			  
 				
 				
 			 else {
