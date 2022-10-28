@@ -115,17 +115,42 @@ export default class VoucherRequest extends LightningElement {
     */
 
 	saveNewRecord() {
-		this.showSpinner = true;
+	//	this.showSpinner = true;
 		this.fileList.push(JSON.stringify(this.filesData));
 		console.log("New FileData:", this.fileList);
+		console.log('query selector:',this.template.querySelector('.textAreaStyle').value);
+		console.log('query selector:',this.template.querySelector('.dateInput').value);
+		//dateInput
 		try {
-			const allValid = [...this.template.querySelectorAll(".validate")].reduce((validSoFar, inputCmp) => {
-				inputCmp.reportValidity();
-				return validSoFar && inputCmp.checkValidity();
-			}, true);
-			if (!allValid) {
-				console.log("Errors when a user didnt put value");
-			} else {
+			const allValidvalue = this.template.querySelector('.textAreaStyle').value;
+			
+		const allValid = this.template.querySelector('.textAreaStyle');
+			const allValid1value  = this.template.querySelector('.dateInput').value;
+			const allValid1  = this.template.querySelector('.dateInput');
+			
+			
+			if(!allValidvalue && !allValid1value){
+				 allValid.setCustomValidity("Comments, value is required");
+				allValid.reportValidity();
+				allValid1.setCustomValidity('Exam Date is Required');
+				allValid1.reportValidity();
+
+			}else if(!allValidvalue){
+			    allValid.setCustomValidity("Comments, value is required");
+				allValid.reportValidity();
+
+			}else if(!allValid1value){
+					allValid1.setCustomValidity('Exam Date is Required');
+				allValid1.reportValidity();
+
+
+			}
+			
+			  // console.log('cancel :====>', this.template.querySelector('[data-id="validate"]').type);
+				
+				
+			 else {
+				
 				this.showSpinner = true;
 				this.isShowModal = false;
 				const examAttemptFields = {
@@ -211,6 +236,7 @@ export default class VoucherRequest extends LightningElement {
     */
 	closeModal() {
 		this.displayExamDetailsModal = false;
+		this.isShowModal = false;
 	}
 	/* 
       @description - showModalOnNo this is used to open  the Exam Details  modal on value no from UI;
