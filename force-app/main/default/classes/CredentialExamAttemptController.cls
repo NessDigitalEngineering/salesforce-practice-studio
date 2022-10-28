@@ -91,4 +91,22 @@ public with sharing class CredentialExamAttemptController{
         
         return 'Success';    
     }
+
+    /*******************************************************************************************************
+      * @description Returns Credentials Exam attempts that are in progress
+      * @param userId SF id of user
+      * @return List of Credentials Exam attempts
+      */ 
+      @AuraEnabled
+      public static List<Credential_Exam_Attempt__c> getUploadResultsList(String recordId)
+      { 
+          try {
+          CredentialExamAttemptService ceas = new CredentialExamAttemptService();
+          List<Credential_Exam_Attempt__c> totalExamAttempts = ceas.getUploadResultRecord(recordId);
+          return totalExamAttempts;  
+              
+          } catch (Exception e) {
+        throw new AuraHandledException(e.getMessage());
+      }  
+      } 
 }

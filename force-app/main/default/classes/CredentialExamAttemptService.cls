@@ -95,4 +95,19 @@ public with sharing class CredentialExamAttemptService {
             throw ex;
         }
      }
+
+     /*******************************************************************************************************
+      * @description This method upload result records
+      * @return List of Credential Exam Attempt
+      */
+      public List<Credential_Exam_Attempt__c> getUploadResultRecord(String recordId) {
+        try {
+           
+            return [
+                SELECT id, Credential__c ,Name, Exam_Date_Time__c,Status__c FROM Credential_Exam_Attempt__c WHERE Credential_Exam_Attempt__c.Status__c = 'Voucher Approved' WITH SECURITY_ENFORCED];
+               
+            } catch (Exception ex) {
+            throw ex;
+        }
+    }
  }
