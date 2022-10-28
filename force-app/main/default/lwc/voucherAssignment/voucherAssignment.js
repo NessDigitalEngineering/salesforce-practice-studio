@@ -3,6 +3,8 @@ import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 import ExamAttempt_EmptyMsg from "@salesforce/label/c.ExamAttempt_EmptyMsg";
 import voucher_Assignment from "@salesforce/label/c.voucher_Assignment";
 import VoucherAssigned_ToastMessage from "@salesforce/label/c.VoucherAssigned_ToastMessage";
+import Voucher_Price from "@salesforce/label/c.Voucher_Price";
+import Continue from "@salesforce/label/c.Continue";
 import getVoucherApprovedUsers from "@salesforce/apex/VoucherRequestController.getVoucherApprovedUsers";
 import getAllExamVouchers from "@salesforce/apex/VoucherRequestController.getAllExamVouchers";
 import updateExamRecords from "@salesforce/apex/VoucherRequestController.updateExamRecords";
@@ -30,6 +32,7 @@ export default class VoucherAssignment extends LightningElement {
     columns1 = columns1;
     @track countRec;
     @track isShowButton = false;
+    @track showAssignButton = false;
     @track isShowModal = false;
     @track openDialog = false;
     @track showIcon = false;
@@ -48,7 +51,9 @@ export default class VoucherAssignment extends LightningElement {
     label = {
 		ExamAttempt_EmptyMsg,
         voucher_Assignment,
-        VoucherAssigned_ToastMessage
+        VoucherAssigned_ToastMessage,
+        Continue,
+        Voucher_Price
 	};
     @track isDialogVisible = false;
     @track originalMessage;
@@ -74,10 +79,9 @@ export default class VoucherAssignment extends LightningElement {
         console.log("error" + JSON.stringify(error));
     });
     }   
-
     getSelectedName() {
-            this.isShowButton = true;
-    }
+        this.isShowButton = true;
+}
 /*
         @description    :   This Method is to show available Exam Voucher.      
     */
@@ -117,26 +121,37 @@ export default class VoucherAssignment extends LightningElement {
     hideDialog() {  
         this.openDialog = false;
     }
+
  /*
         @description    :   This Method is to show confirmation Message.      
     */
+
     handleClick(event){
+        this.showAssignButton = true;
         let selectedRows = event.detail.selectedRows;
         console.log(JSON.stringify(selectedRows));
                 for (let i of selectedRows.keys()) {
             this.exmVoucher=selectedRows[i].Id;
-            this.cost=selectedRows[i].Cost__c;
-            if(selectedRows[i].Cost__c > this.credCost){
-                this.openDialog = true;
-            }                    
-        }
+            this.cost=selectedRows[i].Cost__c;                  
+         }
     }
 
     /*
         @description    :   This Method is to update the Exam Status and Exam Voucher record.      
     */
-   updateExmRecord(event){
-      
+   updateExmRecord(){
+    if(this.cost > this.credCost){
+        this.openDialog = true;
+    }else{   
+        updateExamRecords();
+    }
+}
+
+handleDialog(){
+    updateExamRecords();
+}
+
+updateExamRecords(){
     updateExamRecords({recordId : this.parentID, examVoucher: this.exmVoucher}).then((response)=>{
         const evt = new ShowToastEvent({
             message: this.label.VoucherAssigned_ToastMessage,
@@ -155,14 +170,14 @@ export default class VoucherAssignment extends LightningElement {
   /*
         @description    :   This Method is to sort Expiry Date.      
     */
-        handleSortdata(event) {
-            // field name
-            this.sortBy = event.detail.fieldName;
-            // sort direction
-            this.sortDirection = event.detail.sortDirection;
-            // calling sortdata function to sort the data based on direction and selected field
-            this.sortData(this.sortBy, this.sortDirection);
-        }
+    handleSortdata(event) {
+        // field name
+        this.sortBy = event.detail.fieldName;
+        // sort direction
+        this.sortDirection = event.detail.sortDirection;
+        // calling sortdata function to sort the data based on direction and selected field
+        this.sortData(this.sortBy, this.sortDirection);
+    }
 
         sortData(fieldname, direction) {
             // serialize the data before calling sort function

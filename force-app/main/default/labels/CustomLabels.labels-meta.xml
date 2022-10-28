@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
         <fullName>UserSearchLabel</fullName>
@@ -120,7 +120,6 @@
         <value>OK</value>
     </labels>
     <labels>
-
         <fullName>PreparationDocs_HelpText</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -315,5 +314,54 @@
         <protected>true</protected>
         <shortDescription>VoucherAssigned_ToastMessage</shortDescription>
         <value>Voucher Assigned Successfully.</value>
+    </labels>
+    <labels>
+        <fullName>Upload_Result</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Upload_Result</shortDescription>
+        <value>Exam Result</value>
+    </labels>
+    <labels>
+        <fullName>Voucher_Price</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Voucher_Price</shortDescription>
+        <value>Voucher Prize is more than Exam cost.</value>
+    </labels>
+    <labels>
+        <fullName>Continue</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Continue</shortDescription>
+        <value>Do you want to continue?</value>
+    </labels>
+    <labels>
+        <fullName>Exam_Schedule</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Exam_Schedule</shortDescription>
+        <value>Exam Schedule</value>
+    </labels>
+    <labels>
+        <fullName>Exam_Attempt_Id</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Exam_Attempt_Id</shortDescription>
+        <value>Credential Exam Attempt ID</value>
+    </labels>
+    <labels>
+        <fullName>Exam_DateTime</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Exam_DateTime</shortDescription>
+        <value>Exam DateTime</value>
+    </labels>
+    <labels>
+        <fullName>Reciept</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Reciept</shortDescription>
+        <value>Reciept</value>
     </labels>
 </CustomLabels>

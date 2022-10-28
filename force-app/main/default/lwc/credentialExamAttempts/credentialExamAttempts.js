@@ -7,6 +7,10 @@ import User_Credential from "@salesforce/label/c.credentailExamAttempt_User_Cred
 import Credential_Name from "@salesforce/label/c.credentialExamAttempt_Credential_Name";
 import Exam_Date_Time from "@salesforce/label/c.credentialExamAttempt_Exam_Date_Time";
 import Status from "@salesforce/label/c.credentailExamAttempt_Status";
+import Exam_Attempt_Id from "@salesforce/label/c.Exam_Attempt_Id";
+import Exam_DateTime from "@salesforce/label/c.Exam_DateTime";
+import Reciept from "@salesforce/label/c.Reciept";
+import Upload_Result from "@salesforce/label/c.Upload_Result";
 import ExamAttempt_EmptyMsg from "@salesforce/label/c.ExamAttempt_EmptyMsg";
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 import LOCALE from "@salesforce/i18n/locale";
@@ -22,6 +26,8 @@ const MAX_FILE_SIZE = 50000000;
 //import updateStatus from "@salesforce/apex/CredentialExamAttemptController.updateStatus";
 import updateDate from "@salesforce/apex/CredentialExamAttemptController.updateDate";
 
+import getUploadResultsList from "@salesforce/apex/CredentialExamAttemptController.getUploadResultsList";
+
 export default class CredentialExamAttempts extends LightningElement {
 	@track timeZone = TIME_ZONE;
 	@track locale = LOCALE;
@@ -34,12 +40,7 @@ export default class CredentialExamAttempts extends LightningElement {
 	@track countRec;
 	@track showIcon = false;
 	@track emptyRecords = true;
-	@track editDate = false;
-	@track editExamDate = false;
-	@track exmDate;
-	@track credExamAttemptId;
-	@track isShowExamModal = false;
-	@track examAttemptIdForModal;
+    @track displayUploadResultModal = false;
 	dt;
 	@track credentialName;
 	@track examId;
@@ -47,6 +48,7 @@ export default class CredentialExamAttempts extends LightningElement {
 	@track examComments;
 	@track filesDatas = [];
 	subscription = null;
+	@track response;
 
 	label = {
 		ExamAttemptID,
@@ -55,7 +57,11 @@ export default class CredentialExamAttempts extends LightningElement {
 		Exam_Date_Time,
 		Status,
 		Exam,
-		ExamAttempt_EmptyMsg
+		Upload_Result,
+		ExamAttempt_EmptyMsg,
+		Reciept,
+		Exam_DateTime,
+		Exam_Attempt_Id
 	};
 	/*
         @description    :   This Method is to itrate data and show the buttons as per status.
@@ -117,7 +123,9 @@ export default class CredentialExamAttempts extends LightningElement {
 					if (srchRecords[rs].Status__c == "Exam Scheduled") {
 						srchRecords[rs].showButton = true;
 						srchRecords[rs].buttonName = "Upload Result";
+	
 					}
+					
 				}
 				console.log("SRCH" + JSON.stringify(srchRecords));
 
@@ -141,6 +149,8 @@ export default class CredentialExamAttempts extends LightningElement {
             @param          :   event
         */
 	handleClick(event) {
+			
+			
 		try {
 			this.examId = event.target.value;
 			this.credentialName = event.target.dataset.credentialname;
@@ -159,7 +169,11 @@ export default class CredentialExamAttempts extends LightningElement {
 		} catch (error) {
 			console.log("error", error);
 		}
-	}
+
+		if(	this.searchRecords.buttonName == "Upload Result"){
+			this.displayUploadResultModal = true;
+		}
+}
 	/*
         @description    :   This Method is used to enabled edit date field.
         @param          :   event
@@ -223,6 +237,23 @@ export default class CredentialExamAttempts extends LightningElement {
 		});
 		this.dispatchEvent(evt);
 	}
+
+	/* 
+      @description - closeModal this is used to close the modal from UI   ;
+         @param-  Did'nt recieve any parameter
+    */
+		 closeModal() {
+			this.displayUploadResultModal = false;
+		}
+
+		uploadResult(event){
+			let credId =event.target.value;
+			getUploadResultsList({recordId: credId}).then((res) => {
+				this.response = res;
+			})
+			.catch((error) => {});
+		}
+
 	/*
         @description    :   Closes edit option
     */
