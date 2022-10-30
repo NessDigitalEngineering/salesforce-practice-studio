@@ -1,4 +1,4 @@
-import { LightningElement, track, wire } from "lwc";
+import { LightningElement, track, wire, api } from "lwc";
 import getActiveExamAttemptsForUser from "@salesforce/apex/CredentialExamAttemptController.getExamAttempts";
 import USER_ID from "@salesforce/user/Id";
 import Exam from "@salesforce/label/c.Exam";
@@ -21,7 +21,7 @@ import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { subscribe, unsubscribe, APPLICATION_SCOPE, MessageContext } from "lightning/messageService";
 import refreshChannel from "@salesforce/messageChannel/RefreshComponent__c";
 
-const MAX_FILE_SIZE = 50000000;
+//const MAX_FILE_SIZE = 50000000;
 
 //import updateStatus from "@salesforce/apex/CredentialExamAttemptController.updateStatus";
 import updateDate from "@salesforce/apex/CredentialExamAttemptController.updateDate";
@@ -40,7 +40,7 @@ export default class CredentialExamAttempts extends LightningElement {
 	@track countRec;
 	@track showIcon = false;
 	@track emptyRecords = true;
-    @track displayUploadResultModal = false;
+	@track displayUploadResultModal = false;
 	dt;
 	@track credentialName;
 	@track examId;
@@ -49,7 +49,9 @@ export default class CredentialExamAttempts extends LightningElement {
 	@track filesDatas = [];
 	subscription = null;
 	@track response;
-
+	@track isShowExamModal = false;
+	@track ExamResult;
+	@api isChangeFileName = false;
 	label = {
 		ExamAttemptID,
 		User_Credential,
@@ -89,7 +91,21 @@ export default class CredentialExamAttempts extends LightningElement {
 			);
 		}
 	}
-
+ /*get options() {
+        return [
+           
+		    { label: 'None', value: 'None' },
+		    { label: 'Exam Passed', value: 'Exam Passed' },
+            { label: 'Exam Fail', value: 'Exam Fail' }
+       
+        ];
+    }
+*/
+	handleUploadFiles(event) {
+		console.log('file upload');
+		this.filesDatas = event.detail;
+		console.log('Files:', this.filesDatas);
+	}
 	handleMessage(message) {
 		if (message.refresh && message.userId === this.userId) {
 			this.getAllActiveExamAttemptUsers();
@@ -123,9 +139,9 @@ export default class CredentialExamAttempts extends LightningElement {
 					if (srchRecords[rs].Status__c == "Exam Scheduled") {
 						srchRecords[rs].showButton = true;
 						srchRecords[rs].buttonName = "Upload Result";
-	
+
 					}
-					
+
 				}
 				console.log("SRCH" + JSON.stringify(srchRecords));
 
@@ -149,31 +165,33 @@ export default class CredentialExamAttempts extends LightningElement {
             @param          :   event
         */
 	handleClick(event) {
-			
-			
 		try {
 			this.examId = event.target.value;
 			this.credentialName = event.target.dataset.credentialname;
 			this.examname = event.target.dataset.name;
-			 let status = event.target.dataset.status;
+			let status = event.target.dataset.status;
+			console.log('status:', status);
 			console.log("RecId on Button Click :", event.target.value);
 			this.searchRecords.forEach((Element) => {
 				if (Element.Id == event.target.value && status == 'Exam Schedule') {
 					console.log("Inside ");
 					this.filesDatas = [];
-					this.Fileslist = [];
 					this.isShowExamModal = true;
+					this.isChangeFileName = true;
 					console.log("showModal", this.isShowExamModal);
 				}
+				if (Element.Id == event.target.value && status == "Upload Result") {
+					this.displayUploadResultModal = true;
+				}
 			});
+
+
 		} catch (error) {
 			console.log("error", error);
 		}
 
-		if(	this.searchRecords.buttonName == "Upload Result"){
-			this.displayUploadResultModal = true;
-		}
-}
+
+	}
 	/*
         @description    :   This Method is used to enabled edit date field.
         @param          :   event
@@ -211,7 +229,7 @@ export default class CredentialExamAttempts extends LightningElement {
 						"success"
 					);
 				})
-				.catch((error) => {});
+				.catch((error) => { });
 			this.disableEditOfDate(credId);
 		} catch (error) {
 			console.error(error.message);
@@ -242,17 +260,17 @@ export default class CredentialExamAttempts extends LightningElement {
       @description - closeModal this is used to close the modal from UI   ;
          @param-  Did'nt recieve any parameter
     */
-		 closeModal() {
-			this.displayUploadResultModal = false;
-		}
+	closeModal() {
+		this.displayUploadResultModal = false;
+	}
 
-		uploadResult(event){
-			let credId =event.target.value;
-			getUploadResultsList({recordId: credId}).then((res) => {
-				this.response = res;
-			})
-			.catch((error) => {});
-		}
+	uploadResult(event) {
+		let credId = event.target.value;
+		getUploadResultsList({ recordId: credId }).then((res) => {
+			this.response = res;
+		})
+			.catch((error) => { });
+	}
 
 	/*
         @description    :   Closes edit option
@@ -272,46 +290,47 @@ export default class CredentialExamAttempts extends LightningElement {
     @description -this function is used to remove the uploaded files.
      @param - event.
    */
-	removeReceiptImage(event) {
-		let index = event.currentTarget.dataset.id;
-		this.filesDatas.splice(index, 1);
-	}
-
-	/* 
-        @description -this function is used to  upload files.
-         @param - event.
-       */
-	handleFileUploaded(event) { 
-		try {
-			console.log("File Upload :", event.target.files);
-			let count = 0;
-			if (event.target.files.length > 0) {
-				console.log("Inside file upload");
-				
-				for (let x of event.target.files) {
-					let randomNumber = parseInt(Math.random() * 100);
-					if (x.size > MAX_FILE_SIZE) {
-						this.showToast("Error!", "error", "File Limit Exceed");
-						return;
-					}
-					let file = x;
-					console.log("file:", file);
-					let reader = new FileReader();
-					console.log("reader:", reader);
-					reader.onload = (e) => {
-						count = count++;
-						let fileContents = reader.result.split(",")[1];
-						console.log('File content ',btoa(fileContents));
-						this.filesDatas.push({ fileName: this.examname + '_' + this.credentialName + '_'+'12909'+randomNumber+'__Reciept'+'.pdf' ,fileContent: fileContents });
-					};
-					reader.readAsDataURL(file);
-				}
-				console.log("Files : ", this.filesDatas);
-			}
-		} catch (error) {
-			console.log("error", error);
+	/*	removeReceiptImage(event) {
+			let index = event.currentTarget.dataset.id;
+			this.filesDatas.splice(index, 1);
 		}
-	}
+		*/
+
+
+	/* @description -this function is used to  upload files.
+	  @param - event.*/
+	/*	handleFileUploaded(event) { 
+			try {
+				console.log("File Upload :", event.target.files);
+				let count = 0;
+				if (event.target.files.length > 0) {
+					console.log("Inside file upload");
+					
+					for (let x of event.target.files) {
+						let randomNumber = parseInt(Math.random() * 100);
+						if (x.size > MAX_FILE_SIZE) {
+							this.showToast("Error!", "error", "File Limit Exceed");
+							return;
+						}
+						let file = x;
+						console.log("file:", file);
+						let reader = new FileReader();
+						console.log("reader:", reader);
+						reader.onload = (e) => {
+							count = count++;
+							let fileContents = reader.result.split(",")[1];
+							console.log('File content ',btoa(fileContents));
+							this.filesDatas.push({ fileName: this.examname + '_' + this.credentialName + '_'+'12909'+randomNumber+'__Reciept'+'.pdf' ,fileContent: fileContents });
+						};
+						reader.readAsDataURL(file);
+					}
+					console.log("Files : ", this.filesDatas);
+				}
+			} catch (error) {
+				console.log("error", error);
+			}
+		}
+		*/
 	/* 
     @description -this function is used to update exam details and upload files.
    */
@@ -320,30 +339,21 @@ export default class CredentialExamAttempts extends LightningElement {
 		console.log("New FilesData:", this.Fileslist);
 		try {
 			//validate
-				
-					const allValidvalue = this.template.querySelector('.validate').value;
-			
-		const allValid = this.template.querySelector('.validate');
-			const allValid1value  = this.template.querySelector('.fup').value;
-			const allValid1  = this.template.querySelector('.fup');
-				if(!allValidvalue && !allValid1value){
-				 allValid.setCustomValidity("Exam date is required");
+
+			const allValidvalue = this.template.querySelector('.validate').value;
+
+			const allValid = this.template.querySelector('.validate');
+			//	const allValid1value  = this.template.querySelector('.').value;
+			const allValid1 = this.template.querySelector('c-upload-file');
+			if (!allValidvalue) {
+				allValid.setCustomValidity("Exam date is required");
 				allValid.reportValidity();
-				allValid1.setCustomValidity('Upload reciept is Required');
-				allValid1.reportValidity();
+				this.template.querySelector('c-upload-file').checkValidity();
+			}
+			else if(this.template.querySelector('c-upload-file').checkValidity()){
+			//	alert('upload result');
 
-			}else if(!allValidvalue){
-			    allValid.setCustomValidity("Exam date is required");
-				allValid.reportValidity();
-
-			}else if(!allValid1value){
-
-				
-					allValid1.setCustomValidity('Upload reciept is Required');
-				allValid1.reportValidity();
-
-
-			} else {
+			}  else {
 				this.isShowModal = false;
 				const examAttemptFields = {
 					sobjectType: "Credential_Exam_Attempt__c",
@@ -428,4 +438,83 @@ export default class CredentialExamAttempts extends LightningElement {
 		this.examDate = event.target.value;
 		console.log("date---" + this.examDate);
 	}
+
+	handleresult(event) {
+		this.ExamResult = event.target.value;
+		console.log(this.ExamResult);
+	}
+	saveResult() {
+		try {
+			this.Fileslist.push(JSON.stringify(this.filesDatas));
+			console.log("New FilesData:", this.Fileslist);
+			//status
+			const allValidstatusvalue = this.template.querySelector('.status').value;
+
+			const allValidstatus = this.template.querySelector('.status');
+			const allValiddatevalue = this.template.querySelector('.dt').value;
+
+			const allValiddate = this.template.querySelector('.dt');
+			if (!allValiddatevalue && !allValidstatusvalue ) {
+				allValiddate.setCustomValidity("Exam date is required");
+				allValiddate.reportValidity();
+				allValidstatus.setCustomValidity('status is required');
+				allValidstatus.reportValidity();
+				this.template.querySelector('c-upload-file').checkValidity();
+			}
+			else if (!allValiddatevalue) {
+				allValiddate.setCustomValidity("Exam date is required");
+				allValiddate.reportValidity();
+				this.template.querySelector('c-upload-file').checkValidity();
+
+
+			} else if (!allValidstatusvalue) {
+				allValidstatus.setCustomValidity('status is required');
+				allValidstatus.reportValidity();
+				this.template.querySelector('c-upload-file').checkValidity();
+
+
+			}
+			else if(this.template.querySelector('c-upload-file').checkValidity()){
+
+
+			}
+					
+			else{
+				this.displayUploadResultModal = false;
+				const examAttemptFields = {
+					sobjectType: "Credential_Exam_Attempt__c",
+					Exam_Date_Time__c: this.examDate,
+					Id: this.examId,
+					Status__c: this.ExamResult
+				};
+
+				updateCredExempt({
+					examAttemptRec: examAttemptFields
+				})
+					.then((result) => {
+						this.displayUploadResultModal = false;
+						console.log("result", result);
+						this.UploadFilest(result);
+						this.dispatchEvent(
+							new ShowToastEvent({
+								title: "Success",
+								variant: "success",
+								message: "success"
+							})
+						);
+						this.getAllActiveExamAttemptUsers();
+					})
+					.catch((error) => {
+						console.log("Error", error);
+						this.displayUploadResultModal = false;
+					});
+			}
+
+		} catch (error) {
+			console.log('error', error);
+		}
+
+	}
+
+
 }

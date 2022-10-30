@@ -50,13 +50,19 @@ export default class VoucherRequest extends LightningElement {
 	showSpinner = false;
 	credentialStatus;
 	credentialName;
+	examname;
+	isChangeFileName = false;
 	userCredentialId;
 	userId = USER_ID;
 
 	/* 
        @ description setting variables
     */
-
+handleUploadFiles(event) {
+		console.log('file upload');
+		this.filesData = event.detail;
+		console.log('Files:', this.filesData);
+}
 	connectedCallback() {
 		console.log("credObj:", JSON.stringify(this.credobj));
 		this.isShowModal = true;
@@ -89,7 +95,7 @@ export default class VoucherRequest extends LightningElement {
       @description  handleFileUpload this is a function which is used to get files data  from user  ;
            @param - Standard Event
     */
-	handleFileUpload(event) {
+	/*handleFileUpload(event) {
 		if (event.target.files.length > 0) {
 			for (let x of event.target.files) {
 				if (x.size > MAX_FILE_SIZE) {
@@ -108,6 +114,7 @@ export default class VoucherRequest extends LightningElement {
 
 		console.log("files data :", this.filesData);
 	}
+	*/
 
 	/* 
       @description - saveNewRecord this is a function which is used to  send the data in apex classes   ;
@@ -134,21 +141,18 @@ export default class VoucherRequest extends LightningElement {
 				allValid.reportValidity();
 				allValid1.setCustomValidity('Exam Date is Required');
 				allValid1.reportValidity();
+				
 
 			}else if(!allValidvalue){
 			    allValid.setCustomValidity("Comments, value is required");
 				allValid.reportValidity();
+				
 
 			}else if(!allValid1value){
 					allValid1.setCustomValidity('Exam Date is Required');
 				allValid1.reportValidity();
-
-
 			}
 			
-			  
-				
-				
 			 else {
 				
 				this.showSpinner = true;
