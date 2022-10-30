@@ -12,18 +12,18 @@ export default class FileUploadMultiLWC extends LightningElement {
     showSpinner = false;
 
     handleFileUploaded(event) {
-          let rand = parseInt(Math.random()*10000);
+          let rand = parseInt(Math.random());
         if (event.target.files.length > 0) {
-            for(let i=0; i< event.target.files.length; i++){
-                if (event.target.files[i].size > MAX_FILE_SIZE) {
+            for (let x of event.target.files) {
+                if (x.size > MAX_FILE_SIZE) {
                     this.showToast('Error!', 'error', 'File size exceeded the upload size limit.');
                     return;
                 }
-                let file = event.target.files[i];
+                let file =x;
                 let reader = new FileReader();
                 reader.onload = e => {
                     let fileContents = reader.result.split(',')[1]
-                 
+                 //   this.filesData.push({'fileName':file.name, 'fileContent':fileContents});
                      if(this.isfile){
                         this.filesData.push({'fileName':this.examid + '_'+this.credname + '_'+rand+'_Reciept'+ '.pdf','fileContent':fileContents});
                      
@@ -40,7 +40,7 @@ export default class FileUploadMultiLWC extends LightningElement {
             detail: this.filesData
         });
       	 this.dispatchEvent(selectEvent);
-       
+     
     }
 
  

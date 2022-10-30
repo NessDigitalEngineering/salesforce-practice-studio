@@ -344,7 +344,7 @@ export default class CredentialExamAttempts extends LightningElement {
 
 			const allValid = this.template.querySelector('.validate');
 			//	const allValid1value  = this.template.querySelector('.').value;
-			const allValid1 = this.template.querySelector('c-upload-file');
+			
 			if (!allValidvalue) {
 				allValid.setCustomValidity("Exam date is required");
 				allValid.reportValidity();
