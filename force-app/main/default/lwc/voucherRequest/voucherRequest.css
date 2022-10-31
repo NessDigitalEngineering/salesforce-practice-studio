@@ -13,7 +13,7 @@
 	white-space: normal;
 }
 .button {
-    padding-right: 0.5rem;
+	padding-right: 0.5rem;
 }
 .confirmationModal {
 	max-width: 20rem !important;
@@ -26,12 +26,12 @@
 }
 
 .slds-button__icon {
-	margin-top: -5px;
+	margin-top: -0.313rem;
 }
 .fileUpload {
 	position: relative;
-	bottom: 2px;
-	right: -3px;
+	bottom: 0.125rem;
+	right: -0.188rem;
 }
 
 .inputLabel {
@@ -45,27 +45,3 @@
 .textAreaStyle {
 	margin-top: -1rem;
 }
-.headerText2{
-     
-    font-size:13px;
-    position: relative;
-    bottom: 5px;
-}
-.headerText1{
-    
-    font-size:13px;
-    position: relative;
-    bottom: 10px;
-}
-
-.headerText3{
-    font-size: 13px;
-    position: relative;
-    bottom: 5px;
-}
-.fup{
-    position: relative;
-    bottom:9px;
-
-	}
-	
