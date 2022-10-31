@@ -1,6 +1,6 @@
 import {LightningElement,api,track} from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
+//import uploadFiles from '@salesforce/apex/FileUploadMultiController.uploadFiles'
 const MAX_FILE_SIZE = 50000000;
 
 export default class FileUploadMultiLWC extends LightningElement {
@@ -23,8 +23,8 @@ export default class FileUploadMultiLWC extends LightningElement {
                 let file =x;
                 let reader = new FileReader();
                 reader.onload = e => {
-                    let fileContents = reader.result.split(',')[1]
-                 
+                    var fileContents = reader.result.split(',')[1]
+                 //   this.filesData.push({'fileName':file.name, 'fileContent':fileContents});
                      if(this.isfile){
                         this.filesData.push({'fileName':this.examid + '_'+this.credname + '_'+rand+'_Reciept'+ '.pdf','fileContent':fileContents});
                      
@@ -46,7 +46,7 @@ export default class FileUploadMultiLWC extends LightningElement {
 
  
     removeReceiptImage(event) {
-        let index = event.currentTarget.dataset.id;
+        var index = event.currentTarget.dataset.id;
         this.filesData.splice(index, 1);
     }
 
@@ -87,7 +87,7 @@ export default class FileUploadMultiLWC extends LightningElement {
   getRandomArbitrary (min, max) {
     const _min = Math.ceil(min);
     const _max = Math.floor(max);
-  
-    return Math.floor(Math.random() * (_max - _min) + _min);
+     let random = Math.random();
+    return Math.floor(random * (_max - _min) + _min);
   }
 }
