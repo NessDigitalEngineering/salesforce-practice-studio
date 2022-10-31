@@ -50,13 +50,19 @@ export default class VoucherRequest extends LightningElement {
 	showSpinner = false;
 	credentialStatus;
 	credentialName;
+	examname;
+	isChangeFileName = false;
 	userCredentialId;
 	userId = USER_ID;
 
 	/* 
        @ description setting variables
     */
-
+handleUploadFiles(event) {
+		console.log('file upload');
+		this.filesData = event.detail;
+		console.log('Files:', this.filesData);
+}
 	connectedCallback() {
 		console.log("credObj:", JSON.stringify(this.credobj));
 		this.isShowModal = true;
@@ -89,7 +95,7 @@ export default class VoucherRequest extends LightningElement {
       @description  handleFileUpload this is a function which is used to get files data  from user  ;
            @param - Standard Event
     */
-	handleFileUpload(event) {
+	/*handleFileUpload(event) {
 		if (event.target.files.length > 0) {
 			for (let x of event.target.files) {
 				if (x.size > MAX_FILE_SIZE) {
@@ -108,6 +114,7 @@ export default class VoucherRequest extends LightningElement {
 
 		console.log("files data :", this.filesData);
 	}
+	*/
 
 	/* 
       @description - saveNewRecord this is a function which is used to  send the data in apex classes   ;
@@ -115,17 +122,39 @@ export default class VoucherRequest extends LightningElement {
     */
 
 	saveNewRecord() {
-		this.showSpinner = true;
+	
 		this.fileList.push(JSON.stringify(this.filesData));
 		console.log("New FileData:", this.fileList);
+		console.log('query selector:',this.template.querySelector('.textAreaStyle').value);
+		console.log('query selector:',this.template.querySelector('.dateInput').value);
+		//dateInput
 		try {
-			const allValid = [...this.template.querySelectorAll(".validate")].reduce((validSoFar, inputCmp) => {
-				inputCmp.reportValidity();
-				return validSoFar && inputCmp.checkValidity();
-			}, true);
-			if (!allValid) {
-				console.log("Errors when a user didnt put value");
-			} else {
+			const allValidvalue = this.template.querySelector('.textAreaStyle').value;
+			
+		const allValid = this.template.querySelector('.textAreaStyle');
+			const allValid1value  = this.template.querySelector('.dateInput').value;
+			const allValid1  = this.template.querySelector('.dateInput');
+			
+			
+			if(!allValidvalue && !allValid1value){
+				 allValid.setCustomValidity("Comments, value is required");
+				allValid.reportValidity();
+				allValid1.setCustomValidity('Exam Date is Required');
+				allValid1.reportValidity();
+				
+
+			}else if(!allValidvalue){
+			    allValid.setCustomValidity("Comments, value is required");
+				allValid.reportValidity();
+				
+
+			}else if(!allValid1value){
+					allValid1.setCustomValidity('Exam Date is Required');
+				allValid1.reportValidity();
+			}
+			
+			 else {
+				
 				this.showSpinner = true;
 				this.isShowModal = false;
 				const examAttemptFields = {
@@ -211,6 +240,7 @@ export default class VoucherRequest extends LightningElement {
     */
 	closeModal() {
 		this.displayExamDetailsModal = false;
+		this.isShowModal = false;
 	}
 	/* 
       @description - showModalOnNo this is used to open  the Exam Details  modal on value no from UI;
@@ -219,7 +249,7 @@ export default class VoucherRequest extends LightningElement {
 	showModalOnNo() {
 		this.statusValue = "Voucher Assigned";
 		this.displayExamDetailsModal = true;
-	}
+	} 
 
 	/* 
       @description - showModalOnYes this is used to open  the Exam Details  modal on value yes from UI;

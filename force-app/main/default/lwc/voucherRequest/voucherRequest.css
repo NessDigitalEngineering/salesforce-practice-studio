@@ -26,12 +26,12 @@
 }
 
 .slds-button__icon {
-	margin-top: -5px;
+	margin-top: -0.313rem;
 }
 .fileUpload {
 	position: relative;
-	bottom: 2px;
-	right: -3px;
+	bottom: 0.125rem;
+	right: -0.188rem;
 }
 
 .inputLabel {
