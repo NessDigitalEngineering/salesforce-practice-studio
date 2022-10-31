@@ -1,18 +1,18 @@
 .removeImage {
     border-radius: 50%;
-    padding: 0px 4px;
-    margin: 8px 2px 8px 8px;
+    padding: 0rem 0.25rem;
+    margin: 0.5rem 0.125rem 0.5rem 0.5rem;
     color: #fff;
     background-color: #9f201b;
     cursor: pointer;
 }
 .fup{
     position: relative;
-    bottom: 20px;
+    bottom: 1.25rem;
 
 }
 .pill{
     position: relative;
-    bottom: 17px;
+    bottom: 1.063rem;
 
 }

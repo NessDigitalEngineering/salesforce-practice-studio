@@ -13,7 +13,7 @@ export default class FileUploadMultiLWC extends LightningElement {
 
     handleFileUploaded(event) {
        let rand =  this.getRandomArbitrary();
-        //  let rand = Math.random();
+      
         if (event.target.files.length > 0) {
             for (let x of event.target.files) {
                 if (x.size > MAX_FILE_SIZE) {
@@ -24,7 +24,7 @@ export default class FileUploadMultiLWC extends LightningElement {
                 let reader = new FileReader();
                 reader.onload = e => {
                     let fileContents = reader.result.split(',')[1]
-                 //   this.filesData.push({'fileName':file.name, 'fileContent':fileContents});
+                 
                      if(this.isfile){
                         this.filesData.push({'fileName':this.examid + '_'+this.credname + '_'+rand+'_Reciept'+ '.pdf','fileContent':fileContents});
                      
@@ -41,7 +41,7 @@ export default class FileUploadMultiLWC extends LightningElement {
             detail: this.filesData
         });
       	 this.dispatchEvent(selectEvent);
-       //  this.checkValidity();
+       
     }
 
  
@@ -85,8 +85,8 @@ export default class FileUploadMultiLWC extends LightningElement {
   }
 
   getRandomArbitrary (){
-  var crypto = window.crypto;
-  var random = new Uint8Array(3);
+  let crypto = window.crypto;
+  let random = new Uint8Array(3);
   crypto.getRandomValues(random);
  return random;
 
