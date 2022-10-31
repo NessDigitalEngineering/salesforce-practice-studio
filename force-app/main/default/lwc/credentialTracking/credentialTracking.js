@@ -140,7 +140,7 @@ export default class CredentialTracking extends LightningElement {
 				console.error(error.message);
 			});
 	}
-
+	
 	/*
 		@description    :  Event handler on sucessfully creation of exam attempt record
 	*/

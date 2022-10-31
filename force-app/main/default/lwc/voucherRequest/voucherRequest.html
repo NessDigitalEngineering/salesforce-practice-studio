@@ -62,7 +62,7 @@
 								<span class="abbr">* </span>{label.ExamPlan}
 							</h6>
 							<lightning-input class="dateInput" type="datetime" variant="label-hidden" required
-								date-style="short" onchange={handleDateChange}>
+								date-style="short" onchange={handleDateChange} data-id ="vallidate">
 							</lightning-input>
 
 
@@ -72,8 +72,8 @@
 							<h6 class="inputLabel">
 								<span class="abbr">* </span>{label.Voucher_Comments}
 							</h6>
-							<lightning-textarea onchange={handleCommentChange} class="textAreaStyle">
-							</lightning-textarea>
+							<lightning-textarea onchange={handleCommentChange} class="textAreaStyle" data-id ="vallidate">
+							</lightning-textarea >
 
 						</lightning-layout-item>
 						<lightning-layout-item size="12" padding="around-small" small-device-size="9"
@@ -83,7 +83,7 @@
 								<lightning-helptext class="fileUpload" content={label.PreparationDocs_HelpText}>
 								</lightning-helptext>
 							</h6>
-							<lightning-input type="file" multiple class=""
+						<!--	<lightning-input type="file" multiple class=""
 								accept=".docx, .pdf, .jpg, .txt, .png, .csv, .html, .zip" onchange={handleFileUpload}>
 							</lightning-input>
 
@@ -94,8 +94,9 @@
 											onclick={removeReceiptImage}></lightning-pill>
 									</template>
 								</template>
-							</div>
-
+							</div>-->
+							<c-upload-file onupload={handleUploadFiles} examid={examname}
+										credname={credentialName} isfile={isChangeFileName}></c-upload-file>
 						</lightning-layout-item>
 					</lightning-layout>
 				</div>
