@@ -14,7 +14,7 @@ public with sharing class CredentialExamAttemptService {
          try {
             userInfo.getUserId();
              return [
-                SELECT id, Credential__c , Exam_Date_Time__c,User_Credential__r.Name, Name, Exam_Voucher__c, Fail_Scorecard__c, Status__c,User__c FROM Credential_Exam_Attempt__c WHERE User_Credential__r.User__c =:userId AND ((Credential_Exam_Attempt__c.Status__c != 'Voucher Declined') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Passed') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Failed')) WITH SECURITY_ENFORCED];
+                SELECT id, Credential__c , Exam_Date_Time__c,User_Credential__r.Name , User_Credential__c, Name, Exam_Voucher__c, Fail_Scorecard__c, Status__c,User__c FROM Credential_Exam_Attempt__c WHERE User_Credential__r.User__c =:userId AND ((Credential_Exam_Attempt__c.Status__c != 'Voucher Declined') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Passed') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Failed')) WITH SECURITY_ENFORCED];
          } catch (Exception ex) {
              throw ex;
          }
@@ -110,4 +110,25 @@ public with sharing class CredentialExamAttemptService {
             throw ex;
         }
     }
+
+    /*******************************************************************************************************
+      * @description This method updates exam attempt status
+      * @param userId SF id of user
+      * @return Update Exam Status
+      */
+      public Database.SaveResult updateParentRecord(String parentId, String status){
+        try {
+            User_Credential__c usrCredStatus = new User_Credential__c();
+            usrCredStatus.Id = parentId;
+            if(status == 'Exam Passed'){
+                usrCredStatus.Status__c = 'Completed'; 
+            }else{
+                usrCredStatus.Status__c = 'Preparing'; 
+            }
+            return Database.update(usrCredStatus, true);
+           
+        } catch (Exception ex) {
+            throw ex;
+        }
+     }
  }

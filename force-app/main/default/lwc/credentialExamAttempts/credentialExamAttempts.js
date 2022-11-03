@@ -17,12 +17,11 @@ import LOCALE from "@salesforce/i18n/locale";
 import TIME_ZONE from "@salesforce/i18n/timeZone";
 import updateCredExempt from "@salesforce/apex/CredentialExamAttemptController.updateCredExempt";
 import uploadReciept from "@salesforce/apex/CredentialExamAttemptController.uploadReciept";
+import parentStatus from "@salesforce/apex/CredentialExamAttemptController.parentStatus";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { subscribe, unsubscribe, APPLICATION_SCOPE, MessageContext } from "lightning/messageService";
 import refreshChannel from "@salesforce/messageChannel/RefreshComponent__c";
-
 //const MAX_FILE_SIZE = 50000000;
-
 //import updateStatus from "@salesforce/apex/CredentialExamAttemptController.updateStatus";
 import updateDate from "@salesforce/apex/CredentialExamAttemptController.updateDate";
 
@@ -45,7 +44,9 @@ export default class CredentialExamAttempts extends LightningElement {
 	@track credentialName;
 	@track examId;
 	@track examname;
+	@track examdate;
 	@track examComments;
+	@track usrCredParentId;
 	@track filesDatas = [];
 	subscription = null;
 	@track response;
@@ -91,16 +92,16 @@ export default class CredentialExamAttempts extends LightningElement {
 			);
 		}
 	}
- /*get options() {
+ get options() {
         return [
            
 		    { label: 'None', value: 'None' },
 		    { label: 'Exam Passed', value: 'Exam Passed' },
-            { label: 'Exam Fail', value: 'Exam Fail' }
+            { label: 'Exam Failed', value: 'Exam Failed' }
        
         ];
     }
-*/
+
 	handleUploadFiles(event) {
 		console.log('file upload');
 		this.filesDatas = event.detail;
@@ -169,6 +170,7 @@ export default class CredentialExamAttempts extends LightningElement {
 			this.examId = event.target.value;
 			this.credentialName = event.target.dataset.credentialname;
 			this.examname = event.target.dataset.name;
+			this.examdate = event.target.dataset.examDate;
 			let status = event.target.dataset.status;
 			console.log('status:', status);
 			console.log("RecId on Button Click :", event.target.value);
@@ -181,6 +183,7 @@ export default class CredentialExamAttempts extends LightningElement {
 					console.log("showModal", this.isShowExamModal);
 				}
 				if (Element.Id == event.target.value && status == "Upload Result") {
+					this.usrCredParentId = Element.User_Credential__c;
 					this.displayUploadResultModal = true;
 				}
 			});
@@ -286,52 +289,7 @@ export default class CredentialExamAttempts extends LightningElement {
 	hideModalBox(event) {
 		this.isShowExamModal = false;
 	}
-	/* 
-    @description -this function is used to remove the uploaded files.
-     @param - event.
-   */
-	/*	removeReceiptImage(event) {
-			let index = event.currentTarget.dataset.id;
-			this.filesDatas.splice(index, 1);
-		}
-		*/
-
-
-	/* @description -this function is used to  upload files.
-	  @param - event.*/
-	/*	handleFileUploaded(event) { 
-			try {
-				console.log("File Upload :", event.target.files);
-				let count = 0;
-				if (event.target.files.length > 0) {
-					console.log("Inside file upload");
-					
-					for (let x of event.target.files) {
-						let randomNumber = parseInt(Math.random() * 100);
-						if (x.size > MAX_FILE_SIZE) {
-							this.showToast("Error!", "error", "File Limit Exceed");
-							return;
-						}
-						let file = x;
-						console.log("file:", file);
-						let reader = new FileReader();
-						console.log("reader:", reader);
-						reader.onload = (e) => {
-							count = count++;
-							let fileContents = reader.result.split(",")[1];
-							console.log('File content ',btoa(fileContents));
-							this.filesDatas.push({ fileName: this.examname + '_' + this.credentialName + '_'+'12909'+randomNumber+'__Reciept'+'.pdf' ,fileContent: fileContents });
-						};
-						reader.readAsDataURL(file);
-					}
-					console.log("Files : ", this.filesDatas);
-				}
-			} catch (error) {
-				console.log("error", error);
-			}
-		}
-		*/
-	/* 
+	/*
     @description -this function is used to update exam details and upload files.
    */
 	saveRecord() {
@@ -444,42 +402,7 @@ export default class CredentialExamAttempts extends LightningElement {
 		console.log(this.ExamResult);
 	}
 	saveResult() {
-		try {
-			this.Fileslist.push(JSON.stringify(this.filesDatas));
-			console.log("New FilesData:", this.Fileslist);
-			//status
-			const allValidstatusvalue = this.template.querySelector('.status').value;
-
-			const allValidstatus = this.template.querySelector('.status');
-			const allValiddatevalue = this.template.querySelector('.dt').value;
-
-			const allValiddate = this.template.querySelector('.dt');
-			if (!allValiddatevalue && !allValidstatusvalue ) {
-				allValiddate.setCustomValidity("Exam date is required");
-				allValiddate.reportValidity();
-				allValidstatus.setCustomValidity('status is required');
-				allValidstatus.reportValidity();
-				this.template.querySelector('c-upload-file').checkValidity();
-			}
-			else if (!allValiddatevalue) {
-				allValiddate.setCustomValidity("Exam date is required");
-				allValiddate.reportValidity();
-				this.template.querySelector('c-upload-file').checkValidity();
-
-
-			} else if (!allValidstatusvalue) {
-				allValidstatus.setCustomValidity('status is required');
-				allValidstatus.reportValidity();
-				this.template.querySelector('c-upload-file').checkValidity();
-
-
-			}
-			else if(this.template.querySelector('c-upload-file').checkValidity()){
-
-
-			}
-					
-			else{
+		
 				this.displayUploadResultModal = false;
 				const examAttemptFields = {
 					sobjectType: "Credential_Exam_Attempt__c",
@@ -488,6 +411,12 @@ export default class CredentialExamAttempts extends LightningElement {
 					Status__c: this.ExamResult
 				};
 
+            parentStatus({parentId: this.usrCredParentId, status : this.ExamResult}).then((respose)=> {
+			})
+			.catch((error) => {
+				console.log("Error", error);
+				
+			});
 				updateCredExempt({
 					examAttemptRec: examAttemptFields
 				})
@@ -509,12 +438,4 @@ export default class CredentialExamAttempts extends LightningElement {
 						this.displayUploadResultModal = false;
 					});
 			}
-
-		} catch (error) {
-			console.log('error', error);
-		}
-
-	}
-
-
 }

@@ -135,37 +135,33 @@ export default class VoucherAssignment extends LightningElement {
             this.cost=selectedRows[i].Cost__c;                  
          }
     }
+updateRecords(){
+    this.handleRecords();
+}
 
-    /*
-        @description    :   This Method is to update the Exam Status and Exam Voucher record.      
-    */
-   updateExmRecord(){
+
+updateExmRecord(){
     if(this.cost > this.credCost){
         this.openDialog = true;
-    }else{   
-        updateExamRecords();
+    }else{
+        this.handleRecords();
     }
 }
-
-handleDialog(){
-    updateExamRecords();
+  handleRecords(){
+        updateExamRecords({recordId : this.parentID, examVoucher: this.exmVoucher}).then((response)=>{
+            const evt = new ShowToastEvent({
+                message: this.label.VoucherAssigned_ToastMessage,
+                variant: this.variant,
+            });
+            this.dispatchEvent(evt);
+            this.openDialog = false;
+            this.isShowModal = false;
+        }).catch((error) => {});
+        updateVouchersStatus({voucherId: this.exmVoucher ,voucherStatus : "Assigned"}).then((response)=>{
+             this.isShowModal = false;
+         }).catch((error) => {});
 }
 
-updateExamRecords(){
-    updateExamRecords({recordId : this.parentID, examVoucher: this.exmVoucher}).then((response)=>{
-        const evt = new ShowToastEvent({
-            message: this.label.VoucherAssigned_ToastMessage,
-            variant: this.variant,
-        });
-        this.dispatchEvent(evt);
-        this.openDialog = false;
-        this.isShowModal = false;
-    }).catch((error) => {});
-
-    updateVouchersStatus({voucherId: this.exmVoucher ,voucherStatus : "Assigned"}).then((response)=>{
-         this.isShowModal = false;
-     }).catch((error) => {});
-}
 
   /*
         @description    :   This Method is to sort Expiry Date.      

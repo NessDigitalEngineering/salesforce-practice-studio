@@ -109,4 +109,19 @@ public with sharing class CredentialExamAttemptController{
         throw new AuraHandledException(e.getMessage());
       }  
       } 
+
+      /*******************************************************************************************************
+      * @description Returns Credentials Exam attempts that are in progress
+      * @param examAttemptRecordId and  examStatus of credential Exam Attempts
+      */ 
+    @AuraEnabled
+    public static void parentStatus(String parentId, String status)
+    {
+        try {
+            CredentialExamAttemptService ceas = new CredentialExamAttemptService();
+            ceas.updateParentRecord(parentId,status); 
+        } catch (AuraHandledException  ex) {
+            throw ex;
+        }     
+    } 
 }
