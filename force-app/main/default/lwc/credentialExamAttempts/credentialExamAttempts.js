@@ -165,6 +165,8 @@ export default class CredentialExamAttempts extends LightningElement {
             @param          :   event
         */
 	handleClick(event) {
+			
+			
 		try {
 			this.examId = event.target.value;
 			this.credentialName = event.target.dataset.credentialname;

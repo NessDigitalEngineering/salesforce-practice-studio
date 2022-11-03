@@ -427,4 +427,8 @@
         <name>Assign_Credentials</name>
         <enabled>true</enabled>
     </customPermissions>
+    <customPermissions>
+        <name>Credential_Prioritization</name>
+        <enabled>true</enabled>
+    </customPermissions>
 </PermissionSet>
