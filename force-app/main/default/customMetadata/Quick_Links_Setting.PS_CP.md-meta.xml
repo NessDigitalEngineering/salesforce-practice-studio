@@ -15,6 +15,10 @@
         <value xsi:type="xsd:string">c:credentialPrioritize</value>
     </values>
     <values>
+        <field>Custom_Permission__c</field>
+        <value xsi:type="xsd:string">Credential_Prioritization</value>
+    </values>
+    <values>
         <field>Navigation_Type__c</field>
         <value xsi:type="xsd:string">Component</value>
     </values>
