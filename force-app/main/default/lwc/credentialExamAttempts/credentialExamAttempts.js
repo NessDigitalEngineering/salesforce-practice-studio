@@ -23,6 +23,7 @@ import { subscribe, unsubscribe, APPLICATION_SCOPE, MessageContext } from "light
 import refreshChannel from "@salesforce/messageChannel/RefreshComponent__c";
 //const MAX_FILE_SIZE = 50000000;
 //import updateStatus from "@salesforce/apex/CredentialExamAttemptController.updateStatus";
+import { publish } from "lightning/messageService";
 import updateDate from "@salesforce/apex/CredentialExamAttemptController.updateDate";
 
 import getUploadResultsList from "@salesforce/apex/CredentialExamAttemptController.getUploadResultsList";
@@ -473,6 +474,8 @@ export default class CredentialExamAttempts extends LightningElement {
 							})
 						);
 						this.getAllActiveExamAttemptUsers();
+						let payload = { refresh: true, userId: this.userId };
+						publish(this.messageContext, refreshChannel, payload);
 					})
 					.catch((error) => {
 						console.log("Error", error);
