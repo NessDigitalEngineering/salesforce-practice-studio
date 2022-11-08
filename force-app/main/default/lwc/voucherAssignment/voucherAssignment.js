@@ -117,6 +117,7 @@ export default class VoucherAssignment extends LightningElement {
     }
     hideModalBox() {  
         this.isShowModal = false;
+        this.openDialog = false;
     }
     hideDialog() {  
         this.openDialog = false;

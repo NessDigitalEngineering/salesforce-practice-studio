@@ -23,6 +23,7 @@ import { subscribe, unsubscribe, APPLICATION_SCOPE, MessageContext } from "light
 import refreshChannel from "@salesforce/messageChannel/RefreshComponent__c";
 //const MAX_FILE_SIZE = 50000000;
 //import updateStatus from "@salesforce/apex/CredentialExamAttemptController.updateStatus";
+import { publish } from "lightning/messageService";
 import updateDate from "@salesforce/apex/CredentialExamAttemptController.updateDate";
 
 import getUploadResultsList from "@salesforce/apex/CredentialExamAttemptController.getUploadResultsList";
@@ -94,8 +95,6 @@ export default class CredentialExamAttempts extends LightningElement {
 	}
  get options() {
         return [
-           
-		    { label: 'None', value: 'None' },
 		    { label: 'Exam Passed', value: 'Exam Passed' },
             { label: 'Exam Failed', value: 'Exam Failed' }
        
@@ -165,20 +164,19 @@ export default class CredentialExamAttempts extends LightningElement {
             @description    :   This Method is to update the open exam schedule .
             @param          :   event
         */
-	handleClick(event) {
-			
-			
+	handleClick(event) {	
 		try {
 			this.examId = event.target.value;
 			this.credentialName = event.target.dataset.credentialname;
 			this.examname = event.target.dataset.name;
-			this.examdate = event.target.dataset.examDate;
+			this.examdate = event.target.dataset.examdate;
+			console.log('Exam Date Credential Exam Attempt:'+this.examdate);
 			let status = event.target.dataset.status;
 			console.log('status:', status);
 			console.log("RecId on Button Click :", event.target.value);
 			this.searchRecords.forEach((Element) => {
 				if (Element.Id == event.target.value && status == 'Exam Schedule') {
-					console.log("Inside ");
+					console.log("Inside");
 					this.filesDatas = [];
 					this.isShowExamModal = true;
 					this.isChangeFileName = true;
@@ -186,6 +184,7 @@ export default class CredentialExamAttempts extends LightningElement {
 				}
 				if (Element.Id == event.target.value && status == "Upload Result") {
 					this.usrCredParentId = Element.User_Credential__c;
+					this.filesDatas = [];
 					this.displayUploadResultModal = true;
 				}
 			});
@@ -404,7 +403,48 @@ export default class CredentialExamAttempts extends LightningElement {
 		console.log(this.ExamResult);
 	}
 	saveResult() {
-		
+		try {
+			this.Fileslist.push(JSON.stringify(this.filesDatas));
+			console.log("New FilesData:", this.Fileslist);
+			//status
+		const allValidstatusvalue = this.template.querySelector('.status').value;
+
+			const allValidstatus = this.template.querySelector('.status');
+			const allValiddatevalue = this.template.querySelector('.dt').value;
+
+			const allValiddate = this.template.querySelector('.dt');
+			if (!allValiddatevalue  && this.template.querySelector('c-upload-file').checkValidity() && !allValidstatusvalue) {
+				allValiddate.setCustomValidity("Exam date is required");
+				allValiddate.reportValidity();
+				allValidstatus.setCustomValidity('status is required');
+				allValidstatus.reportValidity();
+			//	this.template.querySelector('c-upload-file').checkValidity();
+			}
+			else if (!allValiddatevalue) {
+				allValiddate.setCustomValidity("Exam date is required");
+				allValiddate.reportValidity();
+				this.template.querySelector('c-upload-file').checkValidity();
+
+
+			} else if (!allValidstatusvalue) {
+				allValidstatus.setCustomValidity('status is required');
+				allValidstatus.reportValidity();
+				this.template.querySelector('c-upload-file').checkValidity();
+
+
+			}else if(!allValidstatusvalue && !allValiddatevalue){
+				allValidstatus.setCustomValidity('status is required');
+				allValidstatus.reportValidity();
+				allValiddate.setCustomValidity("Exam date is required");
+				allValiddate.reportValidity();
+
+			}
+			
+			else if(this.template.querySelector('c-upload-file').checkValidity()){
+				console.log('Errors');
+
+			}		
+			else{
 				this.displayUploadResultModal = false;
 				const examAttemptFields = {
 					sobjectType: "Credential_Exam_Attempt__c",
@@ -434,10 +474,17 @@ export default class CredentialExamAttempts extends LightningElement {
 							})
 						);
 						this.getAllActiveExamAttemptUsers();
+						let payload = { refresh: true, userId: this.userId };
+						publish(this.messageContext, refreshChannel, payload);
 					})
 					.catch((error) => {
 						console.log("Error", error);
 						this.displayUploadResultModal = false;
 					});
 			}
+}
+catch (error) {
+	console.log('error', error);
+}
+	}
 }

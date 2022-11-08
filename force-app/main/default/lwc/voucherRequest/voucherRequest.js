@@ -39,6 +39,8 @@ export default class VoucherRequest extends LightningElement {
 	@track fileList = [];
 	@track isShowModal = false;
 	@api credobj;
+	@api isvrequest;
+	@track isVOpen  = false;
 
 	fileNames = [];
 	fileContentsArray = [];
@@ -54,6 +56,7 @@ export default class VoucherRequest extends LightningElement {
 	isChangeFileName = false;
 	userCredentialId;
 	userId = USER_ID;
+	
 
 	/* 
        @ description setting variables
@@ -64,6 +67,7 @@ handleUploadFiles(event) {
 		console.log('Files:', this.filesData);
 }
 	connectedCallback() {
+		this.isVOpen = this.isvrequest;
 		console.log("credObj:", JSON.stringify(this.credobj));
 		this.isShowModal = true;
 		this.credentialName = this.credobj.credName;
