@@ -163,20 +163,19 @@ export default class CredentialExamAttempts extends LightningElement {
             @description    :   This Method is to update the open exam schedule .
             @param          :   event
         */
-	handleClick(event) {
-			
-			
+	handleClick(event) {	
 		try {
 			this.examId = event.target.value;
 			this.credentialName = event.target.dataset.credentialname;
 			this.examname = event.target.dataset.name;
-			this.examdate = event.target.dataset.examDate;
+			this.examdate = event.target.dataset.examdate;
+			console.log('Exam Date Credential Exam Attempt:'+this.examdate);
 			let status = event.target.dataset.status;
 			console.log('status:', status);
 			console.log("RecId on Button Click :", event.target.value);
 			this.searchRecords.forEach((Element) => {
 				if (Element.Id == event.target.value && status == 'Exam Schedule') {
-					console.log("Inside ");
+					console.log("Inside");
 					this.filesDatas = [];
 					this.isShowExamModal = true;
 					this.isChangeFileName = true;
@@ -407,30 +406,41 @@ export default class CredentialExamAttempts extends LightningElement {
 			this.Fileslist.push(JSON.stringify(this.filesDatas));
 			console.log("New FilesData:", this.Fileslist);
 			//status
-			const allValidstatusvalue = this.template.querySelector('.status').value;
+		const allValidstatusvalue = this.template.querySelector('.status').value;
 
 			const allValidstatus = this.template.querySelector('.status');
 			const allValiddatevalue = this.template.querySelector('.dt').value;
 
 			const allValiddate = this.template.querySelector('.dt');
-			if (!allValiddatevalue && !allValidstatusvalue ) {
+			if (!allValiddatevalue  && this.template.querySelector('c-upload-file').checkValidity() && !allValidstatusvalue) {
 				allValiddate.setCustomValidity("Exam date is required");
 				allValiddate.reportValidity();
 				allValidstatus.setCustomValidity('status is required');
 				allValidstatus.reportValidity();
-				this.template.querySelector('c-upload-file').checkValidity();
+			//	this.template.querySelector('c-upload-file').checkValidity();
 			}
 			else if (!allValiddatevalue) {
 				allValiddate.setCustomValidity("Exam date is required");
 				allValiddate.reportValidity();
 				this.template.querySelector('c-upload-file').checkValidity();
+
+
 			} else if (!allValidstatusvalue) {
 				allValidstatus.setCustomValidity('status is required');
 				allValidstatus.reportValidity();
 				this.template.querySelector('c-upload-file').checkValidity();
-			}
-			else if(this.template.querySelector('c-upload-file').checkValidity()){
 
+
+			}else if(!allValidstatusvalue && !allValiddatevalue){
+				allValidstatus.setCustomValidity('status is required');
+				allValidstatus.reportValidity();
+				allValiddate.setCustomValidity("Exam date is required");
+				allValiddate.reportValidity();
+
+			}
+			
+			else if(this.template.querySelector('c-upload-file').checkValidity()){
+				console.log('Errors');
 
 			}		
 			else{

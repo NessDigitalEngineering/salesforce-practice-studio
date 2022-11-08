@@ -7,6 +7,7 @@ export default class FileUploadMultiLWC extends LightningElement {
  @api examid;
     @api credname;
     @api isfile;
+    @api isvopened;
     @api ExamResult;
    // @api recordId;
     @track filesData = [];
@@ -14,7 +15,7 @@ export default class FileUploadMultiLWC extends LightningElement {
 
     handleFileUploaded(event) {
        let rand =  this.getRandomArbitrary();
-      
+      console.log('voucher request:',this.isvopened);
         if (event.target.files.length > 0) {
             for (let x of event.target.files) {
                 if (x.size > MAX_FILE_SIZE) {
@@ -22,6 +23,7 @@ export default class FileUploadMultiLWC extends LightningElement {
                     return;
                 }
                 let file =x;
+                console.log('FIle:',file);
                 let reader = new FileReader();
                 reader.onload = e => {
                     let fileContents = reader.result.split(',')[1]
@@ -29,8 +31,12 @@ export default class FileUploadMultiLWC extends LightningElement {
                      if(this.isfile){
                         this.filesData.push({'fileName':this.examid + '_'+this.credname + '_'+rand+'_Reciept'+ '.pdf','fileContent':fileContents});
                      
+                     }
+                     else if(this.isvopened){
+                        this.filesData.push({'fileName':  this.credname + '_'  + file.name,'fileContent':fileContents});
+
                      }else{
-                         this.filesData.push({'fileName':this.examid + '_' + this.credname + '_'+ rand + this.ExamResult + '.pdf','fileContent':fileContents});
+                         this.filesData.push({'fileName':file.name,'fileContent':fileContents});
                      }
                 };
                 reader.readAsDataURL(file);
