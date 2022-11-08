@@ -1,20 +1,20 @@
 <template>
     <lightning-card title={title}>
         <template if:true={emptyRecords}>
-            <div class="slds-var-p-around_small slds-scrollable_y  setHeight">
-
+            <div class="slds-var-p-around_small slds-scrollable_y setHeight">
                 <lightning-card class="" title="">
-                    <lightning-datatable max-row-selection=1 key-field="id" data={lstCred} onrowselection={getSelectedName} columns={columns}></lightning-datatable>
-                </lightning-card>
+                    <lightning-datatable class="setHeight" max-row-selection=1 key-field="id" data={lstCred} onrowselection={getSelectedName} columns={columns}></lightning-datatable>
+                </lightning-card> 
                 <template if:true={isShowButton}>
-                    <div class="slds-float_right slds-p-right_medium">
+                    <div class="button-corner ">
                         <lightning-button  variant="brand" disabled={disableButton} label="Assign" title="Primary action"
                     onclick={showModalBox} class="slds-m-right_x-medium slds-size_10-of-12 slds-float_right"></lightning-button>
                     </div>
                 </template>
             </div>
+            
         </template>
-
+   
         <!-- modal start -->
         <template if:true={isShowModal}>
             <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
@@ -73,7 +73,6 @@
             <div class="slds-text-align_center imgAdjustment">
                 <img src={Icn} aria-hidden="true" alt="Assignment Logo"></img>
             </div>
-
             <div class="slds-text-align_center">
                 <h2>{label.ExamAttempt_EmptyMsg}</h2><br>
             </div>
