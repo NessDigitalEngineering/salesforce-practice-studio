@@ -94,8 +94,6 @@ export default class CredentialExamAttempts extends LightningElement {
 	}
  get options() {
         return [
-           
-		    { label: 'None', value: 'None' },
 		    { label: 'Exam Passed', value: 'Exam Passed' },
             { label: 'Exam Failed', value: 'Exam Failed' }
        
@@ -186,6 +184,7 @@ export default class CredentialExamAttempts extends LightningElement {
 				}
 				if (Element.Id == event.target.value && status == "Upload Result") {
 					this.usrCredParentId = Element.User_Credential__c;
+					this.filesDatas = [];
 					this.displayUploadResultModal = true;
 				}
 			});
@@ -404,7 +403,37 @@ export default class CredentialExamAttempts extends LightningElement {
 		console.log(this.ExamResult);
 	}
 	saveResult() {
-		
+		try {
+			this.Fileslist.push(JSON.stringify(this.filesDatas));
+			console.log("New FilesData:", this.Fileslist);
+			//status
+			const allValidstatusvalue = this.template.querySelector('.status').value;
+
+			const allValidstatus = this.template.querySelector('.status');
+			const allValiddatevalue = this.template.querySelector('.dt').value;
+
+			const allValiddate = this.template.querySelector('.dt');
+			if (!allValiddatevalue && !allValidstatusvalue ) {
+				allValiddate.setCustomValidity("Exam date is required");
+				allValiddate.reportValidity();
+				allValidstatus.setCustomValidity('status is required');
+				allValidstatus.reportValidity();
+				this.template.querySelector('c-upload-file').checkValidity();
+			}
+			else if (!allValiddatevalue) {
+				allValiddate.setCustomValidity("Exam date is required");
+				allValiddate.reportValidity();
+				this.template.querySelector('c-upload-file').checkValidity();
+			} else if (!allValidstatusvalue) {
+				allValidstatus.setCustomValidity('status is required');
+				allValidstatus.reportValidity();
+				this.template.querySelector('c-upload-file').checkValidity();
+			}
+			else if(this.template.querySelector('c-upload-file').checkValidity()){
+
+
+			}		
+			else{
 				this.displayUploadResultModal = false;
 				const examAttemptFields = {
 					sobjectType: "Credential_Exam_Attempt__c",
@@ -440,4 +469,9 @@ export default class CredentialExamAttempts extends LightningElement {
 						this.displayUploadResultModal = false;
 					});
 			}
+}
+catch (error) {
+	console.log('error', error);
+}
+	}
 }
