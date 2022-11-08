@@ -146,7 +146,7 @@ export default class CredentialExamAttempts extends LightningElement {
 				console.log("SRCH" + JSON.stringify(srchRecords));
 
 				this.countRec = res.length;
-				if (res.length === 0) {
+				if (this.countRec  === 0) {
 					this.showIcon = true;
 					this.emptyRecords = false;
 				}

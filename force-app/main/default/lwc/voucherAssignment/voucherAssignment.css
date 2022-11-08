@@ -12,7 +12,7 @@
 	padding-top: 4.5rem;
 }
 .setHeight {
-	height: 13.25rem !important;
+	height: 14rem !important;
 }
 .text-align {
 	white-space: normal;
@@ -30,3 +30,8 @@
 	top: calc(30% - 25px);
 	left: calc(40% - 50px);
 }
+.button-corner {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+  }
