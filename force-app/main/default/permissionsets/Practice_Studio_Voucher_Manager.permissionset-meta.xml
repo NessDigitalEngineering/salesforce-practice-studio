@@ -181,4 +181,8 @@
         <tab>Exam_Voucher__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    <customPermissions>
+        <name>Assign_Voucher</name>
+        <enabled>true</enabled>
+    </customPermissions>
 </PermissionSet>

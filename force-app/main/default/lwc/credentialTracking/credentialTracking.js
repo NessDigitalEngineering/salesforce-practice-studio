@@ -185,11 +185,13 @@ export default class CredentialTracking extends LightningElement {
 		this.countRec = data.length;
 		if (data.length === 0) {
 			this.showIcon = true;
-			this.emptyRecords = false;
+			this.emptyRecords = true;
 		}
 		this.userCredentialsData = data;
 		if (this.countRec > 0) {
 			this.title = this.label.CompTitle + " (" + data.length + ")";
+			this.showIcon = false;
+			this.emptyRecords = false;
 		} else {
 			this.title = this.label.CompTitle;
 		}

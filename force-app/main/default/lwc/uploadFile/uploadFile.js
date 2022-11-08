@@ -15,6 +15,7 @@ export default class FileUploadMultiLWC extends LightningElement {
 
     handleFileUploaded(event) {
        let rand =  this.getRandomArbitrary();
+       console.log('rand:',rand);
       console.log('voucher request:',this.isvopened);
         if (event.target.files.length > 0) {
             for (let x of event.target.files) {
@@ -92,10 +93,12 @@ export default class FileUploadMultiLWC extends LightningElement {
   }
 
   getRandomArbitrary (){
-  let crypto = window.crypto;
-  let random = new Uint8Array(3);
-  crypto.getRandomValues(random);
- return random;
+    // let crypto = window.crypto;
+    // let random = new Uint8Array(3);
+    // crypto.getRandomValues(random);
+    // return random.toString();
+    let random = Math.floor(Math.random()*90000) + 10000;
+    return random.toString();
 
   }
 }
