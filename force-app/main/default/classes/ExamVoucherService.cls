@@ -57,7 +57,7 @@ global with sharing class ExamVoucherService {
       public List<Exam_Voucher__c> getAvailableExamVouchers(string credType, integer credentialCost) {
         try {
             return [
-                SELECT id, Credential_Type__c, Name, Cost__c, Value__c, Sponsor__c, Expiry_Date__c, Status__c FROM Exam_Voucher__c WHERE Status__c='Available' AND ((Credential_Type__c=:credType) AND  (Cost__c >=: credentialCost)) WITH SECURITY_ENFORCED];
+                SELECT id, Credential_Type__c, Name, Cost__c, Value__c, Sponsor__c, Expiry_Date__c, Status__c FROM Exam_Voucher__c WHERE Status__c='Available' AND ((Credential_Type__c=:credType) AND  (Value__c >=: credentialCost))  ORDER BY Expiry_Date__c, Value__c WITH SECURITY_ENFORCED];
         } catch (Exception ex) {
             throw ex;
         }

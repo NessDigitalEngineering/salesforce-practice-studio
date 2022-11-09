@@ -1,4 +1,4 @@
-import { LightningElement ,wire,track } from 'lwc';
+import { LightningElement,track } from 'lwc';
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 import ExamAttempt_EmptyMsg from "@salesforce/label/c.ExamAttempt_EmptyMsg";
 import voucher_Assignment from "@salesforce/label/c.voucher_Assignment";

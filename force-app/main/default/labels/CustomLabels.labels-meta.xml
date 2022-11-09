@@ -327,7 +327,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Voucher_Price</shortDescription>
-        <value>Voucher Prize is more than Exam cost.</value>
+        <value>Voucher Price is more than Exam cost.</value>
     </labels>
     <labels>
         <fullName>Continue</fullName>
