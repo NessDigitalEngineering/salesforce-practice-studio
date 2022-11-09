@@ -42,7 +42,15 @@
                 </div>
             </section>
             <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
-
+  <!-- to show the image if there is no records
+        <template if:true={showImage}>
+            <div class="slds-text-align_center imgAdjustment">
+                <img src={Icn} aria-hidden="true" alt="Assignment Logo"></img>
+            </div>
+            <div class="slds-text-align_center">
+                <h2>{label.ExamAttempt_EmptyMsg}</h2><br>
+            </div>
+        </template> -->
         </template>
         <!-- modal end -->
         <template if:true={openDialog}>

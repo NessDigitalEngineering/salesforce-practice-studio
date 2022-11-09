@@ -418,7 +418,7 @@ export default class CredentialExamAttempts extends LightningElement {
 				allValiddate.reportValidity();
 				allValidstatus.setCustomValidity('status is required');
 				allValidstatus.reportValidity();
-			//	this.template.querySelector('c-upload-file').checkValidity();
+				this.template.querySelector('c-upload-file').checkValidity();
 			}
 			else if (!allValiddatevalue) {
 				allValiddate.setCustomValidity("Exam date is required");
@@ -453,7 +453,7 @@ export default class CredentialExamAttempts extends LightningElement {
 					Status__c: this.ExamResult
 				};
 
-            parentStatus({parentId: this.usrCredParentId, status : this.ExamResult}).then((respose)=> {
+            parentStatus({parentId: this.usrCredParentId, status : this.ExamResult , dt: this.examDate }).then((respose)=> {
 			})
 			.catch((error) => {
 				console.log("Error", error);

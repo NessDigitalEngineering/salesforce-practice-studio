@@ -1,4 +1,4 @@
-import { LightningElement ,track } from 'lwc';
+import { LightningElement ,wire,track } from 'lwc';
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 import ExamAttempt_EmptyMsg from "@salesforce/label/c.ExamAttempt_EmptyMsg";
 import voucher_Assignment from "@salesforce/label/c.voucher_Assignment";
@@ -38,6 +38,8 @@ export default class VoucherAssignment extends LightningElement {
     @track showIcon = false;
     Icn = TasksIcon;
     @track emptyRecords = true;
+    @track showImage = false;
+    @track noRecords = true;
     @track credentialName;
     @track voucherCost;
     @track credType;
@@ -57,6 +59,7 @@ export default class VoucherAssignment extends LightningElement {
 	};
     @track isDialogVisible = false;
     @track originalMessage;
+
 /*
         @description    :   This Method is to show available Voucher Approved User.      
     */
@@ -90,6 +93,11 @@ export default class VoucherAssignment extends LightningElement {
         getAllExamVouchers({credentialType:this.credType,credentialCost:this.credCost}).then((response) => {
             this.lstVoucher= response;
             console.log('response=='+ this.lstVoucher);
+
+            if (response.length === 0) {
+                this.showImage = true;
+                this.noRecords = false;
+             }
         })
         .catch((error) => {
             console.log("error==" + JSON.stringify(error));
@@ -157,10 +165,14 @@ updateExmRecord(){
             this.dispatchEvent(evt);
             this.openDialog = false;
             this.isShowModal = false;
+            
         }).catch((error) => {});
         updateVouchersStatus({voucherId: this.exmVoucher ,voucherStatus : "Assigned"}).then((response)=>{
              this.isShowModal = false;
          }).catch((error) => {});
+
+         getVoucherApprovedUsers().then((response)=>{
+        }).catch((error) => {});
 }
 
 
