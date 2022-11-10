@@ -78,11 +78,11 @@ public with sharing class VoucherRequestController {
       * @param examAttemptRecordId and  examStatus of credential Exam Attempts
       */ 
     @AuraEnabled
-    public static void updateVouchersStatus(String voucherId, String voucherStatus)
+    public static void updateVouchersStatus(String voucherId, String voucherStatus, String examAttemptId) 
     {
         try {
             ExamVoucherService evs = new ExamVoucherService();
-            evs.updateVoucherStatus(voucherId,voucherStatus); 
+            evs.updateVoucherStatus(voucherId,voucherStatus,examAttemptId); 
         } catch (Exception e) {
 			throw new AuraHandledException(e.getMessage());
 		}    

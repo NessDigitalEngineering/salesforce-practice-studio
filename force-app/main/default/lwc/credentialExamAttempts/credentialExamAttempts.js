@@ -54,6 +54,7 @@ export default class CredentialExamAttempts extends LightningElement {
 	@track isShowExamModal = false;
 	@track ExamResult;
 	@api isChangeFileName = false;
+	@track fileLength;
 	label = {
 		ExamAttemptID,
 		User_Credential,
@@ -302,8 +303,7 @@ export default class CredentialExamAttempts extends LightningElement {
 			const allValidvalue = this.template.querySelector('.validate').value;
 
 			const allValid = this.template.querySelector('.validate');
-			//	const allValid1value  = this.template.querySelector('.').value;
-			
+
 			if (!allValidvalue) {
 				allValid.setCustomValidity("Exam date is required");
 				allValid.reportValidity();
@@ -313,36 +313,38 @@ export default class CredentialExamAttempts extends LightningElement {
 			//	alert('upload result');
 
 			}  else {
-				this.isShowModal = false;
-				const examAttemptFields = {
-					sobjectType: "Credential_Exam_Attempt__c",
-					Exam_Date_Time__c: this.examDate,
-					Id: this.examId,
-					Status__c: "Exam Scheduled"
-				};
-				console.log("examAttemptRec---" + JSON.stringify(examAttemptFields));
-
-				console.log("jsonData:", JSON.stringify(this.filesDatas));
-				updateCredExempt({
-					examAttemptRec: examAttemptFields
-				})
-					.then((result) => {
-						this.isShowExamModal = false;
-						console.log("result", result);
-						this.UploadFilest(result);
-						this.dispatchEvent(
-							new ShowToastEvent({
-								title: "Success",
-								variant: "success",
-								message: "success"
-							})
-						);
-						this.getAllActiveExamAttemptUsers();
+				if(this.filesDatas.length > 0){
+					this.isShowModal = false;
+					const examAttemptFields = {
+						sobjectType: "Credential_Exam_Attempt__c",
+						Exam_Date_Time__c: this.examDate,
+						Id: this.examId,
+						Status__c: "Exam Scheduled"
+					};
+					console.log("examAttemptRec---" + JSON.stringify(examAttemptFields));
+	
+					console.log("jsonData:", JSON.stringify(this.filesDatas));
+					updateCredExempt({
+						examAttemptRec: examAttemptFields
 					})
-					.catch((error) => {
-						console.log("Error", error);
-						this.isShowExamModal = false;
-					});
+						.then((result) => {
+							this.isShowExamModal = false;
+							console.log("result", result);
+							this.UploadFilest(result);
+							this.dispatchEvent(
+								new ShowToastEvent({
+									title: "Success",
+									variant: "success",
+									message: "success"
+								})
+							);
+							this.getAllActiveExamAttemptUsers();
+						})
+						.catch((error) => {
+							console.log("Error", error);
+							this.isShowExamModal = false;
+						});
+					}
 			}
 		} catch (error) {
 			console.log("error", error);
@@ -420,7 +422,7 @@ export default class CredentialExamAttempts extends LightningElement {
 				allValidstatus.reportValidity();
 				this.template.querySelector('c-upload-file').checkValidity();
 			}
-			else if (!allValiddatevalue) {
+			else if (!allValiddatevalue ) {
 				allValiddate.setCustomValidity("Exam date is required");
 				allValiddate.reportValidity();
 				this.template.querySelector('c-upload-file').checkValidity();
@@ -445,6 +447,7 @@ export default class CredentialExamAttempts extends LightningElement {
 
 			}		
 			else{
+				if(this.filesDatas.length > 0){
 				this.displayUploadResultModal = false;
 				const examAttemptFields = {
 					sobjectType: "Credential_Exam_Attempt__c",
@@ -482,6 +485,7 @@ export default class CredentialExamAttempts extends LightningElement {
 						this.displayUploadResultModal = false;
 					});
 			}
+		}
 }
 catch (error) {
 	console.log('error', error);

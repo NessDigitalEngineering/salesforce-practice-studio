@@ -29,7 +29,7 @@ export default class FileUploadMultiLWC extends LightningElement {
                     let fileContents = reader.result.split(',')[1]
                  
                      if(this.isfile){
-                        this.filesData.push({'fileName':this.examid + '_'+this.credname + '_'+rand+'_Reciept'+ '.pdf','fileContent':fileContents});
+                        this.filesData.push({'fileName':this.examid + '_'+this.credname + '_'+rand+'_Receipt'+ '.pdf','fileContent':fileContents});
                      
                      }
                      else if(this.isvopened){
@@ -54,7 +54,10 @@ export default class FileUploadMultiLWC extends LightningElement {
  
     removeReceiptImage(event) {
         let index = event.currentTarget.dataset.id;
+        //alert(index);
         this.filesData.splice(index, 1);
+        //alert(this.filesData.splice(index, 1));
+        //alert('remove file');
     }
 
     showToast(title, variant, message) {

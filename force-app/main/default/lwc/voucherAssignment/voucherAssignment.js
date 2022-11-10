@@ -49,6 +49,8 @@ export default class VoucherAssignment extends LightningElement {
     @track sortBy
     @track sortDirection;
     @track cost;
+    @track attemptID;
+
 
     label = {
 		ExamAttempt_EmptyMsg,
@@ -77,6 +79,8 @@ export default class VoucherAssignment extends LightningElement {
         } else {
             this.title = this.label.voucher_Assignment;
         }
+        eval("$A.get('e.force:refreshView').fire();");
+       
     })
     .catch((error) => {
         console.log("error" + JSON.stringify(error));
@@ -141,6 +145,7 @@ export default class VoucherAssignment extends LightningElement {
         console.log(JSON.stringify(selectedRows));
                 for (let i of selectedRows.keys()) {
             this.exmVoucher=selectedRows[i].Id;
+            
             this.cost=selectedRows[i].Cost__c;                  
          }
     }
@@ -167,12 +172,13 @@ updateExmRecord(){
             this.isShowModal = false;
             
         }).catch((error) => {});
-        updateVouchersStatus({voucherId: this.exmVoucher ,voucherStatus : "Assigned"}).then((response)=>{
+        alert(this.parentID);
+        updateVouchersStatus({voucherId: this.exmVoucher ,voucherStatus : "Assigned", examAttemptId: this.parentID}).then((response)=>{
              this.isShowModal = false;
          }).catch((error) => {});
 
-         getVoucherApprovedUsers().then((response)=>{
-        }).catch((error) => {});
+        window.location.reload();
+        this.connectedCallback();
 }
 
 
