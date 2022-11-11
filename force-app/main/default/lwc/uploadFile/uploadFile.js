@@ -54,10 +54,7 @@ export default class FileUploadMultiLWC extends LightningElement {
  
     removeReceiptImage(event) {
         let index = event.currentTarget.dataset.id;
-        //alert(index);
         this.filesData.splice(index, 1);
-        //alert(this.filesData.splice(index, 1));
-        //alert('remove file');
     }
 
     showToast(title, variant, message) {
