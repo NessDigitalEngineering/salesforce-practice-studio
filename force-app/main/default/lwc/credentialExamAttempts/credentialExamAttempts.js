@@ -55,6 +55,7 @@ export default class CredentialExamAttempts extends LightningElement {
 	@track ExamResult;
 	@api isChangeFileName = false;
 	@track fileLength;
+	@track exmVchrDate;
 	label = {
 		ExamAttemptID,
 		User_Credential,
@@ -175,12 +176,15 @@ export default class CredentialExamAttempts extends LightningElement {
 			let status = event.target.dataset.status;
 			console.log('status:', status);
 			console.log("RecId on Button Click :", event.target.value);
+			alert(this.searchRecords);
+			alert(JSON.stringify(this.searchRecords));
 			this.searchRecords.forEach((Element) => {
 				if (Element.Id == event.target.value && status == 'Exam Schedule') {
 					console.log("Inside");
 					this.filesDatas = [];
 					this.isShowExamModal = true;
 					this.isChangeFileName = true;
+					this.exmVchrDate = Element.Exam_Voucher__r.Expiry_Date__c; 
 					console.log("showModal", this.isShowExamModal);
 				}
 				if (Element.Id == event.target.value && status == "Upload Result") {
@@ -301,19 +305,28 @@ export default class CredentialExamAttempts extends LightningElement {
 			//validate
 
 			const allValidvalue = this.template.querySelector('.validate').value;
-
+			 var expiryDate =allValidvalue;
+			 var readable_date = new Date(expiryDate).toLocaleDateString();
+		     var examVchrDate = new Date(this.exmVchrDate).toLocaleDateString();
+			
 			const allValid = this.template.querySelector('.validate');
-
 			if (!allValidvalue) {
-				allValid.setCustomValidity("Exam date is required");
+		
+				if (readable_date >= examVchrDate) {
+					 				alert('inside if');
+				 				allValid.setCustomValidity("This exam was purchased using a voucher/coupon. Please select a date before the voucher/coupon's last allowed exam date (01 May 2022)");
+					 				
+					 			}else{
+									allValid.setCustomValidity("Exam date is required");
+								}
+				
 				allValid.reportValidity();
 				this.template.querySelector('c-upload-file').checkValidity();
-			}
-			else if(this.template.querySelector('c-upload-file').checkValidity()){
+			 }else if(this.template.querySelector('c-upload-file').checkValidity()){
 			//	alert('upload result');
 
-			}  else {
-				if(this.filesDatas.length > 0){
+			}else {
+				if(this.filesDatas.length > 0 && readable_date <= examVchrDate){
 					this.isShowModal = false;
 					const examAttemptFields = {
 						sobjectType: "Credential_Exam_Attempt__c",
