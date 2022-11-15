@@ -4,11 +4,11 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 const MAX_FILE_SIZE = 50000000;
 
 export default class FileUploadMultiLWC extends LightningElement {
- @api examid;
+    @api examid;
     @api credname;
     @api isfile;
     @api isvopened;
-    @api ExamResult;
+    @api examresult;
    // @api recordId;
     @track filesData = [];
     showSpinner = false;
@@ -30,14 +30,14 @@ export default class FileUploadMultiLWC extends LightningElement {
                     let fileContents = reader.result.split(',')[1]
                  
                      if(this.isfile){
-                        this.filesData.push({'fileName':this.examid + '_'+this.credname + '_'+rand+'_Reciept'+ '.pdf','fileContent':fileContents});
+                        this.filesData.push({'fileName':this.examid + '_'+this.credname + '_'+rand+'_Receipt'+ '.pdf','fileContent':fileContents});
                      
                      }
                      else if(this.isvopened){
-                        this.filesData.push({'fileName':  this.credname + '_'  + file.name,'fileContent':fileContents});
+                        this.filesData.push({'fileName': this.credname + '_'  + file.name,'fileContent':fileContents});
 
                      }else{
-                         this.filesData.push({'fileName':file.name,'fileContent':fileContents});
+                         this.filesData.push({'fileName': this.examid + '_'+this.credname + '_'+ 'Exam Result' + '.pdf','fileContent':fileContents});
                      }
                 };
                 reader.readAsDataURL(file);

@@ -1,4 +1,4 @@
-import { LightningElement ,track } from 'lwc';
+import { LightningElement,track } from 'lwc';
 import TasksIcon from "@salesforce/resourceUrl/EmptyCmpImage";
 import ExamAttempt_EmptyMsg from "@salesforce/label/c.ExamAttempt_EmptyMsg";
 import voucher_Assignment from "@salesforce/label/c.voucher_Assignment";
@@ -38,6 +38,8 @@ export default class VoucherAssignment extends LightningElement {
     @track showIcon = false;
     Icn = TasksIcon;
     @track emptyRecords = true;
+    @track showImage = false;
+    @track noRecords = true;
     @track credentialName;
     @track voucherCost;
     @track credType;
@@ -47,6 +49,8 @@ export default class VoucherAssignment extends LightningElement {
     @track sortBy
     @track sortDirection;
     @track cost;
+    @track attemptID;
+
 
     label = {
 		ExamAttempt_EmptyMsg,
@@ -57,6 +61,7 @@ export default class VoucherAssignment extends LightningElement {
 	};
     @track isDialogVisible = false;
     @track originalMessage;
+
 /*
         @description    :   This Method is to show available Voucher Approved User.      
     */
@@ -74,6 +79,8 @@ export default class VoucherAssignment extends LightningElement {
         } else {
             this.title = this.label.voucher_Assignment;
         }
+        eval("$A.get('e.force:refreshView').fire();");
+       
     })
     .catch((error) => {
         console.log("error" + JSON.stringify(error));
@@ -90,6 +97,11 @@ export default class VoucherAssignment extends LightningElement {
         getAllExamVouchers({credentialType:this.credType,credentialCost:this.credCost}).then((response) => {
             this.lstVoucher= response;
             console.log('response=='+ this.lstVoucher);
+
+            if (response.length === 0) {
+                this.showImage = true;
+                this.noRecords = false;
+             }
         })
         .catch((error) => {
             console.log("error==" + JSON.stringify(error));
@@ -133,6 +145,7 @@ export default class VoucherAssignment extends LightningElement {
         console.log(JSON.stringify(selectedRows));
                 for (let i of selectedRows.keys()) {
             this.exmVoucher=selectedRows[i].Id;
+            
             this.cost=selectedRows[i].Cost__c;                  
          }
     }
@@ -157,10 +170,15 @@ updateExmRecord(){
             this.dispatchEvent(evt);
             this.openDialog = false;
             this.isShowModal = false;
+            
         }).catch((error) => {});
-        updateVouchersStatus({voucherId: this.exmVoucher ,voucherStatus : "Assigned"}).then((response)=>{
+        alert(this.parentID);
+        updateVouchersStatus({voucherId: this.exmVoucher ,voucherStatus : "Assigned", examAttemptId: this.parentID}).then((response)=>{
              this.isShowModal = false;
          }).catch((error) => {});
+
+        window.location.reload();
+        this.connectedCallback();
 }
 
 
