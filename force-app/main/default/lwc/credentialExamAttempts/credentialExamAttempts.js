@@ -148,10 +148,12 @@ export default class CredentialExamAttempts extends LightningElement {
 				this.countRec = res.length;
 				if (this.countRec  === 0) {
 					this.showIcon = true;
-					this.emptyRecords = false;
+					this.emptyRecords = true;
 				}
 				if (this.countRec > 0) {
 					this.title = this.label.Exam + " (" + res.length + ")";
+					this.showIcon = false;
+					this.emptyRecords = false;
 				} else {
 					this.title = this.label.Exam;
 				}
