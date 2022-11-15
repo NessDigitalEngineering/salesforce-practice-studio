@@ -57,7 +57,6 @@ public with sharing class CredentialExamAttemptController{
         list<Credential_Exam_Attempt__c> credentialsExamAttemptList = [select id , name,Credential__c from Credential_Exam_Attempt__c  where id =:examId];
         returnmap.put('ExamId',credentialsExamAttemptList[0].NaMe);
         returnmap.put('credentialId',credentialsExamAttemptList[0].Credential__c);
-        
         return returnMap;    
     }
     /* @ description - this function is used to update cred Exam Attempt. 
@@ -115,11 +114,11 @@ public with sharing class CredentialExamAttemptController{
       * @param examAttemptRecordId and  examStatus of credential Exam Attempts
       */ 
     @AuraEnabled
-    public static void parentStatus(String parentId, String status)
+    public static void parentStatus(String parentId, String status, date dt)
     {
         try {
             CredentialExamAttemptService ceas = new CredentialExamAttemptService();
-            ceas.updateParentRecord(parentId,status); 
+            ceas.updateParentRecord(parentId,status, dt); 
         } catch (AuraHandledException  ex) {
             throw ex;
         }     

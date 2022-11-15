@@ -14,7 +14,7 @@ public with sharing class CredentialExamAttemptService {
          try {
             userInfo.getUserId();
              return [
-                SELECT id, Credential__c , Exam_Date_Time__c,User_Credential__r.Name , User_Credential__c, Name, Exam_Voucher__c, Fail_Scorecard__c, Status__c,User__c FROM Credential_Exam_Attempt__c WHERE User_Credential__r.User__c =:userId AND ((Credential_Exam_Attempt__c.Status__c != 'Voucher Declined') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Passed') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Failed')) WITH SECURITY_ENFORCED];
+                SELECT id, Credential__c ,Exam_Voucher__r.Expiry_Date__c , Exam_Date_Time__c,User_Credential__r.Name , User_Credential__c, Name, Exam_Voucher__c, Fail_Scorecard__c, Status__c,User__c FROM Credential_Exam_Attempt__c WHERE User_Credential__r.User__c =:userId AND ((Credential_Exam_Attempt__c.Status__c != 'Voucher Declined') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Passed') AND (Credential_Exam_Attempt__c.Status__c != 'Exam Failed'))  WITH SECURITY_ENFORCED ORDER BY Exam_Date_Time__c ASC];
          } catch (Exception ex) {
              throw ex;
          }
@@ -72,7 +72,7 @@ public with sharing class CredentialExamAttemptService {
         try {
            
             return [
-                SELECT id, Credential__c, Name, Status__c,User_Credential__r.Credential__r.Type__c,User_Credential__r.Credential__r.Registration_fee__c, User__c FROM Credential_Exam_Attempt__c WHERE Credential_Exam_Attempt__c.Status__c = 'Voucher Approved' WITH SECURITY_ENFORCED];
+                SELECT id, Credential__c, Name, Status__c, User_Credential__r.Credential__r.Type__c, User_Credential__r.Credential__r.Registration_fee__c, User__c FROM Credential_Exam_Attempt__c WHERE Credential_Exam_Attempt__c.Status__c = 'Voucher Approved' WITH SECURITY_ENFORCED];
                
             } catch (Exception ex) {
             throw ex;
@@ -116,10 +116,11 @@ public with sharing class CredentialExamAttemptService {
       * @param userId SF id of user
       * @return Update Exam Status
       */
-      public Database.SaveResult updateParentRecord(String parentId, String status){
+      public Database.SaveResult updateParentRecord(String parentId, String status , date dt){
         try {
             User_Credential__c usrCredStatus = new User_Credential__c();
             usrCredStatus.Id = parentId;
+            usrCredStatus.Completion_Date__c= dt;
             if(status == 'Exam Passed'){
                 usrCredStatus.Status__c = 'Completed'; 
             }else{

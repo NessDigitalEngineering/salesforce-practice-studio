@@ -3,7 +3,9 @@
         <template if:true={emptyRecords}>
             <div class="slds-var-p-around_small slds-scrollable_y setHeight">
                 <lightning-card class="" title="">
+                    
                     <lightning-datatable class="setHeight" max-row-selection=1 key-field="id" data={lstCred} onrowselection={getSelectedName} columns={columns}></lightning-datatable>
+             
                 </lightning-card> 
                 <template if:true={isShowButton}>
                     <div class="button-corner ">
@@ -42,7 +44,6 @@
                 </div>
             </section>
             <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
-
         </template>
         <!-- modal end -->
         <template if:true={openDialog}>
