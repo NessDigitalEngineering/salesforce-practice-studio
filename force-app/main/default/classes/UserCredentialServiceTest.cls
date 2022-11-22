@@ -96,7 +96,7 @@ private class UserCredentialServiceTest {
 
             Test.startTest();
             UserCredentialService ucService = new UserCredentialService();
-            List<Database.SaveResult> result = ucService.createUserCredentials(new List<User_Credential__c>{ usrCredentials });
+            ucService.createUserCredentials(new List<User_Credential__c>{ usrCredentials });
             Test.stopTest();
 
             System.assertEquals(
@@ -136,7 +136,7 @@ private class UserCredentialServiceTest {
 
             Test.startTest();
             UserCredentialService ucService = new UserCredentialService();
-            List<Database.SaveResult> result = ucService.updateUserCredentials(
+            ucService.updateUserCredentials(
                 new List<User_Credential__c>{ new User_Credential__c(Id = usrCredentials.Id, Status__c = 'Completed') }
             );
             Test.stopTest();
@@ -160,7 +160,7 @@ private class UserCredentialServiceTest {
             insert usrCredentials;
             try {
                 UserCredentialService ucService = new UserCredentialService();
-                List<Database.SaveResult> result = ucService.updateUserCredentials(
+                ucService.updateUserCredentials(
                     new List<User_Credential__c>{ new User_Credential__c(Id = usrCredentials.Id, Status__c = 'Completed') }
                 );
             } catch (Exception ex) {

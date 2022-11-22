@@ -19,7 +19,6 @@ private class CredentialExamAttemptServiceTest {
 
     static testMethod void getActiveExamAttemptsForUserTest() {
         Map<String, String> userId = new Map<String, String>();
-        List<Credential_Exam_Attempt__c> examList = [SELECT id, Name FROM Credential_Exam_Attempt__c];
         User usrs = [SELECT id, name FROM User WHERE Email = 'puser000@amamama.com' LIMIT 1];
         System.runAs(usrs) {
             Test.startTest();
