@@ -431,4 +431,8 @@
         <name>Credential_Prioritization</name>
         <enabled>true</enabled>
     </customPermissions>
+    <customPermissions>
+        <name>Approve_Voucher_Request</name>
+        <enabled>true</enabled>
+    </customPermissions>
 </PermissionSet>

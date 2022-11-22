@@ -19,7 +19,12 @@ import updateCredExempt from "@salesforce/apex/CredentialExamAttemptController.u
 import uploadReciept from "@salesforce/apex/CredentialExamAttemptController.uploadReciept";
 import parentStatus from "@salesforce/apex/CredentialExamAttemptController.parentStatus";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import { subscribe, unsubscribe, APPLICATION_SCOPE, MessageContext } from "lightning/messageService";
+import {
+  subscribe,
+  unsubscribe,
+  APPLICATION_SCOPE,
+  MessageContext
+} from "lightning/messageService";
 import refreshChannel from "@salesforce/messageChannel/RefreshComponent__c";
 //const MAX_FILE_SIZE = 50000000;
 //import updateStatus from "@salesforce/apex/CredentialExamAttemptController.updateStatus";
@@ -29,479 +34,470 @@ import updateDate from "@salesforce/apex/CredentialExamAttemptController.updateD
 import getUploadResultsList from "@salesforce/apex/CredentialExamAttemptController.getUploadResultsList";
 
 export default class CredentialExamAttempts extends LightningElement {
-	@track timeZone = TIME_ZONE;
-	@track locale = LOCALE;
-	@track searchRecords;
-	userId = USER_ID;
-	title;
-	@track Fileslist = [];
-	Icn = TasksIcon;
-	@track userCredentialsData;
-	@track countRec;
-	@track showIcon = false;
-	@track emptyRecords = true;
-	@track displayUploadResultModal = false;
-	dt;
-	@track credentialName;
-	@track examId;
-	@track examname;
-	@track examdate;
-	@track examComments;
-	@track usrCredParentId;
-	@track filesDatas = [];
-	subscription = null;
-	@track response;
-	@track isShowExamModal = false;
-	@track ExamResult;
-	@api isChangeFileName = false;
-	@track fileLength;
-	@track exmVchrDate;
-	label = {
-		ExamAttemptID,
-		User_Credential,
-		Credential_Name,
-		Exam_Date_Time,
-		Status,
-		Exam,
-		Upload_Result,
-		ExamAttempt_EmptyMsg,
-		Reciept,
-		Exam_DateTime,
-		Exam_Attempt_Id
-	};
-	/*
+  @track timeZone = TIME_ZONE;
+  @track locale = LOCALE;
+  @track searchRecords;
+  userId = USER_ID;
+  title;
+  @track Fileslist = [];
+  Icn = TasksIcon;
+  @track userCredentialsData;
+  @track countRec;
+  @track showIcon = false;
+  @track emptyRecords = true;
+  @track displayUploadResultModal = false;
+  dt;
+  @track credentialName;
+  @track examId;
+  @track examname;
+  @track examdate;
+  @track examComments;
+  @track usrCredParentId;
+  @track filesDatas = [];
+  subscription = null;
+  @track response;
+  @track isShowExamModal = false;
+  @track ExamResult;
+  @api isChangeFileName = false;
+  @track fileLength;
+  @track exmVchrDate;
+  label = {
+    ExamAttemptID,
+    User_Credential,
+    Credential_Name,
+    Exam_Date_Time,
+    Status,
+    Exam,
+    Upload_Result,
+    ExamAttempt_EmptyMsg,
+    Reciept,
+    Exam_DateTime,
+    Exam_Attempt_Id
+  };
+  /*
         @description    :   This Method is to itrate data and show the buttons as per status.
         @param          :   event
     */
-	@wire(MessageContext)
-	messageContext;
+  @wire(MessageContext)
+  messageContext;
 
-	connectedCallback() {
-		this.subscribeToMessageChannel();
-		this.getAllActiveExamAttemptUsers();
-	}
+  connectedCallback() {
+    this.subscribeToMessageChannel();
+    this.getAllActiveExamAttemptUsers();
+  }
 
-	disconnectedCallback() {
-		this.unsubscribeToMessageChannel();
-	}
+  disconnectedCallback() {
+    this.unsubscribeToMessageChannel();
+  }
 
-	subscribeToMessageChannel() {
-		if (!this.subscription) {
-			this.subscription = subscribe(
-				this.messageContext,
-				refreshChannel,
-				(message) => this.handleMessage(message),
-				{ scope: APPLICATION_SCOPE }
-			);
-		}
-	}
- get options() {
-        return [
-		    { label: 'Exam Passed', value: 'Exam Passed' },
-            { label: 'Exam Failed', value: 'Exam Failed' }
-       
-        ];
+  subscribeToMessageChannel() {
+    if (!this.subscription) {
+      this.subscription = subscribe(
+        this.messageContext,
+        refreshChannel,
+        (message) => this.handleMessage(message),
+        { scope: APPLICATION_SCOPE }
+      );
     }
+  }
+  get options() {
+    return [
+      { label: "Exam Passed", value: "Exam Passed" },
+      { label: "Exam Failed", value: "Exam Failed" }
+    ];
+  }
 
-	handleUploadFiles(event) {
-		console.log('file upload');
-		this.filesDatas = event.detail;
-		console.log('Files:', this.filesDatas);
-	}
-	handleMessage(message) {
-		if (message.refresh && message.userId === this.userId) {
-			this.getAllActiveExamAttemptUsers();
-		}
-	}
+  handleUploadFiles(event) {
+    console.log("file upload");
+    this.filesDatas = event.detail;
+    console.log("Files:", this.filesDatas);
+  }
+  handleMessage(message) {
+    if (message.refresh && message.userId === this.userId) {
+      this.getAllActiveExamAttemptUsers();
+    }
+  }
 
-	unsubscribeToMessageChannel() {
-		unsubscribe(this.subscription);
-		this.subscription = null;
-	}
-	/* 
+  unsubscribeToMessageChannel() {
+    unsubscribe(this.subscription);
+    this.subscription = null;
+  }
+  /* 
         @description - this method is used to get all Active Exam Attempt users.
          @param - userId.
        */
-	getAllActiveExamAttemptUsers() {
-		let srchRecords = [];
-		getActiveExamAttemptsForUser({ userId: this.userId })
-			.then((res) => {
-				this.searchRecords = res;
-				console.log("search records:", this.searchRecords);
-				for (const r of res) {
-					srchRecords.push(r);
-				}
-				for (let rs of srchRecords.keys()) {
-					srchRecords[rs].showButton = false;
+  getAllActiveExamAttemptUsers() {
+    let srchRecords = [];
+    getActiveExamAttemptsForUser({ userId: this.userId })
+      .then((res) => {
+        this.searchRecords = res;
+        console.log("search records:", this.searchRecords);
+        for (const r of res) {
+          srchRecords.push(r);
+        }
+        for (let rs of srchRecords.keys()) {
+          srchRecords[rs].showButton = false;
 
-					if (srchRecords[rs].Status__c == "Voucher Assigned") {
-						srchRecords[rs].showButton = true;
-						srchRecords[rs].buttonName = "Exam Schedule";
-					}
-					if (srchRecords[rs].Status__c == "Exam Scheduled") {
-						srchRecords[rs].showButton = true;
-						srchRecords[rs].buttonName = "Upload Result";
+          if (srchRecords[rs].Status__c == "Voucher Assigned") {
+            srchRecords[rs].showButton = true;
+            srchRecords[rs].buttonName = "Exam Schedule";
+          }
+          if (srchRecords[rs].Status__c == "Exam Scheduled") {
+            srchRecords[rs].showButton = true;
+            srchRecords[rs].buttonName = "Upload Result";
+          }
+        }
+        console.log("SRCH" + JSON.stringify(srchRecords));
 
-					}
-
-				}
-				console.log("SRCH" + JSON.stringify(srchRecords));
-
-				this.countRec = res.length;
-				if (this.countRec  === 0) {
-					this.showIcon = true;
-					this.emptyRecords = false;
-				}
-				if (this.countRec > 0) {
-					this.title = this.label.Exam + " (" + res.length + ")";
-				} else {
-					this.title = this.label.Exam;
-				}
-			})
-			.catch((error) => {
-				console.log("error" + JSON.stringify(error));
-			});
-	}
-	/*
+        this.countRec = res.length;
+        if (this.countRec === 0) {
+          this.showIcon = true;
+          this.emptyRecords = true;
+        }
+        if (this.countRec > 0) {
+          this.title = this.label.Exam + " (" + res.length + ")";
+          this.showIcon = false;
+          this.emptyRecords = false;
+        } else {
+          this.title = this.label.Exam;
+        }
+      })
+      .catch((error) => {
+        console.log("error" + JSON.stringify(error));
+      });
+  }
+  /*
             @description    :   This Method is to update the open exam schedule .
             @param          :   event
         */
-	handleClick(event) {	
-		try {
-			this.examId = event.target.value;
-			this.credentialName = event.target.dataset.credentialname;
-			this.examname = event.target.dataset.name;
-			this.examdate = event.target.dataset.examdate;
-			console.log('Exam Date Credential Exam Attempt:'+this.examdate);
-			let status = event.target.dataset.status;
-			console.log('status:', status);
-			console.log("RecId on Button Click :", event.target.value);
-			alert(this.searchRecords);
-			alert(JSON.stringify(this.searchRecords));
-			this.searchRecords.forEach((Element) => {
-				if (Element.Id == event.target.value && status == 'Exam Schedule') {
-					console.log("Inside");
-					this.filesDatas = [];
-					this.isShowExamModal = true;
-					this.isChangeFileName = true;
-					this.exmVchrDate = Element.Exam_Voucher__r.Expiry_Date__c; 
-					console.log("showModal", this.isShowExamModal);
-				}
-				if (Element.Id == event.target.value && status == "Upload Result") {
-					this.usrCredParentId = Element.User_Credential__c;
-					this.filesDatas = [];
-					this.displayUploadResultModal = true;
-				}
-			});
-
-
-		} catch (error) {
-			console.log("error", error);
-		}
-
-
-	}
-	/*
+  handleClick(event) {
+    try {
+      this.examdate = undefined;
+      this.examId = event.target.value;
+      this.credentialName = event.target.dataset.credentialname;
+      this.examname = event.target.dataset.name;
+      this.examdate = event.target.dataset.examdate;
+      console.log("Exam Date Credential Exam Attempt:" + this.examdate);
+      let status = event.target.dataset.status;
+      console.log("status:", status);
+      console.log("RecId on Button Click :", event.target.value);
+      this.searchRecords.forEach((Element) => {
+        if (Element.Id == event.target.value && status == "Exam Schedule") {
+          console.log("Inside");
+          this.filesDatas = [];
+          this.isShowExamModal = true;
+          this.isChangeFileName = true;
+          this.exmVchrDate = Element.Exam_Voucher__r.Expiry_Date__c;
+          console.log("showModal", this.isShowExamModal);
+        }
+        if (Element.Id == event.target.value && status === "Upload Result") {
+          this.usrCredParentId = Element.User_Credential__c;
+          this.filesDatas = [];
+          this.displayUploadResultModal = true;
+        }
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+  /*
         @description    :   This Method is used to enabled edit date field.
         @param          :   event
     */
-	handleDateEdit(event) {
-		try {
-			this.editExamDate = true;
-			let credId = event.target.value;
-			let index = this.searchRecords.findIndex((x) => x.Id === credId);
-			console.log("index: ", index);
+  handleDateEdit(event) {
+    try {
+      this.editExamDate = true;
+      let credId = event.target.value;
+      let index = this.searchRecords.findIndex((x) => x.Id === credId);
+      console.log("index: ", index);
 
-			this.searchRecords[index].editExamDate = true;
-		} catch (error) {
-			console.log("error", error);
-		}
-	}
-	/*
+      this.searchRecords[index].editExamDate = true;
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+  /*
         @description    :   Saves any change in exam date
     */
 
-	handleActionCheck(event) {
-		try {
-			let credId = event.target.name;
-			let examDate = this.template.querySelector('[data-name="' + credId + '"]').value;
-			console.log("credExamAttemptId:", credId);
-			console.log("exmDate:", examDate);
-			updateDate({ examAttemptRecordId: credId, dt: examDate })
-				.then((res) => {
-					console.log("Record updated successfully");
-					let index = this.searchRecords.findIndex((x) => x.Id === credId);
-					this.searchRecords[index].Exam_Date_Time__c = examDate;
-					this.showNotification(
-						"Success",
-						this.searchRecords[index].Name + " updated sucessfully",
-						"success"
-					);
-				})
-				.catch((error) => { });
-			this.disableEditOfDate(credId);
-		} catch (error) {
-			console.error(error.message);
-		}
-	}
+  handleActionCheck(event) {
+    try {
+      let credId = event.target.name;
+      let examDate = this.template.querySelector(
+        '[data-name="' + credId + '"]'
+      ).value;
+      console.log("credExamAttemptId:", credId);
+      console.log("exmDate:", examDate);
+      updateDate({ examAttemptRecordId: credId, dt: examDate })
+        .then((res) => {
+          console.log("Record updated successfully");
+          let index = this.searchRecords.findIndex((x) => x.Id === credId);
+          this.searchRecords[index].Exam_Date_Time__c = examDate;
+          this.showNotification(
+            "Success",
+            this.searchRecords[index].Name + " updated sucessfully",
+            "success"
+          );
+        })
+        .catch((error) => {});
+      this.disableEditOfDate(credId);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
 
-	/*
+  /*
         @description    :  Helper method to target element of list
     */
-	disableEditOfDate(credId) {
-		let index = this.searchRecords.findIndex((x) => x.Id === credId);
-		console.log("index to disable: ", index);
-		this.searchRecords[index].editExamDate = false;
-	}
-	/*
+  disableEditOfDate(credId) {
+    let index = this.searchRecords.findIndex((x) => x.Id === credId);
+    console.log("index to disable: ", index);
+    this.searchRecords[index].editExamDate = false;
+  }
+  /*
     description: method to display notification as toast message
   */
-	showNotification(title, message, variant) {
-		const evt = new ShowToastEvent({
-			title: title,
-			message: message,
-			variant: variant
-		});
-		this.dispatchEvent(evt);
-	}
+  showNotification(title, message, variant) {
+    const evt = new ShowToastEvent({
+      title: title,
+      message: message,
+      variant: variant
+    });
+    this.dispatchEvent(evt);
+  }
 
-	/* 
+  /* 
       @description - closeModal this is used to close the modal from UI   ;
          @param-  Did'nt recieve any parameter
     */
-	closeModal() {
-		this.displayUploadResultModal = false;
-	}
+  closeModal() {
+    this.displayUploadResultModal = false;
+  }
 
-	uploadResult(event) {
-		let credId = event.target.value;
-		getUploadResultsList({ recordId: credId }).then((res) => {
-			this.response = res;
-		})
-			.catch((error) => { });
-	}
+  uploadResult(event) {
+    let credId = event.target.value;
+    getUploadResultsList({ recordId: credId })
+      .then((res) => {
+        this.response = res;
+      })
+      .catch((error) => {});
+  }
 
-	/*
+  /*
         @description    :   Closes edit option
     */
-	handleActionClose(event) {
-		this.disableEditOfDate(event.target.value);
-	}
+  handleActionClose(event) {
+    this.disableEditOfDate(event.target.value);
+  }
 
-	/* 
+  /* 
         @description -this function is used to close modal.
          @param - event.
        */
-	hideModalBox(event) {
-		this.isShowExamModal = false;
-	}
-	/*
+  hideModalBox(event) {
+    this.isShowExamModal = false;
+  }
+  /*
     @description -this function is used to update exam details and upload files.
    */
-	saveRecord() {
-		this.Fileslist.push(JSON.stringify(this.filesDatas));
-		console.log("New FilesData:", this.Fileslist);
-		try {
-			//validate
+  saveRecord() {
+    this.Fileslist.push(JSON.stringify(this.filesDatas));
+    console.log("New FilesData:", this.Fileslist);
+    try {
+      //validate
 
-			const allValidvalue = this.template.querySelector('.validate').value;
-			 var expiryDate =allValidvalue;
-			 var readable_date = new Date(expiryDate).toLocaleDateString();
-		     var examVchrDate = new Date(this.exmVchrDate).toLocaleDateString();
-			
-			const allValid = this.template.querySelector('.validate');
-			if (!allValidvalue) {
-		
-				if (readable_date >= examVchrDate) {
-					 				alert('inside if');
-				 				allValid.setCustomValidity("This exam was purchased using a voucher/coupon. Please select a date before the voucher/coupon's last allowed exam date (01 May 2022)");
-					 				
-					 			}else{
-									allValid.setCustomValidity("Exam date is required");
-								}
-				
-				allValid.reportValidity();
-				this.template.querySelector('c-upload-file').checkValidity();
-			 }else if(this.template.querySelector('c-upload-file').checkValidity()){
-			//	alert('upload result');
+      const allValidvalue = this.template.querySelector(".validate").value;
+      var expiryDate = allValidvalue;
+      var readable_date = new Date(expiryDate).toLocaleDateString();
+      var examVchrDate = new Date(this.exmVchrDate).toLocaleDateString();
 
-			}else {
-				if(this.filesDatas.length > 0 && readable_date <= examVchrDate){
-					this.isShowModal = false;
-					const examAttemptFields = {
-						sobjectType: "Credential_Exam_Attempt__c",
-						Exam_Date_Time__c: this.examDate,
-						Id: this.examId,
-						Status__c: "Exam Scheduled"
-					};
-					console.log("examAttemptRec---" + JSON.stringify(examAttemptFields));
-	
-					console.log("jsonData:", JSON.stringify(this.filesDatas));
-					updateCredExempt({
-						examAttemptRec: examAttemptFields
-					})
-						.then((result) => {
-							this.isShowExamModal = false;
-							console.log("result", result);
-							this.UploadFilest(result);
-							this.dispatchEvent(
-								new ShowToastEvent({
-									title: "Success",
-									variant: "success",
-									message: "success"
-								})
-							);
-							this.getAllActiveExamAttemptUsers();
-						})
-						.catch((error) => {
-							console.log("Error", error);
-							this.isShowExamModal = false;
-						});
-					}
-			}
-		} catch (error) {
-			console.log("error", error);
-		}
-	}
-	/* 
+      const allValid = this.template.querySelector(".validate");
+      if (!allValidvalue) {
+        if (readable_date >= examVchrDate) {
+          allValid.setCustomValidity(
+            "This exam was purchased using a voucher/coupon. Please select a date before the voucher/coupon's last allowed exam date (01 May 2022)"
+          );
+        } else {
+          allValid.setCustomValidity("Exam date is required");
+        }
+
+        allValid.reportValidity();
+        this.template.querySelector("c-upload-file").checkValidity();
+      } else if (this.template.querySelector("c-upload-file").checkValidity()) {
+        //	alert('upload result');
+      } else {
+        if (this.filesDatas.length > 0 && readable_date <= examVchrDate) {
+          this.isShowModal = false;
+          const examAttemptFields = {
+            sobjectType: "Credential_Exam_Attempt__c",
+            Exam_Date_Time__c: this.examDate,
+            Id: this.examId,
+            Status__c: "Exam Scheduled"
+          };
+          console.log("examAttemptRec---" + JSON.stringify(examAttemptFields));
+
+          console.log("jsonData:", JSON.stringify(this.filesDatas));
+          updateCredExempt({
+            examAttemptRec: examAttemptFields
+          })
+            .then((result) => {
+              this.isShowExamModal = false;
+              console.log("result", result);
+              this.UploadFilest(result);
+              this.dispatchEvent(
+                new ShowToastEvent({
+                  title: "Success",
+                  variant: "success",
+                  message: "success"
+                })
+              );
+              this.getAllActiveExamAttemptUsers();
+            })
+            .catch((error) => {
+              console.log("Error", error);
+              this.isShowExamModal = false;
+            });
+        }
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+  /* 
        @description -this function is used to  upload files.
        @param - examId
       */
-	UploadFilest(Cid) {
-		console.log("inside file upload");
-		uploadReciept({
-			parentId: Cid,
-			filedata: this.Fileslist
-		})
-			.then((result) => {
-				this.isShowExamModal = false;
-				console.log("inside uploading...", result);
-				if (result == "success") {
-					this.dispatchEvent(
-						new ShowToastEvent({
-							title: "Success",
-							variant: "success",
-							message: "success"
-						})
-					);
-					this.getAllActiveExamAttemptUsers();
-				}
-			})
-			.catch((error) => {
-				console.log("error ", error);
-				this.isShowExamModal = false;
-			});
-	}
-	/* 
+  UploadFilest(Cid) {
+    console.log("inside file upload");
+    uploadReciept({
+      parentId: Cid,
+      filedata: this.Fileslist
+    })
+      .then((result) => {
+        this.isShowExamModal = false;
+        console.log("inside uploading...", result);
+        if (result == "success") {
+          this.dispatchEvent(
+            new ShowToastEvent({
+              title: "Success",
+              variant: "success",
+              message: "success"
+            })
+          );
+          this.getAllActiveExamAttemptUsers();
+        }
+      })
+      .catch((error) => {
+        console.log("error ", error);
+        this.isShowExamModal = false;
+      });
+  }
+  /* 
    @description -this function is used to showToast message.
   */
-	showToast(toastTitle, toastMessage, variant) {
-		const event = new ShowToastEvent({
-			title: toastTitle,
-			message: toastMessage,
-			variant: variant,
-			mode: "dismissable"
-		});
-		this.dispatchEvent(event);
-	}
-	/* 
+  showToast(toastTitle, toastMessage, variant) {
+    const event = new ShowToastEvent({
+      title: toastTitle,
+      message: toastMessage,
+      variant: variant,
+      mode: "dismissable"
+    });
+    this.dispatchEvent(event);
+  }
+  /* 
    @description -this function is used to handleDateChange.
    @param - event
   */
-	handleDateChange(event) {
-		this.examDate = event.target.value;
-		console.log("date---" + this.examDate);
-	}
+  handleDateChange(event) {
+    this.examDate = event.target.value;
+    console.log("date---" + this.examDate);
+  }
 
-	handleresult(event) {
-		this.ExamResult = event.target.value;
-		console.log(this.ExamResult);
-	}
-	saveResult() {
-		try {
-			this.Fileslist.push(JSON.stringify(this.filesDatas));
-			console.log("New FilesData:", this.Fileslist);
-			//status
-		const allValidstatusvalue = this.template.querySelector('.status').value;
+  handleresult(event) {
+    this.ExamResult = event.target.value;
+    console.log(this.ExamResult);
+  }
+  saveResult() {
+    try {
+      this.Fileslist.push(JSON.stringify(this.filesDatas));
+      console.log("New FilesData:", this.Fileslist);
+      //status
+      const allValidstatusvalue = this.template.querySelector(".status").value;
 
-			const allValidstatus = this.template.querySelector('.status');
-			const allValiddatevalue = this.template.querySelector('.dt').value;
+      const allValidstatus = this.template.querySelector(".status");
+      const allValiddatevalue = this.template.querySelector(".dt").value;
 
-			const allValiddate = this.template.querySelector('.dt');
-			if (!allValiddatevalue  && this.template.querySelector('c-upload-file').checkValidity() && !allValidstatusvalue) {
-				allValiddate.setCustomValidity("Exam date is required");
-				allValiddate.reportValidity();
-				allValidstatus.setCustomValidity('status is required');
-				allValidstatus.reportValidity();
-				this.template.querySelector('c-upload-file').checkValidity();
-			}
-			else if (!allValiddatevalue ) {
-				allValiddate.setCustomValidity("Exam date is required");
-				allValiddate.reportValidity();
-				this.template.querySelector('c-upload-file').checkValidity();
+      const allValiddate = this.template.querySelector(".dt");
+      if (
+        !allValiddatevalue &&
+        this.template.querySelector("c-upload-file").checkValidity() &&
+        !allValidstatusvalue
+      ) {
+        allValiddate.setCustomValidity("Exam date is required");
+        allValiddate.reportValidity();
+        allValidstatus.setCustomValidity("status is required");
+        allValidstatus.reportValidity();
+        this.template.querySelector("c-upload-file").checkValidity();
+      } else if (!allValiddatevalue) {
+        allValiddate.setCustomValidity("Exam date is required");
+        allValiddate.reportValidity();
+        this.template.querySelector("c-upload-file").checkValidity();
+      } else if (!allValidstatusvalue) {
+        allValidstatus.setCustomValidity("status is required");
+        allValidstatus.reportValidity();
+        this.template.querySelector("c-upload-file").checkValidity();
+      } else if (!allValidstatusvalue && !allValiddatevalue) {
+        allValidstatus.setCustomValidity("status is required");
+        allValidstatus.reportValidity();
+        allValiddate.setCustomValidity("Exam date is required");
+        allValiddate.reportValidity();
+      } else if (this.template.querySelector("c-upload-file").checkValidity()) {
+        console.log("Errors");
+      } else {
+        if (this.filesDatas.length > 0) {
+          this.displayUploadResultModal = false;
+          const examAttemptFields = {
+            sobjectType: "Credential_Exam_Attempt__c",
+            Exam_Date_Time__c: this.examDate,
+            Id: this.examId,
+            Status__c: this.ExamResult
+          };
 
-
-			} else if (!allValidstatusvalue) {
-				allValidstatus.setCustomValidity('status is required');
-				allValidstatus.reportValidity();
-				this.template.querySelector('c-upload-file').checkValidity();
-
-
-			}else if(!allValidstatusvalue && !allValiddatevalue){
-				allValidstatus.setCustomValidity('status is required');
-				allValidstatus.reportValidity();
-				allValiddate.setCustomValidity("Exam date is required");
-				allValiddate.reportValidity();
-
-			}
-			
-			else if(this.template.querySelector('c-upload-file').checkValidity()){
-				console.log('Errors');
-
-			}		
-			else{
-				if(this.filesDatas.length > 0){
-				this.displayUploadResultModal = false;
-				const examAttemptFields = {
-					sobjectType: "Credential_Exam_Attempt__c",
-					Exam_Date_Time__c: this.examDate,
-					Id: this.examId,
-					Status__c: this.ExamResult
-				};
-
-            parentStatus({parentId: this.usrCredParentId, status : this.ExamResult , dt: this.examDate }).then((respose)=> {
-			})
-			.catch((error) => {
-				console.log("Error", error);
-				
-			});
-				updateCredExempt({
-					examAttemptRec: examAttemptFields
-				})
-					.then((result) => {
-						this.displayUploadResultModal = false;
-						console.log("result", result);
-						this.UploadFilest(result);
-						this.dispatchEvent(
-							new ShowToastEvent({
-								title: "Success",
-								variant: "success",
-								message: "success"
-							})
-						);
-						this.getAllActiveExamAttemptUsers();
-						let payload = { refresh: true, userId: this.userId };
-						publish(this.messageContext, refreshChannel, payload);
-					})
-					.catch((error) => {
-						console.log("Error", error);
-						this.displayUploadResultModal = false;
-					});
-			}
-		}
-}
-catch (error) {
-	console.log('error', error);
-}
-	}
+          parentStatus({
+            parentId: this.usrCredParentId,
+            status: this.ExamResult,
+            dt: this.examDate
+          })
+            .then((respose) => {})
+            .catch((error) => {
+              console.log("Error", error);
+            });
+          updateCredExempt({
+            examAttemptRec: examAttemptFields
+          })
+            .then((result) => {
+              this.displayUploadResultModal = false;
+              console.log("result", result);
+              this.UploadFilest(result);
+              this.dispatchEvent(
+                new ShowToastEvent({
+                  title: "Success",
+                  variant: "success",
+                  message: "success"
+                })
+              );
+              this.getAllActiveExamAttemptUsers();
+              let payload = { refresh: true, userId: this.userId };
+              publish(this.messageContext, refreshChannel, payload);
+            })
+            .catch((error) => {
+              console.log("Error", error);
+              this.displayUploadResultModal = false;
+            });
+        }
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
 }
