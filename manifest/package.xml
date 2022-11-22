@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
         <members>CredentialAssignmentController</members>
@@ -47,7 +47,8 @@
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>Credential_Exam_Attempt__c.Credential_Exam_Attempt_Compact_Layout</members>
+        <members
+    >Credential_Exam_Attempt__c.Credential_Exam_Attempt_Compact_Layout</members>
         <members>Credential__c.Credential_Compact_Layout</members>
         <members>Exam_Voucher__c.Exam_Voucher_Compact_Layout</members>
         <members>User_Credential__c.User_Credential_Compact_Layout</members>
@@ -103,7 +104,8 @@
         <members>Credential__c.US_Target_Achievement__c</members>
         <members>Credential__c.US_Target_Assigned__c</members>
         <members>Credential__c.US_Target__c</members>
-        <members>Credential__c.Visible_in_Partner_Community_Cert_Tab__c</members>
+        <members
+    >Credential__c.Visible_in_Partner_Community_Cert_Tab__c</members>
         <members>Exam_Voucher__c.Cost__c</members>
         <members>Exam_Voucher__c.Credential_Exam_Attempt__c</members>
         <members>Exam_Voucher__c.Credential_Type__c</members>
@@ -147,7 +149,8 @@
         <members>User_Credential__c.Due_Date__c</members>
         <members>User_Credential__c.Exam_Attempt_Count__c</members>
         <members>User_Credential__c.External_ID__c</members>
-        <members>User_Credential__c.Last_Partner_Portal_Sync_Date_Time__c</members>
+        <members
+    >User_Credential__c.Last_Partner_Portal_Sync_Date_Time__c</members>
         <members>User_Credential__c.Maintenance_Due__c</members>
         <members>User_Credential__c.Region__c</members>
         <members>User_Credential__c.Status__c</members>
@@ -278,10 +281,12 @@
     </types>
     <types>
         <members>CommunityMemberLayout-Community Member Layout</members>
-        <members>Credential_Exam_Attempt__c-Credential Exam Attempt Layout</members>
+        <members
+    >Credential_Exam_Attempt__c-Credential Exam Attempt Layout</members>
         <members>Credential__c-Credential Layout</members>
         <members>Exam_Voucher__c-Exam Voucher Layout</members>
-        <members>Practice_Studio_Setting__mdt-Practice Studio Setting Layout</members>
+        <members
+    >Practice_Studio_Setting__mdt-Practice Studio Setting Layout</members>
         <members>Quick_Links_Setting__mdt-Quick Links Setting Layout</members>
         <members>User-User Layout</members>
         <members>User_Credential__c-User Credential Layout</members>
@@ -326,6 +331,11 @@
     <types>
         <members>EmptyCmpImage</members>
         <name>StaticResource</name>
+    </types>
+    <types>
+        <members
+    >Credential_Exam_Attempt__c.Examdate_is_Greater_than_Voucher_date</members>
+        <name>ValidationRule</name>
     </types>
     <types>
         <members>Credential_Exam_Attempt__c</members>

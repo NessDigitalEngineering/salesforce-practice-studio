@@ -190,7 +190,7 @@ export default class CredentialExamAttempts extends LightningElement {
           this.exmVchrDate = Element.Exam_Voucher__r.Expiry_Date__c;
           console.log("showModal", this.isShowExamModal);
         }
-        if (Element.Id == event.target.value && status == "Upload Result") {
+        if (Element.Id == event.target.value && status === "Upload Result") {
           this.usrCredParentId = Element.User_Credential__c;
           this.filesDatas = [];
           this.displayUploadResultModal = true;

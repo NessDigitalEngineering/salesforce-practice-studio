@@ -111,7 +111,7 @@ export default class FileUploadMultiLWC extends LightningElement {
     crypto.getRandomValues(myArray);
 
     for (const num of myArray) {
-      text += num + "<br>";
+      text += num;
     }
     return text;
   }
