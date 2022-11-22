@@ -32,13 +32,13 @@ public with sharing class VoucherRequestController {
      */
 
     @AuraEnabled
-    public static string methodVRC(string ParentRecId, list<string> filedata) {
-        system.debug('StrId' + ParentRecId);
+    public static string methodVRC(string parentRecId, list<string> filedata) {
+        system.debug('StrId' + parentRecId);
 
         try {
             if (filedata.size() > 0) {
                 FilesUploadService fp = new FilesUploadService();
-                fp.uploadFiles(ParentRecId, filedata);
+                fp.uploadFiles(parentRecId, filedata);
             }
         } catch (Exception ex) {
             System.debug(ex.getMessage() + ' -> ' + ex.getStackTraceString());
