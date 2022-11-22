@@ -21,6 +21,7 @@ global with sharing class ExamVoucherService {
     }
       return examVouchers;
   }
+
    	/*******************************************************************************************************
 	 * @description Returns masked Voucher Codes
 	 * @param examVouchers data inseretd via UI/Data Loader
@@ -79,5 +80,41 @@ global with sharing class ExamVoucherService {
             throw ex;
         }
      }
+
+ 
+    /*******************************************************************************************************
+    * @description This method sends email with voucher code when the voucher gets assigned
+    * @param voucherList Voucher list for which the voucher code needs to be decrypted
+    * @param examAttemptIdSet Exam attempt record ids
+    */
+    public void sendAssignedEmail(List<Exam_Voucher__c> voucherList,Set<String> examAttemptIdSet){
+      EncryptDecryptService service= EncryptDecryptService.getInstance();
+      List<Credential_Exam_Attempt__c> examAttemptList = new List<Credential_Exam_Attempt__c>();
+      examAttemptList = [Select id,User_Credential__r.User__r.email from Credential_Exam_Attempt__c where id=:examAttemptIdSet with SECURITY_ENFORCED];
+      Map<Id,Credential_Exam_Attempt__c> examAttemptMap = new Map<Id,Credential_Exam_Attempt__c>(examAttemptList);
+      List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+      for(Exam_Voucher__c vchr : voucherList){
+        Messaging.SingleEmailMessage mail =  new Messaging.SingleEmailMessage();
+  
+        List<String> sendTo = new List<String>();
+        sendTo.add(examAttemptMap.get(vchr.Credential_Exam_Attempt__c).User_Credential__r.User__r.email);
+        mail.setToAddresses(sendTo);
+    
+        mail.setReplyTo(UserInfo.getUserEmail());
+        mail.setSenderDisplayName(UserInfo.getName());
+
+  
+        mail.setSubject('Voucher for '+vchr.Credential__c);
+        String body = 'Dear ' + vchr.User__c+',\n \n';
+        body+= 'Here is your voucher: '+service.decryptData(vchr.Voucher_Code_Encrypted__c)+'. Do upload the receipt in PBO as soon as you schedule the exam. All the best! \n \n';
+        body+= 'Regards,\n';
+        body+= 'Learning and Enablement Team';
+        mail.setPlainTextBody(body);
+    
+        mails.add(mail);
+      }
+
+        Messaging.sendEmail(mails);
+    }
 
 }

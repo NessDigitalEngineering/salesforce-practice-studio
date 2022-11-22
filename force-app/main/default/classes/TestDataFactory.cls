@@ -76,6 +76,13 @@ public class TestDataFactory {
         return examVoucherList;
     }
 
+    public static Exam_Voucher__c getExamVoucher(){
+        return new Exam_Voucher__c(
+                    Voucher_Code__c = 'abcd',
+                    Credential_Type__c = 'Trailhead',
+                    Value__c = 100
+                );        
+    }
 
     public static List<Credential_Exam_Attempt__c> createCredentialExamAttempt(Id usrCrdId){
         List<Credential_Exam_Attempt__c> credExamAttemptLists = new List<Credential_Exam_Attempt__c>{new Credential_Exam_Attempt__c( 

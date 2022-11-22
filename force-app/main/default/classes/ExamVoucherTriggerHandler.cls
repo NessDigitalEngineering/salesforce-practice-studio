@@ -7,6 +7,8 @@ public class ExamVoucherTriggerHandler extends TriggerHandler {
     public ExamVoucherTriggerHandler()
     {
         this.examVoucherNewList = (List<Exam_Voucher__c>) Trigger.New;
+        this.examVoucherNewMap = (Map<Id, Exam_Voucher__c>) Trigger.NewMap;
+        this.examVoucherOldMap = (Map<Id, Exam_Voucher__c>) Trigger.OldMap;
     }
     public override void beforeInsert() 
     {   
@@ -16,6 +18,20 @@ public class ExamVoucherTriggerHandler extends TriggerHandler {
         
     }
     
-    
+    public override void afterUpdate() 
+    {   
+        List<Exam_Voucher__c> voucherList = new List<Exam_Voucher__c>();
+        Set<String> examAttemptIdSet = new Set<String>();
+        for(Id i:this.examVoucherNewMap.keySet()){
+            if(examVoucherNewMap.get(i).Status__c != examVoucherOldMap.get(i).Status__c && examVoucherNewMap.get(i).Status__c == 'Assigned'){
+                voucherList.add(this.examVoucherNewMap.get(i));
+                examAttemptIdSet.add(examVoucherNewMap.get(i).Credential_Exam_Attempt__c);
+            }
+        }
+        if(!voucherList.isEmpty()){
+            new ExamVoucherService().sendAssignedEmail(voucherList,examAttemptIdSet);
+        }
+        
+    }
     
 }
