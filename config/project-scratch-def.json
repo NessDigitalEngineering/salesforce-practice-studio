@@ -1,7 +1,12 @@
 {
   "orgName": "Ness Practice Studio - Developer Org",
   "edition": "Developer",
-  "features": ["EnableSetPasswordInApi"],
+  "features": [
+    "EnableSetPasswordInApi",
+    "AnalyticsAppEmbedded",
+    "AnalyticsAdminPerms",
+    "DevelopmentWave"
+  ],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
