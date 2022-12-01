@@ -17,7 +17,6 @@ import LOCALE from "@salesforce/i18n/locale";
 import TIME_ZONE from "@salesforce/i18n/timeZone";
 import updateCredExempt from "@salesforce/apex/CredentialExamAttemptController.updateCredExempt";
 import uploadReciept from "@salesforce/apex/CredentialExamAttemptController.uploadReciept";
-import parentStatus from "@salesforce/apex/CredentialExamAttemptController.parentStatus";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import {
   subscribe,
@@ -26,11 +25,8 @@ import {
   MessageContext
 } from "lightning/messageService";
 import refreshChannel from "@salesforce/messageChannel/RefreshComponent__c";
-//const MAX_FILE_SIZE = 50000000;
-//import updateStatus from "@salesforce/apex/CredentialExamAttemptController.updateStatus";
 import { publish } from "lightning/messageService";
 import updateDate from "@salesforce/apex/CredentialExamAttemptController.updateDate";
-
 import getUploadResultsList from "@salesforce/apex/CredentialExamAttemptController.getUploadResultsList";
 
 export default class CredentialExamAttempts extends LightningElement {
@@ -183,12 +179,12 @@ export default class CredentialExamAttempts extends LightningElement {
       console.log("RecId on Button Click :", event.target.value);
       this.searchRecords.forEach((Element) => {
         if (Element.Id == event.target.value && status == "Exam Schedule") {
-          console.log("Inside");
+          console.log("Element:", JSON.stringify(Element));
           this.filesDatas = [];
           this.isShowExamModal = true;
           this.isChangeFileName = true;
           this.exmVchrDate = Element.Exam_Voucher__r.Expiry_Date__c;
-          console.log("showModal", this.isShowExamModal);
+          console.log("exmVchrDate", this.exmVchrDate);
         }
         if (Element.Id == event.target.value && status === "Upload Result") {
           this.usrCredParentId = Element.User_Credential__c;
@@ -310,17 +306,9 @@ export default class CredentialExamAttempts extends LightningElement {
       var expiryDate = allValidvalue;
       var readable_date = new Date(expiryDate).toLocaleDateString();
       var examVchrDate = new Date(this.exmVchrDate).toLocaleDateString();
-
       const allValid = this.template.querySelector(".validate");
       if (!allValidvalue) {
-        if (readable_date >= examVchrDate) {
-          allValid.setCustomValidity(
-            "This exam was purchased using a voucher/coupon. Please select a date before the voucher/coupon's last allowed exam date (01 May 2022)"
-          );
-        } else {
-          allValid.setCustomValidity("Exam date is required");
-        }
-
+        allValid.setCustomValidity("Exam date is required");
         allValid.reportValidity();
         this.template.querySelector("c-upload-file").checkValidity();
       } else if (this.template.querySelector("c-upload-file").checkValidity()) {
@@ -343,7 +331,7 @@ export default class CredentialExamAttempts extends LightningElement {
             .then((result) => {
               this.isShowExamModal = false;
               console.log("result", result);
-              this.UploadFilest(result);
+              this.uploadFile(result);
               this.dispatchEvent(
                 new ShowToastEvent({
                   title: "Success",
@@ -367,7 +355,7 @@ export default class CredentialExamAttempts extends LightningElement {
        @description -this function is used to  upload files.
        @param - examId
       */
-  UploadFilest(Cid) {
+  uploadFile(Cid) {
     console.log("inside file upload");
     uploadReciept({
       parentId: Cid,
@@ -463,22 +451,13 @@ export default class CredentialExamAttempts extends LightningElement {
             Status__c: this.ExamResult
           };
 
-          parentStatus({
-            parentId: this.usrCredParentId,
-            status: this.ExamResult,
-            dt: this.examDate
-          })
-            .then((respose) => {})
-            .catch((error) => {
-              console.log("Error", error);
-            });
           updateCredExempt({
             examAttemptRec: examAttemptFields
           })
             .then((result) => {
               this.displayUploadResultModal = false;
               console.log("result", result);
-              this.UploadFilest(result);
+              this.uploadFile(result);
               this.dispatchEvent(
                 new ShowToastEvent({
                   title: "Success",
