@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Examdate_is_Greater_than_Voucher_date</fullName>
-    <active>false</active>
-    <errorConditionFormula>DATEVALUE(Exam_Date_Time__c) &gt;= Exam_Voucher__r.Expiry_Date__c</errorConditionFormula>
-    <errorMessage>This exam was purchased using a voucher/coupon. Please select a date before the voucher/coupon&apos;s last allowed exam date (01 May 2022)</errorMessage>
-</ValidationRule>

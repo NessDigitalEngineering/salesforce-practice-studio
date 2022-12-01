@@ -140,25 +140,4 @@ public with sharing class CredentialExamAttemptService {
             throw ex;
         }
     }
-
-    /*******************************************************************************************************
-     * @description This method updates exam attempt status
-     * @param userId SF id of user
-     * @return Update Exam Status
-     */
-    public Database.SaveResult updateParentRecord(String parentId, String status, date dt) {
-        try {
-            User_Credential__c usrCredStatus = new User_Credential__c();
-            usrCredStatus.Id = parentId;
-            usrCredStatus.Completion_Date__c = dt;
-            if (status == 'Exam Passed') {
-                usrCredStatus.Status__c = 'Completed';
-            } else {
-                usrCredStatus.Status__c = 'Preparing';
-            }
-            return Database.update(usrCredStatus, true);
-        } catch (Exception ex) {
-            throw ex;
-        }
-    }
 }
