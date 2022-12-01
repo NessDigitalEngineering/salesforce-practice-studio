@@ -23,8 +23,8 @@ export default class EarnedCredentials extends LightningElement {
     if (data) {
       let selectedRec = [];
 
-      for (let i = 0; i < data.length; i++) {
-        selectedRec.push(data[i]);
+      for (let value of data) {
+        selectedRec.push(value);
       }
       this.userCredentialsData = selectedRec;
 

@@ -40,7 +40,6 @@ describe("c-earned-credentials", () => {
       element.senddata = "0051y00000Ls0uKAAR";
       earnedCredentialsData.emit(mockData);
 
-      let eventValue;
       element.addEventListener("fireCountEvent", handler);
       element.dispatchEvent(new CustomEvent("fireCountEvent"));
       return Promise.resolve().then(() => {
