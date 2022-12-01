@@ -1,4 +1,4 @@
-import { LightningElement, api, wire, track } from "lwc";
+import { LightningElement, wire, track } from "lwc";
 import { getObjectInfo, getPicklistValues } from "lightning/uiObjectInfoApi";
 import STATUS from "@salesforce/schema/User_Credential__c.Status__c";
 import getUserCredentials from "@salesforce/apex/CredentialTrackingController.getUserCredentials";

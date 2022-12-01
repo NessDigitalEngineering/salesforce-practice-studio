@@ -1,26 +1,13 @@
 <template>
     <template if:true={isShowModal}>
-        <section
-            role="dialog"
-            tabindex="-1"
-            aria-labelledby="modal-heading-01"
-            aria-describedby="modal-content-id-1"
-            aria-modal="true"
-            class="slds-modal slds-fade-in-open"
-        >
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-describedby="modal-content-id-1"
+            aria-modal="true" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container confirmationModal">
                 <header class="slds-modal__header">
-                    <button
-                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
-                        title="Close"
-                        onclick={closeFirstModal}
-                    >
-                        <lightning-icon
-                            icon-name="utility:close"
-                            alternative-text="close"
-                            variant="inverse"
-                            size="small"
-                        >
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeFirstModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small">
                         </lightning-icon>
                         <span class="slds-assistive-text">Close</span>
                     </button>
@@ -34,18 +21,9 @@
                     </div>
                 </div>
                 <footer class="slds-modal__footer">
-                    <lightning-button
-                        class="button"
-                        variant="neutral"
-                        label="Yes"
-                        onclick={showModalOnYes}
-                    >
+                    <lightning-button class="button" variant="neutral" label="Yes" onclick={showModalOnYes}>
                     </lightning-button>
-                    <lightning-button
-                        variant="brand"
-                        label="No"
-                        onclick={showModalOnNo}
-                    >
+                    <lightning-button variant="brand" label="No" onclick={showModalOnNo}>
                     </lightning-button>
                 </footer>
             </div>
@@ -53,27 +31,14 @@
         <div class="slds-backdrop slds-backdrop_open"></div>
     </template>
     <template if:true={displayExamDetailsModal}>
-        <section
-            role="dialog"
-            tabindex="-1"
-            aria-labelledby="modal-heading-01"
-            aria-describedby="modal-content-id-1"
-            aria-modal="true"
-            class="slds-modal slds-fade-in-open"
-        >
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-describedby="modal-content-id-1"
+            aria-modal="true" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
                 <header class="slds-modal__header">
-                    <button
-                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
-                        title="Close"
-                        onclick={closeModal}
-                    >
-                        <lightning-icon
-                            icon-name="utility:close"
-                            alternative-text="close"
-                            variant="inverse"
-                            size="small"
-                        >
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small">
                         </lightning-icon>
                         <span class="slds-assistive-text">Close</span>
                     </button>
@@ -83,116 +48,49 @@
                 </header>
                 <div class="slds-modal__content slds-p-around_medium">
                     <template if:true={showSpinner}>
-                        <lightning-spinner
-                            alternative-text="Saving"
-                        ></lightning-spinner>
+                        <lightning-spinner alternative-text="Saving"></lightning-spinner>
                     </template>
                     <lightning-layout multiple-rows="true">
-                        <lightning-layout-item
-                            size="12"
-                            padding="around-small"
-                            small-device-size="9"
-                            medium-device-size="6"
-                            large-device-size="6"
-                        >
-                            <lightning-input
-                                class=""
-                                name="credential"
-                                value={credentialName}
-                                label={label.Voucher_CredentialName}
-                                disabled
-                            >
+                        <lightning-layout-item size="12" padding="around-small" small-device-size="9"
+                            medium-device-size="6" large-device-size="6">
+                            <lightning-input class="" name="credential" value={credentialName}
+                                label={label.Voucher_CredentialName} disabled>
                             </lightning-input>
                         </lightning-layout-item>
-                        <lightning-layout-item
-                            size="12"
-                            padding="around-small"
-                            small-device-size="9"
-                            medium-device-size="6"
-                            large-device-size="6"
-                        >
+                        <lightning-layout-item size="12" padding="around-small" small-device-size="9"
+                            medium-device-size="6" large-device-size="6">
                             <h6 class="inputLabel">
                                 <span class="abbr">* </span>{label.ExamPlan}
                             </h6>
-                            <lightning-input
-                                class="dateInput"
-                                type="datetime"
-                                variant="label-hidden"
-                                required
-                                date-style="short"
-                                onchange={handleDateChange}
-                                data-id="vallidate"
-                            >
+                            <lightning-input class="dateInput" type="datetime" variant="label-hidden" required
+                                date-style="short" onchange={handleDateChange} data-id="vallidate">
                             </lightning-input>
                         </lightning-layout-item>
-                        <lightning-layout-item
-                            size="12"
-                            padding="around-small"
-                            small-device-size="9"
-                            medium-device-size="6"
-                            large-device-size="6"
-                        >
+                        <lightning-layout-item size="12" padding="around-small" small-device-size="9"
+                            medium-device-size="6" large-device-size="6">
                             <h6 class="inputLabel">
-                                <span class="abbr">* </span
-                                >{label.Voucher_Comments}
+                                <span class="abbr">* </span>{label.Voucher_Comments}
                             </h6>
-                            <lightning-textarea
-                                onchange={handleCommentChange}
-                                class="textAreaStyle"
-                                data-id="vallidate"
-                            >
+                            <lightning-textarea onchange={handleCommentChange} class="textAreaStyle"
+                                data-id="vallidate">
                             </lightning-textarea>
                         </lightning-layout-item>
-                        <lightning-layout-item
-                            size="12"
-                            padding="around-small"
-                            small-device-size="9"
-                            medium-device-size="6"
-                            large-device-size="6"
-                        >
+                        <lightning-layout-item size="12" padding="around-small" small-device-size="9"
+                            medium-device-size="6" large-device-size="6">
                             <h6 class="inputLabel">
                                 {label.Voucher_Preparation}
-                                <lightning-helptext
-                                    class="fileUpload"
-                                    content={label.PreparationDocs_HelpText}
-                                >
+                                <lightning-helptext class="fileUpload" content={label.PreparationDocs_HelpText}>
                                 </lightning-helptext>
                             </h6>
-                            <!--	<lightning-input type="file" multiple class=""
-								accept=".docx, .pdf, .jpg, .txt, .png, .csv, .html, .zip" onchange={handleFileUpload}>
-							</lightning-input>
-
-							<div class="slds-m-around_small">
-								<template if:true={filesData}>
-									<template for:each={filesData} for:item="file" for:index="index">
-										<lightning-pill key={file.fileName} label={file.fileName} data-id={index}
-											onclick={removeReceiptImage}></lightning-pill>
-									</template>
-								</template>
-							</div>-->
-                            <c-upload-file
-                                onupload={handleUploadFiles}
-                                examid={examname}
-                                credname={credentialName}
-                                isfile={isChangeFileName}
-                                isvopened={isVOpen}
-                            ></c-upload-file>
+                            <c-upload-file onupload={handleUploadFiles} examid={examname} credname={credentialName}
+                                isfile={isChangeFileName} isvopened={isVOpen}></c-upload-file>
                         </lightning-layout-item>
                     </lightning-layout>
                 </div>
                 <footer class="slds-modal__footer">
-                    <lightning-button
-                        class="button"
-                        variant="neutral"
-                        label="Cancel"
-                        onclick={closeSecondModal}
-                    >
+                    <lightning-button class="button" variant="neutral" label="Cancel" onclick={closeSecondModal}>
                     </lightning-button>
-                    <lightning-button
-                        variant="brand"
-                        label="Save"
-                        onclick={saveNewRecord}
-                    >
+                    <lightning-button variant="brand" label="Save" onclick={saveNewRecord}>
                     </lightning-button>
                 </footer>
             </div>

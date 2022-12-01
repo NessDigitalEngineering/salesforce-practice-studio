@@ -22,10 +22,10 @@ import {
   subscribe,
   unsubscribe,
   APPLICATION_SCOPE,
-  MessageContext
+  MessageContext,
+  publish
 } from "lightning/messageService";
 import refreshChannel from "@salesforce/messageChannel/RefreshComponent__c";
-import { publish } from "lightning/messageService";
 import updateDate from "@salesforce/apex/CredentialExamAttemptController.updateDate";
 import getUploadResultsList from "@salesforce/apex/CredentialExamAttemptController.getUploadResultsList";
 
@@ -303,16 +303,14 @@ export default class CredentialExamAttempts extends LightningElement {
       //validate
 
       const allValidvalue = this.template.querySelector(".validate").value;
-      var expiryDate = allValidvalue;
-      var readable_date = new Date(expiryDate).toLocaleDateString();
-      var examVchrDate = new Date(this.exmVchrDate).toLocaleDateString();
+      let expiryDate = allValidvalue;
+      let readable_date = new Date(expiryDate).toLocaleDateString();
+      let examVchrDate = new Date(this.exmVchrDate).toLocaleDateString();
       const allValid = this.template.querySelector(".validate");
       if (!allValidvalue) {
         allValid.setCustomValidity("Exam date is required");
         allValid.reportValidity();
         this.template.querySelector("c-upload-file").checkValidity();
-      } else if (this.template.querySelector("c-upload-file").checkValidity()) {
-        //	alert('upload result');
       } else {
         if (this.filesDatas.length > 0 && readable_date <= examVchrDate) {
           this.isShowModal = false;

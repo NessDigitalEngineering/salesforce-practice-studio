@@ -10,7 +10,7 @@ public with sharing class FilesUploadService {
      * @return show success message on file upload
      */
 
-    public String uploadFiles(String ParentRecId, list<String> filedata) {
+    public String uploadFiles(String parentRecId, list<String> filedata) {
         system.debug('Filesdata:' + filedata);
         system.debug('files size:' + filedata.size());
         try {
@@ -36,7 +36,7 @@ public with sharing class FilesUploadService {
                 List<ContentDocumentLink> cdList = new List<ContentDocumentLink>();
                 for (ContentVersion cv : [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :cvList]) {
                     ContentDocumentLink conDocLink = new ContentDocumentLink();
-                    conDocLink.LinkedEntityId = ParentRecId;
+                    conDocLink.LinkedEntityId = parentRecId;
                     conDocLink.ContentDocumentId = cv.ContentDocumentId;
                     conDocLink.Visibility = 'AllUsers';
                     conDocLink.shareType = 'V'; // V = Viewer, C = Collaborator, I = Inferred
@@ -61,15 +61,15 @@ public with sharing class FilesUploadService {
         private String fileContent;
 
         public FileDataWP() {
-            SetfileName();
-            SetfileContent();
+            setFileName();
+            setFileContent();
         }
         @TestVisible
-        private void SetfileName() {
+        private void setFileName() {
             this.fileName = fileName;
         }
         @TestVisible
-        private void SetfileContent() {
+        private void setFileContent() {
             this.fileContent = fileContent;
         }
     }

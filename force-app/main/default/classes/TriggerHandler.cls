@@ -57,6 +57,9 @@ public virtual class TriggerHandler {
             when AFTER_UNDELETE {
                 this.afterUndelete();
             }
+            when else {
+                System.debug('default');
+            }
         }
     }
 

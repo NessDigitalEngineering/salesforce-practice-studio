@@ -194,7 +194,8 @@ export default class VoucherRequest extends LightningElement {
       .then((result) => {
         this.isShowExamModal = false;
         console.log("inside uploading...", result);
-        if (result == "Success") {
+        if (result === "Success") {
+          console.log("Success file upload");
         }
       })
       .catch((error) => {
