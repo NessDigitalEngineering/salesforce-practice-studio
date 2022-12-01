@@ -1,0 +1,19 @@
+Hello {!Credential_Exam_Attempt__c.User__c},
+
+
+Your voucher request for {!Credential_Exam_Attempt__c.Credential__c} exam has been approved by your manager.
+
+Manager Comments: {!ApprovalRequest.Comments}
+
+Thank you for your commitment to learning initiatives. We are rooting for you!
+
+
+Regards,
+
+Learning and Enablement Team
+
+Learn More
+
+
+
+©2022 Ness Digital Engineering

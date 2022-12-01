@@ -1,0 +1,16 @@
+.c-container {
+    border: 1px solid #d8dde6;
+    margin: 10px 0 20px 0;
+}
+ .large {
+    height: 200px;
+}
+ .x-large {
+    height: 300px;
+}
+ .custom-box {
+    padding-top: 1rem;
+    padding-right: 0rem;
+    padding-bottom: 0rem;
+    padding-left: 1rem;
+}

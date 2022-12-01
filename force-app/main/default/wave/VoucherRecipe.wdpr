@@ -1,0 +1,165 @@
+{
+  "version": "55.0",
+  "nodes": {
+    "LOAD_DATASET0": {
+      "action": "load",
+      "sources": [],
+      "parameters": {
+        "fields": [
+          "Id",
+          "Name",
+          "CreatedDate",
+          "User_Credential__c",
+          "Exam_Date_Time__c",
+          "Fail_Scorecard__c",
+          "Pass_Certificate__c",
+          "Status__c",
+          "Credential__c",
+          "Exam_Voucher__c",
+          "User__c"
+        ],
+        "dataset": {
+          "type": "connectedDataset",
+          "label": "Credential_Exam_Attempt__c",
+          "connectionName": "SFDC_LOCAL",
+          "sourceObjectName": "Credential_Exam_Attempt__c"
+        },
+        "sampleDetails": {
+          "type": "TopN",
+          "sortBy": []
+        }
+      }
+    },
+    "LOAD_DATASET1": {
+      "action": "load",
+      "sources": [],
+      "parameters": {
+        "fields": [
+          "Id",
+          "OwnerId",
+          "IsDeleted",
+          "Name",
+          "CreatedDate",
+          "CreatedById",
+          "LastModifiedDate",
+          "LastModifiedById",
+          "SystemModstamp",
+          "LastActivityDate",
+          "LastViewedDate",
+          "LastReferencedDate",
+          "Cost__c",
+          "Credential_Exam_Attempt__c",
+          "Credential_Type__c",
+          "Expiry_Date__c",
+          "Permitted_Countries__c",
+          "Sponsor__c",
+          "Status__c",
+          "Type__c",
+          "Value__c",
+          "Credential__c",
+          "Exam_Status__c",
+          "User__c"
+        ],
+        "dataset": {
+          "type": "connectedDataset",
+          "label": "Exam_Voucher__c",
+          "connectionName": "SFDC_LOCAL",
+          "sourceObjectName": "Exam_Voucher__c"
+        },
+        "sampleDetails": {
+          "type": "TopN",
+          "sortBy": []
+        }
+      }
+    },
+    "JOIN0": {
+      "action": "join",
+      "sources": [
+        "LOAD_DATASET0",
+        "LOAD_DATASET1"
+      ],
+      "schema": {
+        "slice": {
+          "mode": "DROP",
+          "ignoreMissingFields": true,
+          "fields": []
+        }
+      },
+      "parameters": {
+        "joinType": "OUTER",
+        "leftKeys": [
+          "Exam_Voucher__c"
+        ],
+        "rightQualifier": "Exam_Vouch",
+        "rightKeys": [
+          "Id"
+        ]
+      }
+    },
+    "OUTPUT0": {
+      "action": "save",
+      "sources": [
+        "JOIN0"
+      ],
+      "parameters": {
+        "fields": [],
+        "dataset": {
+          "type": "analyticsDataset",
+          "label": "Voucher Recipe",
+          "name": "Voucher_Recipe",
+          "folderName": "Credentials_Analytics"
+        }
+      }
+    }
+  },
+  "ui": {
+    "nodes": {
+      "LOAD_DATASET0": {
+        "label": "Credential_Exam_Attempt__c",
+        "type": "LOAD_DATASET",
+        "top": 112,
+        "left": 112,
+        "parameters": {
+          "sampleSize": 2000
+        }
+      },
+      "LOAD_DATASET1": {
+        "label": "Exam_Voucher__c",
+        "type": "LOAD_DATASET",
+        "top": 252.7,
+        "left": 390.1,
+        "parameters": {
+          "sampleSize": 2000
+        }
+      },
+      "JOIN0": {
+        "label": "Join 0",
+        "type": "JOIN",
+        "top": 112.1,
+        "left": 393.3
+      },
+      "OUTPUT0": {
+        "label": "Output 0",
+        "type": "OUTPUT",
+        "top": 112,
+        "left": 532
+      }
+    },
+    "connectors": [
+      {
+        "source": "LOAD_DATASET0",
+        "target": "JOIN0"
+      },
+      {
+        "source": "LOAD_DATASET1",
+        "target": "JOIN0"
+      },
+      {
+        "source": "JOIN0",
+        "target": "OUTPUT0"
+      }
+    ],
+    "hiddenColumns": [],
+    "assetType": "TCRM"
+  }
+}

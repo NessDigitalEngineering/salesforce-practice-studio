@@ -1,0 +1,30 @@
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner
+            alternative-text="Loading"
+            size="medium"
+            class="spinnerClass"
+        ></lightning-spinner>
+    </template>
+
+    <lightning-input
+        type="file"
+        class="fup"
+        onchange={handleFileUploaded}
+        multiple
+    >
+    </lightning-input>
+    <template if:true={filesData}>
+        <template for:each={filesData} for:item="file" for:index="index">
+            <lightning-pill
+                key={file.fileName}
+                label={file.fileName}
+                class="pill"
+                data-id={index}
+                onclick={removeReceiptImage}
+            >
+            </lightning-pill>
+        </template>
+    </template>
+    <br />
+</template>

@@ -1,0 +1,47 @@
+.h2 {
+	text-align: center;
+}
+.icon {
+	padding-top: 5rem;
+	padding-left: 5rem;
+}
+.content {
+	overflow: auto;
+}
+
+.text-align {
+	white-space: normal;
+}
+.button {
+	padding-right: 0.5rem;
+}
+.confirmationModal {
+	max-width: 20rem !important;
+	max-height: 24rem !important;
+	margin-top: 15rem;
+}
+
+.abbr {
+	color: #ff0000;
+}
+
+.slds-button__icon {
+	margin-top: -0.313rem;
+}
+.fileUpload {
+	position: relative;
+	bottom: 0.125rem;
+	right: -0.188rem;
+}
+
+.inputLabel {
+	font-size: 0.75rem;
+	margin-top: 0.2rem;
+	white-space: break-spaces;
+}
+.dateInput {
+	margin-top: 0.15rem;
+}
+.textAreaStyle {
+	margin-top: -1rem;
+}
