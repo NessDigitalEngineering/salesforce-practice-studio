@@ -6,10 +6,18 @@ Import Credentials
 
 sfdx force:data:tree:import -f .\Credential__c.json
 
+Create Package
+
+sf package create --name "Practice Studio" --description "A Practice Management Solution" --package-type Unlocked --path force-app --target-dev-hub NessCRMDevHub
+
 Create Package Version
 
-sfdx force:package:version:create -x -c -v PBODevHub -p 0Ho5j000000PB7DCAW -w 60
+sf package version create -x -c -v NessCRMDevHub -p 0Ho3l000000KysXCAS -w 60
 
 Promote Package Version
 
-sfdx force:package:version:promote -p 04t5j000000UbpNAAS
+sf package version promote -p 04t3l000000kpGvAAI
+
+Install Package
+
+/packaging/installPackage.apexp?p0=04t3l000000kpGvAAI
